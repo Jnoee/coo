@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+	<!-- 内置权限组，不允许修改 -->
+	<permission-group name="管理员权限">
+		<permission id="1" name="机构用户管理" code="ADMIN" depends="" />
+	</permission-group>
+</permissions>

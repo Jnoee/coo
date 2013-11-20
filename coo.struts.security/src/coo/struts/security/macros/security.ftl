@@ -1,0 +1,1 @@
+<#global shiro=JspTaglibs["http://shiro.apache.org/tags"] />

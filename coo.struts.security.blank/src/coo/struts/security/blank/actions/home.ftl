@@ -1,0 +1,1 @@
+<h1>Hello Struts!</h1>

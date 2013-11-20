@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN" "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+<module name="Checker">
+	<property name="localeCountry" value="CN" />
+	<property name="localeLanguage" value="zh" />
+	<property name="charset" value="UTF-8" />
+
+	<!-- 文件长度不超过1500行 -->
+	<module name="FileLength">
+		<property name="max" value="1500" />
+	</module>
+
+	<module name="TreeWalker">
+		<!-- javadoc的检查 -->
+		<!-- 检查所有的interface和class -->
+		<module name="JavadocType" />
+		<!-- 检查所有方法的javadoc，可以不声明RuntimeException -->
+		<module name="JavadocMethod">
+			<property name="allowUndeclaredRTE" value="true" />
+			<property name="allowMissingPropertyJavadoc" value="true" />
+		</module>
+		<!-- 命名方面的检查，它们都使用了Sun官方定的规则。 -->
+		<!-- 类名(class 或interface) 的检查 -->
+		<module name="TypeName" />
+		<!-- 变量的检查 -->
+		<module name="MemberName" />
+		<!-- 方法名的检查 -->
+		<module name="MethodName" />
+		<!-- 方法的参数名 -->
+		<module name="ParameterName " />
+		<!-- 常量名的检查 -->
+		<module name="ConstantName" />
+
+		<!-- 长度方面的检查 -->
+		<!-- 方法不超过30行 -->
+		<module name="MethodLength">
+			<property name="tokens" value="METHOD_DEF" />
+			<property name="max" value="30" />
+		</module>
+		<!-- 方法的参数个数不超过4个。 -->
+		<module name="ParameterNumber">
+			<property name="max" value="4" />
+		</module>
+
+		<!-- 多余的关键字 -->
+		<module name="RedundantModifier" />
+		<!-- 对区域的检查 -->
+		<!-- 不能出现空白区域 -->
+		<module name="EmptyBlock" />
+		<!-- 所有区域都要使用大括号。 -->
+		<module name="NeedBraces" />
+		<!-- 多余的括号 -->
+		<module name="AvoidNestedBlocks">
+			<property name="allowInSwitchCase" value="true" />
+		</module>
+
+		<!-- 编码方面的检查 -->
+		<!-- 不许出现空语句 -->
+		<module name="EmptyStatement" />
+		<!-- 每个类都实现了equals()和hashCode() -->
+		<module name="EqualsHashCode" />
+		<!-- 不许内部赋值 -->
+		<module name="InnerAssignment" />
+		<!-- 循环控制变量不能被修改 -->
+		<module name="ModifiedControlVariable" />
+		<!-- 多余的throw -->
+		<module name="RedundantThrows" />
+		<!-- 不许使用未被简化的条件表达式 -->
+		<module name="SimplifyBooleanExpression" />
+		<!-- 不许使用未被简化的布尔返回值 -->
+		<module name="SimplifyBooleanReturn" />
+		<!-- String的比较不能用!= 和 == -->
+		<module name="StringLiteralEquality" />
+		<!-- if最多嵌套3层 -->
+		<module name="NestedIfDepth">
+			<property name="max" value="3" />
+		</module>
+		<!-- try最多被嵌套1层 -->
+		<module name="NestedTryDepth" />
+		<!-- clone方法必须调用了super.clone() -->
+		<module name="SuperClone" />
+		<!-- finalize 必须调用了super.finalize() -->
+		<module name="SuperFinalize" />
+		<!-- JUnitTestCase 的核心方法存在。 -->
+		<module name="JUnitTestCase" />
+		<!-- 同一行不能有多个声明 -->
+		<module name="MultipleVariableDeclarations" />
+
+		<!-- 杂项 -->
+		<!-- 不允许代码存在System.out.println -->
+		<module name="RegexpSinglelineJava">
+			<property name="format" value="System\.out\.println" />
+			<property name="ignoreComments" value="true" />
+		</module>
+
+		<!-- 不许使用与代码同行的注释 -->
+		<module name="TrailingComment" />
+
+		<!--
+			不能catch java.lang.Exception <module name="IllegalCatch"><property
+			name="illegalClassNames" value="java.lang.Exception" /></module>
+		-->
+		<!-- 绝对不能容忍魔法数 <module name="MagicNumber" /> -->
+		<!-- 检查某个变量的javadoc <module name="JavadocVariable" />-->
+		<!--
+			不许使用switch <module name="IllegalToken"> <property name="tokens"
+			value="LITERAL_SWITCH" /> </module>
+		-->
+		<!--
+			重复代码的检查，超过8行就认为重复 <module name="StrictDuplicateCode"> <property
+			name="min" value="8" /> </module>
+		-->
+		<!-- 不许有同样内容的String 
+		<module name="MultipleStringLiterals" />-->
+		<!-- 不许对方法的参数赋值 
+		<module name="ParameterAssignment" />-->
+		<!--
+			一个方法中最多有3个return <module name="ReturnCount"> <property name="max"
+			value="3" /> </module>
+		-->
+		<!-- 布尔表达式的复杂度，不超过3 
+		<module name="BooleanExpressionComplexity" />-->
+		<!-- 函数的分支复杂度，不超过10 
+		<module name="CyclomaticComplexity" />-->
+		<!-- NPath复杂度，不超过200 
+		<module name="NPathComplexity" />-->
+		<!-- 类的分散复杂度，不超过20
+		<module name="ClassFanOutComplexity" /> -->
+		<!-- 类数据的抽象耦合，不超过7 
+		<module name="ClassDataAbstractionCoupling" />-->
+		<!--
+			每行不超过120个字 <module name="LineLength"> <property name="max"
+			value="120" /> </module>
+		-->
+	</module>
+	<!-- 不进行检查的文件配置 -->
+	<module name="SuppressionFilter">
+		<property name="file" value="${basedir}/checkstyle.suppressions.xml" />
+	</module>
+	<!-- 检查翻译文件 -->
+	<module name="Translation" />
+</module> 
