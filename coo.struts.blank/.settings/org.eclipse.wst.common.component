@@ -2,6 +2,15 @@
     <wb-module deploy-name="coo.struts.blank">
         <wb-resource deploy-path="/" source-path="/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="coo.base.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/coo.base/coo.base">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="coo.core.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/coo.core/coo.core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="coo.struts.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/coo.struts/coo.struts">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="coo.struts.blank"/>
         <property name="java-output-path" value="/coo.struts.blank/target/classes"/>
     </wb-module>

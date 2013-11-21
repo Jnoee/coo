@@ -3,6 +3,11 @@
 	<name>coo.struts.security.blank</name>
 	<comment></comment>
 	<projects>
+		<project>coo.base</project>
+		<project>coo.core</project>
+		<project>coo.core.security</project>
+		<project>coo.struts</project>
+		<project>coo.struts.security</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

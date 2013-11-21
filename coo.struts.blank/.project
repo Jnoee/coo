@@ -3,6 +3,9 @@
 	<name>coo.struts.blank</name>
 	<comment></comment>
 	<projects>
+		<project>coo.base</project>
+		<project>coo.core</project>
+		<project>coo.struts</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
