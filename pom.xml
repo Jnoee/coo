@@ -119,7 +119,6 @@
 		<module>coo.core.security</module>
 		<module>coo.struts</module>
 		<module>coo.struts.security</module>
-		<module>coo.crawler</module>
 	</modules>
 	<distributionManagement>
 		<repository>

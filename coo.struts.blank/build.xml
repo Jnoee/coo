@@ -4,37 +4,32 @@
 	<!-- 旧的配置变量定义 -->
 	<property name="old.maven.groupId" value="jnoee" />
 	<property name="old.maven.artifactId" value="coo.struts.blank" />
-	<property name="old.project.name" value="coo.struts.blank" />
 	<property name="old.project.package" value="coo.struts.blank" />
 	<property name="old.project.package.path" value="/coo/struts/blank" />
 	<property name="old.project.src" value="src/coo/struts/blank" />
 	<!-- 新的配置变量定义 -->
 	<property name="new.maven.groupId" value="none" />
 	<property name="new.maven.artifactId" value="demo" />
-	<property name="new.project.name" value="demo" />
 	<property name="new.project.package" value="none.demo" />
 	<property name="new.project.package.path" value="/none/demo" />
 	<property name="new.project.src" value="src/none/demo" />
 	<target name="default" description="构建新项目">
-		<antcall target="delete.svn" />
-		<antcall target="modify.eclipse" />
+		<antcall target="init" />
 		<antcall target="modify.pom" />
-		<antcall target="modify.webapp" />
 		<antcall target="modify.context" />
 		<antcall target="modify.package" />
-		<antcall target="modify.index" />
-		<antcall target="clean.dirs" />
+		<antcall target="destroy" />
 	</target>
-	<target name="delete.svn" description="删除所有svn目录">
+	<target name="init" description="清理项目成为一个纯Maven项目">
 		<delete includeemptydirs="true" verbose="true" quiet="true">
 			<fileset dir="." defaultexcludes="false">
-				<include name="**/*svn*/**" />
+				<exclude name="pom.xml" />
+				<exclude name="build.xml" />
+				<exclude name="webapp/**" />
+				<exclude name="src/**" />
+				<exclude name="test/**" />
 			</fileset>
 		</delete>
-	</target>
-	<target name="modify.eclipse" description="修改Eclipse相关的项目配置文件">
-		<replace file=".project" token="${old.project.name}" value="${new.project.name}" />
-		<replace file=".settings/org.eclipse.wst.common.component" token="${old.project.name}" value="${new.project.name}" />
 	</target>
 	<target name="modify.pom" description="修改pom.xml文件">
 		<replace file="pom.xml" encoding="UTF-8">
@@ -43,14 +38,6 @@
 			<replacevalue expandProperties="true"><![CDATA[<groupId>${new.maven.groupId}</groupId>
 	<artifactId>${new.maven.artifactId}</artifactId>]]></replacevalue>
 		</replace>
-	</target>
-	<target name="modify.webapp" description="修改webapp目录下的web.xml和log4j.xml文件">
-		<replace file="webapp/WEB-INF/log4j.xml" encoding="UTF-8" token="${old.project.name}" value="${new.project.name}" />
-		<replace file="webapp/WEB-INF/web.xml" encoding="UTF-8">
-			<replacetoken expandProperties="true"><![CDATA[<param-value>${old.project.name}</param-value>]]></replacetoken>
-			<replacevalue expandProperties="true"><![CDATA[<param-value>${new.project.name}</param-value>]]></replacevalue>
-		</replace>
-		<replace file="webapp/WEB-INF/web.xml" encoding="UTF-8" token="${old.project.package}" value="${new.project.package}" />
 	</target>
 	<target name="modify.context" description="修改applicationContext.xml及struts.xml文件">
 		<replace file="src/applicationContext.xml" encoding="UTF-8" token="${old.project.package}" value="${new.project.package}" />
@@ -66,13 +53,7 @@
 			<include name="**/*.java" />
 		</replace>
 	</target>
-	<target name="modify.index" description="修改index.ftl文件">
-		<replace file="${new.project.src}/actions/index.ftl" encoding="UTF-8" token="${old.project.name}" value="${new.project.name}" />
-	</target>
-	<target name="clean.dirs" description="清理多余目录和文件">
-		<delete includeemptydirs="true">
-			<fileset dir="target/classes" includes="**/*" />
-		</delete>
+	<target name="destroy" description="清理多余目录和文件">
 		<delete dir="src/coo" />
 		<delete file="build.xml" />
 	</target>
