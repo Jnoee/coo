@@ -75,9 +75,9 @@ public class BnLogger {
 	public Page<BnLog> searchLog(SearchModel searchModel) {
 		FullTextCriteria criteria = bnLogDao.createFullTextCriteria();
 		criteria.addSortDesc("createDate", SortField.LONG);
-		criteria.setKeyText(searchModel.getKeyText());
-		return bnLogDao.searchPage(criteria, searchModel.getPageNum(),
-				searchModel.getNumPerPage());
+		criteria.setKeyword(searchModel.getKeyword());
+		return bnLogDao.searchPage(criteria, searchModel.getPageNo(),
+				searchModel.getPageSize());
 	}
 
 	/**

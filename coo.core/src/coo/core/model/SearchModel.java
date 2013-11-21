@@ -8,43 +8,53 @@ import java.io.Serializable;
  */
 public class SearchModel implements Serializable {
 	/** 当前页码 */
-	protected Integer pageNum = 1;
+	protected Integer pageNo = 1;
 	/** 每页记录数 */
-	protected Integer numPerPage = 20;
+	protected Integer pageSize = 20;
 	/** 排序字段 */
-	protected String orderField;
+	protected String orderBy;
+	/** 排序顺序 */
+	protected String sort;
 	/** 全文检索关键字 */
-	protected String keyText;
+	protected String keyword;
 
-	public Integer getPageNum() {
-		return pageNum;
+	public Integer getPageNo() {
+		return pageNo;
 	}
 
-	public void setPageNum(Integer pageNum) {
-		this.pageNum = pageNum;
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
 	}
 
-	public Integer getNumPerPage() {
-		return numPerPage;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
-	public void setNumPerPage(Integer numPerPage) {
-		this.numPerPage = numPerPage;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
-	public String getOrderField() {
-		return orderField;
+	public String getOrderBy() {
+		return orderBy;
 	}
 
-	public void setOrderField(String orderField) {
-		this.orderField = orderField;
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
 	}
 
-	public String getKeyText() {
-		return keyText;
+	public String getSort() {
+		return sort;
 	}
 
-	public void setKeyText(String keyText) {
-		this.keyText = keyText;
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 }

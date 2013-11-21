@@ -75,14 +75,15 @@
 </#macro>
 <#macro pagerForm action method="post" onsubmit="return navTabSearch(this);">
 <@s.form id="pagerForm" method="${method}" action="${action}" onsubmit="${onsubmit}">
-<@s.hidden name="pageNum" />
-<@s.hidden name="numPerPage" />
-<@s.hidden name="orderField" />
+<@s.hidden name="pageNo" />
+<@s.hidden name="pageSize" />
+<@s.hidden name="orderBy" />
+<@s.hidden name="sort" />
 <div class="searchBar">
     <div class="subBar">
         <ul>
             <#nested>
-            <li><@s.textfield name="keyText" /></li>
+            <li><@s.textfield name="keyword" /></li>
             <li>
                 <div class="buttonActive">
                     <div class="buttonContent">
@@ -99,7 +100,7 @@
 <div class="pages">
     <span>显示</span>
 	<#assign options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
-    <@s.select name="numPerPage" list=options listKey="value" listValue="key" cssClass="combox" onchange="${onchange}" /><span>条，共${pageModel.count}条</span>
+    <@s.select name="pageSize" list=options listKey="value" listValue="key" cssClass="combox" onchange="${onchange}" /><span>条，共${pageModel.count}条</span>
 </div>
 <div class="pagination" targetType="navTab" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
 </#macro>

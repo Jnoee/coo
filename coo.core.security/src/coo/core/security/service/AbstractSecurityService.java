@@ -226,10 +226,10 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional(readOnly = true)
 	public Page<U> searchUser(SearchModel searchModel) {
 		FullTextCriteria criteria = userDao.createFullTextCriteria();
-		criteria.setKeyText(searchModel.getKeyText());
+		criteria.setKeyword(searchModel.getKeyword());
 		criteria.addSortDesc("createDate", SortField.LONG);
-		return userDao.searchPage(criteria, searchModel.getPageNum(),
-				searchModel.getNumPerPage());
+		return userDao.searchPage(criteria, searchModel.getPageNo(),
+				searchModel.getPageSize());
 	}
 
 	/**

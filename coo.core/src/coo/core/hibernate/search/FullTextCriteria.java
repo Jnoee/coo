@@ -44,7 +44,7 @@ public class FullTextCriteria {
 	private FullTextSession session;
 	private Class<?> clazz;
 	/** 搜索关键字 */
-	private String keyText;
+	private String keyword;
 	/** 待搜索的字段 */
 	private Map<String, Analyze> searchFields = new LinkedHashMap<String, Analyze>();
 	/** 排序字段 */
@@ -75,11 +75,11 @@ public class FullTextCriteria {
 	/**
 	 * 设置全文搜索关键字。
 	 * 
-	 * @param keyText
+	 * @param keyword
 	 *            关键字
 	 */
-	public void setKeyText(String keyText) {
-		this.keyText = keyText;
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 
 	/**
@@ -277,11 +277,11 @@ public class FullTextCriteria {
 	private Query generateLuceneQuery() {
 		BooleanQuery query = new BooleanQuery();
 		// 如果关键字为空，则匹配任意记录
-		if (StringUtils.isEmpty(keyText)) {
+		if (StringUtils.isEmpty(keyword)) {
 			query.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
 		} else {
 			query.add(
-					generateMultiFieldQuery(QueryParser.escape(keyText),
+					generateMultiFieldQuery(QueryParser.escape(keyword),
 							searchFields), Occur.MUST);
 			log.debug("全文搜索包含字段：" + searchFields.keySet());
 		}

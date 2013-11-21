@@ -14,8 +14,8 @@ import java.util.jar.JarFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import coo.base.constants.Encoding;
 import coo.base.constants.Chars;
+import coo.base.constants.Encoding;
 import coo.base.exception.UncheckedException;
 
 /**
@@ -96,8 +96,7 @@ public class ClassUtils {
 		List<String> classNames = new ArrayList<String>();
 		try {
 			for (String packageName : packageNames) {
-				String packagePath = packageName.replace(".",
-						Chars.BACKSLASH);
+				String packagePath = packageName.replace(".", Chars.BACKSLASH);
 				Enumeration<URL> packageUrls = Thread.currentThread()
 						.getContextClassLoader().getResources(packagePath);
 				while (packageUrls.hasMoreElements()) {
@@ -140,6 +139,7 @@ public class ClassUtils {
 				JarEntry jarEntry = jarEntries.nextElement();
 				classNames.addAll(getClassNamesFromJar(jarEntry, packageName));
 			}
+			jarInputStream.close();
 		} catch (Exception e) {
 			log.warn("获取jar包中的类名时发生异常。", e);
 		}

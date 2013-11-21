@@ -25,6 +25,9 @@ $.fn.extend({
     }
 });
 
+/** 覆盖DWZ的翻页参数设置 */
+$.extend(DWZ.pageInfo, {pageNum:"pageNo", numPerPage:"pageSize", orderField:"orderBy", orderDirection:"s"});
+
 /** 覆盖DWZ的switchEnv函数 */
 (function($){
     $.fn.switchEnv = function(){
