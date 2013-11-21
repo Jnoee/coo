@@ -11,34 +11,9 @@
 		<encoding>UTF-8</encoding>
 		<plugin.compiler.version>3.1</plugin.compiler.version>
 		<plugin.resources.version>2.6</plugin.resources.version>
-		<plugin.war.version>2.3</plugin.war.version>
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
-		<servlet.version>2.5</servlet.version>
-		<coo.version>2.0.0</coo.version>
-		<!-- coo.base -->
-		<joda.time.version>2.2</joda.time.version>
-		<!-- coo.core -->
-		<spring.version>3.2.2.RELEASE</spring.version>
-		<hibernate.version>4.2.0.Final</hibernate.version>
-		<hibernate.search.version>4.2.0.Final</hibernate.search.version>
-		<hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-		<cglib.version>3.0</cglib.version>
-		<freemarker.version>2.3.19</freemarker.version>
-		<xstream.version>1.4.4</xstream.version>
-		<dbcp.version>6.0.36</dbcp.version>
-		<aspectj.version>1.7.2</aspectj.version>
-		<quartz.version>2.1.7</quartz.version>
-		<jackson.version>2.2.2</jackson.version>
-		<!-- coo.core.security -->
-		<shiro.version>1.2.1</shiro.version>
-		<!-- coo.struts -->
-		<struts.version>2.3.14</struts.version>
-		<!-- coo.crawler -->
-		<jsoup.version>1.7.2</jsoup.version>
-		<htmlunit.version>2.12</htmlunit.version>
-		<bsh.version>2.0b5</bsh.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -56,12 +31,6 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>${servlet.version}</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -100,17 +69,6 @@
 					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>${plugin.war.version}</version>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>webapp</directory>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 	<modules>
@@ -123,13 +81,11 @@
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
-			<name>Nexus Release Repository</name>
-			<url>http://192.168.21.10:8081/nexus/content/repositories/releases</url>
+			<url>file:///d:/Work/Git/github/maven/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
-			<name>Nexus Snapshot Repository</name>
-			<url>http://192.168.21.10:8081/nexus/content/repositories/snapshots/</url>
+			<url>file:///d:/Work/Git/github/maven/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>

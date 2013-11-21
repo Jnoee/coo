@@ -3,7 +3,6 @@ package coo.base.util;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -24,7 +23,7 @@ public class ClassUtilsTest {
 	@Test
 	public void testFindClassesByParentClass() throws Exception {
 		List<Class<?>> classes = ClassUtils.findClassesByParentClass(
-				ServletRequest.class, "javax.servlet");
+				Object.class, "coo.base");
 		log.debug("找到 " + classes.size() + " 个目标类：");
 		for (Class<?> clazz : classes) {
 			log.debug(clazz.getName());
@@ -34,7 +33,7 @@ public class ClassUtilsTest {
 	@Test
 	public void testFindClassesByAnnotationClass() throws Exception {
 		List<Class<?>> classes = ClassUtils.findClassesByAnnotationClass(
-				Resource.class, "javax.servlet");
+				Resource.class, "coo.base");
 		log.debug("找到 " + classes.size() + " 个目标类：");
 		for (Class<?> clazz : classes) {
 			log.debug(clazz.getName());

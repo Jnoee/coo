@@ -8,11 +8,14 @@
 		<version>2.0.0</version>
 		<relativePath>..</relativePath>
 	</parent>
+	<properties>
+		<shiro.version>1.2.1</shiro.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>jnoee</groupId>
 			<artifactId>coo.core</artifactId>
-			<version>${coo.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>

@@ -8,6 +8,9 @@
 		<version>2.0.0</version>
 		<relativePath>..</relativePath>
 	</parent>
+	<properties>
+		<joda.time.version>2.2</joda.time.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>joda-time</groupId>
