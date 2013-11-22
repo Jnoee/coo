@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="NewProject" default="default" basedir=".">
-	<description>不要对文件进行格式化！ant replace任务对于精确文字替换要求格式严格匹配，包括tab个数。</description>
 	<!-- 旧的配置变量定义 -->
 	<property name="old.maven.groupId" value="jnoee" />
 	<property name="old.maven.artifactId" value="coo.struts.security.blank" />
@@ -32,12 +31,8 @@
 		</delete>
 	</target>
 	<target name="modify.pom" description="修改pom.xml文件">
-		<replace file="pom.xml" encoding="UTF-8">
-			<replacetoken expandProperties="true"><![CDATA[<groupId>${old.maven.groupId}</groupId>
-	<artifactId>${old.maven.artifactId}</artifactId>]]></replacetoken>
-			<replacevalue expandProperties="true"><![CDATA[<groupId>${new.maven.groupId}</groupId>
-	<artifactId>${new.maven.artifactId}</artifactId>]]></replacevalue>
-		</replace>
+		<replaceregexp file="pom.xml" encoding="UTF-8" match="${old.maven.groupId}" replace="${new.maven.groupId}" flags="s" />
+		<replaceregexp file="pom.xml" encoding="UTF-8" match="${old.maven.artifactId}" replace="${new.maven.artifactId}" flags="s" />
 	</target>
 	<target name="modify.context" description="修改applicationContext.xml/struts.xml/freemarker.properties文件">
 		<replace file="src/applicationContext.xml" encoding="UTF-8" token="${old.project.package}" value="${new.project.package}" />

@@ -16,6 +16,7 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
 		<servlet.version>2.5</servlet.version>
+		<mysql.version>5.1.27</mysql.version>
 		<coo.version>2.0.0</coo.version>
 	</properties>
 	<dependencies>
@@ -24,13 +25,11 @@
 			<artifactId>coo.struts</artifactId>
 			<version>${coo.version}</version>
 		</dependency>
-		<!-- 
 		<dependency>
-			<groupId>ojdbc</groupId>
-			<artifactId>ojdbc</artifactId>
-			<version>14</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
 		</dependency>
-		 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
