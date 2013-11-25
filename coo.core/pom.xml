@@ -16,7 +16,7 @@
 		<cglib.version>3.0</cglib.version>
 		<freemarker.version>2.3.19</freemarker.version>
 		<xstream.version>1.4.4</xstream.version>
-		<dbcp.version>6.0.36</dbcp.version>
+		<tomcat.jdbc.version>7.0.47</tomcat.jdbc.version>
 		<aspectj.version>1.7.2</aspectj.version>
 		<quartz.version>2.1.7</quartz.version>
 		<jackson.version>2.2.2</jackson.version>
@@ -86,8 +86,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
-			<artifactId>dbcp</artifactId>
-			<version>${dbcp.version}</version>
+			<artifactId>tomcat-jdbc</artifactId>
+			<version>${tomcat.jdbc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>

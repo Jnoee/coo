@@ -1,1 +1,1 @@
-<h1>Hello Struts!</h1>
+<h1>首页</h1>
