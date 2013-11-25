@@ -8,10 +8,31 @@ create table Syst_Actor  (
    roleId               CHAR(36)                        not null,
    name                 NVARCHAR2(60)                   not null,
    creatorId            CHAR(36)                        not null,
-   createDate           DATETIME                        not null,
+   createDate           DATE                            not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATETIME                        not null,
+   modifyDate           DATE                            not null,
    constraint PK_SYST_ACTOR primary key (id)
+);
+
+/*==============================================================*/
+/* Index: IDX_Actor_organId                                     */
+/*==============================================================*/
+create index IDX_Actor_organId on Syst_Actor (
+   organId ASC
+);
+
+/*==============================================================*/
+/* Index: IDX_Actor_userId                                      */
+/*==============================================================*/
+create index IDX_Actor_userId on Syst_Actor (
+   userId ASC
+);
+
+/*==============================================================*/
+/* Index: IDX_Actor_roleId                                      */
+/*==============================================================*/
+create index IDX_Actor_roleId on Syst_Actor (
+   roleId ASC
 );
 
 /*==============================================================*/
@@ -20,7 +41,7 @@ create table Syst_Actor  (
 create table Syst_BnLog  (
    id                   CHAR(36)                        not null,
    creator              NVARCHAR2(20)                   not null,
-   createDate           DATETIME                        not null,
+   createDate           DATE                            not null,
    message              NVARCHAR2(800)                  not null,
    origData             NVARCHAR2(2000),
    newData              NVARCHAR2(2000),
@@ -36,10 +57,17 @@ create table Syst_Organ  (
    name                 NVARCHAR2(60)                   not null,
    ordinal              INTEGER,
    creatorId            CHAR(36)                        not null,
-   createDate           DATETIME                        not null,
+   createDate           DATE                            not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATETIME                        not null,
+   modifyDate           DATE                            not null,
    constraint PK_SYST_ORGAN primary key (id)
+);
+
+/*==============================================================*/
+/* Index: IDX_Organ_parentId                                    */
+/*==============================================================*/
+create index IDX_Organ_parentId on Syst_Organ (
+   parentId ASC
 );
 
 /*==============================================================*/
@@ -50,9 +78,9 @@ create table Syst_Role  (
    name                 NVARCHAR2(60)                   not null,
    permissions          NVARCHAR2(800)                  not null,
    creatorId            CHAR(36)                        not null,
-   createDate           DATETIME                        not null,
+   createDate           DATE                            not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATETIME                        not null,
+   modifyDate           DATE                            not null,
    constraint PK_SYST_ROLE primary key (id)
 );
 
@@ -67,9 +95,9 @@ create table Syst_User  (
    enabled              SMALLINT                        not null,
    ordinal              INTEGER,
    creatorId            CHAR(36)                        not null,
-   createDate           DATETIME                        not null,
+   createDate           DATE                            not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATETIME                        not null,
+   modifyDate           DATE                            not null,
    constraint PK_SYST_USER primary key (id)
 );
 
@@ -105,15 +133,15 @@ alter table Syst_Organ
       
 /** 创建系统根机构 */
 insert into Syst_Organ (id, parentId, name, creatorId, createDate, modifierId, modifyDate)
-values ('c9b68b8b-24a9-4669-b38d-5544f4643c58', null, '系统根机构', '70900052-bfed-4ef0-be2e-99df235ceddf', NOW(), '70900052-bfed-4ef0-be2e-99df235ceddf', NOW());
+values ('ADMINOID-0000-0000-0000-000000000000', null, '系统根机构', 'ADMINUID-0000-0000-0000-000000000000', NOW(), 'ADMINUID-0000-0000-0000-000000000000', NOW());
 /** 创建系统管理员用户 */
 insert into Syst_User (id, username, password, name, enabled, creatorId, createDate, modifierId, modifyDate)
-values ('70900052-bfed-4ef0-be2e-99df235ceddf', 'admin', 'j6Xdj208bRekjd8a9acwQJL5IbHiws3ncNkgO6Gh9HY=', '系统管理员', 1, '70900052-bfed-4ef0-be2e-99df235ceddf', NOW(), '70900052-bfed-4ef0-be2e-99df235ceddf', NOW());
+values ('ADMINUID-0000-0000-0000-000000000000', 'admin', 'j6Xdj208bRekjd8a9acwQJL5IbHiws3ncNkgO6Gh9HY=', '系统管理员', 1, 'ADMINUID-0000-0000-0000-000000000000', NOW(), 'ADMINUID-0000-0000-0000-000000000000', NOW());
 /** 创建系统管理员角色 */
 insert into Syst_Role (id, name, permissions, creatorId, createDate, modifierId, modifyDate)
-values('24a8e04b-11cb-48a2-97ce-ed921bdd7df1', '系统管理员', '100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000', '70900052-bfed-4ef0-be2e-99df235ceddf', NOW(), '70900052-bfed-4ef0-be2e-99df235ceddf', NOW());
+values('ADMINRID-0000-0000-0000-000000000000', '系统管理员', '111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111', 'ADMINUID-0000-0000-0000-000000000000', NOW(), 'ADMINUID-0000-0000-0000-000000000000', NOW());
 /** 创建系统根机构管理员职务 */
 insert into Syst_Actor (id, organId, userId, roleId, name, creatorId, createDate, modifierId, modifyDate)
-values ('72a7a166-ee81-4be0-99bb-97907112056f', 'c9b68b8b-24a9-4669-b38d-5544f4643c58', '70900052-bfed-4ef0-be2e-99df235ceddf', '24a8e04b-11cb-48a2-97ce-ed921bdd7df1', '系统根机构管理员', '70900052-bfed-4ef0-be2e-99df235ceddf', NOW(), '70900052-bfed-4ef0-be2e-99df235ceddf', NOW());
+values ('ADMINAID-0000-0000-0000-000000000000', 'ADMINOID-0000-0000-0000-000000000000', 'ADMINUID-0000-0000-0000-000000000000', 'ADMINRID-0000-0000-0000-000000000000', '系统根机构管理员', 'ADMINUID-0000-0000-0000-000000000000', NOW(), 'ADMINUID-0000-0000-0000-000000000000', NOW());
 /** 创建系统管理员用户设置 */
-insert into Syst_UserSettings (id, defaultActorId) values ('70900052-bfed-4ef0-be2e-99df235ceddf', '72a7a166-ee81-4be0-99bb-97907112056f');
+insert into Syst_UserSettings (id, defaultActorId) values ('ADMINUID-0000-0000-0000-000000000000', 'ADMINAID-0000-0000-0000-000000000000');

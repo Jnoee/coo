@@ -4,7 +4,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.WildcardQuery;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -228,6 +233,13 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		FullTextCriteria criteria = userDao.createFullTextCriteria();
 		criteria.setKeyword(searchModel.getKeyword());
 		criteria.addSortDesc("createDate", SortField.LONG);
+
+		// 将系统管理员从搜索的用户结果中排除
+		BooleanQuery bq = new BooleanQuery();
+		bq.add(new TermQuery(new Term("id", AdminIds.USER_ID)), Occur.MUST_NOT);
+		bq.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
+		criteria.setLuceneQuery(bq, Occur.MUST);
+
 		return userDao.searchPage(criteria, searchModel.getPageNo(),
 				searchModel.getPageSize());
 	}

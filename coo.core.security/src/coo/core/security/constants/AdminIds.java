@@ -12,6 +12,4 @@ public abstract class AdminIds {
 	public static final String ROLE_ID = "ADMINRID-0000-0000-0000-000000000000";
 	/** 管理员职务ID */
 	public static final String ACTOR_ID = "ADMINAID-0000-0000-0000-000000000000";
-	/** 管理员设置ID */
-	public static final String SETTINGS_ID = "ADMINSID-0000-0000-0000-000000000000";
 }
