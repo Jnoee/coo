@@ -10,7 +10,7 @@
 	<!-- 默认以settings.xml为全局配置文件 -->
 	<context:property-placeholder location="classpath:settings.xml"	ignore-resource-not-found="true" />
 	<!-- 定义数据源 -->
-	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource" destroy-method="close">
+	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
 		<property name="driverClassName" value="${db.driver}" />
 		<property name="url" value="${db.url}" />
 		<property name="username" value="${db.username}" />
