@@ -66,14 +66,9 @@
                 </div>
                 <div id="navMenu">
                     <ul>
-                    	<@shiro.hasAnyRoles name="COMMONS_SCRIPT_MANAGE,CRAWLER_SCRIPT_MANAGER,CRAWLER_DEFINED_MANAGE">
-                    	<li class="selected">
-                    		<a href="crawler/menu.do"><span>爬虫管理</span> </a>
-                    	</li>
-						</@shiro.hasAnyRoles>
-						<@shiro.hasAnyRoles name="EC_MANAGE,LOGIN_SITE_MANAGER,BLOOM_CONFIG_MANAGE">
+						<@shiro.hasAnyRoles name="COMPANY_MANAGE,EMPLOYEE_MANAGE">
                     	<li>
-                    		<a href="config/menu.do"><span>配置中心</span> </a>
+                    		<a href="company/menu.do"><span>公司管理</span> </a>
                     	</li>
 						</@shiro.hasAnyRoles>
 						<@shiro.hasAnyRoles name="ADMIN">
@@ -105,7 +100,6 @@
 					}
 				});
 			});
-
         </script>
     </body>
 </html>

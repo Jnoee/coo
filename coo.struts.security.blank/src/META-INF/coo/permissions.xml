@@ -4,12 +4,9 @@
 	<permission-group name="管理员权限">
 		<permission id="1" name="机构用户管理" code="ADMIN" depends="" />
 	</permission-group>
-	<permission-group name="权限分组1">
-		<permission id="11" name="测试权限11" code="TEST11" depends="" />
-		<permission id="12" name="测试权限12" code="TEST12" depends="" />
-	</permission-group>
-	<permission-group name="权限分组2">
-		<permission id="21" name="测试权限21" code="TEST21" depends="" />
-		<permission id="22" name="测试权限22" code="TEST22" depends="" />
+	<!-- 示例模块 -->
+	<permission-group name="部门管理">
+		<permission id="11" name="部门管理" code="COMPANY_MANAGE" depends="" />
+		<permission id="12" name="职员管理" code="EMPLOYEE_MANAGE" depends="" />
 	</permission-group>
 </permissions>

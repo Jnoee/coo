@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+	<!-- 系统管理 -->
 	<entry key="organ.add.success">新增机构成功。</entry>
 	<entry key="organ.edit.success">编辑机构成功。</entry>
 	<entry key="role.add.success">新增角色成功。</entry>
@@ -15,4 +16,11 @@
 	<entry key="actor.delete.success">删除职务成功。</entry>
 	<entry key="person.pwd.change.success">修改密码成功。</entry>
 	<entry key="full.text.index.build.success">重建全文索引成功。</entry>
+	<!-- 公司管理 -->
+	<entry key="company.add.success">新增公司成功。</entry>
+	<entry key="company.edit.success">编辑公司成功。</entry>
+	<entry key="company.delete.success">删除公司成功。</entry>
+	<entry key="employee.add.success">新增雇员成功。</entry>
+	<entry key="employee.edit.success">编辑雇员成功。</entry>
+	<entry key="employee.delete.success">删除雇员成功。</entry>
 </properties>

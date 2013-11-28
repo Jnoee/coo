@@ -47,6 +47,7 @@
 		</move>
 		<replace dir="${new.project.src}" encoding="UTF-8" token="${old.project.package}" value="${new.project.package}">
 			<include name="**/*.java" />
+			<include name="**/*.ftl" />
 		</replace>
 	</target>
 	<target name="destroy" description="清理多余目录和文件">
