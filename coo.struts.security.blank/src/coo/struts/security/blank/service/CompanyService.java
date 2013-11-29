@@ -7,8 +7,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import coo.base.exception.UncheckedException;
 import coo.base.util.BeanUtils;
 import coo.core.hibernate.dao.Dao;
+import coo.core.message.MessageConfig;
 import coo.struts.security.blank.entity.Company;
 
 /**
@@ -18,6 +20,8 @@ import coo.struts.security.blank.entity.Company;
 public class CompanyService {
 	@Resource
 	private Dao<Company> companyDao;
+	@Resource
+	private MessageConfig messageConfig;
 
 	/**
 	 * 获取所有公司列表。
@@ -48,7 +52,11 @@ public class CompanyService {
 	 *            公司
 	 */
 	@Transactional
-	public void createDepartment(Company company) {
+	public void createCompany(Company company) {
+		if (!companyDao.isUnique(company, "name")) {
+			throw new UncheckedException(
+					messageConfig.getString("company.name.exists"));
+		}
 		companyDao.save(company);
 	}
 
@@ -60,6 +68,10 @@ public class CompanyService {
 	 */
 	@Transactional
 	public void updateCompany(Company company) {
+		if (!companyDao.isUnique(company, "name")) {
+			throw new UncheckedException(
+					messageConfig.getString("company.name.exists"));
+		}
 		Company origCompany = companyDao.get(company.getId());
 		BeanUtils.copyFields(company, origCompany);
 	}

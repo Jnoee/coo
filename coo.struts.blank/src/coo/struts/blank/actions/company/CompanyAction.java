@@ -34,7 +34,7 @@ public class CompanyAction extends GenericAction {
 
 	@Action("company-save")
 	public String save() {
-		companyService.createDepartment(company);
+		companyService.createCompany(company);
 		return AjaxResultUtils.close(
 				messageConfig.getString("company.add.success"), "company-list");
 	}

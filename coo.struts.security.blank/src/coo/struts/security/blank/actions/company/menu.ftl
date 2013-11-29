@@ -11,7 +11,7 @@
             </@shiro.hasRole>
 			<@shiro.hasRole name="EMPLOYEE_MANAGE">
             <li>
-                <a href="<@s.url action="employee-list"/>" target="navTab" rel="employee-list">雇员管理</a>
+                <a href="<@s.url action="employee-list"/>" target="navTab" rel="employee-list">职员管理</a>
             </li>
             </@shiro.hasRole>
         </ul>

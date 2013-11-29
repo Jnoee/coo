@@ -5,7 +5,8 @@
 	<entry key="company.add.success">新增公司成功。</entry>
 	<entry key="company.edit.success">编辑公司成功。</entry>
 	<entry key="company.delete.success">删除公司成功。</entry>
-	<entry key="employee.add.success">新增雇员成功。</entry>
-	<entry key="employee.edit.success">编辑雇员成功。</entry>
-	<entry key="employee.delete.success">删除雇员成功。</entry>
+	<entry key="company.name.exists">公司名称已存在。</entry>
+	<entry key="employee.add.success">新增职员成功。</entry>
+	<entry key="employee.edit.success">编辑职员成功。</entry>
+	<entry key="employee.delete.success">删除职员成功。</entry>
 </properties>
