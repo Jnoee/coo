@@ -14,7 +14,7 @@
 		<hibernate.search.version>4.2.0.Final</hibernate.search.version>
 		<hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
 		<cglib.version>3.0</cglib.version>
-		<freemarker.version>2.3.19</freemarker.version>
+		<freemarker.version>2.3.20</freemarker.version>
 		<xstream.version>1.4.4</xstream.version>
 		<tomcat.jdbc.version>7.0.47</tomcat.jdbc.version>
 		<aspectj.version>1.7.2</aspectj.version>
