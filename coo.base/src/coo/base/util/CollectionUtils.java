@@ -125,8 +125,8 @@ public abstract class CollectionUtils {
 	public static <T> void copy(Collection<T> source, Collection<T> target) {
 		Assert.isTrue(source != null, "源集合不能为空。");
 		Assert.isTrue(source != null, "目标集合不能为空。");
+		target.clear();
 		if (!source.isEmpty()) {
-			target.clear();
 			for (T o : source) {
 				target.add(o);
 			}
