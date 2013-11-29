@@ -1,8 +1,5 @@
 package coo.struts.security.blank.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -18,11 +15,9 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
-import coo.base.util.StringUtils;
-import coo.core.hibernate.search.IEnumListTextBridge;
+import coo.core.hibernate.search.ArrayBridge;
 import coo.core.hibernate.search.IEnumTextBridge;
 import coo.core.security.entity.ResourceEntity;
-import coo.struts.security.blank.enums.Interest;
 import coo.struts.security.blank.enums.Sex;
 
 /**
@@ -51,36 +46,10 @@ public class Employee extends ResourceEntity<User> {
 	@FieldBridge(impl = IEnumTextBridge.class)
 	private Sex sex = Sex.MALE;
 	/** 兴趣爱好 */
-	@Type(type = "IEnumList")
+	@Type(type = "Array")
 	@Field
-	@FieldBridge(impl = IEnumListTextBridge.class)
-	private List<Interest> interests = new ArrayList<Interest>();
-
-	/**
-	 * 获取兴趣爱好的文本。
-	 * 
-	 * @return 返回兴趣爱好的文本。
-	 */
-	public String getInterestTexts() {
-		List<String> interestTexts = new ArrayList<String>();
-		for (Interest interest : interests) {
-			interestTexts.add(interest.getText());
-		}
-		return StringUtils.join(interestTexts, ",");
-	}
-
-	/**
-	 * 获取兴趣爱好值列表。
-	 * 
-	 * @return 返回兴趣爱好值列表。
-	 */
-	public List<String> getInterestValues() {
-		List<String> interestValues = new ArrayList<String>();
-		for (Interest interest : interests) {
-			interestValues.add(interest.getValue());
-		}
-		return interestValues;
-	}
+	@FieldBridge(impl = ArrayBridge.class)
+	private String[] interests = new String[] {};
 
 	public Company getCompany() {
 		return company;
@@ -114,11 +83,11 @@ public class Employee extends ResourceEntity<User> {
 		this.sex = sex;
 	}
 
-	public List<Interest> getInterests() {
+	public String[] getInterests() {
 		return interests;
 	}
 
-	public void setInterests(List<Interest> interests) {
+	public void setInterests(String[] interests) {
 		this.interests = interests;
 	}
 }

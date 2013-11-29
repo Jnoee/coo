@@ -22,7 +22,7 @@
             </dl>
 			<dl>
                 <dt>兴趣爱好：</dt>
-                <dd><@s.checkboxlist name="employee.interests" list=enums["coo.struts.blank.enums.Interest"]?values listKey="value" listValue="text" value="employee.interestValues" /></dd>
+                <dd><@s.checkboxlist name="employee.interests" list=enums["coo.struts.blank.enums.Interest"]?values listKey="text" listValue="text" value="employee.interests" /></dd>
             </dl>
         </div>
         <div class="formBar">

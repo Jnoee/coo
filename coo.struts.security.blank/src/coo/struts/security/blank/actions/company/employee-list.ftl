@@ -6,7 +6,7 @@
         <div class="panelBar">
             <ul class="toolBar">
                 <li>
-					<a href="<@s.url action="employee-add" />" target="dialog" rel="employee-add" mask="true" title="新增职员" width="800" height="700">
+					<a href="<@s.url action="employee-add" />" target="dialog" rel="employee-add" mask="true" title="新增职员">
 						<span class="a09">新增职员</span>
 					</a>
 				</li>
@@ -30,9 +30,9 @@
                     <td>${employee.company.name}</td>
                     <td>${employee.age}</td>
 					<td>${employee.sex.text}</td>
-					<td>${employee.interestTexts}</td>
+					<td>${employee.interests?join(",")}</td>
                     <td>
-						<a href="<@s.url action="employee-edit" employeeId="${employee.id}" />" target="dialog" mask="true" rel="employee-edit" title="编辑职员" width="800" height="700">编辑</a>
+						<a href="<@s.url action="employee-edit" employeeId="${employee.id}" />" target="dialog" mask="true" rel="employee-edit" title="编辑职员">编辑</a>
 						&nbsp;|&nbsp;
 						<a href="<@s.url action="employee-delete" employeeId="${employee.id}" />" target="ajaxTodo" title="您确定要删除该职员吗？">删除</a>
 					</td>
