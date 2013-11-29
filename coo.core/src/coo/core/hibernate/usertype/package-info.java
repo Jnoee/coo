@@ -5,7 +5,8 @@
 		@TypeDef(name = "IEnumList", typeClass = IEnumListUserType.class),
 		@TypeDef(name = "Json", typeClass = JsonUserType.class),
 		@TypeDef(name = "JsonList", typeClass = JsonListUserType.class),
-		@TypeDef(name = "Array", typeClass = ArrayUserType.class) })
+		@TypeDef(name = "Array", typeClass = ArrayUserType.class),
+		@TypeDef(name = "ArrayList", typeClass = ArrayListUserType.class) })
 package coo.core.hibernate.usertype;
 
 import org.hibernate.annotations.TypeDef;
