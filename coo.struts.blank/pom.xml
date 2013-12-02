@@ -106,30 +106,6 @@
 		<repository>
 			<id>jnoee-releases</id>
 			<url>https://raw.github.com/jnoee/maven/master/releases</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatepolicy>always</updatepolicy>
-				<checksumpolicy>fail</checksumpolicy>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-				<updatepolicy>always</updatepolicy>
-				<checksumpolicy>warn</checksumpolicy>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>jnoee-snapshots</id>
-			<url>https://raw.github.com/jnoee/maven/master/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-				<updatepolicy>always</updatepolicy>
-				<checksumpolicy>warn</checksumpolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatepolicy>never</updatepolicy>
-				<checksumpolicy>fail</checksumpolicy>
-			</snapshots>
 		</repository>
 	</repositories>
 </project>
