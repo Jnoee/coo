@@ -16,7 +16,6 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
 		<servlet.version>2.5</servlet.version>
-		<h2.version>1.3.174</h2.version>
 		<coo.version>2.0.0</coo.version>
 	</properties>
 	<dependencies>
@@ -24,11 +23,6 @@
 			<groupId>jnoee</groupId>
 			<artifactId>coo.struts</artifactId>
 			<version>${coo.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${h2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

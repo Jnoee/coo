@@ -11,10 +11,10 @@
 	<context:property-placeholder location="classpath:settings.xml"	ignore-resource-not-found="true" />
 	<!-- 定义数据源 -->
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-		<property name="driverClassName" value="${db.driver}" />
-		<property name="url" value="${db.url}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
+		<property name="driverClassName" value="${db.driver:org.h2.Driver}" />
+		<property name="url" value="${db.url:jdbc:h2:mem:coo}" />
+		<property name="username" value="${db.username:su}" />
+		<property name="password" value="${db.password:}" />
 		<property name="maxActive" value="${db.maxActive:100}" />
 		<property name="maxIdle" value="${db.maxIdle:10}" />
 		<property name="maxWait" value="${db.maxWait:10000}" />
@@ -27,7 +27,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<!-- 数据库适配器 -->
-				<prop key="hibernate.dialect">${db.dialect}</prop>
+				<prop key="hibernate.dialect">${db.dialect:org.hibernate.dialect.H2Dialect}</prop>
 				<!-- 是否在控制台打印SQL语句 -->
 				<prop key="hibernate.show_sql">${db.show_sql:false}</prop>
 				<!-- 二级缓存设置 -->
@@ -43,7 +43,7 @@
 				<!-- 全文索引设置 -->
 				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:org.hibernate.search.store.impl.FSDirectoryProvider}</prop>
 				<!-- 全文索引保存目录 -->
-				<prop key="hibernate.search.default.indexBase">${search.indexBase}</prop>
+				<prop key="hibernate.search.default.indexBase">${search.indexBase:d:/coo_workspace/indexed/coo.core}</prop>
 				<!-- 全文索引分词器 -->
 				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}</prop>
 			</props>
