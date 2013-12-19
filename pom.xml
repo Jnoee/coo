@@ -75,6 +75,7 @@
 		<module>coo.base</module>
 		<module>coo.core</module>
 		<module>coo.core.security</module>
+		<module>coo.core.support</module>
 		<module>coo.struts</module>
 		<module>coo.struts.security</module>
 	</modules>
