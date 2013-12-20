@@ -45,9 +45,6 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 	 */
 	public void startAndWait(Class<?>... entityClasses) {
 		lock.lock();
-		if (entityClasses.length == 0) {
-			entityClasses = indexedEntityClasses.toArray(new Class<?>[] {});
-		}
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
 				log.info("开始重建 " + indexedEntityClass.getSimpleName()
@@ -73,9 +70,6 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 	 */
 	public void start(Class<?>... entityClasses) {
 		lock.lock();
-		if (entityClasses.length == 0) {
-			entityClasses = indexedEntityClasses.toArray(new Class<?>[] {});
-		}
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
 				log.info("异步重建 " + indexedEntityClass.getSimpleName()

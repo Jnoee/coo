@@ -2,6 +2,7 @@ package coo.base.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -236,7 +237,10 @@ public abstract class BeanUtils {
 	public static <T> void copyField(T source, T target, String fieldName,
 			Boolean containedNull) {
 		Object sourceFieldValue = getField(source, fieldName);
-		Boolean needCopy = findField(target.getClass(), fieldName) != null;
+		Field targetField = findField(target.getClass(), fieldName);
+		Boolean needCopy = targetField != null
+				&& !Modifier.isFinal(targetField.getModifiers())
+				&& !Modifier.isStatic(targetField.getModifiers());
 		if (needCopy && !containedNull && sourceFieldValue == null) {
 			needCopy = false;
 		}

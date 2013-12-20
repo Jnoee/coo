@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	<!-- FreeMarker配置组件 -->
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPaths" value="classpath:/META-INF/coo/template" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	<!-- 异步任务组件 -->
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" />
+	<!-- 邮件发送组件 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host:smtp.163.com}" />
+		<property name="port" value="${mail.port:25}" />
+		<property name="username" value="${mail.username:coo_mail_test}" />
+		<property name="password" value="${mail.password:coomailtest}" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtp.auth:true}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable:false}</prop>
+				<prop key="mail.smtp.timeout">${mail.smtp.timeout:30000}</prop>
+				<prop key="mail.debug">${mail.debug:false}</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

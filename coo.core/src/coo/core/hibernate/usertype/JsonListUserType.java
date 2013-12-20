@@ -31,7 +31,7 @@ public class JsonListUserType extends AbstractUserType {
 			if (value == null) {
 				value = "[]";
 			}
-			Field jsonField = getField(owner, names[0]);
+			Field jsonField = getField(rs, names[0], owner);
 			Class<?> beanClass = BeanUtils.getGenericFieldType(jsonField);
 			JavaType type = mapper.getTypeFactory().constructCollectionType(
 					List.class, beanClass);

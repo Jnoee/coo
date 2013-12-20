@@ -9,7 +9,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<properties>
-		<joda.time.version>2.2</joda.time.version>
+		<joda.time.version>2.3</joda.time.version>
 	</properties>
 	<dependencies>
 		<dependency>

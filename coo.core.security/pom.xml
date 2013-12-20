@@ -9,7 +9,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<properties>
-		<shiro.version>1.2.1</shiro.version>
+		<shiro.version>1.2.2</shiro.version>
 	</properties>
 	<dependencies>
 		<dependency>
