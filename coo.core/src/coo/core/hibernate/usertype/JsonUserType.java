@@ -23,7 +23,7 @@ public class JsonUserType extends AbstractUserType {
 		try {
 			String value = getValue(rs, names[0], session);
 			if (value != null) {
-				Field jsonField = getField(owner, names[0]);
+				Field jsonField = getField(rs, names[0], owner);
 				Class<?> jsonClass = jsonField.getType();
 				return mapper.readValue(value, jsonClass);
 			} else {

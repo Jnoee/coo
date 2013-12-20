@@ -24,8 +24,9 @@ public class IEnumUserType extends AbstractUserType {
 			SessionImplementor session, Object owner) throws SQLException {
 		try {
 			String value = getValue(rs, names[0], session);
+
 			if (value != null) {
-				Field enumField = getField(owner, names[0]);
+				Field enumField = getField(rs, names[0], owner);
 				Class<? extends IEnum> enumClass = (Class<? extends IEnum>) enumField
 						.getType();
 				return IEnumUtils.getIEnumByValue(enumClass, value);
