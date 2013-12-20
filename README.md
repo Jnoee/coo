@@ -12,7 +12,9 @@ coo 全部利用开源框架本身的接口和特性进行封装和扩展，对�
 * 表现层：Struts2/Freemarker
 * UI层：DWZ/BootStrap
 
-#模块组成
+#框架构成
+![框架构成](框架构成.png)
+
 COO由以下子模块项目组成：
 * coo.base: 基础模块。基础工具类、异常定义、常量定义、基础模型等。
 * coo.core: 核心模块。整合封装Hibernate/Hibernate Search/Spring的核心模块。
@@ -20,8 +22,8 @@ COO由以下子模块项目组成：
 * coo.core.security: 安全模块。整合Shiro作为权限控制模块。
 * coo.struts：整合封装Struts2/Freemarker/DWZ/BootStrap作为表现层基础模块。
 * coo.struts.security：基于Struts2 Plugin机制的权限控制模块。
-
-#脚手架子项目
-COO提供两个脚手架项目用于快速搭建开发项目：
 * coo.struts.blank：不带权限控制的脚手架项目。
 * coo.struts.security.blank：带有权限控制的脚手架项目。
+
+#依赖关系
+![依赖关系](依赖关系.png)
