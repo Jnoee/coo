@@ -23,41 +23,36 @@ import coo.base.util.BeanUtils;
  */
 public abstract class AbstractUserType implements UserType {
 	/**
-	 * 根据字段标签名获取源对象中对应字段的属性对象。
+	 * 根据字段名获取源对象中对应字段的属性对象。<br/>
+	 * Hibernate生成SQL中的字段名有一定规律，基本上是以属性名开头加随机数字。<br/>
+	 * 根据这个规律基本能找到对应的源属性对象。<br/>
+	 * 由于长属性名会被Hibernate截断，所以此方法并非绝对可靠。如果出现异常，可以调整属性名称或用其它方法解决。
 	 * 
-	 * @param rs
-	 *            数据结果集
-	 * @param columnLabel
-	 *            Hibernate生成SQL中的字段标签
 	 * @param owner
 	 *            源对象
-	 * @return 返回源对象中对应字段的属性对象。
+	 * @param fieldName
+	 *            Hibernate生成SQL中的字段名称
+	 * @return 返回源对象中对应字段的属性对象
 	 */
-	protected Field getField(ResultSet rs, String columnLabel, Object owner) {
-		try {
-			String columnName = rs.getMetaData().getColumnName(
-					rs.findColumn(columnLabel));
-			// 如果使用了@Column注解，优先用@Column注解设定的名称进行匹配
-			for (Field field : BeanUtils.findField(owner.getClass(),
-					Column.class)) {
-				Column column = field.getAnnotation(Column.class);
-				if (StringUtils.isNotBlank(column.name())
-						&& column.name().equalsIgnoreCase(columnName)) {
-					return field;
-				}
+	protected Field getField(Object owner, String fieldName) {
+		fieldName = fieldName.replaceAll("[^a-zA-Z]", "");
+		// 如果使用了@Column注解，优先用@Column注解设定的名称进行匹配
+		for (Field field : BeanUtils.findField(owner.getClass(), Column.class)) {
+			Column column = field.getAnnotation(Column.class);
+			if (StringUtils.isNotBlank(column.name())
+					&& column.name().startsWith(fieldName)) {
+				return field;
 			}
-			// 如果从@Column注解没有找到则从全部属性中进行匹配
-			for (Field field : BeanUtils.getAllDeclaredField(owner.getClass())) {
-				if (field.isAnnotationPresent(Type.class)
-						&& field.getName().equalsIgnoreCase(columnName)) {
-					return field;
-				}
-			}
-			throw new UncheckedException("没有找到" + owner.getClass() + "中对应"
-					+ columnName + "字段的属性。");
-		} catch (Exception e) {
-			throw new UncheckedException("获取字段名时发生异常。", e);
 		}
+		// 如果从@Column注解没有找到则从全部字段中进行匹配
+		for (Field field : BeanUtils.getAllDeclaredField(owner.getClass())) {
+			if (field.isAnnotationPresent(Type.class)
+					&& field.getName().startsWith(fieldName)) {
+				return field;
+			}
+		}
+		throw new UncheckedException("没有找到" + owner.getClass() + "中对应"
+				+ fieldName + "的属性。");
 	}
 
 	/**
