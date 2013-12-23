@@ -28,3 +28,21 @@ COO由以下子模块项目组成：
 
 #依赖关系
 ![依赖关系](依赖关系.png)
+
+#快速开始
+1.	安装和配置好ANT工具。
+2.	获取coo.struts.blank或coo.struts.security.blank脚手架项目。
+3.	修改脚手架项目目录中的build.xml文件中的配置项。
+
+		<!-- 新的配置变量定义 -->
+		<property name="new.maven.groupId" value="none" />
+		<property name="new.maven.artifactId" value="demo" />
+		<property name="new.project.package" value="none.demo" />
+		<property name="new.project.package.path" value="/none/demo" />
+		<property name="new.project.src" value="src/none/demo" />
+		
+4.	执行ant命令，即可生成一个全新的maven项目。
+
+	导入Eclipse并配置为web application即可在应用服务器中运行。
+	
+	系统管理员的用户名/密码为admin/admin。
