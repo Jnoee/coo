@@ -12,6 +12,9 @@ import org.hibernate.engine.spi.SessionImplementor;
 import coo.base.util.CollectionUtils;
 import coo.base.util.StringUtils;
 
+/**
+ * 字符串列表自定义类型。
+ */
 public class ArrayListUserType extends AbstractUserType {
 	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
 
@@ -45,6 +48,6 @@ public class ArrayListUserType extends AbstractUserType {
 
 	@Override
 	public Class<?> returnedClass() {
-		return String[].class;
+		return List.class;
 	}
 }

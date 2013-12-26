@@ -1,7 +1,5 @@
 package coo.core.model;
 
-import java.io.Serializable;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -12,9 +10,8 @@ import org.hibernate.search.annotations.DocumentId;
 /**
  * UUID实体基类
  */
-@SuppressWarnings("serial")
 @MappedSuperclass
-public abstract class UuidEntity implements Serializable {
+public abstract class UuidEntity {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "org.hibernate.id.UUIDGenerator")
