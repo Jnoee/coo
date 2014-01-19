@@ -29,7 +29,7 @@ public class MessageConfig implements ResourceLoaderAware {
 	public String getString(String code, Object... vars) {
 		String message = messageProperties.getProperty(code);
 		for (Object var : vars) {
-			message = message.replaceFirst("\\$\\{var\\}", var.toString());
+			message = message.replaceFirst("\\{\\}", var.toString());
 		}
 		return message;
 	}

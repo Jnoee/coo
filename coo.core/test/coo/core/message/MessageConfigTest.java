@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:coo.core.xml" })
+@ContextConfiguration(locations = { "classpath:messageConfigTestContext.xml" })
 public class MessageConfigTest {
 	@Resource
 	private MessageConfig messageConfig;
