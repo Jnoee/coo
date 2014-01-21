@@ -8,7 +8,7 @@
 		</layout>
 	</appender>
 	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="d:/coo_workspace/logs/coo.struts.blank.log" />
+		<param name="File" value="${user.home}/.coo/logs/coo.struts.blank.log" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %p %m [%l]%n" />
