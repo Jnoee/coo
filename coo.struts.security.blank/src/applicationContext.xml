@@ -14,7 +14,7 @@
 	<import resource="classpath:META-INF/coo/coo.struts.security.xml" />
 
 	<jdbc:initialize-database data-source="dataSource"
-		ignore-failures="DROPS">
+		ignore-failures="ALL">
 		<jdbc:script location="classpath:h2.sql" />
 	</jdbc:initialize-database>
 
