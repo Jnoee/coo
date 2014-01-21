@@ -11,6 +11,4 @@
 	<entry key="db.password"></entry>
 	<!-- 数据库适配器 -->
 	<entry key="db.dialect">org.hibernate.dialect.H2Dialect</entry>
-	<!-- 全文索引保存目录 -->
-	<entry key="search.indexBase">d:/Work/Indexed/coo.struts.security.blank</entry>
 </properties>

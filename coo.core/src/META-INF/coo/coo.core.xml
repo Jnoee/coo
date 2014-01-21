@@ -43,7 +43,7 @@
 				<!-- 全文索引设置 -->
 				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:org.hibernate.search.store.impl.FSDirectoryProvider}</prop>
 				<!-- 全文索引保存目录 -->
-				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.indexed}</prop>
+				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.coo/indexed}</prop>
 				<!-- 全文索引分词器 -->
 				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}</prop>
 			</props>
