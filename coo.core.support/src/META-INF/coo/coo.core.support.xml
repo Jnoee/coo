@@ -8,10 +8,26 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 	<!-- FreeMarker配置组件 -->
-	<bean id="freemarkerConfiguration"
+	<bean id="commonsFreemarkerConfiguration"
 		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
 		<property name="templateLoaderPaths" value="classpath:/META-INF/coo/template" />
 		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">5</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="output_encoding">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">#</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="whitespace_stripping">true</prop>
+			</props>
+		</property>
 	</bean>
 	<!-- 异步任务组件 -->
 	<bean id="taskExecutor"

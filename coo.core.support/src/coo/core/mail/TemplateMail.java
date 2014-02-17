@@ -25,10 +25,9 @@ public class TemplateMail extends Mail {
 	@Override
 	public String getText() {
 		try {
-			Configuration freemarkerConfiguration = SpringUtils
-					.getBean("freemarkerConfiguration");
-			Template template = freemarkerConfiguration
-					.getTemplate(templateName);
+			Configuration configuration = SpringUtils
+					.getBean("commonsFreemarkerConfiguration");
+			Template template = configuration.getTemplate(templateName);
 			return FreeMarkerTemplateUtils.processTemplateIntoString(template,
 					templateModel);
 		} catch (Exception e) {
