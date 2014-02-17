@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -28,7 +29,7 @@ import coo.struts.security.blank.model.CompanyExtendInfo;
 public class Company extends UuidEntity {
 	/** 名称 */
 	@NotBlank
-	@Field
+	@Field(analyze = Analyze.NO)
 	private String name;
 	/** 成立时间 */
 	@NotNull

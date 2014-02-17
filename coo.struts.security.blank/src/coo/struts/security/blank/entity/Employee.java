@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
@@ -34,7 +35,7 @@ public class Employee extends ResourceEntity<User> {
 	private Company company;
 	/** 姓名 */
 	@NotBlank
-	@Field
+	@Field(analyze = Analyze.NO)
 	private String name;
 	/** 年龄 */
 	@NotNull
@@ -42,7 +43,7 @@ public class Employee extends ResourceEntity<User> {
 	private Integer age = 18;
 	/** 性别 */
 	@Type(type = "IEnum")
-	@Field
+	@Field(analyze = Analyze.NO)
 	@FieldBridge(impl = IEnumTextBridge.class)
 	private Sex sex = Sex.MALE;
 	/** 兴趣爱好 */
