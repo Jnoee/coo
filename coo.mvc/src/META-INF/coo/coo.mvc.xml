@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<!-- Freemarker -->
+	<bean id="baseFreemarkerConfigurer" abstract="true"
+		class="coo.mvc.config.FreeMarkerConfigurer">
+		<property name="templatePaths">
+			<list>
+				<value>classpath:/coo/mvc/macros/</value>
+				<value>classpath:/coo/mvc/templates/</value>
+			</list>
+		</property>
+		<property name="autoImports">
+			<map>
+				<entry key="s" value="spring.ftl" />
+				<entry key="std" value="std.ftl" />
+				<entry key="dwz" value="dwz.ftl" />
+			</map>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">5</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="output_encoding">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">#</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="whitespace_stripping">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean>
+
+	<!-- 异常处理配置 -->
+	<bean id="baseExceptionResolver" abstract="true"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionAttribute" value="ex" />
+		<property name="defaultErrorView" value="500" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="coo.base.exception.UncheckedException">global-operate-failure</prop>
+			</props>
+		</property>
+	</bean>
+
+	<mvc:view-controller path="/" view-name="/index" />
+	<mvc:view-controller path="/500" view-name="/500" />
+	<mvc:view-controller path="/404" view-name="/404" />
+	<mvc:view-controller path="/403" view-name="/403" />
+
+	<mvc:default-servlet-handler />
+	<mvc:resources mapping="/std/**" location="classpath:/coo/mvc/static/dwz/std/" />
+	<mvc:resources mapping="/dwz/**" location="classpath:/coo/mvc/static/dwz/dwz/" />
+	<mvc:resources mapping="/fix/**" location="classpath:/coo/mvc/static/dwz/fix/" />
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="coo.mvc" />
+</beans>

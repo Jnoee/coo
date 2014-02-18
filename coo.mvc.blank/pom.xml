@@ -2,20 +2,28 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jnoee</groupId>
-	<artifactId>coo</artifactId>
+	<artifactId>coo.mvc.blank</artifactId>
 	<version>2.0.0</version>
-	<packaging>pom</packaging>
+	<packaging>war</packaging>
 	<properties>
 		<!-- 编译参数 -->
 		<jdk.version>1.6</jdk.version>
 		<encoding>UTF-8</encoding>
 		<plugin.compiler.version>3.1</plugin.compiler.version>
 		<plugin.resources.version>2.6</plugin.resources.version>
+		<plugin.war.version>2.4</plugin.war.version>
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
+		<servlet.version>2.5</servlet.version>
+		<coo.version>2.0.0</coo.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>jnoee</groupId>
+			<artifactId>coo.mvc</artifactId>
+			<version>${coo.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -31,6 +39,12 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -69,26 +83,23 @@
 					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${plugin.war.version}</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>webapp</directory>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	<modules>
-		<module>coo.base</module>
-		<module>coo.core</module>
-		<module>coo.core.security</module>
-		<module>coo.core.support</module>
-		<module>coo.struts</module>
-		<module>coo.struts.security</module>
-		<module>coo.mvc</module>
-		<module>coo.mvc.security</module>
-	</modules>
-	<distributionManagement>
+	<repositories>
 		<repository>
-			<id>releases</id>
-			<url>file:///d:/Work/Git/github/maven/releases</url>
+			<id>jnoee-releases</id>
+			<url>https://raw.github.com/jnoee/maven/master/releases</url>
 		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>file:///d:/Work/Git/github/maven/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+	</repositories>
 </project>
