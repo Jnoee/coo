@@ -21,6 +21,8 @@ public class TemplateMail extends Mail {
 
 	/**
 	 * 覆盖父方法，从FreeMarker模版生成邮件正文。
+	 * 
+	 * @return 返回邮件正文。
 	 */
 	@Override
 	public String getText() {

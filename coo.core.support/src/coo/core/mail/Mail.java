@@ -25,24 +25,48 @@ public class Mail {
 	/** 附件 */
 	protected List<File> attachements = new ArrayList<File>();
 
-	public void addTo(String... addresses) {
-		for (String address : addresses) {
-			to.add(address);
+	/**
+	 * 新增发送方邮件地址。
+	 * 
+	 * @param mails
+	 *            邮件地址
+	 */
+	public void addTo(String... mails) {
+		for (String mail : mails) {
+			to.add(mail);
 		}
 	}
 
-	public void addCc(String... addresses) {
-		for (String address : addresses) {
-			cc.add(address);
+	/**
+	 * 新增抄送方邮件地址。
+	 * 
+	 * @param mails
+	 *            邮件地址
+	 */
+	public void addCc(String... mails) {
+		for (String mail : mails) {
+			cc.add(mail);
 		}
 	}
 
-	public void addBcc(String... addresses) {
-		for (String address : addresses) {
-			bcc.add(address);
+	/**
+	 * 新增秘密抄送方邮件地址。
+	 * 
+	 * @param mails
+	 *            邮件地址
+	 */
+	public void addBcc(String... mails) {
+		for (String mail : mails) {
+			bcc.add(mail);
 		}
 	}
 
+	/**
+	 * 新增附件。
+	 * 
+	 * @param attachement
+	 *            附件
+	 */
 	public void addAttachement(File attachement) {
 		attachements.add(attachement);
 	}

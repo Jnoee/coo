@@ -33,12 +33,22 @@ public class EmployeeAction extends GenericAction implements
 	private List<Company> companys;
 	private Employee employee;
 
+	/**
+	 * 查看职员列表。
+	 * 
+	 * @return 返回职员列表页面。
+	 */
 	@Action("employee-list")
 	public String list() {
 		employeePage = employeeService.searchEmployee(searchModel);
 		return SUCCESS;
 	}
 
+	/**
+	 * 新增职员。
+	 * 
+	 * @return 返回新增职员页面。
+	 */
 	@Action("employee-add")
 	public String add() {
 		employee = new Employee();
@@ -46,6 +56,11 @@ public class EmployeeAction extends GenericAction implements
 		return SUCCESS;
 	}
 
+	/**
+	 * 保存职员。
+	 * 
+	 * @return 返回提示信息。
+	 */
 	@Action("employee-save")
 	public String save() {
 		employeeService.createEmployee(employee);
@@ -54,6 +69,11 @@ public class EmployeeAction extends GenericAction implements
 				"employee-list");
 	}
 
+	/**
+	 * 编辑职员。
+	 * 
+	 * @return 返回编辑职员页面。
+	 */
 	@Action("employee-edit")
 	public String edit() {
 		String employeeId = request.getParameter("employeeId");
@@ -62,6 +82,11 @@ public class EmployeeAction extends GenericAction implements
 		return SUCCESS;
 	}
 
+	/**
+	 * 更新职员。
+	 * 
+	 * @return 返回提示信息。
+	 */
 	@Action("employee-update")
 	public String update() {
 		employeeService.updateEmployee(employee);
@@ -70,6 +95,11 @@ public class EmployeeAction extends GenericAction implements
 				"employee-list");
 	}
 
+	/**
+	 * 删除职员。
+	 * 
+	 * @return 返回提示信息。
+	 */
 	@Action("employee-delete")
 	public String delete() {
 		String employeeId = request.getParameter("employeeId");

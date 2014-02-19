@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,127 +45,25 @@ public class Excel {
 	/**
 	 * 初始化生成多工作表的Excel。
 	 * 
-	 * @param templateFileName
-	 *            模版文件名称
-	 * @param sheetModels
-	 *            工作表数据模型列表
-	 * @param sheetModelName
-	 *            工作表数据模型名称
+	 * @param data
+	 *            Excel数据
 	 */
-	public void init(String templateFileName, List<?> sheetModels,
-			String sheetModelName) {
-		init(templateFileName, sheetModels, "name", sheetModelName,
-				new HashMap<String, Object>(), 0);
-	}
-
-	/**
-	 * 初始化生成多工作表的Excel。
-	 * 
-	 * @param templateFileName
-	 *            模版文件名称
-	 * @param sheetModels
-	 *            工作表数据模型列表
-	 * @param sheetModelName
-	 *            工作表数据模型名称
-	 * @param otherModel
-	 *            除工作表模型外的数据模型
-	 * @param startSheetNum
-	 *            多工作表开始位置
-	 */
-	public void init(String templateFileName, List<?> sheetModels,
-			String sheetModelName, Map<String, Object> otherModel,
-			Integer startSheetNum) {
-		init(templateFileName, sheetModels, "name", sheetModelName, otherModel,
-				startSheetNum);
-	}
-
-	/**
-	 * 初始化生成多工作表的Excel。
-	 * 
-	 * @param templateFileName
-	 *            模版文件名称
-	 * @param sheetModels
-	 *            工作表数据模型列表
-	 * @param sheetNameField
-	 *            用作工作表名称的数据模型中对应的字段名
-	 * @param sheetModelName
-	 *            工作表数据模型名称
-	 */
-	public void init(String templateFileName, List<?> sheetModels,
-			String sheetNameField, String sheetModelName) {
-		init(templateFileName, sheetModels, sheetNameField, sheetModelName,
-				new HashMap<String, Object>(), 0);
-	}
-
-	/**
-	 * 初始化生成多工作表的Excel。
-	 * 
-	 * @param templateFileName
-	 *            模版文件名称
-	 * @param sheetModels
-	 *            工作表数据模型列表
-	 * @param sheetNameField
-	 *            用作工作表名称的数据模型中对应的字段名
-	 * @param sheetModelName
-	 *            工作表数据模型名称
-	 * @param otherModel
-	 *            除工作表模型外的数据模型
-	 * @param startSheetNum
-	 *            多工作表开始位置
-	 */
-	public void init(String templateFileName, List<?> sheetModels,
-			String sheetNameField, String sheetModelName,
-			Map<String, Object> otherModel, Integer startSheetNum) {
-		List<String> sheetNames = new ArrayList<String>();
-		for (Object sheetModel : sheetModels) {
-			sheetNames.add(BeanUtils.getField(sheetModel, sheetNameField)
-					.toString());
-		}
-		init(templateFileName, sheetModels, sheetNames, sheetModelName,
-				otherModel, startSheetNum);
-	}
-
-	/**
-	 * 初始化生成多工作表的Excel。
-	 * 
-	 * @param templateFileName
-	 *            模版文件名称
-	 * @param sheetModels
-	 *            工作表数据模型列表
-	 * @param sheetNames
-	 *            工作表名称列表
-	 * @param sheetModelName
-	 *            工作表数据模型名称
-	 */
-	public void init(String templateFileName, List<?> sheetModels,
-			List<String> sheetNames, String sheetModelName) {
-		init(templateFileName, sheetModels, sheetNames, sheetModelName,
-				new HashMap<String, Object>(), 0);
-	}
-
-	/**
-	 * 
-	 * @param templateFileName
-	 *            模版文件名称
-	 * @param sheetModels
-	 *            工作表数据模型列表
-	 * @param sheetNames
-	 *            工作表名称列表
-	 * @param sheetModelName
-	 *            工作表数据模型名称
-	 * @param otherModel
-	 *            除工作表模型外的数据模型
-	 * @param startSheetNum
-	 *            多工作表开始位置
-	 */
-	public void init(String templateFileName, List<?> sheetModels,
-			List<String> sheetNames, String sheetModelName,
-			Map<String, Object> otherModel, Integer startSheetNum) {
+	public void init(ExcelData data) {
 		try {
+			// 如果没有设置工作表名称列表，则根据指定的工作表名称字段自动生成。
+			List<String> sheetNames = data.getSheetNames();
+			if (sheetNames.isEmpty()) {
+				for (Object sheetModel : data.getSheetModels()) {
+					sheetNames.add(BeanUtils.getField(sheetModel,
+							data.getSheetNameField()).toString());
+				}
+			}
 			InputStream in = getClass().getResourceAsStream(
-					REPORT_DIR + "/" + templateFileName);
-			workbook = transformer.transformMultipleSheetsList(in, sheetModels,
-					sheetNames, sheetModelName, otherModel, startSheetNum);
+					REPORT_DIR + "/" + data.getTemplateFileName());
+			workbook = transformer.transformMultipleSheetsList(in,
+					data.getSheetModels(), sheetNames,
+					data.getSheetModelName(), data.getOtherModel(),
+					data.getStartSheetNum());
 			in.close();
 		} catch (Exception e) {
 			throw new UncheckedException("生成Excel时发生异常。", e);

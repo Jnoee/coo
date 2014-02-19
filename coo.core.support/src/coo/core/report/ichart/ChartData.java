@@ -1,6 +1,7 @@
 package coo.core.report.ichart;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,6 +23,85 @@ public class ChartData {
 	/** 线宽 */
 	@JsonProperty("line_width")
 	private Integer lineWidth;
+
+	/**
+	 * 构造方法。
+	 * 
+	 * @param name
+	 *            名称
+	 * @param value
+	 *            数值
+	 * @param color
+	 *            颜色
+	 */
+	public ChartData(String name, Number value, String color) {
+		this(name, new Number[] { value }, color);
+	}
+
+	/**
+	 * 构造方法。
+	 * 
+	 * @param name
+	 *            名称
+	 * @param values
+	 *            数值数组
+	 * @param color
+	 *            颜色
+	 */
+	public ChartData(String name, Number[] values, String color) {
+		this(name, Arrays.asList(values), color);
+	}
+
+	/**
+	 * 构造方法。
+	 * 
+	 * @param name
+	 *            名称
+	 * @param values
+	 *            数值列表
+	 * @param color
+	 *            颜色
+	 */
+	public ChartData(String name, List<Number> values, String color) {
+		this(name, values, color, null);
+	}
+
+	/**
+	 * 构造方法。
+	 * 
+	 * @param name
+	 *            名称
+	 * @param values
+	 *            数值数组
+	 * @param color
+	 *            颜色
+	 * @param lineWidth
+	 *            线宽
+	 */
+	public ChartData(String name, Number[] values, String color,
+			Integer lineWidth) {
+		this(name, Arrays.asList(values), color, lineWidth);
+	}
+
+	/**
+	 * 构造方法。
+	 * 
+	 * @param name
+	 *            名称
+	 * @param values
+	 *            数值列表
+	 * @param color
+	 *            颜色
+	 * @param lineWidth
+	 *            线宽
+	 */
+	public ChartData(String name, List<Number> values, String color,
+			Integer lineWidth) {
+		this.name = name;
+		this.values = values;
+		this.color = color;
+		this.lineWidth = lineWidth;
+	}
 
 	public String getName() {
 		return name;

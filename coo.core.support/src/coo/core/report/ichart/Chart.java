@@ -1,7 +1,6 @@
 package coo.core.report.ichart;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -22,120 +21,10 @@ public class Chart {
 	/**
 	 * 新增图表数据。
 	 * 
-	 * @param name
-	 *            名称
-	 * @param value
-	 *            数值
-	 * @param color
-	 *            颜色
+	 * @param data
+	 *            图表数据
 	 */
-	public void addData(String name, Number value, String color) {
-		addData(name, new Number[] { value }, color);
-	}
-
-	/**
-	 * 新增图表数据。
-	 * 
-	 * @param name
-	 *            名称
-	 * @param values
-	 *            数值数组
-	 * @param color
-	 *            颜色
-	 */
-	public void addData(String name, Number[] values, String color) {
-		addData(name, values, color, null);
-	}
-
-	/**
-	 * 新增图表数据。
-	 * 
-	 * @param name
-	 *            名称
-	 * @param values
-	 *            数值列表
-	 * @param color
-	 *            颜色
-	 */
-	public void addData(String name, List<Number> values, String color) {
-		addData(name, values, color, null);
-	}
-
-	/**
-	 * 新增图表数据。
-	 * 
-	 * @param name
-	 *            名称
-	 * @param values
-	 *            数值数组
-	 * @param color
-	 *            颜色
-	 * @param lineWidth
-	 *            线宽
-	 */
-	public void addData(String name, Number[] values, String color,
-			Integer lineWidth) {
-		addData(name, values, color, null, lineWidth);
-	}
-
-	/**
-	 * 新增图表数据。
-	 * 
-	 * @param name
-	 *            名称
-	 * @param values
-	 *            数值列表
-	 * @param color
-	 *            颜色
-	 * @param lineWidth
-	 *            线宽
-	 */
-	public void addData(String name, List<Number> values, String color,
-			Integer lineWidth) {
-		addData(name, values, color, null, lineWidth);
-	}
-
-	/**
-	 * 新增图表数据。
-	 * 
-	 * @param name
-	 *            名称
-	 * @param values
-	 *            数值数组
-	 * @param color
-	 *            颜色
-	 * @param areaColor
-	 *            区域颜色
-	 * @param lineWidth
-	 *            线宽
-	 */
-	public void addData(String name, Number[] values, String color,
-			String areaColor, Integer lineWidth) {
-		addData(name, Arrays.asList(values), color, areaColor, lineWidth);
-	}
-
-	/**
-	 * 新增图表数据。
-	 * 
-	 * @param name
-	 *            名称
-	 * @param values
-	 *            数值列表
-	 * @param color
-	 *            颜色
-	 * @param areaColor
-	 *            区域颜色
-	 * @param lineWidth
-	 *            线宽
-	 */
-	public void addData(String name, List<Number> values, String color,
-			String areaColor, Integer lineWidth) {
-		ChartData data = new ChartData();
-		data.setName(name);
-		data.setValues(values);
-		data.setColor(color);
-		data.setAreaColor(areaColor);
-		data.setLineWidth(lineWidth);
+	public void addData(ChartData data) {
 		datas.add(data);
 	}
 

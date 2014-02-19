@@ -22,18 +22,33 @@ public class CompanyAction extends GenericAction {
 	private List<Company> companys;
 	private Company company;
 
+	/**
+	 * 查看公司列表。
+	 * 
+	 * @return 返回公司列表页面。
+	 */
 	@Action("company-list")
 	public String list() {
 		companys = companyService.getAllCompany();
 		return SUCCESS;
 	}
 
+	/**
+	 * 新增公司。
+	 * 
+	 * @return 返回新增公司页面。
+	 */
 	@Action("company-add")
 	public String add() {
 		company = new Company();
 		return SUCCESS;
 	}
 
+	/**
+	 * 保存公司。
+	 * 
+	 * @return 返回提示信息。
+	 */
 	@Action("company-save")
 	public String save() {
 		companyService.createCompany(company);
@@ -41,6 +56,11 @@ public class CompanyAction extends GenericAction {
 				messageConfig.getString("company.add.success"), "company-list");
 	}
 
+	/**
+	 * 编辑公司。
+	 * 
+	 * @return 返回编辑公司页面。
+	 */
 	@Action("company-edit")
 	public String edit() {
 		String companyId = request.getParameter("companyId");
@@ -48,6 +68,11 @@ public class CompanyAction extends GenericAction {
 		return SUCCESS;
 	}
 
+	/**
+	 * 更新公司。
+	 * 
+	 * @return 返回提示信息。
+	 */
 	@Action("company-update")
 	public String update() {
 		companyService.updateCompany(company);
@@ -56,6 +81,11 @@ public class CompanyAction extends GenericAction {
 						"company-list");
 	}
 
+	/**
+	 * 删除公司。
+	 * 
+	 * @return 返回提示信息。
+	 */
 	@Action("company-delete")
 	public String delete() {
 		String companyId = request.getParameter("companyId");

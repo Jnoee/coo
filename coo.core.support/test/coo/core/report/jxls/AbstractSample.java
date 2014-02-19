@@ -8,7 +8,7 @@ import coo.core.report.model.Department;
 import coo.core.report.model.Employee;
 
 public abstract class AbstractSample {
-	protected String outputDir = "test/META-INF/report";
+	protected String outputDir = "test/META-INF/coo/report";
 
 	protected List<Department> genDepartments(Integer count) {
 		List<Department> departments = new ArrayList<Department>();

@@ -24,6 +24,8 @@ public class SpringUtils implements ApplicationContextAware {
 	/**
 	 * 从Spring容器中获取指定名称的Bean。
 	 * 
+	 * @param <T>
+	 *            Bean类型
 	 * @param beanName
 	 *            bean名称
 	 * @return 返回指定名称的Bean。
