@@ -3,7 +3,7 @@
         <div class="panelBar">
             <ul class="toolBar">
                 <li>
-                    <a href="<@s.url action="company-add" />" target="dialog" rel="ec-add" mask="true" title="新增公司">
+                    <a href="<@s.url "/company/company-add" />" target="dialog" rel="company-add" mask="true" title="新增公司">
 						<span class="a09">新增</span>
 					</a>
                 </li>
@@ -31,9 +31,9 @@
 					<td>${company.extendInfo.fax}</td>
                     <td>${company.enabled?string("√","×")}</td>
                     <td>
-                    	<a href="<@s.url action="company-edit" companyId="${company.id}" />" target="dialog" rel="company-edit" mask="true" title="编辑公司">编辑</a>
+                    	<a href="<@s.url "/company/company-edit?companyId=${company.id}" />" target="dialog" rel="company-edit" mask="true" title="编辑公司">编辑</a>
 						&nbsp;|&nbsp;
-						<a href="<@s.url action="company-delete" companyId="${company.id}" />" target="ajaxTodo" title="确定要删除该公司吗？">删除</a>
+						<a href="<@s.url "/company/company-delete?companyId=${company.id}" />" target="ajaxTodo" title="确定要删除该公司吗？">删除</a>
 					</td>
                 </tr>
                 </#list>

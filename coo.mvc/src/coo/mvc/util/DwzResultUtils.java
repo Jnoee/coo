@@ -1,5 +1,7 @@
 package coo.mvc.util;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import coo.mvc.model.AjaxResultModel;
 
 /**
@@ -13,7 +15,7 @@ public class DwzResultUtils {
 	 *            操作成功信息
 	 * @return 返回操作成功的服务器响应页面。
 	 */
-	public static String close(String message) {
+	public static ModelAndView close(String message) {
 		return close(message, "");
 	}
 
@@ -26,7 +28,7 @@ public class DwzResultUtils {
 	 *            待刷新的navTab的ID
 	 * @return 返回操作成功的服务器响应页面。
 	 */
-	public static String close(String message, String navTabId) {
+	public static ModelAndView close(String message, String navTabId) {
 		return callback(AjaxResultModel.close(message, navTabId));
 	}
 
@@ -39,7 +41,7 @@ public class DwzResultUtils {
 	 *            待刷新的navTab的ID
 	 * @return 返回操作成功的服务器响应页面。
 	 */
-	public static String refresh(String message, String navTabId) {
+	public static ModelAndView refresh(String message, String navTabId) {
 		return callback(AjaxResultModel.refresh(message, navTabId));
 	}
 
@@ -52,7 +54,7 @@ public class DwzResultUtils {
 	 *            待局部刷新容器的ID或待重新加载的dialog的ID
 	 * @return 返回操作成功的服务器响应页面。
 	 */
-	public static String flush(String message, String rel) {
+	public static ModelAndView flush(String message, String rel) {
 		return callback(AjaxResultModel.flush(message, rel));
 	}
 
@@ -65,7 +67,7 @@ public class DwzResultUtils {
 	 *            待重新加载的dialog的ID
 	 * @return 返回操作成功的服务器响应页面。
 	 */
-	public static String reload(String message, String rel) {
+	public static ModelAndView reload(String message, String rel) {
 		return callback(AjaxResultModel.reload(message, rel));
 	}
 
@@ -78,7 +80,7 @@ public class DwzResultUtils {
 	 *            待跳转的页面URL
 	 * @return 返回操作成功的服务器响应页面。
 	 */
-	public static String forward(String message, String url) {
+	public static ModelAndView forward(String message, String url) {
 		return forward(message, "", url);
 	}
 
@@ -93,7 +95,8 @@ public class DwzResultUtils {
 	 *            待跳转的页面URL
 	 * @return 返回操作成功的服务器响应页面。
 	 */
-	public static String forward(String message, String navTabId, String url) {
+	public static ModelAndView forward(String message, String navTabId,
+			String url) {
 		return callback(AjaxResultModel.forward(message, navTabId, url));
 	}
 
@@ -102,7 +105,7 @@ public class DwzResultUtils {
 	 * 
 	 * @return 返回系统异常的服务器响应页面。
 	 */
-	public static String fail() {
+	public static ModelAndView fail() {
 		return callback(AjaxResultModel.fail());
 	}
 
@@ -113,7 +116,7 @@ public class DwzResultUtils {
 	 *            操作失败信息
 	 * @return 返回操作失败的服务器响应页面。
 	 */
-	public static String fail(String message) {
+	public static ModelAndView fail(String message) {
 		return callback(AjaxResultModel.error(message));
 	}
 
@@ -122,7 +125,7 @@ public class DwzResultUtils {
 	 * 
 	 * @return 返回会话超时的服务器响应页面。
 	 */
-	public static String timeout() {
+	public static ModelAndView timeout() {
 		return callback(AjaxResultModel.timeout("会话已超时，请重新登录。"));
 	}
 
@@ -131,7 +134,7 @@ public class DwzResultUtils {
 	 * 
 	 * @return 返回页面未找到或会话已过期的服务器响应页面。
 	 */
-	public static String expired() {
+	public static ModelAndView expired() {
 		return callback(AjaxResultModel.timeout("页面未找到或会话已过期。"));
 	}
 
@@ -140,7 +143,7 @@ public class DwzResultUtils {
 	 * 
 	 * @return 返回权限限制的服务器响应页面。
 	 */
-	public static String denied() {
+	public static ModelAndView denied() {
 		return callback(AjaxResultModel.error("您没有执行该操作的权限，请与管理员联系。"));
 	}
 
@@ -151,8 +154,10 @@ public class DwzResultUtils {
 	 *            model
 	 * @return 返回对应的响应页面。
 	 */
-	private static String callback(AjaxResultModel model) {
-		// ServletActionContext.getRequest().setAttribute("ajaxResult", model);
-		return "ajaxResult";
+	private static ModelAndView callback(AjaxResultModel model) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("dwz-result");
+		mv.addObject("ajaxResult", model);
+		return mv;
 	}
 }

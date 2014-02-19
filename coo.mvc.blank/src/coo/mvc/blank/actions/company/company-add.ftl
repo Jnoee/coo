@@ -1,26 +1,26 @@
 <div class="page">
     <div class="pageContent">
-        <@s.form action="company-save" cssClass="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+        <form action="<@s.url "/company/company-save"/>" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
         <div class="pageFormContent" layoutH="60">
             <dl>
                 <dt>名称：</dt>
-                <dd><@s.textfield name="company.name" size="30" maxlength="60" cssClass="required" /></dd>
+                <dd><@s.formInput path="company.name" attributes="size=\"30\" maxlength=\"60\" class=\"required\"" /></dd>
             </dl>
             <dl>
                 <dt>成立时间：</dt>
-                <dd><@s.textfield name="company.foundDate" size="30" cssClass="required date" /></dd>
+                <dd><@s.formInput path="company.foundDate" attributes="size=\"30\" class=\"required date\"" /></dd>
             </dl>
             <dl>
                 <dt>地址：</dt>
-                <dd><@s.textfield name="company.extendInfo.address" size="30" maxlength="60" /></dd>
+                <dd><@s.formInput path="company.extendInfo.address" attributes="size=\"30\" maxlength=\"60\"" /></dd>
             </dl>
             <dl>
                 <dt>电话：</dt>
-                <dd><@s.textfield name="company.extendInfo.tel" size="30" maxlength="20" /></dd>
+                <dd><@s.formInput path="company.extendInfo.tel" attributes="size=\"30\" maxlength=\"20\"" /></dd>
             </dl>
 			<dl>
                 <dt>传真：</dt>
-                <dd><@s.textfield name="company.extendInfo.fax" size="30" maxlength="20" /></dd>
+                <dd><@s.formInput path="company.extendInfo.fax" attributes="size=\"30\" maxlength=\"20\"" /></dd>
             </dl>
         </div>
         <div class="formBar">
@@ -41,6 +41,6 @@
                 </li>
             </ul>
         </div>
-        </@s.form>
+        </form>
     </div>
 </div>
