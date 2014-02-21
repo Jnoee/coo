@@ -170,10 +170,22 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 删除多个实体对象
+	 * 根据ID批量删除实体对象。
+	 * 
+	 * @param ids
+	 *            待删除实体对象ID数组
+	 */
+	public void remove(Serializable[] ids) {
+		for (Serializable id : ids) {
+			remove(id);
+		}
+	}
+
+	/**
+	 * 删除多个实体对象。
 	 * 
 	 * @param entitys
-	 *            待删除的实体对象集合
+	 *            待删除的实体对象列表
 	 */
 	public void remove(List<T> entitys) {
 		for (T entity : entitys) {
