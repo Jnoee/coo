@@ -44,9 +44,10 @@ public class SpringUtils implements ApplicationContextAware {
 	 *            实体ID
 	 * @return 返回对应的UuidEntity对象。
 	 */
-	public static Object getUuidEntityObject(
-			Class<? extends UuidEntity> entityClass, String id) {
+	@SuppressWarnings("unchecked")
+	public static <T extends UuidEntity> T getUuidEntityObject(
+			Class<T> entityClass, String id) {
 		SessionFactory sessionFactory = getBean("sessionFactory");
-		return sessionFactory.getCurrentSession().get(entityClass, id);
+		return (T) sessionFactory.getCurrentSession().get(entityClass, id);
 	}
 }

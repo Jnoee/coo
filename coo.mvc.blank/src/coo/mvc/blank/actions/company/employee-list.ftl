@@ -1,12 +1,12 @@
 <div class="page">
     <div class="pageHeader">
-        <@dwz.pagerForm action="employee-list" />
+        <@dwz.pageForm action="/company/employee-list" />
     </div>
     <div class="pageContent">
         <div class="panelBar">
             <ul class="toolBar">
                 <li>
-					<a href="<@s.url action="employee-add" />" target="dialog" rel="employee-add" mask="true" title="新增职员">
+					<a href="<@s.url "/company/employee-add" />" target="dialog" rel="employee-add" mask="true" title="新增职员">
 						<span class="a09">新增职员</span>
 					</a>
 				</li>
@@ -32,16 +32,16 @@
 					<td>${employee.sex.text}</td>
 					<td>${employee.interests?join(",")}</td>
                     <td>
-						<a href="<@s.url action="employee-edit" employeeId="${employee.id}" />" target="dialog" mask="true" rel="employee-edit" title="编辑职员">编辑</a>
+						<a href="<@s.url "/company/employee-edit?employeeId=${employee.id}" />" target="dialog" mask="true" rel="employee-edit" title="编辑职员">编辑</a>
 						&nbsp;|&nbsp;
-						<a href="<@s.url action="employee-delete" employeeId="${employee.id}" />" target="ajaxTodo" title="您确定要删除该职员吗？">删除</a>
+						<a href="<@s.url "/company/employee-delete?employeeId=${employee.id}" />" target="ajaxTodo" title="您确定要删除该职员吗？">删除</a>
 					</td>
                 </tr>
                 </#list>
             </tbody>
         </table>
         <div class="panelBar">
-            <@dwz.pagerNav pageModel=employeePage />
+            <@dwz.pageNav pageModel=employeePage />
         </div>
     </div>
 </div>

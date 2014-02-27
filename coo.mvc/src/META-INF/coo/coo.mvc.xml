@@ -17,7 +17,7 @@
 		</property>
 		<property name="autoImports">
 			<map>
-				<entry key="s" value="spring.ftl" />
+				<entry key="s" value="mvc.ftl" />
 				<entry key="std" value="std.ftl" />
 				<entry key="dwz" value="dwz.ftl" />
 			</map>
@@ -61,16 +61,23 @@
 		</property>
 	</bean>
 
+	<!-- 转换器 -->
+	<bean id="conversionService" class="coo.mvc.converter.ConversionServiceFactoryBean" />
+
 	<mvc:view-controller path="/" view-name="/index" />
 	<mvc:view-controller path="/500" view-name="/500" />
 	<mvc:view-controller path="/404" view-name="/404" />
 	<mvc:view-controller path="/403" view-name="/403" />
 
 	<mvc:default-servlet-handler />
-	<mvc:resources mapping="/std/**" location="classpath:/coo/mvc/static/dwz/std/" />
-	<mvc:resources mapping="/dwz/**" location="classpath:/coo/mvc/static/dwz/dwz/" />
-	<mvc:resources mapping="/fix/**" location="classpath:/coo/mvc/static/dwz/fix/" />
-	<mvc:annotation-driven />
+	<mvc:resources mapping="/std/**"
+		location="classpath:/coo/mvc/static/dwz/std/" />
+	<mvc:resources mapping="/dwz/**"
+		location="classpath:/coo/mvc/static/dwz/dwz/" />
+	<mvc:resources mapping="/fix/**"
+		location="classpath:/coo/mvc/static/dwz/fix/" />
+
+	<mvc:annotation-driven conversion-service="conversionService" />
 
 	<context:component-scan base-package="coo.mvc" />
 </beans>

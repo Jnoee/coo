@@ -1,28 +1,34 @@
 <div class="page">
     <div class="pageContent">
-        <@s.form action="employee-update" cssClass="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
-        <@s.hidden name="employee.id" />
+        <@s.form action="/company/employee-update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+        <@s.hidden path="employee.id" />
         <div class="pageFormContent" layoutH="60">
             <dl>
                 <dt>姓名：</dt>
-                <dd><@s.textfield name="employee.name" size="30" maxlength="60" cssClass="required" /></dd>
-			</dl>
+                <dd><@s.input path="employee.name" size="30" maxlength="60" class="required" /></dd>
+            </dl>
             <dl>
-				<dt>所属公司：</dt>
-                <dd><@s.select name="employee.company" list=companys headerKey="" headerValue="请选择..." listKey="id" listValue="name" cssClass="required combox" value="employee.company.id" /></dd>
-			</dl>
-			<div class="divider" />
-			<dl>
+                <dt>所属公司：</dt>
+                <dd>
+                    <@s.select path="employee.company" items=companys itemValue="id" itemLabel="name" class="required combox" />
+                </dd>
+            </dl>
+            <div class="divider" />
+            <dl>
                 <dt>年龄：</dt>
-                <dd><@s.textfield name="employee.age" size="30" min="1" max="999" cssClass="required number" /></dd>
+                <dd><@s.input path="employee.age" size="30" min="1" max="999" class="required number" /></dd>
             </dl>
-			<dl>
+            <dl>
                 <dt>性别：</dt>
-                <dd><@s.select name="employee.sex" list=enums["coo.struts.blank.enums.Sex"]?values listKey="value" listValue="text" cssClass="required combox" value="employee.sex.value" /></dd>
+                <dd>
+                    <@s.select path="employee.sex" items=enums["coo.mvc.blank.enums.Sex"]?values itemValue="value" itemLabel="text" class="required combox" />
+                </dd>
             </dl>
-			<dl>
+            <dl>
                 <dt>兴趣爱好：</dt>
-                <dd><@s.checkboxlist name="employee.interests" list=enums["coo.struts.blank.enums.Interest"]?values listKey="text" listValue="text" value="employee.interests" /></dd>
+                <dd>
+                    <@s.checkboxs path="employee.interests" items=enums["coo.mvc.blank.enums.Interest"]?values itemValue="text" itemLabel="text" />
+                </dd>
             </dl>
         </div>
         <div class="formBar">

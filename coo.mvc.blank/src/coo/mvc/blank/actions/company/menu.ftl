@@ -5,10 +5,10 @@
     <div class="accordionContent">
         <ul class="tree treeFolder">
             <li>
-                <a href="<@s.url relativeUrl="/company/company-list" />" target="navTab" rel="company-list">公司管理</a>
+                <a href="<@s.url "/company/company-list" />" target="navTab" rel="company-list">公司管理</a>
             </li>
             <li>
-                <a href="<@s.url relativeUrl="/company/employee-list" />" target="navTab" rel="employee-list">职员管理</a>
+                <a href="<@s.url "/company/employee-list" />" target="navTab" rel="employee-list">职员管理</a>
             </li>
         </ul>
     </div>

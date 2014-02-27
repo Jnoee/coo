@@ -17,9 +17,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import coo.base.util.DateUtils;
 import coo.core.model.UuidEntity;
 import coo.mvc.blank.model.CompanyExtendInfo;
 
@@ -36,7 +34,6 @@ public class Company extends UuidEntity {
 	/** 成立时间 */
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = DateUtils.TO_DATE)
 	private Date foundDate;
 	/** 是否可用 */
 	@NotNull
