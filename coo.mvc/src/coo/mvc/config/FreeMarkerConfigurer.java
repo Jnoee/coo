@@ -17,6 +17,9 @@ import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModelException;
 
+/**
+ * 自定义FreeMarker配置管理。
+ */
 public class FreeMarkerConfigurer extends
 		org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer {
 	private ServletContext servletContext;

@@ -14,6 +14,7 @@
 		<property name="unauthorizedUrl" value="/login" />
 		<property name="successUrl" value="/" />
 	</bean>
+
 	<!-- 安全相关FreeMarker配置 -->
 	<bean id="securityFreemarkerConfigurer" abstract="true"
 		parent="baseFreemarkerConfigurer">
@@ -28,16 +29,10 @@
 			</list>
 		</property>
 	</bean>
+
 	<!-- 安全相关异常处理配置 -->
-	<bean id="securityExceptionResolver" abstract="true"
-		parent="baseExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="coo.core.security.exception.AccessDeniedException">403</prop>
-				<prop key="coo.core.security.exception.NotLogonException">404</prop>
-			</props>
-		</property>
-	</bean>
+	<bean id="exceptionResolver" class="coo.mvc.security.handler.DwzSecurityExceptionResolver" />
+
 	<!-- 自定义权限注解拦截器配置 -->
 	<mvc:interceptors>
 		<bean class="coo.mvc.security.interceptor.AuthInterceptor" />

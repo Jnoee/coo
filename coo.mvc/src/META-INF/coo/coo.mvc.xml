@@ -50,18 +50,9 @@
 	</bean>
 
 	<!-- 异常处理配置 -->
-	<bean id="baseExceptionResolver" abstract="true"
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionAttribute" value="ex" />
-		<property name="defaultErrorView" value="500" />
-		<property name="exceptionMappings">
-			<props>
-				<prop key="coo.base.exception.UncheckedException">global-operate-failure</prop>
-			</props>
-		</property>
-	</bean>
+	<bean id="exceptionResolver" class="coo.mvc.handler.DwzExceptionResolver" />
 
-	<!-- 转换器 -->
+	<!-- 转换器配置 -->
 	<bean id="conversionService" class="coo.mvc.converter.ConversionServiceFactoryBean" />
 
 	<mvc:view-controller path="/" view-name="/index" />

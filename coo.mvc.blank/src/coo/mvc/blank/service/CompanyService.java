@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import coo.base.exception.UncheckedException;
+import coo.base.exception.BusinessException;
 import coo.base.util.BeanUtils;
 import coo.core.hibernate.dao.Dao;
 import coo.core.message.MessageConfig;
@@ -54,7 +54,7 @@ public class CompanyService {
 	@Transactional
 	public void createCompany(Company company) {
 		if (!companyDao.isUnique(company, "name")) {
-			throw new UncheckedException(
+			throw new BusinessException(
 					messageConfig.getString("company.name.exists"));
 		}
 		companyDao.save(company);
@@ -69,7 +69,7 @@ public class CompanyService {
 	@Transactional
 	public void updateCompany(Company company) {
 		if (!companyDao.isUnique(company, "name")) {
-			throw new UncheckedException(
+			throw new BusinessException(
 					messageConfig.getString("company.name.exists"));
 		}
 		Company origCompany = companyDao.get(company.getId());

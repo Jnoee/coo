@@ -1,11 +1,9 @@
 package coo.mvc.model;
 
-import java.io.Serializable;
-
 /**
  * DWZ的Ajax响应内容Model。
  */
-public class AjaxResultModel implements Serializable {
+public class DwzResult {
 	private StatusCode statusCode;
 	private String message;
 	private String navTabId = "";
@@ -22,8 +20,8 @@ public class AjaxResultModel implements Serializable {
 	 *            待刷新的navTab的ID
 	 * @return 返回用于刷新的响应内容model。
 	 */
-	public static AjaxResultModel refresh(String message, String navTabId) {
-		AjaxResultModel model = new AjaxResultModel();
+	public static DwzResult refresh(String message, String navTabId) {
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
 		model.setMessage(message);
 		model.setNavTabId(navTabId);
@@ -39,8 +37,8 @@ public class AjaxResultModel implements Serializable {
 	 *            待局部刷新容器ID
 	 * @return 返回用于局部刷新的响应内容model。
 	 */
-	public static AjaxResultModel flush(String message, String rel) {
-		AjaxResultModel model = new AjaxResultModel();
+	public static DwzResult flush(String message, String rel) {
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
 		model.setMessage(message);
 		model.setRel(rel);
@@ -56,8 +54,8 @@ public class AjaxResultModel implements Serializable {
 	 *            待重新加载dialog的ID
 	 * @return 返回用于重新加载dialog的响应内容model。
 	 */
-	public static AjaxResultModel reload(String message, String rel) {
-		AjaxResultModel model = new AjaxResultModel();
+	public static DwzResult reload(String message, String rel) {
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
 		model.setMessage(message);
 		model.setRel(rel);
@@ -74,8 +72,8 @@ public class AjaxResultModel implements Serializable {
 	 *            待刷新的navTab的ID
 	 * @return 返回用于刷新并关闭当前页面的响应内容model。
 	 */
-	public static AjaxResultModel close(String message, String navTabId) {
-		AjaxResultModel model = new AjaxResultModel();
+	public static DwzResult close(String message, String navTabId) {
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
 		model.setMessage(message);
 		model.setNavTabId(navTabId);
@@ -94,9 +92,9 @@ public class AjaxResultModel implements Serializable {
 	 *            待跳转的url地址
 	 * @return 返回用于刷新指定navTab并将当前页面跳转到其它页面的响应内容model。
 	 */
-	public static AjaxResultModel forward(String message, String navTabId,
+	public static DwzResult forward(String message, String navTabId,
 			String forwardUrl) {
-		AjaxResultModel model = new AjaxResultModel();
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
 		model.setMessage(message);
 		model.setNavTabId(navTabId);
@@ -112,8 +110,8 @@ public class AjaxResultModel implements Serializable {
 	 *            错误信息
 	 * @return 返回用于提示错误的响应内容model。
 	 */
-	public static AjaxResultModel error(String message) {
-		AjaxResultModel model = new AjaxResultModel();
+	public static DwzResult error(String message) {
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.ERROR);
 		model.setMessage(message);
 		return model;
@@ -124,8 +122,8 @@ public class AjaxResultModel implements Serializable {
 	 * 
 	 * @return 返回用于提示系统异常的响应内容model。
 	 */
-	public static AjaxResultModel fail() {
-		AjaxResultModel model = new AjaxResultModel();
+	public static DwzResult fail() {
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.ERROR);
 		model.setMessage("系统发生未知的异常，请稍后再试。");
 		model.setCallbackType(CallbackType.CLOSE_CURRENT);
@@ -139,8 +137,8 @@ public class AjaxResultModel implements Serializable {
 	 *            超时提示信息
 	 * @return 返回用于提示超时的响应内容model。
 	 */
-	public static AjaxResultModel timeout(String message) {
-		AjaxResultModel model = new AjaxResultModel();
+	public static DwzResult timeout(String message) {
+		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.TIMEOUT);
 		model.setMessage(message);
 		return model;

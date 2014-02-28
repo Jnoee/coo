@@ -14,6 +14,9 @@ import coo.mvc.blank.service.CompanyService;
 import coo.mvc.blank.service.EmployeeService;
 import coo.mvc.util.DwzResultUtils;
 
+/**
+ * 职员管理。
+ */
 @Controller
 @RequestMapping("/company")
 public class EmployeeAction {
@@ -27,7 +30,10 @@ public class EmployeeAction {
 	/**
 	 * 查看职员列表。
 	 * 
-	 * @return 返回职员列表页面。
+	 * @param model
+	 *            数据模型
+	 * @param searchModel
+	 *            搜索条件
 	 */
 	@RequestMapping("employee-list")
 	public void list(Model model, SearchModel searchModel) {
@@ -38,7 +44,8 @@ public class EmployeeAction {
 	/**
 	 * 新增职员。
 	 * 
-	 * @return 返回新增职员页面。
+	 * @param model
+	 *            数据模型
 	 */
 	@RequestMapping("employee-add")
 	public void add(Model model) {
@@ -48,6 +55,9 @@ public class EmployeeAction {
 
 	/**
 	 * 保存职员。
+	 * 
+	 * @param employee
+	 *            职员
 	 * 
 	 * @return 返回提示信息。
 	 */
@@ -62,7 +72,10 @@ public class EmployeeAction {
 	/**
 	 * 编辑职员。
 	 * 
-	 * @return 返回编辑职员页面。
+	 * @param employeeId
+	 *            职员ID
+	 * @param model
+	 *            数据模型
 	 */
 	@RequestMapping("employee-edit")
 	public void edit(String employeeId, Model model) {
@@ -72,6 +85,9 @@ public class EmployeeAction {
 
 	/**
 	 * 更新职员。
+	 * 
+	 * @param employee
+	 *            职员
 	 * 
 	 * @return 返回提示信息。
 	 */
@@ -85,6 +101,9 @@ public class EmployeeAction {
 
 	/**
 	 * 删除职员。
+	 * 
+	 * @param employeeId
+	 *            职员ID
 	 * 
 	 * @return 返回提示信息。
 	 */

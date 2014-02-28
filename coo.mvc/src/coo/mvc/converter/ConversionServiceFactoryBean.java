@@ -5,6 +5,9 @@ import org.springframework.format.support.FormattingConversionServiceFactoryBean
 
 import coo.base.util.DateUtils;
 
+/**
+ * 自定义转换器配置管理。
+ */
 public class ConversionServiceFactoryBean extends
 		FormattingConversionServiceFactoryBean {
 	@Override

@@ -2,7 +2,7 @@ package coo.mvc.util;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.mvc.model.AjaxResultModel;
+import coo.mvc.model.DwzResult;
 
 /**
  * 基于UI框架AJAX提交后服务器响应内容（JSON）构建的页面类。
@@ -29,7 +29,7 @@ public class DwzResultUtils {
 	 * @return 返回操作成功的服务器响应页面。
 	 */
 	public static ModelAndView close(String message, String navTabId) {
-		return callback(AjaxResultModel.close(message, navTabId));
+		return callback(DwzResult.close(message, navTabId));
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class DwzResultUtils {
 	 * @return 返回操作成功的服务器响应页面。
 	 */
 	public static ModelAndView refresh(String message, String navTabId) {
-		return callback(AjaxResultModel.refresh(message, navTabId));
+		return callback(DwzResult.refresh(message, navTabId));
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class DwzResultUtils {
 	 * @return 返回操作成功的服务器响应页面。
 	 */
 	public static ModelAndView flush(String message, String rel) {
-		return callback(AjaxResultModel.flush(message, rel));
+		return callback(DwzResult.flush(message, rel));
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class DwzResultUtils {
 	 * @return 返回操作成功的服务器响应页面。
 	 */
 	public static ModelAndView reload(String message, String rel) {
-		return callback(AjaxResultModel.reload(message, rel));
+		return callback(DwzResult.reload(message, rel));
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class DwzResultUtils {
 	 */
 	public static ModelAndView forward(String message, String navTabId,
 			String url) {
-		return callback(AjaxResultModel.forward(message, navTabId, url));
+		return callback(DwzResult.forward(message, navTabId, url));
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class DwzResultUtils {
 	 * @return 返回系统异常的服务器响应页面。
 	 */
 	public static ModelAndView fail() {
-		return callback(AjaxResultModel.fail());
+		return callback(DwzResult.fail());
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class DwzResultUtils {
 	 * @return 返回操作失败的服务器响应页面。
 	 */
 	public static ModelAndView fail(String message) {
-		return callback(AjaxResultModel.error(message));
+		return callback(DwzResult.error(message));
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class DwzResultUtils {
 	 * @return 返回会话超时的服务器响应页面。
 	 */
 	public static ModelAndView timeout() {
-		return callback(AjaxResultModel.timeout("会话已超时，请重新登录。"));
+		return callback(DwzResult.timeout("会话已超时，请重新登录。"));
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class DwzResultUtils {
 	 * @return 返回页面未找到或会话已过期的服务器响应页面。
 	 */
 	public static ModelAndView expired() {
-		return callback(AjaxResultModel.timeout("页面未找到或会话已过期。"));
+		return callback(DwzResult.timeout("页面未找到或会话已过期。"));
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class DwzResultUtils {
 	 * @return 返回权限限制的服务器响应页面。
 	 */
 	public static ModelAndView denied() {
-		return callback(AjaxResultModel.error("您没有执行该操作的权限，请与管理员联系。"));
+		return callback(DwzResult.error("您没有执行该操作的权限，请与管理员联系。"));
 	}
 
 	/**
@@ -154,10 +154,10 @@ public class DwzResultUtils {
 	 *            model
 	 * @return 返回对应的响应页面。
 	 */
-	private static ModelAndView callback(AjaxResultModel model) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("dwz-result");
-		mv.addObject("ajaxResult", model);
-		return mv;
+	private static ModelAndView callback(DwzResult model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("dwz-result");
+		mav.addObject("ajaxResult", model);
+		return mav;
 	}
 }

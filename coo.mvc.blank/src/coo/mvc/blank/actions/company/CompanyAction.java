@@ -12,6 +12,9 @@ import coo.mvc.blank.entity.Company;
 import coo.mvc.blank.service.CompanyService;
 import coo.mvc.util.DwzResultUtils;
 
+/**
+ * 公司管理。
+ */
 @Controller
 @RequestMapping("/company")
 public class CompanyAction {
@@ -20,16 +23,35 @@ public class CompanyAction {
 	@Resource
 	private MessageConfig messageConfig;
 
+	/**
+	 * 查看公司列表。
+	 * 
+	 * @param model
+	 *            数据模型
+	 */
 	@RequestMapping("company-list")
 	public void list(Model model) {
 		model.addAttribute("companys", companyService.getAllCompany());
 	}
 
+	/**
+	 * 新增公司。
+	 * 
+	 * @param model
+	 *            数据模型
+	 */
 	@RequestMapping("company-add")
 	public void add(Model model) {
 		model.addAttribute(new Company());
 	}
 
+	/**
+	 * 保存公司。
+	 * 
+	 * @param company
+	 *            公司
+	 * @return 返回提示信息。
+	 */
 	@RequestMapping("company-save")
 	public ModelAndView save(Company company) {
 		companyService.createCompany(company);
@@ -37,11 +59,26 @@ public class CompanyAction {
 				messageConfig.getString("company.add.success"), "company-list");
 	}
 
+	/**
+	 * 编辑公司。
+	 * 
+	 * @param companyId
+	 *            公司ID
+	 * @param model
+	 *            数据模型
+	 */
 	@RequestMapping("company-edit")
 	public void edit(String companyId, Model model) {
 		model.addAttribute(companyService.getCompany(companyId));
 	}
 
+	/**
+	 * 更新公司。
+	 * 
+	 * @param company
+	 *            公司
+	 * @return 返回提示信息。
+	 */
 	@RequestMapping("company-update")
 	public ModelAndView update(Company company) {
 		companyService.updateCompany(company);
@@ -50,6 +87,13 @@ public class CompanyAction {
 						"company-list");
 	}
 
+	/**
+	 * 删除公司。
+	 * 
+	 * @param companyId
+	 *            公司ID
+	 * @return 返回提示信息。
+	 */
 	@RequestMapping("company-delete")
 	public ModelAndView delete(String companyId) {
 		companyService.deleteCompany(companyId);
