@@ -101,53 +101,6 @@ public class DwzResultUtils {
 	}
 
 	/**
-	 * 提示系统异常。
-	 * 
-	 * @return 返回系统异常的服务器响应页面。
-	 */
-	public static ModelAndView fail() {
-		return callback(DwzResult.fail());
-	}
-
-	/**
-	 * 提示操作失败。
-	 * 
-	 * @param message
-	 *            操作失败信息
-	 * @return 返回操作失败的服务器响应页面。
-	 */
-	public static ModelAndView fail(String message) {
-		return callback(DwzResult.error(message));
-	}
-
-	/**
-	 * 提示会话超时。
-	 * 
-	 * @return 返回会话超时的服务器响应页面。
-	 */
-	public static ModelAndView timeout() {
-		return callback(DwzResult.timeout("会话已超时，请重新登录。"));
-	}
-
-	/**
-	 * 提示页面未找到或会话已过期。
-	 * 
-	 * @return 返回页面未找到或会话已过期的服务器响应页面。
-	 */
-	public static ModelAndView expired() {
-		return callback(DwzResult.timeout("页面未找到或会话已过期。"));
-	}
-
-	/**
-	 * 提示权限限制。
-	 * 
-	 * @return 返回权限限制的服务器响应页面。
-	 */
-	public static ModelAndView denied() {
-		return callback(DwzResult.error("您没有执行该操作的权限，请与管理员联系。"));
-	}
-
-	/**
 	 * 根据结果Model返回对应的响应页面。
 	 * 
 	 * @param model
