@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- 系统管理 -->
+	<entry key="organ.add.success">新增机构成功。</entry>
+	<entry key="organ.edit.success">编辑机构成功。</entry>
+	<entry key="role.add.success">新增角色成功。</entry>
+	<entry key="role.edit.success">编辑角色成功。</entry>
+	<entry key="user.add.success">新增用户成功。</entry>
+	<entry key="user.edit.success">编辑用户成功。</entry>
+	<entry key="user.enable.success">启用用户成功。</entry>
+	<entry key="user.disable.success">禁用用户成功。</entry>
+	<entry key="user.pwd.reset.success">重置密码成功。</entry>
+	<entry key="actor.add.success">新增职务成功。</entry>
+	<entry key="actor.edit.success">编辑职务成功。</entry>
+	<entry key="actor.delete.success">删除职务成功。</entry>
+	<entry key="person.pwd.change.success">修改密码成功。</entry>
+	<entry key="full.text.index.build.success">重建全文索引成功。</entry>
+	<!-- 公司管理 -->
+	<entry key="company.add.success">新增公司成功。</entry>
+	<entry key="company.edit.success">编辑公司成功。</entry>
+	<entry key="company.delete.success">删除公司成功。</entry>
+	<entry key="company.name.exists">公司名称已存在。</entry>
+	<entry key="employee.add.success">新增职员成功。</entry>
+	<entry key="employee.edit.success">编辑职员成功。</entry>
+	<entry key="employee.delete.success">删除职员成功。</entry>
+</properties>
