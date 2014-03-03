@@ -3,12 +3,12 @@ package coo.mvc.security.handler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import coo.base.exception.BusinessException;
-import coo.core.security.exception.AccessDeniedException;
-import coo.core.security.exception.NotLogonException;
 import coo.mvc.handler.DwzExceptionResolver;
 import coo.mvc.model.DwzResult;
 
@@ -29,10 +29,10 @@ public class DwzSecurityExceptionResolver extends DwzExceptionResolver {
 				mav.addObject("ajaxResult",
 						DwzResult.error(exception.getMessage()));
 			}
-			if (exception instanceof NotLogonException) {
+			if (exception instanceof UnauthenticatedException) {
 				mav.addObject("ajaxResult", DwzResult.timeout("会话已超时，请重新登录。"));
 			}
-			if (exception instanceof AccessDeniedException) {
+			if (exception instanceof UnauthorizedException) {
 				mav.addObject("ajaxResult",
 						DwzResult.error("您没有执行该操作的权限，请与管理员联系。"));
 			}

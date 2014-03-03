@@ -17,6 +17,7 @@ import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.subject.Subject;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -38,7 +39,6 @@ import coo.core.security.entity.OrganEntity;
 import coo.core.security.entity.RoleEntity;
 import coo.core.security.entity.UserEntity;
 import coo.core.security.entity.UserSettingsEntity;
-import coo.core.security.exception.NotLogonException;
 import coo.core.security.permission.AdminPermission;
 import coo.core.security.permission.PermissionConfig;
 
@@ -217,7 +217,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			String userId = (String) SecurityUtils.getSubject().getPrincipal();
 			return userDao.get(userId);
 		} catch (Exception e) {
-			throw new NotLogonException();
+			throw new UnauthenticatedException();
 		}
 	}
 

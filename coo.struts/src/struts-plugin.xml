@@ -51,10 +51,9 @@
 				result="error-runtime" />
 			<exception-mapping exception="coo.base.exception.UncheckedException"
 				result="error-failure" />
-			<exception-mapping
-				exception="coo.core.security.exception.AccessDeniedException"
+			<exception-mapping exception="org.apache.shiro.authz.UnauthorizedException"
 				result="error-denied" />
-			<exception-mapping exception="coo.core.security.exception.NotLogonException"
+			<exception-mapping exception="org.apache.shiro.authz.UnauthenticatedException"
 				result="error-timeout" />
 		</global-exception-mappings>
 	</package>

@@ -35,9 +35,9 @@
 	<bean id="exceptionResolver" class="coo.mvc.security.handler.DwzSecurityExceptionResolver">
 		<property name="exceptionMappings">
 			<map>
-				<entry key="coo.core.security.exception.NotLogonException"
+				<entry key="org.apache.shiro.authz.UnauthenticatedException"
 					value="redirect:/login" />
-				<entry key="coo.core.security.exception.AccessDeniedException"
+				<entry key="org.apache.shiro.authz.UnauthorizedException"
 					value="403" />
 			</map>
 		</property>

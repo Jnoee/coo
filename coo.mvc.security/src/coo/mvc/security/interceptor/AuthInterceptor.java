@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -13,8 +15,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import coo.base.exception.UncheckedException;
 import coo.base.util.CollectionUtils;
 import coo.core.security.annotations.Auth;
-import coo.core.security.exception.AccessDeniedException;
-import coo.core.security.exception.NotLogonException;
 
 /**
  * 权限注解拦截器。
@@ -29,10 +29,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			if (authorizeAnnotation != null) {
 				Subject subject = SecurityUtils.getSubject();
 				if (!subject.isAuthenticated()) {
-					throw new NotLogonException();
+					throw new UnauthenticatedException();
 				}
 				if (!isAccessable(subject, authorizeAnnotation.value())) {
-					throw new AccessDeniedException();
+					throw new UnauthorizedException();
 				}
 			}
 		}

@@ -1,6 +1,5 @@
 <div class="page">
     <div class="pageContent">
-        <@dwz.refresh action="/company/company-save" searchModel="searchModel" />
         <@s.form action="/company/company-save" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
         <div class="pageFormContent" layoutH="60">
             <dl>

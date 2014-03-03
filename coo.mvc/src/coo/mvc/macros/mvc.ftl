@@ -164,7 +164,8 @@
     <input type="checkbox" id="${id}" name="${name}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
 </#macro>
 
-<#macro errors separator attributes...>
+<#macro errors path separator attributes...>
+    <@bind path />
     <#list status.errorMessages as error>
         <span ${getAttributes(attributes)}>${error}</span>
         <#if error_has_next>${separator}</#if>

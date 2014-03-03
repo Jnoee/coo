@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import coo.core.captcha.CaptchaImageConfig;
@@ -16,6 +18,7 @@ import coo.core.captcha.CaptchaImageGenerator;
  * 验证码组件。
  */
 @Component
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Captcha implements Serializable {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
@@ -24,8 +27,6 @@ public class Captcha implements Serializable {
 	private CaptchaImageConfig captchaImageConfig;
 	/** 正确的验证码 */
 	private String correctCode;
-	/** 待验证的验证码 */
-	private String code;
 
 	/**
 	 * 生成验证码图片。
@@ -43,8 +44,11 @@ public class Captcha implements Serializable {
 	 * 
 	 * @return 正确返回true，错误返回false。
 	 */
-	public Boolean validate() {
-		return code.equalsIgnoreCase(correctCode);
+	public Boolean validate(String code) {
+		if (code != null) {
+			return code.equalsIgnoreCase(correctCode);
+		}
+		return false;
 	}
 
 	/**
@@ -52,8 +56,8 @@ public class Captcha implements Serializable {
 	 * 
 	 * @return 正确返回true，错误返回false。
 	 */
-	public Boolean validateWithCase() {
-		return code.equalsIgnoreCase(correctCode);
+	public Boolean validateWithCase(String code) {
+		return code.equals(correctCode);
 	}
 
 	/**
@@ -72,13 +76,5 @@ public class Captcha implements Serializable {
 			challengeString.append(characterToShow);
 		}
 		return challengeString.toString();
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 }

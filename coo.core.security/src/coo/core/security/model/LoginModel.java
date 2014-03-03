@@ -1,13 +1,15 @@
 package coo.core.security.model;
 
-import java.io.Serializable;
-
 /**
- * 用户名/密码登录model。
+ * 登录Model。
  */
-public class LoginModel implements Serializable {
+public class LoginModel {
+	/** 用户名 */
 	private String username;
+	/** 密码 */
 	private String password;
+	/** 验证码 */
+	private String code;
 
 	public String getUsername() {
 		return username;
@@ -23,5 +25,13 @@ public class LoginModel implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

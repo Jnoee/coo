@@ -36,8 +36,6 @@
 	</target>
 	<target name="modify.context" description="修改applicationContext.xml及struts.xml文件">
 		<replace file="src/applicationContext.xml" encoding="UTF-8" token="${old.project.package}" value="${new.project.package}" />
-		<replace file="src/struts.xml" encoding="UTF-8" token="${old.project.package.path}" value="${new.project.package.path}" />
-		<replace file="src/struts.xml" encoding="UTF-8" token="${old.project.package}" value="${new.project.package}" />
 	</target>
 	<target name="modify.package" description="修改项目包路径（目录）">
 		<mkdir dir="${new.project.src}" />

@@ -3,6 +3,8 @@ package coo.struts.security.interceptor;
 import java.lang.reflect.Method;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -12,8 +14,6 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import coo.base.exception.UncheckedException;
 import coo.base.util.CollectionUtils;
 import coo.core.security.annotations.Auth;
-import coo.core.security.exception.AccessDeniedException;
-import coo.core.security.exception.NotLogonException;
 
 /**
  * 权限注解拦截器。
@@ -25,10 +25,10 @@ public class AuthInterceptor extends AbstractInterceptor {
 		if (authorizeAnnotation != null) {
 			Subject subject = SecurityUtils.getSubject();
 			if (!subject.isAuthenticated()) {
-				throw new NotLogonException();
+				throw new UnauthenticatedException();
 			}
 			if (!isAccessable(subject, authorizeAnnotation.value())) {
-				throw new AccessDeniedException();
+				throw new UnauthorizedException();
 			}
 		}
 		return invocation.invoke();

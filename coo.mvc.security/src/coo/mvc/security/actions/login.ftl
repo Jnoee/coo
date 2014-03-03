@@ -9,7 +9,7 @@
         <div class="login-panel">
             <@s.form action="/login-auth">
             <div class="errors">
-                <@s.errors />
+                <@s.errors path="loginModel" />
             </div>
             <ul class="form">
                 <li>
@@ -23,22 +23,24 @@
                 <#if authCounter.isOver()>
                 <li>
                     <span>验证码：</span>
-                    <span><@s.input path="captcha.code" size="5" /></span>
+                    <span><@s.input path="loginModel.code" size="5" /></span>
                     <span><a href="javascript:reloadCaptchaCode()" title="点击换一张图片"><img id="captchaCodeImage" src="<@s.url "/captcha-code-image" />" /></a></span>
                 </li>
                 </#if>
                 <li class="login_btn">
-                    <button type="submit">登录</button>
+                    <button type="submit">
+                        登录
+                    </button>
                 </li>
             </ul>
             </@s.form>
         </div>
         <#if authCounter.isOver()>
         <script>
-            function reloadCaptchaCode() {
-                var now = new Date().getTime();
-                $("#captchaCodeImage").attr("src", "<@s.url "/captcha-code-image" />?" + now);
-            }
+function reloadCaptchaCode() {
+var now = new Date().getTime();
+$("#captchaCodeImage").attr("src", "<@s.url "/captcha-code-image" />?" + now);
+}
         </script>
         </#if>
     </body>
