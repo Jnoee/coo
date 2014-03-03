@@ -1,41 +1,59 @@
 <#macro message code>
+    <@compress>
     ${springMacroRequestContext.getMessage(code)}
+    </@compress>
 </#macro>
 
 <#macro messageText code, text>
+    <@compress>
     ${springMacroRequestContext.getMessage(code, text)}
+    </@compress>
 </#macro>
 
 <#macro messageArgs code, args>
+    <@compress>
     ${springMacroRequestContext.getMessage(code, args)}
+    </@compress>
 </#macro>
 
 <#macro messageArgsText code, args, text>
+    <@compress>
     ${springMacroRequestContext.getMessage(code, args, text)}
+    </@compress>
 </#macro>
 
 <#macro theme code>
+    <@compress>
     ${springMacroRequestContext.getThemeMessage(code)}
+    </@compress>
 </#macro>
 
 <#macro themeText code, text>
+    <@compress>
     ${springMacroRequestContext.getThemeMessage(code, text)}
+    </@compress>
 </#macro>
 
 <#macro themeArgs code, args>
+    <@compress>
     ${springMacroRequestContext.getThemeMessage(code, args)}
+    </@compress>
 </#macro>
 
 <#macro themeArgsText code, args, text>
+    <@compress>
     ${springMacroRequestContext.getThemeMessage(code, args, text)}
+    </@compress>
 </#macro>
 
 <#macro url url params...>
+    <@compress>
     <#if params?? && params?size!=0>
         ${springMacroRequestContext.getContextUrl(url, params)}
     <#else>
         ${springMacroRequestContext.getContextUrl(url)}
     </#if>
+    </@compress>
 </#macro>
 
 <#macro bind path>
@@ -72,12 +90,16 @@
 
 <#macro input path attributes...>
     <@bind path/>
+    <@compress>
     <input type="text" id="${id}" name="${name}" value="${stringStatusValue}" ${getAttributes(attributes)} />
+    </@compress>
 </#macro>
 
 <#macro password path attributes...>
     <@bind path/>
+    <@compress>
     <input type="password" id="${id}" name="${name}" ${getAttributes(attributes)} />
+    </@compress>
 </#macro>
 
 <#macro hidden path attributes...>
@@ -87,7 +109,9 @@
 
 <#macro textarea path attributes...>
     <@bind path/>
+    <@compress>
     <textarea id="${id}" name="${name}" ${getAttributes(attributes)}>${stringStatusValue}</textarea>
+    </@compress>
 </#macro>
 
 <#macro select path items itemValue itemLabel attributes...>
@@ -113,8 +137,10 @@
         <#assign id="${id}${optKey_index}">
         <#assign optVal = opts[optKey]>
         <#assign isChecked = contains(vals, optVal)>
+        <@compress single_line=true>
         <input type="radio" id="${id}" name="${name}" value="${optVal?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
         ${optKey?html}${separator}
+        </@compress>
     </#list>
 </#macro>
 
@@ -125,8 +151,10 @@
         <#assign id="${id}${optKey_index}">
         <#assign optVal = opts[optKey]>
         <#assign isChecked = contains(vals, optVal)>
+        <@compress single_line=true>
         <input type="checkbox" id="${id}" name="${name}" value="${optVal?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
         ${optKey?html}${separator}
+        </@compress>
     </#list>
 </#macro>
 
@@ -183,17 +211,20 @@
 
 <#function getAttributes attributes>
     <#local attrs>
+        <@compress single_line=true>
         <#if attributes?? && attributes?size gt 0>
             <#list attributes?keys as attributeName>
                 ${attributeName}="${attributes[attributeName]}"
             </#list>
         </#if>
+        </@compress>
     </#local>
     <#return attrs>
 </#function>
 
 <#function getOptions items itemValue itemLabel>
     <#local opts>
+        <@compress single_line=true>
         {
         <#if items?? && items?size gt 0>
             <#list items as item>
@@ -201,6 +232,7 @@
             </#list>
         </#if>
         }
+        </@compress>
     </#local>
     <#return opts?eval>
 </#function>

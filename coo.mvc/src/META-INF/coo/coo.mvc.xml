@@ -55,7 +55,7 @@
 	<!-- 转换器配置 -->
 	<bean id="conversionService" class="coo.mvc.converter.ConversionServiceFactoryBean" />
 
-	<mvc:view-controller path="/" view-name="/index" />
+	<mvc:view-controller path="/" view-name="forward:/index" />
 	<mvc:view-controller path="/500" view-name="/500" />
 	<mvc:view-controller path="/404" view-name="/404" />
 	<mvc:view-controller path="/403" view-name="/403" />

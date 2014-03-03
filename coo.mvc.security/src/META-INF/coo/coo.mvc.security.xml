@@ -21,6 +21,7 @@
 		<property name="templatePaths">
 			<list>
 				<value>classpath:/coo/mvc/security/macros/</value>
+				<value>classpath:/coo/mvc/security/actions/</value>
 			</list>
 		</property>
 		<property name="autoIncludes">
@@ -31,7 +32,16 @@
 	</bean>
 
 	<!-- 安全相关异常处理配置 -->
-	<bean id="exceptionResolver" class="coo.mvc.security.handler.DwzSecurityExceptionResolver" />
+	<bean id="exceptionResolver" class="coo.mvc.security.handler.DwzSecurityExceptionResolver">
+		<property name="exceptionMappings">
+			<map>
+				<entry key="coo.core.security.exception.NotLogonException"
+					value="redirect:/login" />
+				<entry key="coo.core.security.exception.AccessDeniedException"
+					value="403" />
+			</map>
+		</property>
+	</bean>
 
 	<!-- 自定义权限注解拦截器配置 -->
 	<mvc:interceptors>

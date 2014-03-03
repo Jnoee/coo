@@ -5,9 +5,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=7" />
 		<@dwz.head />
-		<link href="themes/default/style.css" rel="stylesheet" type="text/css" />
-		<link href="themes/css/core.css" rel="stylesheet" type="text/css" />
-		<script src="js/site.js" type="text/javascript"></script>
+		<link href="${ctx}/themes/default/style.css" rel="stylesheet" type="text/css" />
+		<link href="${ctx}/themes/css/core.css" rel="stylesheet" type="text/css" />
+		<script src="${ctx}/js/site.js" type="text/javascript"></script>
 		<title>coo.mvc.blank</title>
 	</head>
 	<body scroll="no">
@@ -54,13 +54,13 @@
 				<div id="navMenu">
 					<ul>
 						<li class="selected">
-							<a href="company/menu"><span>公司管理</span> </a>
+							<a href="<@s.url "/company/menu" />"><span>公司管理</span> </a>
 						</li>
 						<li>
-							<a href="module1/menu"><span>模块1</span> </a>
+							<a href="<@s.url "/module1/menu" />"><span>模块1</span> </a>
 						</li>
 						<li>
-							<a href="module2/menu"><span>模块2</span> </a>
+							<a href="<@s.url "/module2/menu" />"><span>模块2</span> </a>
 						</li>
 					</ul>
 				</div>

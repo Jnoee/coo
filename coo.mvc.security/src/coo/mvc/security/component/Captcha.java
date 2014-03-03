@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import coo.core.captcha.CaptchaImageConfig;
@@ -17,7 +16,6 @@ import coo.core.captcha.CaptchaImageGenerator;
  * 验证码组件。
  */
 @Component
-@Scope("session")
 public class Captcha implements Serializable {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
@@ -58,14 +56,6 @@ public class Captcha implements Serializable {
 		return code.equalsIgnoreCase(correctCode);
 	}
 
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
 	/**
 	 * 生成随机验证码字符串。
 	 * 
@@ -82,5 +72,13 @@ public class Captcha implements Serializable {
 			challengeString.append(characterToShow);
 		}
 		return challengeString.toString();
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

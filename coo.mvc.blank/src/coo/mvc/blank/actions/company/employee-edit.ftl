@@ -21,13 +21,13 @@
             <dl>
                 <dt>性别：</dt>
                 <dd>
-                    <@s.select path="employee.sex" items=enums["coo.mvc.blank.enums.Sex"]?values itemValue="value" itemLabel="text" class="required combox" />
+                    <@s.select path="employee.sex" items=Sex?values itemValue="value" itemLabel="text" class="required combox" />
                 </dd>
             </dl>
             <dl>
                 <dt>兴趣爱好：</dt>
                 <dd>
-                    <@s.checkboxs path="employee.interests" items=enums["coo.mvc.blank.enums.Interest"]?values itemValue="text" itemLabel="text" />
+                    <@s.checkboxs path="employee.interests" items=Interest?values itemValue="text" itemLabel="text" />
                 </dd>
             </dl>
         </div>

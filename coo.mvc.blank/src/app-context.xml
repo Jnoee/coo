@@ -28,6 +28,11 @@
 
 	<bean id="freemarkerConfigurer" parent="baseFreemarkerConfigurer">
 		<property name="templateLoaderPaths" value="classpath:/coo/mvc/blank/actions/" />
+		<property name="enumPackages">
+			<list>
+				<value>coo.mvc.blank.enums</value>
+			</list>
+		</property>
 	</bean>
 
 	<!-- 加载应用组件 -->

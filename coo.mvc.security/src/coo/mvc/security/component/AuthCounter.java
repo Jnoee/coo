@@ -1,13 +1,11 @@
 package coo.mvc.security.component;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
  * 验证次数计数器。
  */
 @Component
-@Scope("session")
 public class AuthCounter {
 	private Integer allowRetries = 3;
 	private Integer retries = 0;

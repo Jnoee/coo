@@ -23,15 +23,17 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		HandlerMethod handlerMethod = (HandlerMethod) handler;
-		Auth authorizeAnnotation = getAuthorizeAnnotation(handlerMethod);
-		if (authorizeAnnotation != null) {
-			Subject subject = SecurityUtils.getSubject();
-			if (!subject.isAuthenticated()) {
-				throw new NotLogonException();
-			}
-			if (!isAccessable(subject, authorizeAnnotation.value())) {
-				throw new AccessDeniedException();
+		if (handler instanceof HandlerMethod) {
+			HandlerMethod handlerMethod = (HandlerMethod) handler;
+			Auth authorizeAnnotation = getAuthorizeAnnotation(handlerMethod);
+			if (authorizeAnnotation != null) {
+				Subject subject = SecurityUtils.getSubject();
+				if (!subject.isAuthenticated()) {
+					throw new NotLogonException();
+				}
+				if (!isAccessable(subject, authorizeAnnotation.value())) {
+					throw new AccessDeniedException();
+				}
 			}
 		}
 		return true;

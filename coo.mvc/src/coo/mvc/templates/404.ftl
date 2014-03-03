@@ -2,12 +2,12 @@
  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <@std.errorHead><title>404-页面异常</title></@std.errorHead>
+    <@std.errorHead><title>404-页面未找到</title></@std.errorHead>
 </head>
 <body>
     <div class="std-error-panel">
-        <div class="head">页面不能显示</div>
-        <div class="body">页面未找到或会话已过期。</div>
+        <div class="head">页面未找到</div>
+        <div class="body">您访问的页面未找到。</div>
         <div class="foot">
             <a href="${ctx}/">返回首页</a>
         </div>
