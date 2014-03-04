@@ -22,6 +22,9 @@
 	<category name="coo">
 		<level value="DEBUG" />
 	</category>
+	<category name="coo.mvc.handler.GenericExceptionResolver">
+		<level value="WARN" />
+	</category>
 	<root>
 		<level value="WARN" />
 		<appender-ref ref="console" />

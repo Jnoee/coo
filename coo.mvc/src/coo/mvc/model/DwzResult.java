@@ -131,16 +131,26 @@ public class DwzResult {
 	}
 
 	/**
-	 * 构建用于提示超时的响应内容model。
+	 * 构建用于提示权限限制的响应内容model。
 	 * 
-	 * @param message
-	 *            超时提示信息
 	 * @return 返回用于提示超时的响应内容model。
 	 */
-	public static DwzResult timeout(String message) {
+	public static DwzResult denied() {
+		DwzResult model = new DwzResult();
+		model.setStatusCode(StatusCode.ERROR);
+		model.setMessage("您没有执行该操作的权限，请与管理员联系。");
+		return model;
+	}
+
+	/**
+	 * 构建用于提示超时的响应内容model。
+	 * 
+	 * @return 返回用于提示超时的响应内容model。
+	 */
+	public static DwzResult timeout() {
 		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.TIMEOUT);
-		model.setMessage(message);
+		model.setMessage("会话已超时，请重新登录。");
 		return model;
 	}
 

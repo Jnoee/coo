@@ -16,6 +16,6 @@ public class GenericExceptionResolver extends SimpleMappingExceptionResolver {
 		addStatusCode("500", HttpStatus.INTERNAL_SERVER_ERROR.value());
 		addStatusCode("404", HttpStatus.NOT_FOUND.value());
 		addStatusCode("403", HttpStatus.FORBIDDEN.value());
-		setWarnLogCategory(getClass().getName());
+		setWarnLogCategory(GenericExceptionResolver.class.getName());
 	}
 }

@@ -42,6 +42,9 @@ public class Captcha implements Serializable {
 	/**
 	 * 验证验证码，忽略大小写。
 	 * 
+	 * @param code
+	 *            验证码
+	 * 
 	 * @return 正确返回true，错误返回false。
 	 */
 	public Boolean validate(String code) {
@@ -52,7 +55,10 @@ public class Captcha implements Serializable {
 	}
 
 	/**
-	 * 验证验证码，验证大小写。
+	 * 验证验证码，区分大小写。
+	 * 
+	 * @param code
+	 *            验证码
 	 * 
 	 * @return 正确返回true，错误返回false。
 	 */

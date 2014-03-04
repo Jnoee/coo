@@ -21,6 +21,9 @@ public class IndexAction {
 
 	/**
 	 * 查看主页。
+	 * 
+	 * @param model
+	 *            数据模型
 	 */
 	@RequestMapping("index")
 	public void index(Model model) {

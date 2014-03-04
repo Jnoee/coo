@@ -22,10 +22,7 @@ public class DwzExceptionResolver extends GenericExceptionResolver {
 			response.setStatus(HttpStatus.OK.value());
 			mav.setViewName("dwz-result");
 			mav.addObject("ajaxResult", DwzResult.fail());
-			if (exception instanceof BusinessException) {
-				mav.addObject("ajaxResult",
-						DwzResult.error(exception.getMessage()));
-			}
+			processCustomExceptions(mav, exception);
 		}
 		return mav;
 	}
@@ -41,5 +38,19 @@ public class DwzExceptionResolver extends GenericExceptionResolver {
 	protected Boolean isAjaxRequest(HttpServletRequest request) {
 		return "XMLHttpRequest".equalsIgnoreCase(request
 				.getHeader("X-Requested-With"));
+	}
+
+	/**
+	 * 处理自定义异常。
+	 * 
+	 * @param mav
+	 *            数据模型
+	 * @param exception
+	 *            异常
+	 */
+	protected void processCustomExceptions(ModelAndView mav, Exception exception) {
+		if (exception instanceof BusinessException) {
+			mav.addObject("ajaxResult", DwzResult.error(exception.getMessage()));
+		}
 	}
 }

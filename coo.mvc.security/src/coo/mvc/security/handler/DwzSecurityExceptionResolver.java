@@ -5,10 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.base.exception.BusinessException;
+import coo.base.util.CollectionUtils;
 import coo.mvc.handler.DwzExceptionResolver;
 import coo.mvc.model.DwzResult;
 
@@ -19,24 +20,35 @@ public class DwzSecurityExceptionResolver extends DwzExceptionResolver {
 	@Override
 	protected ModelAndView doResolveException(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception exception) {
-		ModelAndView mav = super.doResolveException(request, response, handler,
-				exception);
-		if (isAjaxRequest(request)) {
-			response.setStatus(HttpStatus.OK.value());
-			mav.setViewName("dwz-result");
-			mav.addObject("ajaxResult", DwzResult.fail());
-			if (exception instanceof BusinessException) {
-				mav.addObject("ajaxResult",
-						DwzResult.error(exception.getMessage()));
-			}
-			if (exception instanceof UnauthenticatedException) {
-				mav.addObject("ajaxResult", DwzResult.timeout("会话已超时，请重新登录。"));
-			}
-			if (exception instanceof UnauthorizedException) {
-				mav.addObject("ajaxResult",
-						DwzResult.error("您没有执行该操作的权限，请与管理员联系。"));
+		// 如果是系统首页抛出未登录异常则直接跳转到登录页面。
+		if (exception instanceof UnauthenticatedException
+				&& handler instanceof HandlerMethod) {
+			HandlerMethod handlerMethod = (HandlerMethod) handler;
+			RequestMapping requestMapping = handlerMethod
+					.getMethodAnnotation(RequestMapping.class);
+			if (CollectionUtils.contains(requestMapping.value(), "index")) {
+				return new ModelAndView("redirect:/login");
 			}
 		}
-		return mav;
+		return super.doResolveException(request, response, handler, exception);
+	}
+
+	@Override
+	protected void logException(Exception ex, HttpServletRequest request) {
+		if (ex instanceof UnauthenticatedException) {
+			return;
+		}
+		super.logException(ex, request);
+	}
+
+	@Override
+	protected void processCustomExceptions(ModelAndView mav, Exception exception) {
+		super.processCustomExceptions(mav, exception);
+		if (exception instanceof UnauthenticatedException) {
+			mav.addObject("ajaxResult", DwzResult.timeout());
+		}
+		if (exception instanceof UnauthorizedException) {
+			mav.addObject("ajaxResult", DwzResult.denied());
+		}
 	}
 }

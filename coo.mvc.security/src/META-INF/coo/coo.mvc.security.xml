@@ -36,7 +36,7 @@
 		<property name="exceptionMappings">
 			<map>
 				<entry key="org.apache.shiro.authz.UnauthenticatedException"
-					value="redirect:/login" />
+					value="global-timeout" />
 				<entry key="org.apache.shiro.authz.UnauthorizedException"
 					value="403" />
 			</map>
