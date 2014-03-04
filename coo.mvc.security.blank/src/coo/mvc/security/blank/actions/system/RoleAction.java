@@ -1,7 +1,7 @@
 package coo.mvc.security.blank.actions.system;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.annotation.Resource;
 
@@ -67,13 +67,9 @@ public class RoleAction {
 	 * @return 返回保存角色成功提示。
 	 */
 	@RequestMapping("role-save")
-	public ModelAndView save(Role role, String[] permissionIds) {
-		List<Integer> permissionIdList = new ArrayList<Integer>();
-		for (String permissionId : permissionIds) {
-			permissionIdList.add(Integer.parseInt(permissionId));
-		}
-		role.setPermissions(permissionConfig
-				.getPermissionCode(permissionIdList));
+	public ModelAndView save(Role role, Integer[] permissionIds) {
+		role.setPermissions(permissionConfig.getPermissionCode(Arrays
+				.asList(permissionIds)));
 		securityService.createRole(role);
 		return DwzResultUtils.close(
 				messageConfig.getString("role.add.success"), "role-list");
@@ -107,13 +103,9 @@ public class RoleAction {
 	 * @return 返回提示信息。
 	 */
 	@RequestMapping("role-update")
-	public ModelAndView update(Role role, String[] permissionIds) {
-		List<Integer> permissionIdList = new ArrayList<Integer>();
-		for (String permissionId : permissionIds) {
-			permissionIdList.add(Integer.parseInt(permissionId));
-		}
-		role.setPermissions(permissionConfig
-				.getPermissionCode(permissionIdList));
+	public ModelAndView update(Role role, Integer[] permissionIds) {
+		role.setPermissions(permissionConfig.getPermissionCode(Arrays
+				.asList(permissionIds)));
 		securityService.updateRole(role);
 		return DwzResultUtils.refresh(
 				messageConfig.getString("role.edit.success"), "role-list");
