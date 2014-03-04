@@ -15,7 +15,7 @@
 			<legend>${permissionGroup.name}</legend>
         <#list permissionGroup.permissions as permission>
         <label>
-            <input type="checkbox" name="permissionIds" value="${permission.id}"<#if permissionIds.contains(permission.id)> checked="checked"</#if> />
+            <input type="checkbox" name="permissionIds" value="${permission.id}"<#if permissionIds?seq_contains(permission.id)> checked="checked"</#if> />
             ${permission.name}
         </label>
         </#list>
