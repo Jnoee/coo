@@ -80,7 +80,7 @@ public class OrganAction {
 	/**
 	 * 编辑机构。
 	 * 
-	 * @param orgnId
+	 * @param organId
 	 *            机构ID
 	 * @param model
 	 *            数据模型
