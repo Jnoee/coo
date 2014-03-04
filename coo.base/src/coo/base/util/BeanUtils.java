@@ -241,15 +241,19 @@ public abstract class BeanUtils {
 		Boolean needCopy = targetField != null
 				&& !Modifier.isFinal(targetField.getModifiers())
 				&& !Modifier.isStatic(targetField.getModifiers());
-		if (needCopy && !containedNull && sourceFieldValue == null) {
+		if (!containedNull && sourceFieldValue == null) {
 			needCopy = false;
 		}
 		if (needCopy) {
+			// 处理Collection类型的属性
 			if (sourceFieldValue != null
 					&& Collection.class.isAssignableFrom(sourceFieldValue
 							.getClass())) {
-				CollectionUtils.copy((Collection<Object>) sourceFieldValue,
-						(Collection<Object>) getField(target, fieldName));
+				if (!((Collection<Object>) sourceFieldValue).isEmpty()
+						|| containedNull) {
+					CollectionUtils.copy((Collection<Object>) sourceFieldValue,
+							(Collection<Object>) getField(target, fieldName));
+				}
 			} else {
 				setField(target, fieldName, sourceFieldValue);
 			}
