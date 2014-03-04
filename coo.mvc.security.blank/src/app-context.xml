@@ -40,10 +40,10 @@
 				<value>classpath:/coo/mvc/security/blank/macros/</value>
 			</list>
 		</property>
-		<property name="autoIncludes">
-			<list>
-				<value>system.ftl</value>
-			</list>
+		<property name="autoImports">
+			<map>
+				<entry key="system" value="system.ftl" />
+			</map>
 		</property>
 	</bean>
 
