@@ -33,7 +33,7 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 		extends ResourceEntity<U> {
 	/** 姓名 */
 	@NotEmpty
-	@Field
+	@Field(analyze = Analyze.NO)
 	@Log(text = "姓名")
 	private String name;
 	/** 用户名 */
