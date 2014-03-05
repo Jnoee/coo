@@ -24,12 +24,28 @@ public class LogAction {
 	@Autowired
 	private BnLogger bnLogger;
 
+	/**
+	 * 查询日志列表
+	 * 
+	 * @param model
+	 *            model
+	 * @param searchModel
+	 *            SearchModel
+	 */
 	@RequestMapping(value = "log-list", method = { RequestMethod.POST,
 			RequestMethod.GET })
 	public void list(Model model, SearchModel searchModel) {
 		model.addAttribute("logPage", bnLogger.searchLog(searchModel));
 	}
 
+	/**
+	 * 查询日志详情
+	 * 
+	 * @param logId
+	 *            logId
+	 * @param model
+	 *            model
+	 */
 	@RequestMapping("log-data-view")
 	public void logDataView(String logId, Model model) {
 		BnLog log = bnLogger.getLog(logId);
