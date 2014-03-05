@@ -31,7 +31,7 @@ public class LogAction {
 	 * @param searchModel
 	 *            SearchModel
 	 */
-	@RequestMapping("log-list")
+	@RequestMapping(value = "log-list")
 	public void list(Model model, SearchModel searchModel) {
 		model.addAttribute("logPage", bnLogger.searchLog(searchModel));
 	}
