@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import coo.core.model.SearchModel;
 import coo.core.security.annotations.Auth;
@@ -31,7 +32,8 @@ public class LogAction {
 	 * @param searchModel
 	 *            SearchModel
 	 */
-	@RequestMapping(value = "log-list")
+	@RequestMapping(value = "log-list", method = { RequestMethod.POST,
+			RequestMethod.GET })
 	public void list(Model model, SearchModel searchModel) {
 		model.addAttribute("logPage", bnLogger.searchLog(searchModel));
 	}
