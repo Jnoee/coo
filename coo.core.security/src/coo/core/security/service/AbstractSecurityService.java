@@ -24,6 +24,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
+import coo.base.exception.BusinessException;
 import coo.base.exception.UncheckedException;
 import coo.base.model.BitCode;
 import coo.base.model.Page;
@@ -357,8 +358,10 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	public void resetPassword(String managePassword, String userId) {
-		Assert.isTrue(loginRealm.checkPassword(managePassword, getCurrentUser()
-				.getPassword()), "管理员密码错误。");
+		if (!loginRealm.checkPassword(managePassword, getCurrentUser()
+				.getPassword())) {
+			throw new BusinessException("管理员密码错误。");
+		}
 		U user = getUser(userId);
 		user.setPassword(loginRealm
 				.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
