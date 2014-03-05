@@ -27,12 +27,25 @@ public class FullTextIndexAction {
 	@Autowired
 	private MessageConfig messageConfig;
 
+	/**
+	 * 查看全文索引信息
+	 * 
+	 * @param model
+	 *            model
+	 */
 	@RequestMapping("entity-list")
 	public void select(Model model) {
 		model.addAttribute("indexedEntityClasses",
 				fullTextIndexer.getIndexedEntityClasses());
 	}
 
+	/**
+	 * 重建全文索引
+	 * 
+	 * @param entityClasses
+	 *            entityClasses
+	 * @return ModelAndView
+	 */
 	@RequestMapping("full-text-index-build")
 	public ModelAndView build(Class<?>[] entityClasses) {
 		fullTextIndexer.startAndWait(entityClasses);
