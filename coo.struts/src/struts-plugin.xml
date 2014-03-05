@@ -51,6 +51,8 @@
 				result="error-runtime" />
 			<exception-mapping exception="coo.base.exception.UncheckedException"
 				result="error-failure" />
+			<exception-mapping exception="coo.base.exception.BusinessException"
+				result="error-failure" />
 			<exception-mapping exception="org.apache.shiro.authz.UnauthorizedException"
 				result="error-denied" />
 			<exception-mapping exception="org.apache.shiro.authz.UnauthenticatedException"
