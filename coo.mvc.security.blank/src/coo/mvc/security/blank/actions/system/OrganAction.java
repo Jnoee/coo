@@ -1,6 +1,5 @@
 package coo.mvc.security.blank.actions.system;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -29,8 +28,6 @@ public class OrganAction {
 	private SecurityService securityService;
 	@Resource
 	private MessageConfig messageConfig;
-	private Organ rootOrgan;
-	private List<Organ> parentOrgans = new ArrayList<Organ>();
 
 	/**
 	 * 查看机构列表。
@@ -52,11 +49,11 @@ public class OrganAction {
 	 */
 	@RequestMapping("organ-add")
 	public void add(Model model) {
-		rootOrgan = securityService.getCurrentUser().getSettings()
+		Organ rootOrgan = securityService.getCurrentUser().getSettings()
 				.getDefaultActor().getOrgan();
 		Organ organ = new Organ();
 		organ.setParent(rootOrgan);
-		parentOrgans = rootOrgan.getOrganTree();
+		List<Organ> parentOrgans = rootOrgan.getOrganTree();
 		parentOrgans.remove(organ);
 		model.addAttribute("parentOrgans", parentOrgans);
 		model.addAttribute("rootOrgan", rootOrgan);
@@ -87,11 +84,11 @@ public class OrganAction {
 	 */
 	@RequestMapping("organ-edit")
 	public void edit(String organId, Model model) {
-		rootOrgan = securityService.getCurrentUser().getSettings()
+		Organ rootOrgan = securityService.getCurrentUser().getSettings()
 				.getDefaultActor().getOrgan();
 		model.addAttribute("rootOrgan", rootOrgan);
 		Organ organ = securityService.getOrgan(organId);
-		parentOrgans = rootOrgan.getOrganTree();
+		List<Organ> parentOrgans = rootOrgan.getOrganTree();
 		parentOrgans.remove(organ);
 		model.addAttribute("parentOrgans", parentOrgans);
 		model.addAttribute(securityService.getOrgan(organId));
@@ -123,22 +120,6 @@ public class OrganAction {
 		securityService.deleteOrgan(orgnId);
 		return DwzResultUtils.refresh(
 				messageConfig.getString("organ.delete.success"), "organ-list");
-	}
-
-	public Organ getRootOrgan() {
-		return rootOrgan;
-	}
-
-	public void setRootOrgan(Organ rootOrgan) {
-		this.rootOrgan = rootOrgan;
-	}
-
-	public List<Organ> getParentOrgans() {
-		return parentOrgans;
-	}
-
-	public void setParentOrgans(List<Organ> parentOrgans) {
-		this.parentOrgans = parentOrgans;
 	}
 
 }
