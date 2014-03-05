@@ -1,7 +1,5 @@
 package coo.mvc.security.blank.actions.system;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -53,9 +51,7 @@ public class OrganAction {
 				.getDefaultActor().getOrgan();
 		Organ organ = new Organ();
 		organ.setParent(rootOrgan);
-		List<Organ> parentOrgans = rootOrgan.getOrganTree();
-		parentOrgans.remove(organ);
-		model.addAttribute("parentOrgans", parentOrgans);
+		model.addAttribute("parentOrgans", rootOrgan.getOrganTree());
 		model.addAttribute("rootOrgan", rootOrgan);
 		model.addAttribute(organ);
 	}
@@ -87,10 +83,7 @@ public class OrganAction {
 		Organ rootOrgan = securityService.getCurrentUser().getSettings()
 				.getDefaultActor().getOrgan();
 		model.addAttribute("rootOrgan", rootOrgan);
-		Organ organ = securityService.getOrgan(organId);
-		List<Organ> parentOrgans = rootOrgan.getOrganTree();
-		parentOrgans.remove(organ);
-		model.addAttribute("parentOrgans", parentOrgans);
+		model.addAttribute("parentOrgans", rootOrgan.getOrganTree());
 		model.addAttribute(securityService.getOrgan(organId));
 	}
 
