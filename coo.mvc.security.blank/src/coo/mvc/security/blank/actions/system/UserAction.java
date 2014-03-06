@@ -35,7 +35,7 @@ public class UserAction {
 	 * 绑定用户。
 	 * 
 	 * @param binder
-	 *            数据绑定对象
+	 *            数据绑定对象。
 	 */
 	@InitBinder("user")
 	public void initBinderUser(WebDataBinder binder) {
@@ -46,7 +46,7 @@ public class UserAction {
 	 * 绑定职务。
 	 * 
 	 * @param binder
-	 *            数据绑定对象
+	 *            数据绑定对象。
 	 */
 	@InitBinder("actor")
 	public void initBinderActor(WebDataBinder binder) {
@@ -57,9 +57,9 @@ public class UserAction {
 	 * 查看用户列表。
 	 * 
 	 * @param model
-	 *            数据模型
+	 *            数据模型。
 	 * @param searchModel
-	 *            搜索条件
+	 *            搜索条件。
 	 */
 	@RequestMapping("user-list")
 	public void list(Model model, SearchModel searchModel) {
@@ -70,7 +70,7 @@ public class UserAction {
 	 * 新增用户。
 	 * 
 	 * @param model
-	 *            数据模型
+	 *            数据模型。
 	 */
 	@RequestMapping("user-add")
 	public void add(Model model) {
@@ -85,10 +85,10 @@ public class UserAction {
 	 * 保存用户。
 	 * 
 	 * @param user
-	 *            用户
+	 *            用户。
 	 * @param actor
-	 *            职务
-	 * @return 返回提示信息
+	 *            职务。
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("user-save")
 	public ModelAndView save(User user, Actor actor) {
@@ -104,9 +104,9 @@ public class UserAction {
 	 * 编辑用户。
 	 * 
 	 * @param userId
-	 *            用户ID
+	 *            用户ID。
 	 * @param model
-	 *            数据模型
+	 *            数据模型。
 	 */
 	@RequestMapping("user-edit")
 	public void edit(String userId, Model model) {
@@ -117,8 +117,8 @@ public class UserAction {
 	 * 更新用户。
 	 * 
 	 * @param user
-	 *            用户
-	 * @return 返回提示信息
+	 *            用户。
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("user-update")
 	public ModelAndView update(User user) {
@@ -131,8 +131,8 @@ public class UserAction {
 	 * 禁用用户。
 	 * 
 	 * @param userId
-	 *            用户ID
-	 * @return 返回提示信息
+	 *            用户ID。
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("user-disable")
 	public ModelAndView disable(String userId) {
@@ -145,8 +145,8 @@ public class UserAction {
 	 * 启用用户。
 	 * 
 	 * @param userId
-	 *            用户ID
-	 * @return 返回提示信息
+	 *            用户ID。
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("user-enable")
 	public ModelAndView enable(String userId) {
@@ -159,9 +159,9 @@ public class UserAction {
 	 * 重置用户密码。
 	 * 
 	 * @param userId
-	 *            用户ID
+	 *            用户ID。
 	 * @param model
-	 *            数据模型
+	 *            数据模型。
 	 */
 	@RequestMapping("user-pwd-reset")
 	public void pwdReset(String userId, Model model) {
@@ -173,10 +173,10 @@ public class UserAction {
 	 * 保存重置密码。
 	 * 
 	 * @param managePassword
-	 *            管理员密码
+	 *            管理员密码。
 	 * @param user
-	 *            用户
-	 * @return 返回提示信息
+	 *            用户。
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("user-pwd-reset-save")
 	public ModelAndView pwdResetSave(String managePassword, User user) {
