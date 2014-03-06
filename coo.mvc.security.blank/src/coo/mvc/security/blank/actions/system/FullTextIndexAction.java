@@ -28,10 +28,10 @@ public class FullTextIndexAction {
 	private MessageConfig messageConfig;
 
 	/**
-	 * 查看全文索引信息
+	 * 查看全文索引信息。
 	 * 
 	 * @param model
-	 *            model
+	 *            数据模型
 	 */
 	@RequestMapping("entity-list")
 	public void select(Model model) {
@@ -40,11 +40,12 @@ public class FullTextIndexAction {
 	}
 
 	/**
-	 * 重建全文索引
+	 * 重建全文索引。
 	 * 
 	 * @param entityClasses
-	 *            entityClasses
-	 * @return ModelAndView
+	 *            全文索引数组
+	 * 
+	 * @return 返回提示信息
 	 */
 	@RequestMapping("full-text-index-build")
 	public ModelAndView build(Class<?>[] entityClasses) {

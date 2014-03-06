@@ -24,12 +24,13 @@ public class LogAction {
 	private BnLogger bnLogger;
 
 	/**
-	 * 查询日志列表
+	 * 查询日志列表。
 	 * 
 	 * @param model
-	 *            model
+	 *            数据模型
+	 * 
 	 * @param searchModel
-	 *            SearchModel
+	 *            搜索条件
 	 */
 	@RequestMapping("log-list")
 	public void list(Model model, SearchModel searchModel) {
@@ -37,12 +38,13 @@ public class LogAction {
 	}
 
 	/**
-	 * 查询日志详情
+	 * 查询日志详情。
 	 * 
 	 * @param logId
-	 *            logId
+	 *            日志Id
+	 * 
 	 * @param model
-	 *            model
+	 *            数据模型
 	 */
 	@RequestMapping("log-data-view")
 	public void logDataView(String logId, Model model) {
