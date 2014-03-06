@@ -2,6 +2,7 @@ package coo.mvc.config;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +12,10 @@ import javax.servlet.ServletContext;
 
 import org.springframework.ui.freemarker.SpringTemplateLoader;
 
+import coo.base.exception.UncheckedException;
 import coo.base.util.ClassUtils;
-import coo.base.util.DateUtils;
-import coo.base.util.StringUtils;
 import coo.core.model.IEnum;
+import coo.core.util.SpringUtils;
 import freemarker.cache.TemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateException;
@@ -27,11 +28,17 @@ import freemarker.template.TemplateModelException;
 public class FreeMarkerConfigurer extends
 		org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer {
 	private ServletContext servletContext;
-	private List<String> enumPackages = new ArrayList<String>();
-	private List<Class<?>> staticClasses = new ArrayList<Class<?>>();
-	private List<String> templatePaths = new ArrayList<String>();
-	private List<String> autoIncludes = new ArrayList<String>();
-	private Map<String, String> autoImports = new HashMap<String, String>();
+	private List<AbstractFreeMarkerSettings> settings = new ArrayList<AbstractFreeMarkerSettings>();
+
+	/**
+	 * 构造方法。
+	 */
+	public FreeMarkerConfigurer() {
+		Map<String, AbstractFreeMarkerSettings> freemarkerSettingsMap = SpringUtils
+				.getContext().getBeansOfType(AbstractFreeMarkerSettings.class);
+		settings.addAll(freemarkerSettingsMap.values());
+		Collections.sort(settings);
+	}
 
 	@Override
 	public void setServletContext(ServletContext servletContext) {
@@ -53,7 +60,7 @@ public class FreeMarkerConfigurer extends
 	protected void postProcessTemplateLoaders(
 			List<TemplateLoader> templateLoaders) {
 		super.postProcessTemplateLoaders(templateLoaders);
-		for (String templatePath : templatePaths) {
+		for (String templatePath : getTemplatePaths()) {
 			templateLoaders.add(new SpringTemplateLoader(getResourceLoader(),
 					templatePath));
 		}
@@ -70,7 +77,7 @@ public class FreeMarkerConfigurer extends
 				.getEnumModels();
 		getConfiguration().setSharedVariable("enums", enums);
 		for (Class<?> enumClass : ClassUtils.findClassesByParentClass(
-				IEnum.class, enumPackages.toArray(new String[] {}))) {
+				IEnum.class, getEnumPackages())) {
 			getConfiguration().setSharedVariable(enumClass.getSimpleName(),
 					enums.get(enumClass.getName()));
 		}
@@ -86,9 +93,7 @@ public class FreeMarkerConfigurer extends
 		TemplateHashModel statics = BeansWrapper.getDefaultInstance()
 				.getStaticModels();
 		getConfiguration().setSharedVariable("statics", statics);
-		staticClasses.add(StringUtils.class);
-		staticClasses.add(DateUtils.class);
-		for (Class<?> staticClass : staticClasses) {
+		for (Class<?> staticClass : getStaticClasses()) {
 			getConfiguration().setSharedVariable(staticClass.getSimpleName(),
 					statics.get(staticClass.getName()));
 		}
@@ -109,7 +114,7 @@ public class FreeMarkerConfigurer extends
 	 * 初始化自动包含文件。
 	 */
 	protected void initAutoIncludes() {
-		for (String autoInclude : autoIncludes) {
+		for (String autoInclude : getAutoIncludes()) {
 			getConfiguration().addAutoInclude(autoInclude);
 		}
 	}
@@ -118,49 +123,108 @@ public class FreeMarkerConfigurer extends
 	 * 初始化自动导入文件。
 	 */
 	protected void initAutoImports() {
-		for (Entry<String, String> autoImport : autoImports.entrySet()) {
+		for (Entry<String, String> autoImport : getAutoImports().entrySet()) {
 			getConfiguration().addAutoImport(autoImport.getKey(),
 					autoImport.getValue());
 		}
 	}
 
-	public List<String> getEnumPackages() {
-		return enumPackages;
+	/**
+	 * 获取枚举包列表。
+	 * 
+	 * @return 返回枚举包列表。
+	 */
+	public String[] getEnumPackages() {
+		List<String> enumPackages = new ArrayList<String>();
+		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
+			for (String enumPackage : freeMarkerSettings.getEnumPackages()) {
+				if (enumPackages.contains(enumPackage)) {
+					throw new UncheckedException("加载枚举类包[" + enumPackage
+							+ "]时发生冲突。");
+				}
+				enumPackages.add(enumPackage);
+			}
+		}
+		return enumPackages.toArray(new String[] {});
 	}
 
-	public void setEnumPackages(List<String> enumPackages) {
-		this.enumPackages = enumPackages;
-	}
-
+	/**
+	 * 获取静态类列表。
+	 * 
+	 * @return 返回静态类列表。
+	 */
 	public List<Class<?>> getStaticClasses() {
+		List<Class<?>> staticClasses = new ArrayList<Class<?>>();
+		List<String> staticClassNames = new ArrayList<String>();
+		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
+			for (Class<?> staticClass : freeMarkerSettings.getStaticClasses()) {
+				if (staticClassNames.contains(staticClass.getSimpleName())) {
+					throw new UncheckedException("加载静态类[" + staticClass
+							+ "]时发生冲突。");
+				}
+				staticClasses.add(staticClass);
+				staticClassNames.add(staticClass.getSimpleName());
+			}
+		}
 		return staticClasses;
 	}
 
-	public void setStaticClasses(List<Class<?>> staticClasses) {
-		this.staticClasses = staticClasses;
-	}
-
+	/**
+	 * 获取模版路径列表。
+	 * 
+	 * @return 返回模版路径列表。
+	 */
 	public List<String> getTemplatePaths() {
+		List<String> templatePaths = new ArrayList<String>();
+		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
+			for (String templatePath : freeMarkerSettings.getTemplatePaths()) {
+				if (templatePaths.contains(templatePath)) {
+					throw new UncheckedException("加载模版路径[" + templatePath
+							+ "]时发生冲突。");
+				}
+				templatePaths.add(templatePath);
+			}
+		}
 		return templatePaths;
 	}
 
-	public void setTemplatePaths(List<String> templatePaths) {
-		this.templatePaths = templatePaths;
-	}
-
+	/**
+	 * 获取自动包含文件列表。
+	 * 
+	 * @return 返回自动包含文件列表。
+	 */
 	public List<String> getAutoIncludes() {
+		List<String> autoIncludes = new ArrayList<String>();
+		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
+			for (String autoInclude : freeMarkerSettings.getAutoIncludes()) {
+				if (autoIncludes.contains(autoInclude)) {
+					throw new UncheckedException("加载自动包含文件[" + autoInclude
+							+ "]时发生冲突。");
+				}
+				autoIncludes.add(autoInclude);
+			}
+		}
 		return autoIncludes;
 	}
 
-	public void setAutoIncludes(List<String> autoIncludes) {
-		this.autoIncludes = autoIncludes;
-	}
-
+	/**
+	 * 获取自动导入宏列表。
+	 * 
+	 * @return 返回自动导入宏列表。
+	 */
 	public Map<String, String> getAutoImports() {
+		Map<String, String> autoImports = new HashMap<String, String>();
+		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
+			for (Entry<String, String> autoImport : freeMarkerSettings
+					.getAutoImports().entrySet()) {
+				if (autoImports.containsKey(autoImport.getKey())) {
+					throw new UncheckedException("加载自动导入文件["
+							+ autoImport.getKey() + ":" + autoImport.getValue()
+							+ "]时发生冲突。");
+				}
+				autoImports.put(autoImport.getKey(), autoImport.getValue());
+			}
+		}
 		return autoImports;
-	}
-
-	public void setAutoImports(Map<String, String> autoImports) {
-		this.autoImports = autoImports;
 	}
 }

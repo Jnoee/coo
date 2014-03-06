@@ -7,21 +7,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- Freemarker -->
-	<bean id="baseFreemarkerConfigurer" abstract="true"
-		class="coo.mvc.config.FreeMarkerConfigurer">
-		<property name="templatePaths">
-			<list>
-				<value>classpath:/coo/mvc/macros/</value>
-				<value>classpath:/coo/mvc/templates/</value>
-			</list>
-		</property>
-		<property name="autoImports">
-			<map>
-				<entry key="s" value="mvc.ftl" />
-				<entry key="std" value="std.ftl" />
-				<entry key="dwz" value="dwz.ftl" />
-			</map>
-		</property>
+	<bean id="freemarkerConfigurer" class="coo.mvc.config.FreeMarkerConfigurer">
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="freemarkerSettings">
 			<props>

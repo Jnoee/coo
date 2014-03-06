@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import coo.base.exception.UncheckedException;
+import coo.base.exception.BusinessException;
 import coo.core.security.model.LoginModel;
 import coo.core.security.service.AbstractSecurityService;
 import coo.mvc.security.component.AuthCounter;
@@ -64,7 +64,7 @@ public abstract class AbstractLoginAction {
 					loginModel.getPassword());
 			authCounter.clean();
 			return "redirect:/index";
-		} catch (UncheckedException e) {
+		} catch (BusinessException e) {
 			errors.reject("user.not.exist", e.getMessage());
 			authCounter.add();
 			model.addAttribute(authCounter);
