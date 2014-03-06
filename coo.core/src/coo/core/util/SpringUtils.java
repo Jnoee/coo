@@ -22,6 +22,15 @@ public class SpringUtils implements ApplicationContextAware {
 	}
 
 	/**
+	 * 获取Spring容器的应用上下文。
+	 * 
+	 * @return 返回Spring容器的应用上下文。
+	 */
+	public static ApplicationContext getContext() {
+		return context;
+	}
+
+	/**
 	 * 从Spring容器中获取指定名称的Bean。
 	 * 
 	 * @param <T>
