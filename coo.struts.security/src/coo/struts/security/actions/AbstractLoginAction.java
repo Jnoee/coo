@@ -7,7 +7,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import com.opensymphony.xwork2.ModelDriven;
 
-import coo.base.exception.UncheckedException;
+import coo.base.exception.BusinessException;
 import coo.core.security.model.LoginModel;
 import coo.core.security.service.AbstractSecurityService;
 import coo.struts.actions.GenericAction;
@@ -34,7 +34,7 @@ public abstract class AbstractLoginAction extends GenericAction implements
 		try {
 			securityService.signIn(loginModel.getUsername(),
 					loginModel.getPassword());
-		} catch (UncheckedException e) {
+		} catch (BusinessException e) {
 			addActionError(e.getMessage());
 			return INPUT;
 		}
