@@ -28,7 +28,8 @@ public class PersonAction {
 	/**
 	 * 修改个人密码。
 	 * 
-	 * @return 返回修改个人密码页面。
+	 * @param model
+	 *            数据模型
 	 */
 	@RequestMapping("person-pwd-change")
 	public void pwdChange(Model model) {
@@ -38,7 +39,9 @@ public class PersonAction {
 	/**
 	 * 保存个人密码。
 	 * 
-	 * @return 返回保存个人密码成功提示。
+	 * @param pwdChangeModel
+	 *            修改密码表单Model
+	 * @return 返回保存个人密码提示信息。
 	 */
 	@RequestMapping("person-pwd-change-save")
 	public ModelAndView pwdChangeSave(PwdChangeModel pwdChangeModel) {
@@ -51,6 +54,8 @@ public class PersonAction {
 	/**
 	 * 切换职务。
 	 * 
+	 * @param actorId
+	 *            职务ID
 	 * @return 返回主页。
 	 */
 	@RequestMapping("person-actor-change")
