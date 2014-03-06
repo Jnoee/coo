@@ -47,6 +47,9 @@ public class SpringUtils implements ApplicationContextAware {
 	/**
 	 * 获取UuidEntity对象。
 	 * 
+	 * @param <T>
+	 *            实体类型
+	 * 
 	 * @param entityClass
 	 *            实体类
 	 * @param id

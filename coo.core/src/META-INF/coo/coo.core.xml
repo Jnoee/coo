@@ -20,10 +20,8 @@
 		<property name="maxWait" value="${db.maxWait:10000}" />
 	</bean>
 	<!-- 定义基本的Hibernate SessionFactory，供继承。 -->
-	<bean id="baseSessionFactory" abstract="true" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="coo.core.hibernate.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<!-- 加载自定义UserType -->
-		<property name="annotatedPackages" value="coo.core.hibernate.usertype" />
 		<property name="hibernateProperties">
 			<props>
 				<!-- 数据库适配器 -->

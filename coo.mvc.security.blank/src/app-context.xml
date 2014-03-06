@@ -20,14 +20,6 @@
 		<jdbc:script location="classpath:h2.sql" />
 	</jdbc:initialize-database>
 
-	<bean id="sessionFactory" parent="securitySessionFactory">
-		<property name="packagesToScan">
-			<list>
-				<value>coo.mvc.security.blank.entity</value>
-			</list>
-		</property>
-	</bean>
-
 	<!-- 加载应用组件 -->
 	<context:component-scan base-package="coo.mvc.security.blank" />
 </beans>
