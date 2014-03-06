@@ -11,7 +11,7 @@
 			<dl>
                 <dt>姓名：</dt>
                 <dd>
-                    <input name="user.name" size="30"  maxlength="20" class="required"/>
+                    <@s.input path="user.name" name="user.name" size="30"  maxlength="20" class="required"/>
                 </dd>
             </dl>
             <dl>
@@ -23,16 +23,16 @@
 			<div class="divider" />
             <dl>
                 <dt>关联机构：</dt>
-                <dd><@s.select path="actor.organ" items=rootOrgan.organTree itemLabel="selectText" itemValue="id" class="required" /></dd>
+                <dd><@s.select path="actor.organ" items=rootOrgan.organTree itemLabel="selectText" itemValue="id" class="required combox" /></dd>
 			</dl>
 			<dl>
                 <dt>关联角色：</dt>
-                <dd><@s.select path="actor.role" items=roles itemLabel="name" itemValue="id" class="required" onchange="userAdd_roleSelectorOnChange(this)" /></dd>
+                <dd><@s.select path="actor.role" items=roles itemLabel="name" itemValue="id" class="required combox" onchange="userAdd_roleSelectorOnChange(this)" /></dd>
             </dl>
             <dl>
                 <dt>职务名称：</dt>
                 <dd>
-                    <input name="actor.name" size="30" maxlength="20" class="required"  />
+                    <@s.input path="actor.name" name="actor.name" size="30" maxlength="20" class="required"  />
                 </dd>
             </dl>
         </div>

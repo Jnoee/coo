@@ -89,33 +89,38 @@
 </#macro>
 
 <#macro input path attributes...>
-    <@bind path/>
+    <@bind path />
+    <@replaceAttributes attributes />
     <@compress>
     <input type="text" id="${id}" name="${name}" value="${stringStatusValue}" ${getAttributes(attributes)} />
     </@compress>
 </#macro>
 
 <#macro password path attributes...>
-    <@bind path/>
+    <@bind path />
+    <@replaceAttributes attributes />
     <@compress>
     <input type="password" id="${id}" name="${name}" ${getAttributes(attributes)} />
     </@compress>
 </#macro>
 
 <#macro hidden path attributes...>
-    <@bind path/>
+    <@bind path />
+    <@replaceAttributes attributes />
     <input type="hidden" id="${id}" name="${name}" value="${stringStatusValue}" ${getAttributes(attributes)} />
 </#macro>
 
 <#macro textarea path attributes...>
-    <@bind path/>
+    <@bind path />
+    <@replaceAttributes attributes />
     <@compress>
     <textarea id="${id}" name="${name}" ${getAttributes(attributes)}>${stringStatusValue}</textarea>
     </@compress>
 </#macro>
 
 <#macro select path items itemValue itemLabel attributes...>
-    <@bind path/>
+    <@bind path />
+    <@replaceAttributes attributes />
     <select id="${id}" name="${name}" ${getAttributes(attributes)}>
         <@options items itemValue itemLabel status.value />
     </select>
@@ -131,7 +136,7 @@
 </#macro>
 
 <#macro radios path items itemValue itemLabel separator attributes...>
-    <@bind path/>
+    <@bind path />
     <@bindOptions items itemValue itemLabel status.value />
     <#list opts?keys as optKey>
         <#assign id="${id}${optKey_index}">
@@ -144,8 +149,12 @@
     </#list>
 </#macro>
 
+<#macro radio attributes...>
+    <input type="radio" ${getAttributes(attributes)} />
+</#macro>
+
 <#macro checkboxs path items itemValue itemLabel separator attributes...>
-    <@bind path/>
+    <@bind path />
     <@bindOptions items itemValue itemLabel status.actualValue />
     <#list opts?keys as optKey>
         <#assign id="${id}${optKey_index}">
@@ -159,9 +168,14 @@
 </#macro>
 
 <#macro checkbox path attributes...>
-    <@bind path />
-    <#assign isChecked = status.value?? && status.value?string=="true">
-    <input type="checkbox" id="${id}" name="${name}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
+    <#if path??>
+        <@bind path />
+        <@replaceAttributes attributes />
+        <#assign isChecked = status.value?? && status.value?string=="true">
+        <input type="checkbox" id="${id}" name="${name}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
+    <#else>
+        <input type="checkbox" ${getAttributes(attributes)} />
+    </#if>
 </#macro>
 
 <#macro errors path separator attributes...>
@@ -170,6 +184,17 @@
         <span ${getAttributes(attributes)}>${error}</span>
         <#if error_has_next>${separator}</#if>
     </#list>
+</#macro>
+
+<#macro replaceAttributes attributes>
+    <#if attributes?? && attributes?size gt 0>
+        <#if contains(attributes?keys, "id")>
+            <#assign id = attributes["id"]>
+        </#if>
+        <#if contains(attributes?keys, "name")>
+            <#assign name = attributes["name"]>
+        </#if>
+    </#if>
 </#macro>
 
 <#macro bindOptions items itemValue itemLabel values>
