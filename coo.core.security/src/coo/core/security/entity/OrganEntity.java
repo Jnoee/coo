@@ -37,7 +37,7 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	private O parent;
 	/** 名称 */
 	@NotEmpty
-	@Field
+	@Field(analyze = Analyze.NO)
 	@Log(text = "名称")
 	private String name;
 	/** 排序 */

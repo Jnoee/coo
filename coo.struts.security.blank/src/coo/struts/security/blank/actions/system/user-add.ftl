@@ -21,11 +21,11 @@
 			<div class="divider" />
             <dl>
                 <dt>关联机构：</dt>
-                <dd><@s.select name="defaultActor.organ" list="rootOrgan.organTree" listKey="id" listValue="selectText" cssClass="required" /></dd>
+                <dd><@s.select name="defaultActor.organ" list="rootOrgan.organTree" listKey="id" listValue="selectText" cssClass="required combox" /></dd>
 			</dl>
 			<dl>
                 <dt>关联角色：</dt>
-                <dd><@s.select name="defaultActor.role" list="roles" listKey="id" listValue="name" cssClass="required" onchange="userAdd_roleSelectorOnChange(this)" /></dd>
+                <dd><@s.select name="defaultActor.role" list="roles" listKey="id" listValue="name" cssClass="required combox" onchange="userAdd_roleSelectorOnChange(this)" /></dd>
             </dl>
             <dl>
                 <dt>职务名称：</dt>

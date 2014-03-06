@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -28,7 +29,7 @@ public abstract class RoleEntity<U extends UserEntity<U, A, ?>, A extends ActorE
 		extends ResourceEntity<U> {
 	/** 名称 */
 	@NotEmpty
-	@Field
+	@Field(analyze = Analyze.NO)
 	private String name;
 	/** 权限 */
 	@NotNull

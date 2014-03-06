@@ -5,6 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -42,7 +43,7 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	private R role;
 	/** 职务名称 */
 	@NotEmpty
-	@Field
+	@Field(analyze = Analyze.NO)
 	@Log(text = "职务名称")
 	private String name;
 

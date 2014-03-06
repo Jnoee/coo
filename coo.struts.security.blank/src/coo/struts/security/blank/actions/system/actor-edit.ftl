@@ -5,11 +5,11 @@
         <div class="pageFormContent" layoutH="60">
         	<dl>
                 <dt>关联机构：</dt>
-                <dd><@s.select name="actor.organ" list="rootOrgan.organTree" listKey="id" listValue="selectText" value="actor.organ.id" cssClass="required" /></dd>
+                <dd><@s.select name="actor.organ" list="rootOrgan.organTree" listKey="id" listValue="selectText" value="actor.organ.id" cssClass="required combox" /></dd>
 			</dl>
 			<dl>
                 <dt>关联角色：</dt>
-                <dd><@s.select name="actor.role" list="roles" listKey="id" listValue="name" value="actor.role.id" cssClass="required" onchange="actorEdit_roleSelectorOnChange(this)" /></dd>
+                <dd><@s.select name="actor.role" list="roles" listKey="id" listValue="name" value="actor.role.id" cssClass="required combox" onchange="actorEdit_roleSelectorOnChange(this)" /></dd>
             </dl>
             <dl>
                 <dt>职务名称：</dt>

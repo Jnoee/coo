@@ -25,10 +25,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import coo.base.exception.BusinessException;
-import coo.base.exception.UncheckedException;
 import coo.base.model.BitCode;
 import coo.base.model.Page;
-import coo.base.util.Assert;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.dao.Dao;
 import coo.core.hibernate.search.FullTextCriteria;
@@ -92,13 +90,13 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			loginRealm.clearCache();
 			bnLogger.log(username, "登录系统。");
 		} catch (DisabledAccountException de) {
-			throw new UncheckedException("用户被禁用。", de);
+			throw new BusinessException("用户被禁用。", de);
 		} catch (UnknownAccountException ue) {
-			throw new UncheckedException("用户不存在。", ue);
+			throw new BusinessException("用户不存在。", ue);
 		} catch (IncorrectCredentialsException ie) {
-			throw new UncheckedException("密码错误。", ie);
+			throw new BusinessException("密码错误。", ie);
 		} catch (AuthenticationException ae) {
-			throw new UncheckedException("登录失败。", ae);
+			throw new BusinessException("登录失败。", ae);
 		}
 	}
 
@@ -131,7 +129,9 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@AutoFillResourceEntity
 	public void createOrgan(O organ) {
-		Assert.notNull(organ.getParent(), "新增机构时必须指定上级机构。");
+		if (organ.getParent() == null) {
+			throw new BusinessException("新增机构时必须指定上级机构。");
+		}
 		organDao.save(organ);
 	}
 
@@ -192,6 +192,9 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@AutoFillResourceEntity
 	public void createRole(R role) {
+		if (!roleDao.isUnique(role, "name")) {
+			throw new BusinessException("角色名[" + role.getName() + "]已存在。");
+		}
 		roleDao.save(role);
 	}
 
@@ -204,6 +207,9 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@AutoFillResourceEntity
 	public void updateRole(R role) {
+		if (!roleDao.isUnique(role, "name")) {
+			throw new BusinessException("角色名[" + role.getName() + "]已存在。");
+		}
 		roleDao.merge(role);
 	}
 
@@ -278,8 +284,9 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@AutoFillResourceEntity
 	public void createUser(U user) {
-		Assert.isTrue(userDao.isUnique(user, "username"),
-				"用户名[" + user.getUsername() + "]已存在。");
+		if (!userDao.isUnique(user, "username")) {
+			throw new BusinessException("用户名[" + user.getUsername() + "]已存在。");
+		}
 		if (StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(loginRealm
 					.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
@@ -306,8 +313,9 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@AutoFillResourceEntity
 	public void updateUser(U user) {
-		Assert.isTrue(userDao.isUnique(user, "username"),
-				"用户名[" + user.getUsername() + "]已存在。");
+		if (!userDao.isUnique(user, "username")) {
+			throw new BusinessException("用户名[" + user.getUsername() + "]已存在。");
+		}
 		userDao.merge(user);
 	}
 
@@ -379,8 +387,9 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	public void changePassword(String oldPwd, String newPwd) {
 		U user = getCurrentUser();
-		Assert.isTrue(loginRealm.checkPassword(oldPwd, user.getPassword()),
-				"原密码错误。");
+		if (!loginRealm.checkPassword(oldPwd, user.getPassword())) {
+			throw new BusinessException("原密码错误。");
+		}
 		user.setPassword(loginRealm.encryptPassword(newPwd));
 		userDao.merge(user);
 	}
@@ -430,7 +439,9 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	public void deleteActor(String actorId) {
 		A actor = getActor(actorId);
-		Assert.isTrue(!actor.isDefaultActor(), "该职务被设置为用户默认职务无法删除。");
+		if (actor.isDefaultActor()) {
+			throw new BusinessException("该职务被设置为用户默认职务无法删除。");
+		}
 		actorDao.remove(actor);
 	}
 
@@ -445,7 +456,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		U currentUser = getCurrentUser();
 		A actor = getActor(actorId);
 		if (!currentUser.getActors().contains(actor)) {
-			throw new UncheckedException("试图切换为非法的职务");
+			throw new BusinessException("试图切换为非法的职务");
 		}
 		currentUser.getSettings().setDefaultActor(actor);
 		currentUser = userDao.merge(currentUser);
