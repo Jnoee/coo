@@ -35,8 +35,21 @@
 		<property name="exposeSpringMacroHelpers" value="true" />
 	</bean>
 
+	<!-- 国际化配置 -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+
 	<!-- 异常处理配置 -->
 	<bean id="exceptionResolver" class="coo.mvc.handler.DwzExceptionResolver" />
+
+	<!-- 验证配置 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
 
 	<!-- 转换器配置 -->
 	<bean id="conversionService" class="coo.mvc.converter.ConversionServiceFactoryBean" />

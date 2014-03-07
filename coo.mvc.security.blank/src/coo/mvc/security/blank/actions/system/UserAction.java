@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.model.SearchModel;
 import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
@@ -29,7 +29,7 @@ public class UserAction {
 	@Resource
 	private SecurityService securityService;
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 绑定用户。
@@ -97,7 +97,7 @@ public class UserAction {
 		user.setSettings(settings);
 		securityService.createUser(user);
 		return DwzResultUtils.close(
-				messageConfig.getString("user.add.success"), "user-list");
+				messageSource.get("user.add.success"), "user-list");
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class UserAction {
 	public ModelAndView update(User user) {
 		securityService.updateUser(user);
 		return DwzResultUtils.close(
-				messageConfig.getString("user.edit.success"), "user-list");
+				messageSource.get("user.edit.success"), "user-list");
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class UserAction {
 	public ModelAndView disable(String userId) {
 		securityService.disableUser(userId);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("user.disable.success"), "user-list");
+				messageSource.get("user.disable.success"), "user-list");
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class UserAction {
 	public ModelAndView enable(String userId) {
 		securityService.enableUser(userId);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("user.enable.success"), "user-list");
+				messageSource.get("user.enable.success"), "user-list");
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class UserAction {
 	@RequestMapping("user-pwd-reset-save")
 	public ModelAndView pwdResetSave(String managePassword, User user) {
 		securityService.resetPassword(managePassword, user.getId());
-		return DwzResultUtils.close(messageConfig
-				.getString("user.pwd.reset.success"));
+		return DwzResultUtils.close(messageSource
+				.get("user.pwd.reset.success"));
 	}
 }

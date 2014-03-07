@@ -53,7 +53,7 @@ public class CompanyAction extends GenericAction {
 	public String save() {
 		companyService.createCompany(company);
 		return AjaxResultUtils.close(
-				messageConfig.getString("company.add.success"), "company-list");
+				messageSource.get("company.add.success"), "company-list");
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class CompanyAction extends GenericAction {
 	public String update() {
 		companyService.updateCompany(company);
 		return AjaxResultUtils
-				.close(messageConfig.getString("company.edit.success"),
+				.close(messageSource.get("company.edit.success"),
 						"company-list");
 	}
 
@@ -91,7 +91,7 @@ public class CompanyAction extends GenericAction {
 		String companyId = request.getParameter("companyId");
 		companyService.deleteCompany(companyId);
 		return AjaxResultUtils.refresh(
-				messageConfig.getString("company.delete.success"),
+				messageSource.get("company.delete.success"),
 				"company-list");
 	}
 

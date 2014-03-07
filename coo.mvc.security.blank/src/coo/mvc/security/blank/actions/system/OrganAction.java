@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
 import coo.mvc.security.blank.entity.Organ;
@@ -21,11 +21,10 @@ import coo.mvc.util.DwzResultUtils;
 @RequestMapping("/system")
 @Auth(AdminPermission.CODE)
 public class OrganAction {
-
 	@Resource
 	private SecurityService securityService;
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 查看机构列表。
@@ -67,7 +66,7 @@ public class OrganAction {
 	public ModelAndView save(Organ organ) {
 		securityService.createOrgan(organ);
 		return DwzResultUtils.close(
-				messageConfig.getString("organ.add.success"), "organ-list");
+				messageSource.get("organ.add.success"), "organ-list");
 	}
 
 	/**
@@ -98,7 +97,7 @@ public class OrganAction {
 	public ModelAndView update(Organ organ) {
 		securityService.updateOrgan(organ);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("organ.edit.success"), "organ-list");
+				messageSource.get("organ.edit.success"), "organ-list");
 	}
 
 	/**
@@ -112,7 +111,7 @@ public class OrganAction {
 	public ModelAndView delete(String orgnId) {
 		securityService.deleteOrgan(orgnId);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("organ.delete.success"), "organ-list");
+				messageSource.get("organ.delete.success"), "organ-list");
 	}
 
 }

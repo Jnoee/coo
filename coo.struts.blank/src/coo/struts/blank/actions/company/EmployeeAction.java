@@ -63,7 +63,7 @@ public class EmployeeAction extends GenericAction implements
 	public String save() {
 		employeeService.createEmployee(employee);
 		return AjaxResultUtils.close(
-				messageConfig.getString("employee.add.success"),
+				messageSource.get("employee.add.success"),
 				"employee-list");
 	}
 
@@ -89,7 +89,7 @@ public class EmployeeAction extends GenericAction implements
 	public String update() {
 		employeeService.updateEmployee(employee);
 		return AjaxResultUtils.close(
-				messageConfig.getString("employee.edit.success"),
+				messageSource.get("employee.edit.success"),
 				"employee-list");
 	}
 
@@ -103,7 +103,7 @@ public class EmployeeAction extends GenericAction implements
 		String employeeId = request.getParameter("employeeId");
 		employeeService.deleteEmployee(employeeId);
 		return AjaxResultUtils.refresh(
-				messageConfig.getString("employee.delete.success"),
+				messageSource.get("employee.delete.success"),
 				"employee-list");
 	}
 

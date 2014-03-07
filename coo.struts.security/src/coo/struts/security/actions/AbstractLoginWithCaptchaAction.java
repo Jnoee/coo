@@ -28,7 +28,7 @@ public abstract class AbstractLoginWithCaptchaAction extends
 	public String auth() {
 		if (authCounter.isOver()) {
 			if (!captcha.validate()) {
-				addActionError("验证码错误。");
+				addActionError(getMessage("security.code.wrong"));
 				return INPUT;
 			}
 		}

@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.core.security.model.PwdChangeModel;
 import coo.mvc.security.blank.service.SecurityService;
@@ -23,7 +23,7 @@ public class PersonAction {
 	@Resource
 	private SecurityService securityService;
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 修改个人密码。
@@ -47,8 +47,8 @@ public class PersonAction {
 	public ModelAndView pwdChangeSave(PwdChangeModel pwdChangeModel) {
 		securityService.changePassword(pwdChangeModel.getOldPwd(),
 				pwdChangeModel.getNewPwd());
-		return DwzResultUtils.close(messageConfig
-				.getString("person.pwd.change.success"));
+		return DwzResultUtils.close(messageSource
+				.get("person.pwd.change.success"));
 	}
 
 	/**

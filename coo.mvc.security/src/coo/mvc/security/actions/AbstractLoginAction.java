@@ -54,7 +54,7 @@ public abstract class AbstractLoginAction {
 	public String auth(LoginModel loginModel, BindingResult errors, Model model) {
 		if (authCounter.isOver()) {
 			if (!captcha.validate(loginModel.getCode())) {
-				errors.reject("verify.code.error", "验证码错误。");
+				errors.reject("security.code.wrong");
 				model.addAttribute(authCounter);
 				return "login";
 			}
@@ -65,7 +65,7 @@ public abstract class AbstractLoginAction {
 			authCounter.clean();
 			return "redirect:/index";
 		} catch (BusinessException e) {
-			errors.reject("user.not.exist", e.getMessage());
+			errors.reject("none", e.getMessage());
 			authCounter.add();
 			model.addAttribute(authCounter);
 			return "login";

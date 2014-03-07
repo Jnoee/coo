@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.model.SearchModel;
 import coo.mvc.blank.entity.Employee;
 import coo.mvc.blank.service.CompanyService;
@@ -25,7 +25,7 @@ public class EmployeeAction {
 	@Resource
 	private CompanyService companyService;
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 查看职员列表。
@@ -65,7 +65,7 @@ public class EmployeeAction {
 	public ModelAndView save(Employee employee) {
 		employeeService.createEmployee(employee);
 		return DwzResultUtils.close(
-				messageConfig.getString("employee.add.success"),
+				messageSource.get("employee.add.success"),
 				"employee-list");
 	}
 
@@ -95,7 +95,7 @@ public class EmployeeAction {
 	public ModelAndView update(Employee employee) {
 		employeeService.updateEmployee(employee);
 		return DwzResultUtils.close(
-				messageConfig.getString("employee.edit.success"),
+				messageSource.get("employee.edit.success"),
 				"employee-list");
 	}
 
@@ -111,7 +111,7 @@ public class EmployeeAction {
 	public ModelAndView delete(String employeeId) {
 		employeeService.deleteEmployee(employeeId);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("employee.delete.success"),
+				messageSource.get("employee.delete.success"),
 				"employee-list");
 	}
 }

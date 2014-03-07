@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.mvc.security.blank.entity.Company;
 import coo.mvc.security.blank.service.CompanyService;
@@ -23,7 +23,7 @@ public class CompanyAction {
 	@Resource
 	private CompanyService companyService;
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 查看公司列表。
@@ -58,7 +58,7 @@ public class CompanyAction {
 	public ModelAndView save(Company company) {
 		companyService.createCompany(company);
 		return DwzResultUtils.close(
-				messageConfig.getString("company.add.success"), "company-list");
+				messageSource.get("company.add.success"), "company-list");
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class CompanyAction {
 	public ModelAndView update(Company company) {
 		companyService.updateCompany(company);
 		return DwzResultUtils
-				.close(messageConfig.getString("company.edit.success"),
+				.close(messageSource.get("company.edit.success"),
 						"company-list");
 	}
 
@@ -100,7 +100,7 @@ public class CompanyAction {
 	public ModelAndView delete(String companyId) {
 		companyService.deleteCompany(companyId);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("company.delete.success"),
+				messageSource.get("company.delete.success"),
 				"company-list");
 	}
 }

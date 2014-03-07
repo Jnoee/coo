@@ -48,8 +48,7 @@
 		</property>
 	</bean>
 	<!-- 定义事务管理 -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<!-- 设置事务的annotation生效 -->

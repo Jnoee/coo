@@ -11,7 +11,7 @@ import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 
 /**
  * 常规Action基类，实现获取Servlet的request/response/context对象的接口，使其子类Action可以直接使用这些对象。
@@ -19,7 +19,7 @@ import coo.core.message.MessageConfig;
 public abstract class GenericAction extends ActionSupport implements
 		ServletRequestAware, ServletResponseAware, ServletContextAware {
 	@Resource
-	protected MessageConfig messageConfig;
+	protected MessageSource messageSource;
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
 	protected ServletContext context;
@@ -34,7 +34,7 @@ public abstract class GenericAction extends ActionSupport implements
 	 * @return 返回配置文字信息。
 	 */
 	public String getMessage(String code, Object... vars) {
-		return messageConfig.getString(code, vars);
+		return messageSource.get(code, vars);
 	}
 
 	@Override
