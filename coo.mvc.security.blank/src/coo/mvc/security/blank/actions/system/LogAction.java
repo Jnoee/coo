@@ -1,6 +1,7 @@
 package coo.mvc.security.blank.actions.system;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,23 +13,21 @@ import coo.core.security.permission.AdminPermission;
 import coo.core.security.service.BnLogger;
 
 /**
- * @Description：日志管理
- * @author 李新文 创建日期：2014年3月3日
+ * 日志管理。
  */
 @Controller
 @RequestMapping("/system")
 @Auth(AdminPermission.CODE)
 public class LogAction {
 
-	@Autowired
+	@Resource
 	private BnLogger bnLogger;
 
 	/**
-	 * 查询日志列表。
+	 * 查看日志列表。
 	 * 
 	 * @param model
 	 *            数据模型
-	 * 
 	 * @param searchModel
 	 *            搜索条件
 	 */
@@ -38,11 +37,10 @@ public class LogAction {
 	}
 
 	/**
-	 * 查询日志详情。
+	 * 查看日志详细记录。
 	 * 
 	 * @param logId
-	 *            日志Id
-	 * 
+	 *            日志ID
 	 * @param model
 	 *            数据模型
 	 */

@@ -1,6 +1,7 @@
 package coo.mvc.security.blank.actions.system;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,22 +14,21 @@ import coo.core.security.permission.AdminPermission;
 import coo.mvc.util.DwzResultUtils;
 
 /**
- * @Description：全文索引
- * @author 李新文 创建日期：2014年3月3日
+ * 全文索引管理。
  */
 @Controller
 @RequestMapping("/system")
 @Auth(AdminPermission.CODE)
 public class FullTextIndexAction {
 
-	@Autowired
+	@Resource
 	private FullTextIndexer fullTextIndexer;
 
-	@Autowired
+	@Resource
 	private MessageConfig messageConfig;
 
 	/**
-	 * 查看全文索引信息。
+	 * 查看全文索引选择页面。
 	 * 
 	 * @param model
 	 *            数据模型
@@ -40,12 +40,11 @@ public class FullTextIndexAction {
 	}
 
 	/**
-	 * 重建全文索引。
+	 * 重建选中的全文索引。
 	 * 
 	 * @param entityClasses
-	 *            全文索引数组
-	 * 
-	 * @return 返回提示信息
+	 *            关联索引名称
+	 * @return 返回操作成功信息。
 	 */
 	@RequestMapping("full-text-index-build")
 	public ModelAndView build(Class<?>[] entityClasses) {
