@@ -142,6 +142,33 @@ public abstract class StringUtils {
 	}
 
 	/**
+	 * 截取两个分隔符之间的字符串。
+	 * 
+	 * @param str
+	 *            待截取的字符串
+	 * @param startSeparator
+	 *            开始分隔符
+	 * @param endSeparator
+	 *            结束分隔符
+	 * @return 返回两个分隔符之间的字符串。
+	 */
+	public static String substringBetween(String str, String startSeparator,
+			String endSeparator) {
+		if (str == null || startSeparator == null || endSeparator == null) {
+			return null;
+		}
+		int start = str.indexOf(startSeparator);
+		if (start != -1) {
+			int end = str
+					.indexOf(endSeparator, start + startSeparator.length());
+			if (end != -1) {
+				return str.substring(start + startSeparator.length(), end);
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * 截取指定起始位置和截取长度的字符串。
 	 * 
 	 * @param str
