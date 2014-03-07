@@ -49,6 +49,10 @@
 			<include name="**/*.java" />
 			<include name="**/*.ftl" />
 		</replace>
+		<replace dir="${new.project.src}" encoding="UTF-8" token="${old.project.package.path}" value="${new.project.package.path}">
+			<include name="**/*.java" />
+			<include name="**/*.ftl" />
+		</replace>
 	</target>
 	<target name="destroy" description="清理多余目录和文件">
 		<delete dir="src/coo" />

@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
 import coo.core.security.permission.PermissionConfig;
@@ -30,7 +30,7 @@ public class RoleAction {
 	@Resource
 	private PermissionConfig permissionConfig;
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 查看角色列表。
@@ -72,7 +72,7 @@ public class RoleAction {
 				.asList(permissionIds)));
 		securityService.createRole(role);
 		return DwzResultUtils.close(
-				messageConfig.getString("role.add.success"), "role-list");
+				messageSource.get("role.add.success"), "role-list");
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class RoleAction {
 				.asList(permissionIds)));
 		securityService.updateRole(role);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("role.edit.success"), "role-list");
+				messageSource.get("role.edit.success"), "role-list");
 	}
 
 }

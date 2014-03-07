@@ -15,22 +15,6 @@
 		<property name="successUrl" value="/" />
 	</bean>
 
-	<!-- 安全相关FreeMarker配置 -->
-	<bean id="securityFreemarkerConfigurer" abstract="true"
-		parent="baseFreemarkerConfigurer">
-		<property name="templatePaths">
-			<list>
-				<value>classpath:/coo/mvc/security/macros/</value>
-				<value>classpath:/coo/mvc/security/actions/</value>
-			</list>
-		</property>
-		<property name="autoIncludes">
-			<list>
-				<value>security.ftl</value>
-			</list>
-		</property>
-	</bean>
-
 	<!-- 安全相关异常处理配置 -->
 	<bean id="exceptionResolver" class="coo.mvc.security.handler.DwzSecurityExceptionResolver">
 		<property name="exceptionMappings">

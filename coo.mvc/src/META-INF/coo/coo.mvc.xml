@@ -7,21 +7,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- Freemarker -->
-	<bean id="baseFreemarkerConfigurer" abstract="true"
-		class="coo.mvc.config.FreeMarkerConfigurer">
-		<property name="templatePaths">
-			<list>
-				<value>classpath:/coo/mvc/macros/</value>
-				<value>classpath:/coo/mvc/templates/</value>
-			</list>
-		</property>
-		<property name="autoImports">
-			<map>
-				<entry key="s" value="mvc.ftl" />
-				<entry key="std" value="std.ftl" />
-				<entry key="dwz" value="dwz.ftl" />
-			</map>
-		</property>
+	<bean id="freemarkerConfigurer" class="coo.mvc.config.FreeMarkerConfigurer">
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="freemarkerSettings">
 			<props>
@@ -49,8 +35,21 @@
 		<property name="exposeSpringMacroHelpers" value="true" />
 	</bean>
 
+	<!-- 国际化配置 -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+
 	<!-- 异常处理配置 -->
 	<bean id="exceptionResolver" class="coo.mvc.handler.DwzExceptionResolver" />
+
+	<!-- 验证配置 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
 
 	<!-- 转换器配置 -->
 	<bean id="conversionService" class="coo.mvc.converter.ConversionServiceFactoryBean" />

@@ -179,7 +179,9 @@
 </#macro>
 
 <#macro errors path separator attributes...>
-    <@bind path />
+    <#if path??>
+        <@bind path />
+    </#if>
     <#list status.errorMessages as error>
         <span ${getAttributes(attributes)}>${error}</span>
         <#if error_has_next>${separator}</#if>

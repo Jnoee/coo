@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import coo.core.hibernate.search.FullTextIndexer;
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
 import coo.mvc.util.DwzResultUtils;
@@ -20,12 +20,10 @@ import coo.mvc.util.DwzResultUtils;
 @RequestMapping("/system")
 @Auth(AdminPermission.CODE)
 public class FullTextIndexAction {
-
 	@Resource
 	private FullTextIndexer fullTextIndexer;
-
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 查看全文索引选择页面。
@@ -50,7 +48,7 @@ public class FullTextIndexAction {
 	public ModelAndView build(Class<?>[] entityClasses) {
 		fullTextIndexer.startAndWait(entityClasses);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("full.text.index.build.success"),
+				messageSource.get("full.text.index.build.success"),
 				"entity-list");
 	}
 }

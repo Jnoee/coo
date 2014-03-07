@@ -20,33 +20,6 @@
 		<jdbc:script location="classpath:h2.sql" />
 	</jdbc:initialize-database>
 
-	<bean id="sessionFactory" parent="securitySessionFactory">
-		<property name="packagesToScan">
-			<list>
-				<value>coo.mvc.security.blank.entity</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="freemarkerConfigurer" parent="securityFreemarkerConfigurer">
-		<property name="templateLoaderPaths" value="classpath:/coo/mvc/security/blank/actions/" />
-		<property name="enumPackages">
-			<list>
-				<value>coo.mvc.security.blank.enums</value>
-			</list>
-		</property>
-		<property name="templatePaths">
-			<list>
-				<value>classpath:/coo/mvc/security/blank/macros/</value>
-			</list>
-		</property>
-		<property name="autoImports">
-			<map>
-				<entry key="system" value="system.ftl" />
-			</map>
-		</property>
-	</bean>
-
 	<!-- 加载应用组件 -->
 	<context:component-scan base-package="coo.mvc.security.blank" />
 </beans>

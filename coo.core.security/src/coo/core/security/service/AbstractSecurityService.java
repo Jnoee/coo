@@ -24,12 +24,12 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import coo.base.exception.BusinessException;
 import coo.base.model.BitCode;
 import coo.base.model.Page;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.dao.Dao;
 import coo.core.hibernate.search.FullTextCriteria;
+import coo.core.message.MessageSource;
 import coo.core.model.SearchModel;
 import coo.core.security.annotations.AutoFillResourceEntity;
 import coo.core.security.constants.AdminIds;
@@ -72,6 +72,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	protected PermissionConfig permissionConfig;
 	@Resource
 	protected BnLogger bnLogger;
+	@Resource
+	protected MessageSource messageSource;
 
 	/**
 	 * 登录。
@@ -88,15 +90,15 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			Subject subject = SecurityUtils.getSubject();
 			subject.login(token);
 			loginRealm.clearCache();
-			bnLogger.log(username, "登录系统。");
+			bnLogger.log(username, messageSource.get("login.success"));
 		} catch (DisabledAccountException de) {
-			throw new BusinessException("用户被禁用。", de);
+			messageSource.thrown(de, "user.disabled");
 		} catch (UnknownAccountException ue) {
-			throw new BusinessException("用户不存在。", ue);
+			messageSource.thrown(ue, "user.not.exist");
 		} catch (IncorrectCredentialsException ie) {
-			throw new BusinessException("密码错误。", ie);
+			messageSource.thrown(ie, "password.wrong");
 		} catch (AuthenticationException ae) {
-			throw new BusinessException("登录失败。", ae);
+			messageSource.thrown(ae, "login.failed");
 		}
 	}
 
@@ -130,7 +132,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@AutoFillResourceEntity
 	public void createOrgan(O organ) {
 		if (organ.getParent() == null) {
-			throw new BusinessException("新增机构时必须指定上级机构。");
+			messageSource.thrown("organ.add.no.parent");
 		}
 		organDao.save(organ);
 	}
@@ -193,7 +195,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@AutoFillResourceEntity
 	public void createRole(R role) {
 		if (!roleDao.isUnique(role, "name")) {
-			throw new BusinessException("角色名[" + role.getName() + "]已存在。");
+			messageSource.thrown("role.name.exist", role.getName());
 		}
 		roleDao.save(role);
 	}
@@ -208,7 +210,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@AutoFillResourceEntity
 	public void updateRole(R role) {
 		if (!roleDao.isUnique(role, "name")) {
-			throw new BusinessException("角色名[" + role.getName() + "]已存在。");
+			messageSource.thrown("role.name.exist", role.getName());
 		}
 		roleDao.merge(role);
 	}
@@ -285,7 +287,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@AutoFillResourceEntity
 	public void createUser(U user) {
 		if (!userDao.isUnique(user, "username")) {
-			throw new BusinessException("用户名[" + user.getUsername() + "]已存在。");
+			messageSource.thrown("username.exist", user.getUsername());
 		}
 		if (StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(loginRealm
@@ -314,7 +316,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@AutoFillResourceEntity
 	public void updateUser(U user) {
 		if (!userDao.isUnique(user, "username")) {
-			throw new BusinessException("用户名[" + user.getUsername() + "]已存在。");
+			messageSource.thrown("username.exist", user.getUsername());
 		}
 		userDao.merge(user);
 	}
@@ -368,7 +370,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	public void resetPassword(String managePassword, String userId) {
 		if (!loginRealm.checkPassword(managePassword, getCurrentUser()
 				.getPassword())) {
-			throw new BusinessException("管理员密码错误。");
+			messageSource.thrown("admin.password.wrong");
 		}
 		U user = getUser(userId);
 		user.setPassword(loginRealm
@@ -388,7 +390,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	public void changePassword(String oldPwd, String newPwd) {
 		U user = getCurrentUser();
 		if (!loginRealm.checkPassword(oldPwd, user.getPassword())) {
-			throw new BusinessException("原密码错误。");
+			messageSource.thrown("old.password.wrong");
 		}
 		user.setPassword(loginRealm.encryptPassword(newPwd));
 		userDao.merge(user);
@@ -440,7 +442,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	public void deleteActor(String actorId) {
 		A actor = getActor(actorId);
 		if (actor.isDefaultActor()) {
-			throw new BusinessException("该职务被设置为用户默认职务无法删除。");
+			messageSource.thrown("default.actor.not.allow.delete");
 		}
 		actorDao.remove(actor);
 	}
@@ -456,7 +458,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		U currentUser = getCurrentUser();
 		A actor = getActor(actorId);
 		if (!currentUser.getActors().contains(actor)) {
-			throw new BusinessException("试图切换为非法的职务");
+			messageSource.thrown("actor.change.not.allow");
 		}
 		currentUser.getSettings().setDefaultActor(actor);
 		currentUser = userDao.merge(currentUser);

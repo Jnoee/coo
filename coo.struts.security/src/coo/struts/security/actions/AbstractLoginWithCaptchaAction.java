@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
-import coo.base.exception.UncheckedException;
+import coo.base.exception.BusinessException;
 import coo.struts.security.component.AuthCounter;
 import coo.struts.security.component.Captcha;
 
@@ -28,7 +28,7 @@ public abstract class AbstractLoginWithCaptchaAction extends
 	public String auth() {
 		if (authCounter.isOver()) {
 			if (!captcha.validate()) {
-				addActionError("验证码错误。");
+				addActionError(getMessage("security.code.wrong"));
 				return INPUT;
 			}
 		}
@@ -36,7 +36,7 @@ public abstract class AbstractLoginWithCaptchaAction extends
 			securityService.signIn(loginModel.getUsername(),
 					loginModel.getPassword());
 			authCounter.clean();
-		} catch (UncheckedException e) {
+		} catch (BusinessException e) {
 			addActionError(e.getMessage());
 			authCounter.add();
 			return INPUT;

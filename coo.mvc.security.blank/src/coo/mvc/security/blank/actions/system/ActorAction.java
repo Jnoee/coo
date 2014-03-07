@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import coo.core.message.MessageConfig;
+import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
 import coo.mvc.security.blank.entity.Actor;
@@ -24,7 +24,7 @@ public class ActorAction {
 	@Resource
 	private SecurityService securityService;
 	@Resource
-	private MessageConfig messageConfig;
+	private MessageSource messageSource;
 
 	/**
 	 * 新增职务。
@@ -49,13 +49,13 @@ public class ActorAction {
 	 * 
 	 * @param actor
 	 *            职务
-	 * @return 返回提示信息
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("actor-save")
 	public ModelAndView save(Actor actor) {
 		securityService.createActor(actor);
 		return DwzResultUtils.close(
-				messageConfig.getString("actor.add.success"), "user-edit");
+				messageSource.get("actor.add.success"), "user-edit");
 	}
 
 	/**
@@ -79,13 +79,13 @@ public class ActorAction {
 	 * 
 	 * @param actor
 	 *            职务
-	 * @return 返回提示信息
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("actor-update")
 	public ModelAndView update(Actor actor) {
 		securityService.updateActor(actor);
 		return DwzResultUtils.close(
-				messageConfig.getString("actor.update.success"), "user-edit");
+				messageSource.get("actor.update.success"), "user-edit");
 	}
 
 	/**
@@ -93,12 +93,12 @@ public class ActorAction {
 	 * 
 	 * @param actorId
 	 *            职务ID
-	 * @return 返回提示信息
+	 * @return 返回提示信息。
 	 */
 	@RequestMapping("actor-delete")
 	public ModelAndView delete(String actorId) {
 		securityService.deleteActor(actorId);
 		return DwzResultUtils.refresh(
-				messageConfig.getString("actor.delete.success"), "user-edit");
+				messageSource.get("actor.delete.success"), "user-edit");
 	}
 }
