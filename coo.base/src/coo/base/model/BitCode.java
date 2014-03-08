@@ -155,15 +155,32 @@ public class BitCode implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return code.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
+		return result;
 	}
 
 	@Override
-	public boolean equals(Object dest) {
-		if (dest == null) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
-		return code.equals(dest.toString());
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		BitCode other = (BitCode) obj;
+		if (code == null) {
+			if (other.code != null) {
+				return false;
+			}
+		} else if (!code.equals(other.code)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
