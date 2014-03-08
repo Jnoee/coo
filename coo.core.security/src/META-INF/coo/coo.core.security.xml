@@ -14,6 +14,12 @@
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="loginRealm" />
 	</bean>
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login" />
+		<property name="unauthorizedUrl" value="/login" />
+		<property name="successUrl" value="/" />
+	</bean>
 	<!-- 加载ResourceEntity切面 -->
 	<bean id="resourceEntityAspect" class="coo.core.security.aspect.ResourceEntityAspect" />
 </beans>
