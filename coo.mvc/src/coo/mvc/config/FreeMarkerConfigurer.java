@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 
 import javax.servlet.ServletContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.freemarker.SpringTemplateLoader;
 
 import coo.base.exception.UncheckedException;
@@ -27,6 +29,7 @@ import freemarker.template.TemplateModelException;
  */
 public class FreeMarkerConfigurer extends
 		org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer {
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private ServletContext servletContext;
 	private List<AbstractFreeMarkerSettings> settings = new ArrayList<AbstractFreeMarkerSettings>();
 
@@ -63,6 +66,7 @@ public class FreeMarkerConfigurer extends
 		for (String templatePath : getTemplatePaths()) {
 			templateLoaders.add(new SpringTemplateLoader(getResourceLoader(),
 					templatePath));
+			log.debug("加载模版路径[{}]。", templatePath);
 		}
 	}
 
@@ -80,6 +84,8 @@ public class FreeMarkerConfigurer extends
 				IEnum.class, getEnumPackages())) {
 			getConfiguration().setSharedVariable(enumClass.getSimpleName(),
 					enums.get(enumClass.getName()));
+			log.debug("初始化枚举变量[{}:{}]。", enumClass.getSimpleName(),
+					enumClass.getName());
 		}
 	}
 
@@ -96,6 +102,8 @@ public class FreeMarkerConfigurer extends
 		for (Class<?> staticClass : getStaticClasses()) {
 			getConfiguration().setSharedVariable(staticClass.getSimpleName(),
 					statics.get(staticClass.getName()));
+			log.debug("初始化静态变量[{}:{}]。", staticClass.getSimpleName(),
+					staticClass.getName());
 		}
 	}
 

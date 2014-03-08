@@ -77,7 +77,7 @@ public abstract class AbstractFreeMarkerSettings implements
 
 	@Override
 	public int compareTo(AbstractFreeMarkerSettings other) {
-		return other.getOrder() - getOrder();
+		return other.getOrder() - order;
 	}
 
 	public Integer getOrder() {
