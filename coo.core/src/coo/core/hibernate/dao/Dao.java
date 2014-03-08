@@ -40,7 +40,7 @@ import coo.core.hibernate.search.FullTextCriteria;
  *            业务实体类型
  */
 public class Dao<T> {
-	private Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
 	private SessionFactory sessionFactory;
 	private Class<T> clazz;
@@ -537,7 +537,7 @@ public class Dao<T> {
 			// 这里捕捉后忽略该异常
 			total = fullTextQuery.getResultSize();
 		} catch (Exception e) {
-			log.warn("实体 " + clazz + " 全文索引文件尚未生成。", e);
+			log.warn("实体[" + clazz + "]全文索引文件尚未生成。", e);
 		}
 		if (total < 1) {
 			return new Page<T>(pageSize);

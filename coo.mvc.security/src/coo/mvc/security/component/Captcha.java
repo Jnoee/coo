@@ -20,7 +20,7 @@ import coo.core.captcha.CaptchaImageGenerator;
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Captcha implements Serializable {
-	private Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
 	private CaptchaImageGenerator captchaImageGenerator;
 	@Resource
@@ -35,7 +35,7 @@ public class Captcha implements Serializable {
 	 */
 	public BufferedImage generateImage() {
 		correctCode = generateCode();
-		log.debug("生成验证码: " + correctCode);
+		log.debug("生成验证码[{}]。", correctCode);
 		return captchaImageGenerator.generateImage(correctCode);
 	}
 

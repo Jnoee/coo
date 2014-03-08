@@ -47,13 +47,12 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 		lock.lock();
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
-				log.info("开始重建 " + indexedEntityClass.getSimpleName()
-						+ " 全文索引...");
+				log.info("开始重建[{}]全文索引...", indexedEntityClass.getSimpleName());
 				Long startTime = System.currentTimeMillis();
 				session.createIndexer(indexedEntityClass).startAndWait();
 				Long endTime = System.currentTimeMillis();
-				log.info("完成重建 " + indexedEntityClass.getSimpleName()
-						+ " 全文索引...耗时" + (endTime - startTime) + "毫秒。");
+				log.info("完成重建[{}]全文索引...耗时[{}]毫秒。",
+						indexedEntityClass.getSimpleName(), endTime - startTime);
 			}
 		} catch (Exception e) {
 			throw new UncheckedException("重建全文索引时发生异常。", e);
@@ -72,8 +71,7 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 		lock.lock();
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
-				log.info("异步重建 " + indexedEntityClass.getSimpleName()
-						+ " 全文索引。");
+				log.info("异步重建[{}]全文索引。", indexedEntityClass.getSimpleName());
 				session.createIndexer(indexedEntityClass).start();
 			}
 		} catch (Exception e) {

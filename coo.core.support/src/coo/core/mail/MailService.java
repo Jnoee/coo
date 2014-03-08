@@ -19,7 +19,7 @@ import coo.base.exception.UncheckedException;
  */
 @Component
 public class MailService {
-	private Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
 	private JavaMailSender mailSender;
 	@Resource

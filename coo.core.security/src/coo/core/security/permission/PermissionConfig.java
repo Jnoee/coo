@@ -24,10 +24,10 @@ import coo.core.util.SpringUtils;
  */
 @Component
 public class PermissionConfig {
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private static final String PERMISSION_DIR = "/META-INF/coo/";
 	private static final String PERMISSION_PATH = "classpath*:"
 			+ PERMISSION_DIR + "*permissions.xml";
-	private Logger log = LoggerFactory.getLogger(getClass());
 	private Permissions permissions = new Permissions();
 	private List<Permission> allPermissions = new ArrayList<Permission>();
 
@@ -58,8 +58,7 @@ public class PermissionConfig {
 		xstream.processAnnotations(new Class[] { Permissions.class,
 				PermissionGroup.class, Permission.class });
 		for (Resource permissionResource : permissionResources) {
-			log.debug("加载权限配置文件[" + permissionResource.getURI().toString()
-					+ "]...");
+			log.debug("加载权限配置文件[{}]...", permissionResource.getURI().toString());
 			permissions.merge((Permissions) xstream.fromXML(permissionResource
 					.getInputStream()));
 		}

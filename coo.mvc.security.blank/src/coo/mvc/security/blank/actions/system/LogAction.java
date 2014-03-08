@@ -19,7 +19,6 @@ import coo.core.security.service.BnLogger;
 @RequestMapping("/system")
 @Auth(AdminPermission.CODE)
 public class LogAction {
-
 	@Resource
 	private BnLogger bnLogger;
 

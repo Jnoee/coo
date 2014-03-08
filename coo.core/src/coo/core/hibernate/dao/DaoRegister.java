@@ -18,7 +18,7 @@ import coo.core.hibernate.EntityClassBeanFactoryPostProcessor;
  */
 @Component
 public class DaoRegister extends EntityClassBeanFactoryPostProcessor {
-	private Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void postProcessBeanFactory(
@@ -39,7 +39,7 @@ public class DaoRegister extends EntityClassBeanFactoryPostProcessor {
 				beanName = new String(chars) + "Dao";
 				((DefaultListableBeanFactory) beanFactory)
 						.registerBeanDefinition(beanName, daoDefinition);
-				log.debug("自动注入DAO组件: " + beanName);
+				log.debug("自动注入DAO组件[{}]", beanName);
 			}
 		}
 	}

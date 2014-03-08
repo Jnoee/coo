@@ -47,7 +47,7 @@ public class GenericFreemarkerManager extends FreemarkerManager {
 			Method method = configClass.getMethod("init", Configuration.class,
 					ServletContext.class);
 			method.invoke(configObject, config, servletContext);
-			log.debug("加载" + configClass + "配置完成。");
+			log.debug("加载[{}]配置完成。", configClass);
 		} catch (Exception e) {
 			throw new UncheckedException("加载Freemarker配置时发生异常。", e);
 		}
