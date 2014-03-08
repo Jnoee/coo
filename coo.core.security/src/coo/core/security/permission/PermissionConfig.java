@@ -1,13 +1,15 @@
 package coo.core.security.permission;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ResourceLoaderAware;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import com.thoughtworks.xstream.XStream;
@@ -21,11 +23,61 @@ import coo.core.util.SpringUtils;
  * 权限配置管理组件。
  */
 @Component
-public class PermissionConfig implements ResourceLoaderAware {
+public class PermissionConfig {
+	private static final String PERMISSION_DIR = "/META-INF/coo/";
+	private static final String PERMISSION_PATH = "classpath*:"
+			+ PERMISSION_DIR + "*permissions.xml";
 	private Logger log = LoggerFactory.getLogger(getClass());
-	private String configFilePath = "classpath:META-INF/coo/permissions.xml";
-	private Permissions permissions;
+	private Permissions permissions = new Permissions();
 	private List<Permission> allPermissions = new ArrayList<Permission>();
+
+	/**
+	 * 初始化权限配置管理组件。
+	 */
+	@PostConstruct
+	public void init() {
+		try {
+			initPermissions();
+			initAllPermissions();
+			log.info("加载权限配置文件成功。");
+		} catch (Exception e) {
+			throw new UncheckedException("加载权限配置文件时发生异常。", e);
+		}
+	}
+
+	/**
+	 * 初始化加载权限配置文件。
+	 * 
+	 * @throws IOException
+	 *             加载权限配置文件失败时抛出该异常。
+	 */
+	private void initPermissions() throws IOException {
+		List<Resource> permissionResources = SpringUtils
+				.getResourcesByWildcard(PERMISSION_PATH);
+		XStream xstream = new XStream();
+		xstream.processAnnotations(new Class[] { Permissions.class,
+				PermissionGroup.class, Permission.class });
+		for (Resource permissionResource : permissionResources) {
+			log.debug("加载权限配置文件[" + permissionResource.getURI().toString()
+					+ "]...");
+			permissions.merge((Permissions) xstream.fromXML(permissionResource
+					.getInputStream()));
+		}
+	}
+
+	/**
+	 * 初始化所有权限列表。
+	 */
+	private void initAllPermissions() {
+		for (PermissionGroup permissionGroup : getPermissionGroups()) {
+			for (Permission permission : permissionGroup.getPermissions()) {
+				if (allPermissions.contains(permission)) {
+					throw new UncheckedException("权限[" + permission + "]定义重复。");
+				}
+				allPermissions.add(permission);
+			}
+		}
+	}
 
 	/**
 	 * 获取所有权限分组。
@@ -53,20 +105,6 @@ public class PermissionConfig implements ResourceLoaderAware {
 	}
 
 	/**
-	 * 获取所有权限。
-	 * 
-	 * @return 返回所有权限。
-	 */
-	public List<Permission> getAllPermissions() {
-		if (allPermissions.isEmpty()) {
-			for (PermissionGroup permissionGroup : getPermissionGroups()) {
-				allPermissions.addAll(permissionGroup.getPermissions());
-			}
-		}
-		return allPermissions;
-	}
-
-	/**
 	 * 获取指定权限编码的权限。
 	 * 
 	 * @param permissionCode
@@ -74,7 +112,7 @@ public class PermissionConfig implements ResourceLoaderAware {
 	 * @return 返回指定权限编码的权限。
 	 */
 	public Permission getPermission(String permissionCode) {
-		for (Permission permission : getAllPermissions()) {
+		for (Permission permission : allPermissions) {
 			if (permission.getCode().equals(permissionCode)) {
 				return permission;
 			}
@@ -123,9 +161,7 @@ public class PermissionConfig implements ResourceLoaderAware {
 	 */
 	public List<Permission> getPermissions(BitCode permissionCode) {
 		List<Permission> resultPermissions = new ArrayList<Permission>();
-		Iterator<Permission> allPermissions = getAllPermissions().iterator();
-		while (allPermissions.hasNext()) {
-			Permission permission = allPermissions.next();
+		for (Permission permission : allPermissions) {
 			if (permissionCode.isTrue(permission.getId())) {
 				resultPermissions.add(permission);
 			}
@@ -176,21 +212,6 @@ public class PermissionConfig implements ResourceLoaderAware {
 			permissionCode.setValue(permissionId, true);
 		}
 		return permissionCode;
-	}
-
-	@Override
-	public void setResourceLoader(ResourceLoader resourceLoader) {
-		try {
-			XStream xstream = new XStream();
-			xstream.processAnnotations(new Class[] { Permissions.class,
-					PermissionGroup.class, Permission.class });
-			permissions = (Permissions) xstream.fromXML(resourceLoader
-					.getResource(configFilePath).getInputStream());
-			log.info("加载权限配置文件成功。");
-		} catch (Exception e) {
-			throw new UncheckedException("加载权限配置文件时发生异常。没有找到[" + configFilePath
-					+ "]权限配置文件或该文件格式有错误。", e);
-		}
 	}
 
 	/**

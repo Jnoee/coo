@@ -2,6 +2,6 @@
 <permissions>
 	<!-- 内置权限组，不允许修改 -->
 	<permission-group name="系统管理" order="0">
-		<permission id="1" name="系统管理管理" code="ADMIN" depends="" />
+		<permission id="1" name="系统管理" code="ADMIN" depends="" />
 	</permission-group>
 </permissions>
