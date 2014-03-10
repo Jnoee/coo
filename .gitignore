@@ -1,7 +1,13 @@
 **/.settings
+**/**/.settings
 **/.project
+**/**/.project
 **/.classpath
+**/**/.classpath
 **/.checkstyle
+**/**/.checkstyle
 **/target
-/.README.md.html
-**/.README.md.html
+**/**/target
+**/*.md.html
+**/**/*.md.html
+/*.md.html
