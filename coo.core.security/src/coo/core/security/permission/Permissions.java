@@ -55,6 +55,11 @@ public class Permissions {
 	}
 
 	public List<PermissionGroup> getPermissionGroups() {
+		// xstream不会调用类的默认构造方法来构造对象
+		// 所以在get方法中确保permissionGroups不为null以方便后续处理
+		if (permissionGroups == null) {
+			permissionGroups = new ArrayList<PermissionGroup>();
+		}
 		return permissionGroups;
 	}
 

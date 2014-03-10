@@ -41,6 +41,11 @@ public class PermissionGroup implements Comparable<PermissionGroup> {
 	}
 
 	public List<Permission> getPermissions() {
+		// xstream不会调用类的默认构造方法来构造对象
+		// 所以在get方法中确保permissions不为null以方便后续处理
+		if (permissions == null) {
+			permissions = new ArrayList<Permission>();
+		}
 		return permissions;
 	}
 
