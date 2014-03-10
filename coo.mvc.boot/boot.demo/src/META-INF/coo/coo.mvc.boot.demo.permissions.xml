@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+	<!-- 示例模块 -->
+	<permission-group name="部门管理" order="1">
+		<permission id="11" name="部门管理" code="COMPANY_MANAGE" depends="" />
+		<permission id="12" name="职员管理" code="EMPLOYEE_MANAGE" depends="" />
+	</permission-group>
+</permissions>

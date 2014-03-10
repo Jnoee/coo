@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="NewProject" default="default" basedir=".">
+	<!-- 旧的配置变量定义 -->
+	<property name="old.maven.groupId" value="coo.mvc" />
+	<property name="old.maven.artifactId" value="boot" />
+	<property name="old.project.package" value="coo.mvc.boot" />
+	<property name="old.project.package.path" value="/coo/mvc/boot" />
+	<property name="old.project.src" value="src/coo/mvc/boot" />
+	<!-- 新的配置变量定义 -->
+	<property name="new.maven.groupId" value="com.github" />
+	<property name="new.maven.artifactId" value="news" />
+	<property name="new.project.package" value="com.github.news" />
+	<property name="new.project.package.path" value="/com/github/news" />
+	<property name="new.project.src" value="src/com/github/news" />
+	<target name="default" description="构建新项目">
+		<antcall target="init" />
+		<antcall target="modify.pom" />
+		<antcall target="modify.modules" />
+		<antcall target="destroy" />
+	</target>
+	<target name="init" description="清理项目成为一个纯Maven项目">
+		<delete includeemptydirs="true" verbose="true" quiet="true">
+			<fileset dir="." defaultexcludes="false">
+				<exclude name="pom.xml" />
+				<exclude name="build.xml" />
+				<exclude name="checkstyle.xml" />
+				<exclude name="${old.maven.artifactId}.core/**" />
+				<exclude name="${old.maven.artifactId}.demo/**" />
+				<exclude name="${old.maven.artifactId}.main/**" />
+			</fileset>
+		</delete>
+	</target>
+	<target name="modify.pom" description="修改pom.xml文件">
+		<replaceregexp file="pom.xml" encoding="UTF-8"
+			match="${old.maven.groupId}" replace="${new.maven.groupId}" flags="s" />
+		<replaceregexp file="pom.xml" encoding="UTF-8"
+			match="${old.maven.artifactId}" replace="${new.maven.artifactId}"
+			flags="s" />
+		<replaceregexp file="pom.xml" encoding="UTF-8"
+			match="${old.maven.artifactId}.core" replace="${new.maven.artifactId}.core"
+			flags="s" />
+		<replaceregexp file="pom.xml" encoding="UTF-8"
+			match="${old.maven.artifactId}.demo" replace="${new.maven.artifactId}.demo"
+			flags="s" />
+		<replaceregexp file="pom.xml" encoding="UTF-8"
+			match="${old.maven.artifactId}.main" replace="${new.maven.artifactId}.main"
+			flags="s" />
+	</target>
+	<target name="modify.modules" description="修改子模块">
+		<ant antfile="build.xml" dir="${old.maven.artifactId}.core" />
+		<ant antfile="build.xml" dir="${old.maven.artifactId}.demo" />
+		<ant antfile="build.xml" dir="${old.maven.artifactId}.main" />
+		<move todir="${new.maven.artifactId}.core">
+			<fileset dir="${old.maven.artifactId}.core" />
+		</move>
+		<move todir="${new.maven.artifactId}.demo">
+			<fileset dir="${old.maven.artifactId}.demo" />
+		</move>
+		<move todir="${new.maven.artifactId}.main">
+			<fileset dir="${old.maven.artifactId}.main" />
+		</move>
+	</target>
+	<target name="destroy" description="清理多余目录和文件">
+		<delete file="build.xml" />
+	</target>
+</project>
