@@ -6,11 +6,11 @@ create table Syst_Actor  (
    organId              CHAR(36)                        not null,
    userId               CHAR(36)                        not null,
    roleId               CHAR(36)                        not null,
-   name                 NVARCHAR2(60)                   not null,
+   name                 VARCHAR(60)                     not null,
    creatorId            CHAR(36)                        not null,
-   createDate           DATE                            not null,
+   createDate           DATETIME                        not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATE                            not null,
+   modifyDate           DATETIME                        not null,
    constraint PK_SYST_ACTOR primary key (id)
 );
 
@@ -40,11 +40,11 @@ create index IDX_Actor_roleId on Syst_Actor (
 /*==============================================================*/
 create table Syst_BnLog  (
    id                   CHAR(36)                        not null,
-   creator              NVARCHAR2(20)                   not null,
-   createDate           DATE                            not null,
-   message              NVARCHAR2(800)                  not null,
-   origData             NVARCHAR2(2000),
-   newData              NVARCHAR2(2000),
+   creator              VARCHAR(20)                     not null,
+   createDate           DATETIME                        not null,
+   message              VARCHAR(800)                    not null,
+   origData             VARCHAR(2000),
+   newData              VARCHAR(2000),
    constraint PK_SYST_BNLOG primary key (id)
 );
 
@@ -54,12 +54,12 @@ create table Syst_BnLog  (
 create table Syst_Organ  (
    id                   CHAR(36)                        not null,
    parentId             CHAR(36),
-   name                 NVARCHAR2(60)                   not null,
+   name                 VARCHAR(60)                     not null,
    ordinal              INTEGER,
    creatorId            CHAR(36)                        not null,
-   createDate           DATE                            not null,
+   createDate           DATETIME                        not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATE                            not null,
+   modifyDate           DATETIME                        not null,
    constraint PK_SYST_ORGAN primary key (id)
 );
 
@@ -75,12 +75,12 @@ create index IDX_Organ_parentId on Syst_Organ (
 /*==============================================================*/
 create table Syst_Role  (
    id                   CHAR(36)                        not null,
-   name                 NVARCHAR2(60)                   not null,
-   permissions          NVARCHAR2(800)                  not null,
+   name                 VARCHAR(60)                     not null,
+   permissions          VARCHAR(800)                    not null,
    creatorId            CHAR(36)                        not null,
-   createDate           DATE                            not null,
+   createDate           DATETIME                        not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATE                            not null,
+   modifyDate           DATETIME                        not null,
    constraint PK_SYST_ROLE primary key (id)
 );
 
@@ -89,15 +89,15 @@ create table Syst_Role  (
 /*==============================================================*/
 create table Syst_User  (
    id                   CHAR(36)                        not null,
-   name                 NVARCHAR2(20)                   not null,
-   username             NVARCHAR2(20)                   not null,
-   password             NVARCHAR2(120)                  not null,
+   name                 VARCHAR(20)                     not null,
+   username             VARCHAR(20)                     not null,
+   password             VARCHAR(120)                    not null,
    enabled              SMALLINT                        not null,
    ordinal              INTEGER,
    creatorId            CHAR(36)                        not null,
-   createDate           DATE                            not null,
+   createDate           DATETIME                        not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATE                            not null,
+   modifyDate           DATETIME                        not null,
    constraint PK_SYST_USER primary key (id)
 );
 
@@ -115,10 +115,10 @@ create table Syst_UserSettings  (
 /*==============================================================*/
 create table Tmp_Company  (
    id                   CHAR(36)                        not null,
-   name                 NVARCHAR2(60)                   not null,
-   foundDate            DATE                            not null,
+   name                 VARCHAR(60)                     not null,
+   foundDate            DATETIME                        not null,
    enabled              SMALLINT                        not null,
-   extendInfo           NVARCHAR2(800),
+   extendInfo           VARCHAR(800),
    constraint PK_TMP_COMPANY primary key (id)
 );
 
@@ -137,14 +137,14 @@ comment on column Tmp_Company.extendInfo is
 create table Tmp_Employee  (
    id                   CHAR(36)                        not null,
    companyId            CHAR(36)                        not null,
-   name                 NVARCHAR2(20)                   not null,
+   name                 VARCHAR(20)                     not null,
    age                  INTEGER                         not null,
-   sex                  NVARCHAR2(3)                    not null,
-   interests            NVARCHAR2(120),
+   sex                  VARCHAR(3)                      not null,
+   interests            VARCHAR(120),
    creatorId            CHAR(36)                        not null,
-   createDate           DATE                            not null,
+   createDate           DATETIME                        not null,
    modifierId           CHAR(36)                        not null,
-   modifyDate           DATE                            not null,
+   modifyDate           DATETIME                        not null,
    constraint PK_TMP_EMPLOYEE primary key (id)
 );
 
