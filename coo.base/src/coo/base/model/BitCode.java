@@ -169,15 +169,12 @@ public class BitCode implements Serializable {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
 		BitCode other = (BitCode) obj;
 		if (code == null) {
-			if (other.code != null) {
+			if (other.toString() != null) {
 				return false;
 			}
-		} else if (!code.equals(other.code)) {
+		} else if (!code.equals(other.toString())) {
 			return false;
 		}
 		return true;

@@ -42,15 +42,12 @@ public abstract class UuidEntity {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
 		UuidEntity other = (UuidEntity) obj;
 		if (id == null) {
-			if (other.id != null) {
+			if (other.getId() != null) {
 				return false;
 			}
-		} else if (!id.equals(other.id)) {
+		} else if (!id.equals(other.getId())) {
 			return false;
 		}
 		return true;
