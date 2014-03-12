@@ -13,14 +13,17 @@ import org.joda.time.format.DateTimeFormatter;
  * 日期时间工具类。
  */
 public class DateUtils {
+	public static final String TO_YEAR = "yyyy";
 	public static final String TO_MONTH = "yyyy-MM";
 	public static final String TO_DATE = "yyyy-MM-dd";
+	public static final String TO_HOUR = "yyyy-MM-dd HH";
 	public static final String TO_MINUTE = "yyyy-MM-dd HH:mm";
 	public static final String TO_SECOND = "yyyy-MM-dd HH:mm:ss";
 	public static final String TO_MILLISECOND = "yyyy-MM-dd HH:mm:ss SSSS";
 
 	public static final String TO_MONTH_N = "yyyyMM";
 	public static final String TO_DATE_N = "yyyyMMdd";
+	public static final String TO_HOUR_N = "yyyyMMddHH";
 	public static final String TO_MINUTE_N = "yyyyMMddHHmm";
 	public static final String TO_SECOND_N = "yyyyMMddHHmmss";
 	public static final String TO_MILLISECOND_N = "yyyyMMddHHmmssSSSS";
