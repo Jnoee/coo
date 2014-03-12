@@ -12,12 +12,12 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.FieldBridge;
 
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
+import coo.core.hibernate.search.DateBridge;
 import coo.core.model.UuidEntity;
 import coo.core.security.annotations.Log;
 import coo.core.security.service.AbstractSecurityService;
@@ -37,22 +37,22 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	@JoinColumn(name = "creatorId")
 	@NotNull
 	protected U creator;
-	@Log(text = "创建时间", format = DateUtils.TO_SECOND)
+	@Log(text = "创建时间", format = DateUtils.SECOND)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Field(analyze = Analyze.NO)
-	@DateBridge(resolution = Resolution.MILLISECOND)
+	@FieldBridge(impl = DateBridge.class)
 	protected Date createDate;
 	@Log(text = "修改人", property = "username")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "modifierId")
 	@NotNull
 	protected U modifier;
-	@Log(text = "修改时间", format = DateUtils.TO_SECOND)
+	@Log(text = "修改时间", format = DateUtils.SECOND)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Field(analyze = Analyze.NO)
-	@DateBridge(resolution = Resolution.MILLISECOND)
+	@FieldBridge(impl = DateBridge.class)
 	protected Date modifyDate;
 
 	/**
