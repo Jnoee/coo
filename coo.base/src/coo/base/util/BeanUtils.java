@@ -95,6 +95,19 @@ public abstract class BeanUtils {
 	}
 
 	/**
+	 * 获取类中指定静态属性的值。
+	 * 
+	 * @param targetClass
+	 *            类
+	 * @param fieldName
+	 *            属性名
+	 * @return 返回类中指定静态属性的值。
+	 */
+	public static Object getStaticField(Class<?> targetClass, String fieldName) {
+		return getField(targetClass, findField(targetClass, fieldName));
+	}
+
+	/**
 	 * 设置对象中指定属性的值。
 	 * 
 	 * @param target
@@ -128,6 +141,53 @@ public abstract class BeanUtils {
 	 */
 	public static void setField(Object target, String fieldName, Object value) {
 		setField(target, findField(target.getClass(), fieldName), value);
+	}
+
+	/**
+	 * 设置类中指定静态属性的值。
+	 * 
+	 * @param targetClass
+	 *            类
+	 * @param fieldName
+	 *            属性名
+	 * @param value
+	 *            值
+	 */
+	public static void setStaticField(Class<?> targetClass, String fieldName,
+			Object value) {
+		setField(targetClass, findField(targetClass, fieldName), value);
+	}
+
+	/**
+	 * 设置类中指定final类型静态属性的值。
+	 * 
+	 * @param targetClass
+	 *            类
+	 * @param fieldName
+	 *            属性名
+	 * @param value
+	 *            值
+	 */
+	public static void setStaticFinalField(Class<?> targetClass,
+			String fieldName, Object value) {
+		Field field = findField(targetClass, fieldName);
+		try {
+			boolean accessible = field.isAccessible();
+			field.setAccessible(true);
+
+			Field modifiersField = Field.class.getDeclaredField("modifiers");
+			boolean modifiersAccessible = modifiersField.isAccessible();
+			modifiersField.setAccessible(true);
+			modifiersField
+					.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+			field.set(targetClass, value);
+
+			modifiersField.setAccessible(modifiersAccessible);
+			field.setAccessible(accessible);
+		} catch (Exception e) {
+			throw new IllegalStateException("设置对象的属性[" + field.getName()
+					+ "]值失败", e);
+		}
 	}
 
 	/**
