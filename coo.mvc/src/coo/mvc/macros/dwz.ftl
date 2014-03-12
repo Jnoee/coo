@@ -76,17 +76,17 @@
     </div>
 </#macro>
 
-<#macro pageForm action method="post" onsubmit="return navTabSearch(this);">
+<#macro pageForm action searchModel=searchModel method="post" onsubmit="return navTabSearch(this);">
     <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
-        <@s.hidden path="searchModel.pageNo" />
-        <@s.hidden path="searchModel.pageSize" />
-        <@s.hidden path="searchModel.orderBy" />
-        <@s.hidden path="searchModel.sort" />
+        <input type="hidden" name="pageNo" value="${searchModel.pageNo}" />
+        <input type="hidden" name="pageSize" value="${searchModel.pageSize}" />
+        <input type="hidden" name="orderBy" value="${searchModel.orderBy}" />
+        <input type="hidden" name="sort" value="${searchModel.sort}" />
         <div class="searchBar">
             <div class="subBar">
                 <ul>
                     <#nested>
-                    <li><@s.input path="searchModel.keyword" /></li>
+                    <li><input type="text" name="keyword" value="${searchModel.keyword}" /></li>
                     <li>
                         <div class="buttonActive">
                             <div class="buttonContent">
