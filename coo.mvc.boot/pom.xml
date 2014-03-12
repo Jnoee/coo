@@ -14,6 +14,7 @@
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
+		<servlet.version>2.5</servlet.version>
 		<coo.version>2.0.0</coo.version>
 	</properties>
 	<dependencies>
@@ -21,6 +22,12 @@
 			<groupId>jnoee</groupId>
 			<artifactId>coo.mvc.security</artifactId>
 			<version>${coo.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
