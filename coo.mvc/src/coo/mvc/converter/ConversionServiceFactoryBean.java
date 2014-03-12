@@ -21,10 +21,10 @@ public class ConversionServiceFactoryBean extends
 		getObject().addConverterFactory(new StringToUuidEntity());
 		getObject().addConverter(new UuidEntityToString());
 
-		getObject().addFormatter(new DateFormatter(DateUtils.TO_MILLISECOND));
-		getObject().addFormatter(new DateFormatter(DateUtils.TO_SECOND));
-		getObject().addFormatter(new DateFormatter(DateUtils.TO_MINUTE));
-		getObject().addFormatter(new DateFormatter(DateUtils.TO_DATE));
+		getObject().addFormatter(new DateFormatter(DateUtils.MILLISECOND));
+		getObject().addFormatter(new DateFormatter(DateUtils.SECOND));
+		getObject().addFormatter(new DateFormatter(DateUtils.MINUTE));
+		getObject().addFormatter(new DateFormatter(DateUtils.DATE));
 
 	}
 }

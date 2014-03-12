@@ -28,7 +28,7 @@ public class FileUtils {
 	 */
 	public static String getRandomFileName(String fileName) {
 		return getFileName(fileName) + "-"
-				+ DateUtils.format(new Date(), DateUtils.TO_MILLISECOND_N)
+				+ DateUtils.format(new Date(), DateUtils.MILLISECOND_N)
 				+ getFileType(fileName);
 	}
 

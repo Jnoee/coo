@@ -13,24 +13,21 @@ import org.joda.time.format.DateTimeFormatter;
  * 日期时间工具类。
  */
 public class DateUtils {
-	public static final String TO_YEAR = "yyyy";
-	public static final String TO_MONTH = "yyyy-MM";
-	public static final String TO_DATE = "yyyy-MM-dd";
-	public static final String TO_HOUR = "yyyy-MM-dd HH";
-	public static final String TO_MINUTE = "yyyy-MM-dd HH:mm";
-	public static final String TO_SECOND = "yyyy-MM-dd HH:mm:ss";
-	public static final String TO_MILLISECOND = "yyyy-MM-dd HH:mm:ss SSSS";
+	public static final String MONTH = "yyyy-MM";
+	public static final String DATE = "yyyy-MM-dd";
+	public static final String MINUTE = "yyyy-MM-dd HH:mm";
+	public static final String SECOND = "yyyy-MM-dd HH:mm:ss";
+	public static final String MILLISECOND = "yyyy-MM-dd HH:mm:ss SSSS";
 
-	public static final String TO_MONTH_N = "yyyyMM";
-	public static final String TO_DATE_N = "yyyyMMdd";
-	public static final String TO_HOUR_N = "yyyyMMddHH";
-	public static final String TO_MINUTE_N = "yyyyMMddHHmm";
-	public static final String TO_SECOND_N = "yyyyMMddHHmmss";
-	public static final String TO_MILLISECOND_N = "yyyyMMddHHmmssSSSS";
+	public static final String MONTH_N = "yyyyMM";
+	public static final String DATE_N = "yyyyMMdd";
+	public static final String MINUTE_N = "yyyyMMddHHmm";
+	public static final String SECOND_N = "yyyyMMddHHmmss";
+	public static final String MILLISECOND_N = "yyyyMMddHHmmssSSSS";
 
-	public static final String[] FORMATS = new String[] { TO_DATE, TO_MONTH,
-			TO_MINUTE, TO_SECOND, TO_MILLISECOND, TO_DATE_N, TO_MONTH_N,
-			TO_MINUTE_N, TO_SECOND_N, TO_MILLISECOND_N };
+	public static final String[] FORMATS = new String[] { DATE, MONTH, MINUTE,
+			SECOND, MILLISECOND, DATE_N, MONTH_N, MINUTE_N, SECOND_N,
+			MILLISECOND_N };
 
 	/**
 	 * 将字符串解析成Date对象。<br/>
@@ -69,7 +66,7 @@ public class DateUtils {
 	 * @return 返回yyyy-MM-dd格式的字符串。
 	 */
 	public static String format(Date date) {
-		return format(date, TO_DATE);
+		return format(date, DATE);
 	}
 
 	/**
@@ -86,8 +83,8 @@ public class DateUtils {
 	}
 
 	/**
-	 * 获取字符串的日期格式。如果字符串不在[{@link #TO_MONTH}/{@link #TO_DATE}/ {@link #TO_MINUTE}
-	 * /{@link #TO_SECOND}/{@link #TO_MILLISECOND} ]格式范围内将抛出异常。
+	 * 获取字符串的日期格式。如果字符串不在[{@link #MONTH}/{@link #DATE}/ {@link #MINUTE} /
+	 * {@link #SECOND}/{@link #MILLISECOND} ]格式范围内将抛出异常。
 	 * 
 	 * @param str
 	 *            字符串

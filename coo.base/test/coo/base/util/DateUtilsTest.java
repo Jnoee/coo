@@ -13,16 +13,16 @@ public class DateUtilsTest {
 	@Test
 	public void testGetToday() {
 		Date today = DateUtils.getToday();
-		log.debug(DateUtils.format(today, DateUtils.TO_SECOND));
+		log.debug(DateUtils.format(today, DateUtils.SECOND));
 
 		Date nextDay = DateUtils.getNextDay();
-		log.debug(DateUtils.format(nextDay, DateUtils.TO_SECOND));
+		log.debug(DateUtils.format(nextDay, DateUtils.SECOND));
 
 		String d1 = "2011-7-10";
-		log.debug(DateUtils.format(DateUtils.parse(d1), DateUtils.TO_SECOND));
+		log.debug(DateUtils.format(DateUtils.parse(d1), DateUtils.SECOND));
 
 		String d2 = "201107101112";
-		log.debug(DateUtils.format(DateUtils.parse(d2), DateUtils.TO_SECOND));
+		log.debug(DateUtils.format(DateUtils.parse(d2), DateUtils.SECOND));
 	}
 
 	@Test
