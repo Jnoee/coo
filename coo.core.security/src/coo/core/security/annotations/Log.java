@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import coo.base.util.DateUtils;
+
 /**
  * 高级日志注解。
  */
@@ -20,5 +22,5 @@ public @interface Log {
 	String property() default "";
 
 	/** 当属性是日期类型时，指定记录的日期格式 */
-	String format() default "";
+	String format() default DateUtils.SECOND;
 }
