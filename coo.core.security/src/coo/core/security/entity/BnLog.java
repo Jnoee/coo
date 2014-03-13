@@ -17,15 +17,15 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Resolution;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.base.util.BeanUtils;
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
+import coo.core.hibernate.search.DateBridge;
 import coo.core.model.UuidEntity;
 import coo.core.security.annotations.Log;
 import coo.core.security.model.LogData;
@@ -45,7 +45,7 @@ public class BnLog extends UuidEntity {
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Field(analyze = Analyze.NO)
-	@DateBridge(resolution = Resolution.MILLISECOND)
+	@FieldBridge(impl = DateBridge.class)
 	private Date createDate;
 	/** 日志信息 */
 	@NotEmpty
@@ -255,7 +255,7 @@ public class BnLog extends UuidEntity {
 	 */
 	private String getPrimitiveFieldValue(Object fieldValue, Log log) {
 		String value = fieldValue.toString();
-		if (StringUtils.isNotEmpty(log.format())) {
+		if (fieldValue instanceof Date) {
 			value = DateUtils.format((Date) fieldValue, log.format());
 		}
 		return value;
