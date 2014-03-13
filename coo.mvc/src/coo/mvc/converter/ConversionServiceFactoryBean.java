@@ -24,7 +24,7 @@ public class ConversionServiceFactoryBean extends
 		getObject().addFormatter(new DateFormatter(DateUtils.MILLISECOND));
 		getObject().addFormatter(new DateFormatter(DateUtils.SECOND));
 		getObject().addFormatter(new DateFormatter(DateUtils.MINUTE));
-		getObject().addFormatter(new DateFormatter(DateUtils.DATE));
+		getObject().addFormatter(new DateFormatter(DateUtils.DAY));
 
 	}
 }

@@ -14,19 +14,19 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class DateUtils {
 	public static final String MONTH = "yyyy-MM";
-	public static final String DATE = "yyyy-MM-dd";
+	public static final String DAY = "yyyy-MM-dd";
 	public static final String MINUTE = "yyyy-MM-dd HH:mm";
 	public static final String SECOND = "yyyy-MM-dd HH:mm:ss";
 	public static final String MILLISECOND = "yyyy-MM-dd HH:mm:ss SSSS";
 
 	public static final String MONTH_N = "yyyyMM";
-	public static final String DATE_N = "yyyyMMdd";
+	public static final String DAY_N = "yyyyMMdd";
 	public static final String MINUTE_N = "yyyyMMddHHmm";
 	public static final String SECOND_N = "yyyyMMddHHmmss";
 	public static final String MILLISECOND_N = "yyyyMMddHHmmssSSSS";
 
-	public static final String[] FORMATS = new String[] { DATE, MONTH, MINUTE,
-			SECOND, MILLISECOND, DATE_N, MONTH_N, MINUTE_N, SECOND_N,
+	public static final String[] FORMATS = new String[] { DAY, MONTH, MINUTE,
+			SECOND, MILLISECOND, DAY_N, MONTH_N, MINUTE_N, SECOND_N,
 			MILLISECOND_N };
 
 	/**
@@ -66,7 +66,7 @@ public class DateUtils {
 	 * @return 返回yyyy-MM-dd格式的字符串。
 	 */
 	public static String format(Date date) {
-		return format(date, DATE);
+		return format(date, DAY);
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * 获取字符串的日期格式。如果字符串不在[{@link #MONTH}/{@link #DATE}/ {@link #MINUTE} /
+	 * 获取字符串的日期格式。如果字符串不在[{@link #MONTH}/{@link #DAY}/ {@link #MINUTE} /
 	 * {@link #SECOND}/{@link #MILLISECOND} ]格式范围内将抛出异常。
 	 * 
 	 * @param str
