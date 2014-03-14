@@ -15,7 +15,8 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import coo.core.security.annotations.Log;
+import coo.core.security.annotations.LogBean;
+import coo.core.security.annotations.LogField;
 
 /**
  * 机构实体基类。
@@ -33,16 +34,16 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	/** 上级机构 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentId")
-	@Log(text = "上级机构", property = "name")
+	@LogBean(@LogField(text = "上级机构", property = "name"))
 	private O parent;
 	/** 名称 */
 	@NotEmpty
 	@Field(analyze = Analyze.NO)
-	@Log(text = "名称")
+	@LogField(text = "名称")
 	private String name;
 	/** 排序 */
 	@Field(analyze = Analyze.NO)
-	@Log(text = "排序")
+	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 下级机构 */
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

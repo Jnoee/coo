@@ -16,7 +16,7 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import coo.core.security.annotations.Log;
+import coo.core.security.annotations.LogField;
 
 /**
  * 用户实体基类。
@@ -34,24 +34,24 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	/** 姓名 */
 	@NotEmpty
 	@Field(analyze = Analyze.NO)
-	@Log(text = "姓名")
+	@LogField(text = "姓名")
 	private String name;
 	/** 用户名 */
 	@NotEmpty
 	@Field(analyze = Analyze.NO)
-	@Log(text = "用户名")
+	@LogField(text = "用户名")
 	private String username;
 	/** 密码 */
 	@NotEmpty
-	@Log(text = "密码")
+	@LogField(text = "密码")
 	private String password;
 	/** 是否禁用 */
 	@NotNull
-	@Log(text = "是否启用")
+	@LogField(text = "是否启用")
 	private Boolean enabled = Boolean.TRUE;
 	/** 排序 */
 	@Field(analyze = Analyze.NO)
-	@Log(text = "排序")
+	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 用户设置 */
 	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REMOVE })

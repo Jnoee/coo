@@ -20,7 +20,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import coo.base.util.DateUtils;
 import coo.core.model.UuidEntity;
-import coo.core.security.annotations.Log;
+import coo.core.security.annotations.LogBean;
+import coo.core.security.annotations.LogField;
 import coo.mvc.boot.demo.model.CompanyExtendInfo;
 
 /**
@@ -32,19 +33,21 @@ public class Company extends UuidEntity {
 	/** 名称 */
 	@NotBlank
 	@Field(analyze = Analyze.NO)
-	@Log(text = "名称")
+	@LogField(text = "名称")
 	private String name;
 	/** 成立时间 */
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Log(text = "成立时间", format = DateUtils.DAY)
+	@LogField(text = "成立时间", format = DateUtils.DAY)
 	private Date foundDate;
 	/** 是否可用 */
 	@NotNull
 	private Boolean enabled = true;
 	/** 扩展信息 */
 	@Type(type = "Json")
-	@Log(text = "地址", property = "address")
+	@LogBean({ @LogField(text = "地址", property = "address"),
+			@LogField(text = "电话", property = "tel"),
+			@LogField(text = "传真", property = "fax") })
 	private CompanyExtendInfo extendInfo;
 	/** 关联职员 */
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

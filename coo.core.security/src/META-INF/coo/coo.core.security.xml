@@ -22,4 +22,6 @@
 	</bean>
 	<!-- 加载ResourceEntity切面 -->
 	<bean id="resourceEntityAspect" class="coo.core.security.aspect.ResourceEntityAspect" />
+	<!-- 加载日志切面 -->
+	<bean id="logsAspect" class="coo.core.security.aspect.LogAspect" />
 </beans>

@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import coo.base.util.BeanUtils;
 import coo.core.hibernate.dao.Dao;
 import coo.core.message.MessageSource;
-import coo.core.security.entity.BnLog;
+import coo.core.security.annotations.Log;
+import coo.core.security.annotations.Log.LogType;
 import coo.core.security.service.BnLogger;
 import coo.mvc.boot.demo.entity.Company;
 
@@ -55,15 +56,12 @@ public class CompanyService {
 	 *            公司
 	 */
 	@Transactional
+	@Log(code = "company.add.log", vars = "name", type = LogType.NEW)
 	public void createCompany(Company company) {
 		if (!companyDao.isUnique(company, "name")) {
 			messageSource.thrown("company.name.exist");
 		}
-		BnLog bnLog = new BnLog();
-		bnLog.setMessage(messageSource.get("company.add.success"));
-		bnLog.setNewData(company);
 		companyDao.save(company);
-		bnLogger.log(bnLog);
 	}
 
 	/**
@@ -73,17 +71,13 @@ public class CompanyService {
 	 *            公司
 	 */
 	@Transactional
+	@Log(code = "company.edit.log", vars = "name", type = LogType.ALL)
 	public void updateCompany(Company company) {
 		if (!companyDao.isUnique(company, "name")) {
 			messageSource.thrown("company.name.exist");
 		}
 		Company origCompany = companyDao.get(company.getId());
-		BnLog bnLog = new BnLog();
-		bnLog.setMessage(messageSource.get("company.edit.success"));
-		bnLog.setOrigData(origCompany);
 		BeanUtils.copyFields(company, origCompany);
-		bnLog.setNewData(origCompany);
-		bnLogger.log(bnLog);
 	}
 
 	/**
@@ -93,6 +87,7 @@ public class CompanyService {
 	 *            公司ID
 	 */
 	@Transactional
+	@Log(code = "company.delete.success")
 	public void deleteCompany(String companyId) {
 		companyDao.remove(companyId);
 		bnLogger.log(messageSource.get("company.delete.success"));

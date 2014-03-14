@@ -18,7 +18,7 @@ public class ResourceEntityAspect {
 	 *            切入点
 	 */
 	@Before("@annotation(coo.core.security.annotations.AutoFillResourceEntity)")
-	public void autoFillResourceEntity(JoinPoint joinPoint) {
+	public void before(JoinPoint joinPoint) {
 		Object[] params = joinPoint.getArgs();
 		for (Object param : params) {
 			if (param instanceof ResourceEntity<?>) {

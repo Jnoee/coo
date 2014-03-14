@@ -10,7 +10,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import coo.core.security.annotations.Log;
+import coo.core.security.annotations.LogBean;
+import coo.core.security.annotations.LogField;
 
 /**
  * 职务实体基类。
@@ -29,13 +30,13 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "organId")
 	@IndexedEmbedded(depth = 1)
-	@Log(text = "关联机构", property = "name")
+	@LogBean(@LogField(text = "关联机构", property = "name"))
 	private O organ;
 	/** 关联用户 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
 	@IndexedEmbedded(depth = 1)
-	@Log(text = "所属用户", property = "username")
+	@LogBean(@LogField(text = "所属用户", property = "username"))
 	private U user;
 	/** 关联角色 */
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +45,7 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	/** 职务名称 */
 	@NotEmpty
 	@Field(analyze = Analyze.NO)
-	@Log(text = "职务名称")
+	@LogField(text = "职务名称")
 	private String name;
 
 	public O getOrgan() {

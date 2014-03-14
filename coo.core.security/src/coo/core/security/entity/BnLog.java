@@ -1,9 +1,11 @@
 package coo.core.security.entity;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,10 +13,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -22,12 +20,16 @@ import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import coo.base.exception.UncheckedException;
 import coo.base.util.BeanUtils;
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.search.DateBridge;
 import coo.core.model.UuidEntity;
-import coo.core.security.annotations.Log;
+import coo.core.security.annotations.LogBean;
+import coo.core.security.annotations.LogField;
 import coo.core.security.model.LogData;
 
 /**
@@ -107,7 +109,7 @@ public class BnLog extends UuidEntity {
 	}
 
 	public void setOrigData(Object origDataObject) {
-		this.origData = getXml(origDataObject);
+		this.origData = getJson(origDataObject);
 	}
 
 	public String getNewData() {
@@ -119,7 +121,7 @@ public class BnLog extends UuidEntity {
 	}
 
 	public void setNewData(Object newDataObject) {
-		this.newData = getXml(newDataObject);
+		this.newData = getJson(newDataObject);
 	}
 
 	/**
@@ -152,27 +154,26 @@ public class BnLog extends UuidEntity {
 	 */
 	@SuppressWarnings("unchecked")
 	private void fillInOrigData(List<LogData> datas) {
-		try {
-			SAXReader reader = new SAXReader();
-			if (StringUtils.isNotEmpty(origData)) {
-				Document xml = reader.read(new StringReader(origData));
-				List<Element> elements = xml.getRootElement().elements();
+		if (origData != null) {
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				Map<String, String> dataMap = mapper.readValue(origData,
+						LinkedHashMap.class);
 				if (datas.isEmpty()) {
-					for (Element element : elements) {
+					for (Entry<String, String> entry : dataMap.entrySet()) {
 						LogData data = new LogData();
-						data.setText(element.elementText("text"));
-						data.setOrigData(element.elementText("value"));
+						data.setText(entry.getKey());
+						data.setOrigData(entry.getValue());
 						datas.add(data);
 					}
 				} else {
-					for (int i = 0; i < datas.size(); i++) {
-						datas.get(i).setOrigData(
-								elements.get(i).elementText("value"));
+					for (LogData data : datas) {
+						data.setOrigData(dataMap.get(data.getText()));
 					}
 				}
+			} catch (Exception e) {
+				throw new UncheckedException("填充日志数据原值时发生异常。", e);
 			}
-		} catch (DocumentException e) {
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -184,101 +185,128 @@ public class BnLog extends UuidEntity {
 	 */
 	@SuppressWarnings("unchecked")
 	private void fillInNewData(List<LogData> datas) {
-		try {
-			SAXReader reader = new SAXReader();
-			if (StringUtils.isNotEmpty(newData)) {
-				Document xml = reader.read(new StringReader(newData));
-				List<Element> elements = xml.getRootElement().elements();
+		if (newData != null) {
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				Map<String, String> dataMap = mapper.readValue(newData,
+						LinkedHashMap.class);
 				if (datas.isEmpty()) {
-					for (Element element : elements) {
+					for (Entry<String, String> entry : dataMap.entrySet()) {
 						LogData data = new LogData();
-						data.setText(element.elementText("text"));
-						data.setNewData(element.elementText("value"));
+						data.setText(entry.getKey());
+						data.setNewData(entry.getValue());
 						datas.add(data);
 					}
 				} else {
-					for (int i = 0; i < datas.size(); i++) {
-						datas.get(i).setNewData(
-								elements.get(i).elementText("value"));
+					for (LogData data : datas) {
+						data.setNewData(dataMap.get(data.getText()));
 					}
 				}
+			} catch (Exception e) {
+				throw new UncheckedException("填充日志数据新值时发生异常。", e);
 			}
-		} catch (DocumentException e) {
-			throw new RuntimeException(e);
 		}
 	}
 
 	/**
-	 * 根据数据对象中的@Log注解生成数据对象的日志xml。
+	 * 根据数据对象中的日志注解生成数据对象的日志Json字符串。
 	 * 
 	 * @param data
 	 *            数据对象
-	 * @return 返回日志xml字符串。
+	 * @return 返回日志Json字符串。
 	 */
-	private String getXml(Object data) {
-		StringBuilder xml = new StringBuilder();
-		xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		xml.append("<" + data.getClass().getSimpleName() + ">");
+	private String getJson(Object data) {
+		try {
+			Map<String, String> datas = new LinkedHashMap<String, String>();
+			datas.putAll(getAllLogFieldDatas(data));
+			datas.putAll(getAllLogBeanDatas(data));
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.writeValueAsString(datas);
+		} catch (Exception e) {
+			throw new UncheckedException("转换日志对象时发生异常。", e);
+		}
+	}
 
+	/**
+	 * 获取所有日志字段的日志数据。
+	 * 
+	 * @param data
+	 *            数据对象
+	 * @return 返回所有日志字段的日志数据。
+	 */
+	private Map<String, String> getAllLogFieldDatas(Object data) {
+		Map<String, String> datas = new LinkedHashMap<String, String>();
 		List<java.lang.reflect.Field> fields = BeanUtils.findField(
-				data.getClass(), Log.class);
+				data.getClass(), LogField.class);
 		for (java.lang.reflect.Field field : fields) {
-			Log log = field.getAnnotation(Log.class);
-			xml.append("<" + field.getName() + ">");
-			xml.append("<text>" + log.text() + "</text>");
-
-			String value = "";
+			LogField logField = field.getAnnotation(LogField.class);
 			Object fieldValue = BeanUtils.getField(data, field);
-			if (fieldValue != null) {
-				if (fieldValue.getClass().isPrimitive()) {
-					value = getPrimitiveFieldValue(fieldValue, log);
-				} else {
-					value = getBeanFieldValue(fieldValue, log);
-				}
+			datas.putAll(getLogFieldData(fieldValue, logField));
+		}
+		return datas;
+	}
+
+	/**
+	 * 获取所有日志对象的日志数据。
+	 * 
+	 * @param data
+	 *            数据对象
+	 * @return 返回所有日志对象的日志数据。
+	 */
+	private Map<String, String> getAllLogBeanDatas(Object data) {
+		Map<String, String> datas = new LinkedHashMap<String, String>();
+		List<java.lang.reflect.Field> fields = BeanUtils.findField(
+				data.getClass(), LogBean.class);
+		for (java.lang.reflect.Field field : fields) {
+			LogBean logBean = field.getAnnotation(LogBean.class);
+			Object fieldValue = BeanUtils.getField(data, field);
+			datas.putAll(getLogBeanDatas(fieldValue, logBean));
+		}
+		return datas;
+	}
+
+	/**
+	 * 获取日志字段的日志数据。
+	 * 
+	 * @param fieldValue
+	 *            日志字段
+	 * @param logField
+	 *            日志字段注解
+	 * @return 返回日志字段的日志数据。
+	 */
+	private Map<String, String> getLogFieldData(Object fieldValue,
+			LogField logField) {
+		Map<String, String> datas = new LinkedHashMap<String, String>();
+		String value = "";
+		if (fieldValue != null) {
+			value = fieldValue.toString();
+			if (fieldValue instanceof Date) {
+				value = DateUtils.format((Date) fieldValue, logField.format());
 			}
-			xml.append("<value>" + value + "</value>");
-			xml.append("</" + field.getName() + ">");
 		}
-
-		xml.append("</" + data.getClass().getSimpleName() + ">");
-		return xml.toString();
+		datas.put(logField.text(), value);
+		return datas;
 	}
 
 	/**
-	 * 获取基础类型属性值对象的日志值。
+	 * 获取日志对象的日志数据。
 	 * 
-	 * @param fieldValue
-	 *            属性值对象
-	 * @param log
-	 *            日志注解
-	 * @return 返回基础类型属性值对象的日志值。
+	 * @param bean
+	 *            日志对象
+	 * @param logBean
+	 *            日志对象注解
+	 * @return 返回日志对象的日志数据。
 	 */
-	private String getPrimitiveFieldValue(Object fieldValue, Log log) {
-		String value = fieldValue.toString();
-		if (fieldValue instanceof Date) {
-			value = DateUtils.format((Date) fieldValue, log.format());
+	private Map<String, String> getLogBeanDatas(Object bean, LogBean logBean) {
+		Map<String, String> datas = new LinkedHashMap<String, String>();
+		if (bean instanceof HibernateProxy) {
+			bean = ((HibernateProxy) bean).getHibernateLazyInitializer()
+					.getImplementation();
 		}
-		return value;
-	}
-
-	/**
-	 * 获取Bean类型属性值对象的日志值。
-	 * 
-	 * @param fieldValue
-	 *            属性值对象
-	 * @param log
-	 *            日志注解
-	 * @return 返回Bean类型属性值对象的日志值。
-	 */
-	private String getBeanFieldValue(Object fieldValue, Log log) {
-		// 如果属性值对象是Hibernate懒加载对象，需要把它还原为实际类型的对象。
-		if (fieldValue instanceof HibernateProxy) {
-			fieldValue = ((HibernateProxy) fieldValue)
-					.getHibernateLazyInitializer().getImplementation();
+		for (LogField logField : logBean.value()) {
+			Object fieldValue = BeanUtils.getField(bean, logField.property());
+			datas.putAll(getLogFieldData(fieldValue, logField));
 		}
-		if (StringUtils.isNotEmpty(log.property())) {
-			fieldValue = BeanUtils.getField(fieldValue, log.property());
-		}
-		return getPrimitiveFieldValue(fieldValue, log);
+		return datas;
 	}
 }

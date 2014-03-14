@@ -19,7 +19,8 @@ import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.search.DateBridge;
 import coo.core.model.UuidEntity;
-import coo.core.security.annotations.Log;
+import coo.core.security.annotations.LogBean;
+import coo.core.security.annotations.LogField;
 import coo.core.security.service.AbstractSecurityService;
 import coo.core.util.SpringUtils;
 
@@ -32,23 +33,23 @@ import coo.core.util.SpringUtils;
 @MappedSuperclass
 public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 		UuidEntity {
-	@Log(text = "创建人", property = "username")
+	@LogBean(@LogField(text = "创建人", property = "username"))
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "creatorId")
 	@NotNull
 	protected U creator;
-	@Log(text = "创建时间", format = DateUtils.SECOND)
+	@LogField(text = "创建时间", format = DateUtils.SECOND)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Field(analyze = Analyze.NO)
 	@FieldBridge(impl = DateBridge.class)
 	protected Date createDate;
-	@Log(text = "修改人", property = "username")
+	@LogBean(@LogField(text = "修改人", property = "username"))
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "modifierId")
 	@NotNull
 	protected U modifier;
-	@Log(text = "修改时间", format = DateUtils.SECOND)
+	@LogField(text = "修改时间", format = DateUtils.SECOND)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Field(analyze = Analyze.NO)
