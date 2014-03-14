@@ -54,6 +54,11 @@ public class Permissions {
 		return null;
 	}
 
+	/**
+	 * 获取权限分组列表。
+	 * 
+	 * @return 返回权限分组列表。
+	 */
 	public List<PermissionGroup> getPermissionGroups() {
 		// xstream不会调用类的默认构造方法来构造对象
 		// 所以在get方法中确保permissionGroups不为null以方便后续处理

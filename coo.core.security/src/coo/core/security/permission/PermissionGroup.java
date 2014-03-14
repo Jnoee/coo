@@ -40,6 +40,11 @@ public class PermissionGroup implements Comparable<PermissionGroup> {
 		this.order = order;
 	}
 
+	/**
+	 * 获取权限列表。
+	 * 
+	 * @return 返回权限列表。
+	 */
 	public List<Permission> getPermissions() {
 		// xstream不会调用类的默认构造方法来构造对象
 		// 所以在get方法中确保permissions不为null以方便后续处理
