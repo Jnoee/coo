@@ -34,3 +34,22 @@
 		<div class="panelBar"></div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#fullTextIndexForm").validate({
+            rules: {
+                "entityClasses": {
+                    required: true
+                }
+            },
+            messages: {
+                "entityClasses": {
+                    required: "您至少要选择一个需要重建索引的实体类。"
+                }
+            },
+            errorPlacement: function(error, element) {
+                alertMsg.error(error.text());
+            }
+        });
+    });
+</script>
