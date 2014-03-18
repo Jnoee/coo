@@ -1,5 +1,7 @@
 package coo.mvc.security.component;
 
+import java.io.Serializable;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AuthCounter {
+public class AuthCounter implements Serializable {
 	private Integer allowRetries = 3;
 	private Integer retries = 0;
 
