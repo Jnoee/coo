@@ -1,5 +1,6 @@
 package coo.mvc.config;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,12 +13,14 @@ import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.ui.freemarker.SpringTemplateLoader;
 
 import coo.base.exception.UncheckedException;
 import coo.base.util.ClassUtils;
 import coo.core.model.IEnum;
 import coo.core.util.SpringUtils;
+import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateException;
@@ -64,9 +67,26 @@ public class FreeMarkerConfigurer extends
 			List<TemplateLoader> templateLoaders) {
 		super.postProcessTemplateLoaders(templateLoaders);
 		for (String templatePath : getTemplatePaths()) {
-			templateLoaders.add(new SpringTemplateLoader(getResourceLoader(),
-					templatePath));
+			templateLoaders.add(getTemplateLoaderForPath(templatePath));
 			log.debug("加载模版路径[{}]。", templatePath);
+		}
+	}
+
+	@Override
+	protected TemplateLoader getTemplateLoaderForPath(String templateLoaderPath) {
+		if (isPreferFileSystemAccess()) {
+			try {
+				Resource path = getResourceLoader().getResource(
+						templateLoaderPath);
+				File file = path.getFile();
+				return new FileTemplateLoader(file);
+			} catch (IOException ex) {
+				return new SpringTemplateLoader(getResourceLoader(),
+						templateLoaderPath);
+			}
+		} else {
+			return new SpringTemplateLoader(getResourceLoader(),
+					templateLoaderPath);
 		}
 	}
 
