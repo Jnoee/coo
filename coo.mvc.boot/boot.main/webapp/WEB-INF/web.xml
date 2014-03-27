@@ -46,6 +46,12 @@
 		<filter-name>hibernateFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://shiro.apache.org/tags</taglib-uri>
+			<taglib-location>/WEB-INF/shiro.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 	<error-page>
 		<error-code>500</error-code>
 		<location>/500</location>
