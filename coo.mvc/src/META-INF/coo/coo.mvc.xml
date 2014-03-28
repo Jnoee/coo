@@ -8,13 +8,13 @@
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- Freemarker -->
 	<bean id="freemarkerConfigurer" class="coo.mvc.config.FreeMarkerConfigurer">
-		<property name="defaultEncoding" value="UTF-8" />
+		<property name="defaultEncoding" value="${freemarker.encoding:UTF-8}" />
 		<property name="freemarkerSettings">
 			<props>
 				<prop key="template_update_delay">5</prop>
-				<prop key="url_escaping_charset">UTF-8</prop>
-				<prop key="default_encoding">UTF-8</prop>
-				<prop key="output_encoding">UTF-8</prop>
+				<prop key="url_escaping_charset">${freemarker.encoding:UTF-8}</prop>
+				<prop key="default_encoding">${freemarker.encoding:UTF-8}</prop>
+				<prop key="output_encoding">${freemarker.encoding:UTF-8}</prop>
 				<prop key="locale">zh_CN</prop>
 				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
 				<prop key="date_format">yyyy-MM-dd</prop>
