@@ -6,7 +6,7 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
-	<!-- Freemarker -->
+	<!-- Freemarker配置 -->
 	<bean id="freemarkerConfigurer" class="coo.mvc.config.FreeMarkerConfigurer">
 		<property name="defaultEncoding" value="${freemarker.encoding:UTF-8}" />
 		<property name="freemarkerSettings">
@@ -26,13 +26,44 @@
 			</props>
 		</property>
 	</bean>
+
+	<!-- 视图配置 -->
 	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="suffix" value=".ftl" />
-		<property name="contentType" value="text/html;charset=UTF-8" />
-		<property name="exposeRequestAttributes" value="true" />
-		<property name="exposeSessionAttributes" value="true" />
-		<property name="exposeSpringMacroHelpers" value="true" />
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="favorParameter" value="false" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+					<property name="suffix" value=".ftl" />
+					<property name="contentType" value="text/html;charset=UTF-8" />
+					<property name="exposeRequestAttributes" value="true" />
+					<property name="exposeSessionAttributes" value="true" />
+					<property name="exposeSpringMacroHelpers" value="true" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<property name="marshaller">
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+							<property name="autodetectAnnotations" value="true" />
+						</bean>
+					</property>
+				</bean>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- 国际化配置 -->
