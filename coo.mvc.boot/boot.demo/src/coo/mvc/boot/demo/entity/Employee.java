@@ -16,6 +16,10 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import coo.core.hibernate.search.ArrayBridge;
 import coo.core.hibernate.search.IEnumTextBridge;
 import coo.core.security.entity.ResourceEntity;
@@ -28,11 +32,14 @@ import coo.mvc.boot.demo.enums.Sex;
 @Entity
 @Table(name = "Tmp_Employee")
 @Indexed
+@XStreamAlias("employee")
+@JsonIgnoreProperties({ "creator", "modifier" })
 public class Employee extends ResourceEntity<User> {
 	/** 关联部门 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "companyId")
 	@IndexedEmbedded(depth = 1)
+	@JsonBackReference
 	private Company company;
 	/** 姓名 */
 	@NotBlank

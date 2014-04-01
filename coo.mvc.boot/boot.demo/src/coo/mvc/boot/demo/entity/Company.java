@@ -18,6 +18,9 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import coo.base.util.DateUtils;
 import coo.core.model.UuidEntity;
 import coo.core.security.annotations.LogBean;
@@ -29,6 +32,7 @@ import coo.mvc.boot.demo.model.CompanyExtendInfo;
  */
 @Entity
 @Table(name = "Tmp_Company")
+@XStreamAlias("company")
 public class Company extends UuidEntity {
 	/** 名称 */
 	@NotBlank
@@ -51,6 +55,7 @@ public class Company extends UuidEntity {
 	private CompanyExtendInfo extendInfo;
 	/** 关联职员 */
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Employee> employees = new ArrayList<Employee>();
 
 	public String getName() {
