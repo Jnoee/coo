@@ -15,6 +15,8 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.search.DateBridge;
@@ -31,6 +33,7 @@ import coo.core.util.SpringUtils;
  *            用户类型
  */
 @MappedSuperclass
+@JsonIgnoreProperties({ "creator", "createDate", "modifier", "modifyDate" })
 public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 		UuidEntity {
 	@LogBean(@LogField(text = "创建人", property = "username"))
