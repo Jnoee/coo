@@ -53,15 +53,8 @@
 		</property>
 		<property name="defaultViews">
 			<list>
-				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
-					<property name="marshaller">
-						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
-							<property name="autodetectAnnotations" value="true" />
-						</bean>
-					</property>
-				</bean>
-				<bean
-					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+				<bean class="coo.mvc.handler.GenericXStreamView" />
+				<bean class="coo.mvc.handler.GenericJacksonView" />
 			</list>
 		</property>
 	</bean>
