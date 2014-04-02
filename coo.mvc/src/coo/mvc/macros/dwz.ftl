@@ -76,7 +76,7 @@
     </div>
 </#macro>
 
-<#macro pageForm action searchModel=searchModel method="post" onsubmit="return navTabSearch(this);">
+<#macro pageForm action searchModel=searchModel showKeyword=true buttonText="检索" method="post" onsubmit="return navTabSearch(this);">
     <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
         <input type="hidden" name="pageNo" value="${searchModel.pageNo}" />
         <input type="hidden" name="pageSize" value="${searchModel.pageSize}" />
@@ -86,11 +86,13 @@
             <div class="subBar">
                 <ul>
                     <#nested>
+                    <#if showKeyword>
                     <li><input type="text" name="keyword" value="${searchModel.keyword}" /></li>
+                    </#if>
                     <li>
                         <div class="buttonActive">
                             <div class="buttonContent">
-                                <button type="submit">检索 </button>
+                                <button type="submit">${buttonText}</button>
                             </div>
                         </div>
                     </li>
@@ -100,7 +102,7 @@
     </@s.form>
 </#macro>
 
-<#macro pageNav pageModel onchange="navTabPageBreak({numPerPage:this.value});">
+<#macro pageNav pageModel targetType="navTab" onchange="navTabPageBreak({numPerPage:this.value});">
     <div class="pages">
         <span>显示</span>
     	<#assign options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
@@ -109,7 +111,7 @@
         </select>
         <span>条，共${pageModel.count}条</span>
     </div>
-    <div class="pagination" targetType="navTab" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
+    <div class="pagination" targetType="${targetType}" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
 </#macro>
 
 <#macro refresh action params...>
