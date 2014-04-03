@@ -18,7 +18,13 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import coo.base.util.DateUtils;
 import coo.core.model.UuidEntity;
+import coo.core.security.annotations.LogBean;
+import coo.core.security.annotations.LogField;
 import coo.mvc.security.blank.model.CompanyExtendInfo;
 
 /**
@@ -26,23 +32,30 @@ import coo.mvc.security.blank.model.CompanyExtendInfo;
  */
 @Entity
 @Table(name = "Tmp_Company")
+@XStreamAlias("company")
 public class Company extends UuidEntity {
 	/** 名称 */
 	@NotBlank
 	@Field(analyze = Analyze.NO)
+	@LogField(text = "名称")
 	private String name;
 	/** 成立时间 */
 	@NotNull
 	@Temporal(TemporalType.DATE)
+	@LogField(text = "成立时间", format = DateUtils.DAY)
 	private Date foundDate;
 	/** 是否可用 */
 	@NotNull
 	private Boolean enabled = true;
 	/** 扩展信息 */
 	@Type(type = "Json")
+	@LogBean({ @LogField(text = "地址", property = "address"),
+			@LogField(text = "电话", property = "tel"),
+			@LogField(text = "传真", property = "fax") })
 	private CompanyExtendInfo extendInfo;
 	/** 关联职员 */
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Employee> employees = new ArrayList<Employee>();
 
 	public String getName() {

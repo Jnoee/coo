@@ -24,4 +24,7 @@
 	<entry key="employee.add.success">新增职员成功。</entry>
 	<entry key="employee.edit.success">编辑职员成功。</entry>
 	<entry key="employee.delete.success">删除职员成功。</entry>
+	
+	<entry key="company.add.log">新增公司[{0}]。</entry>
+	<entry key="company.edit.log">编辑公司[{0}]。</entry>
 </properties>
