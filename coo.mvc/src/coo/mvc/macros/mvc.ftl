@@ -1,51 +1,33 @@
-<#macro message code>
+<#--
+ * 将配置信息编码转换为配置信息文本。
+ * 
+ * code：配置信息编码
+ * args：配置信息参数
+ *
+ * 示例：
+ * <@s.message "user.delete.confirm" />
+ -->
+<#macro message code args>
     <@compress>
-    ${springMacroRequestContext.getMessage(code)}
-    </@compress>
-</#macro>
-
-<#macro messageText code, text>
-    <@compress>
-    ${springMacroRequestContext.getMessage(code, text)}
-    </@compress>
-</#macro>
-
-<#macro messageArgs code, args>
-    <@compress>
+    <#if args?? && args?size != 0>
     ${springMacroRequestContext.getMessage(code, args)}
+    <#else>
+    ${springMacroRequestContext.getMessage(code)}
+    </#if>
     </@compress>
 </#macro>
 
-<#macro messageArgsText code, args, text>
-    <@compress>
-    ${springMacroRequestContext.getMessage(code, args, text)}
-    </@compress>
-</#macro>
-
-<#macro theme code>
-    <@compress>
-    ${springMacroRequestContext.getThemeMessage(code)}
-    </@compress>
-</#macro>
-
-<#macro themeText code, text>
-    <@compress>
-    ${springMacroRequestContext.getThemeMessage(code, text)}
-    </@compress>
-</#macro>
-
-<#macro themeArgs code, args>
-    <@compress>
-    ${springMacroRequestContext.getThemeMessage(code, args)}
-    </@compress>
-</#macro>
-
-<#macro themeArgsText code, args, text>
-    <@compress>
-    ${springMacroRequestContext.getThemeMessage(code, args, text)}
-    </@compress>
-</#macro>
-
+<#--
+ * 将相对路径的url转换为绝对路径的url。
+ *
+ * url：url的相对路径
+ * params：用于填充url中变量的参数
+ *
+ * 示例：
+ * <@s.url "/system/user-add" />
+ * <@s.url "/system/user-edit?userId=${user.id}" />
+ * <@s.url url="/system/user-edit?userId={userId}" userId="${user.id}" /> 
+ -->
 <#macro url url params...>
     <@compress>
     <#if params?? && params?size!=0>
@@ -56,6 +38,11 @@
     </@compress>
 </#macro>
 
+<#--
+ * 绑定变量。
+ *
+ * path：变量路径
+ -->
 <#macro bind path>
     <#if htmlEscape?exists>
         <#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)>
@@ -71,23 +58,25 @@
     <#assign name = status.expression>
 </#macro>
 
-<#macro bindEscaped path, htmlEscape>
-    <#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)>
-    <#if status.value?exists && status.value?is_boolean>
-        <#assign stringStatusValue = status.value?string>
-    <#else>
-        <#assign stringStatusValue = status.value?default("")>
-    </#if>
-    <#assign id = status.expression?replace("[", "")?replace("]", "")>
-    <#assign name = status.expression>
-</#macro>
-
+<#--
+ * 表单。
+ *
+ * action：表单提交的相对路径
+ * method：表单提交的方式
+ * attributes：form的其它属性
+ -->
 <#macro form action method="post" attributes...>
     <form method="${method}" action="<@url "${action}" />" ${getAttributes(attributes)}>
         <#nested>
     </form>
 </#macro>
 
+<#--
+ * 文本框。
+ *
+ * path：文本框绑定的属性路径
+ * attributes：文本框的其它属性
+ -->
 <#macro input path attributes...>
     <@bind path />
     <@replaceAttributes attributes />
@@ -96,6 +85,12 @@
     </@compress>
 </#macro>
 
+<#--
+ * 密码框。
+ *
+ * path：密码框绑定的属性路径
+ * attributes：密码框的其它属性
+ -->
 <#macro password path attributes...>
     <@bind path />
     <@replaceAttributes attributes />
@@ -104,12 +99,24 @@
     </@compress>
 </#macro>
 
+<#--
+ * 隐藏域。
+ *
+ * path：隐藏域绑定的属性路径
+ * attributes：隐藏域的其它属性
+ -->
 <#macro hidden path attributes...>
     <@bind path />
     <@replaceAttributes attributes />
     <input type="hidden" id="${id}" name="${name}" value="${stringStatusValue}" ${getAttributes(attributes)} />
 </#macro>
 
+<#--
+ * 大文本框。
+ *
+ * path：大文本框绑定的属性路径
+ * attributes：大文本框的其它属性
+ -->
 <#macro textarea path attributes...>
     <@bind path />
     <@replaceAttributes attributes />
@@ -118,6 +125,15 @@
     </@compress>
 </#macro>
 
+<#--
+ * 选择框。
+ *
+ * path：选择框绑定的属性路径
+ * items：选择框选项集合对象
+ * itemValue：选择项值的属性名
+ * itemLabel：选择项文本的属性名
+ * attributes：选择框的其它属性
+ -->
 <#macro select path items itemValue itemLabel attributes...>
     <@bind path />
     <@replaceAttributes attributes />
@@ -126,6 +142,15 @@
     </select>
 </#macro>
 
+<#--
+ * 选择项列表。
+ *
+ * path：选择框绑定的属性路径
+ * items：选择框选项集合对象
+ * itemValue：选择项值的属性名
+ * itemLabel：选择项文本的属性名
+ * values：选中的值列表
+ -->
 <#macro options items itemValue itemLabel values>
     <@bindOptions items itemValue itemLabel values />
     <#list opts?keys as optKey>
@@ -135,6 +160,16 @@
     </#list>
 </#macro>
 
+<#--
+ * 单选组。
+ *
+ * path：单选组绑定的属性路径
+ * items：单选组选项集合对象
+ * itemValue：单选组值的属性名
+ * itemLabel：单选组文本的属性名
+ * separator：单选组项之间的分割符
+ * attributes：单选组的其它属性
+ -->
 <#macro radios path items itemValue itemLabel separator attributes...>
     <@bind path />
     <@bindOptions items itemValue itemLabel status.value />
@@ -149,10 +184,25 @@
     </#list>
 </#macro>
 
+<#--
+ * 单选按钮。
+ *
+ * attributes：单选按钮的其它属性
+ -->
 <#macro radio attributes...>
     <input type="radio" ${getAttributes(attributes)} />
 </#macro>
 
+<#--
+ * 多选组。
+ *
+ * path：多选组绑定的属性路径
+ * items：多选组选项集合对象
+ * itemValue：多选组值的属性名
+ * itemLabel：多选组文本的属性名
+ * separator：多选组项之间的分割符
+ * attributes：多选组的其它属性
+ -->
 <#macro checkboxs path items itemValue itemLabel separator attributes...>
     <@bind path />
     <@bindOptions items itemValue itemLabel status.actualValue />
@@ -167,6 +217,12 @@
     </#list>
 </#macro>
 
+<#--
+ * 多选按钮。
+ *
+ * path：多选按钮绑定的属性路径
+ * attributes：多选按钮的其它属性
+ -->
 <#macro checkbox path attributes...>
     <#if path??>
         <@bind path />
@@ -178,6 +234,13 @@
     </#if>
 </#macro>
 
+<#--
+ * 错误信息。
+ *
+ * path：错误信息绑定的属性路径
+ * separator：错误信息之间的分割符
+ * attributes：错误信息的其它属性
+ -->
 <#macro errors path separator attributes...>
     <#if path??>
         <@bind path />
@@ -188,6 +251,11 @@
     </#list>
 </#macro>
 
+<#--
+ * 用于重置表单组件的id和name属性，用于支持多表单对象绑定时覆盖默认的id和name。
+ *
+ * attributes：属性集合
+ -->
 <#macro replaceAttributes attributes>
     <#if attributes?? && attributes?size gt 0>
         <#if contains(attributes?keys, "id")>
@@ -199,6 +267,14 @@
     </#if>
 </#macro>
 
+<#--
+ * 绑定选项值。
+ *
+ * items：选项集合对象
+ * itemValue：值的属性名
+ * itemLabel：文本的属性名
+ * values：选中的值列表
+ -->
 <#macro bindOptions items itemValue itemLabel values>
     <#if itemValue?? && itemLabel??>
         <#assign opts = getOptions(items, itemValue, itemLabel)>
@@ -216,6 +292,12 @@
     </#if>
 </#macro>
 
+<#--
+ * 判断集合中是否包含某个元素。
+ *
+ * items：元素集合
+ * target：目标元素
+ -->
 <#function contains items target>
     <#list items as item>
         <#if item == target><#return true></#if>
@@ -223,20 +305,11 @@
     <#return false>
 </#function>
 
-<#function isIEnum value>
-    <#if value?is_string && value?is_hash && value.text?? && value.value??>
-        <#return true>
-    </#if>
-    <#return false>
-</#function>
-
-<#function isPrimitive value>
-    <#if value?is_string || value?is_number || value?is_boolean || value?is_date>
-        <#return true>
-    </#if>
-    <#return false>
-</#function>
-
+<#--
+ * 获取属性值拼装的字符串。
+ *
+ * attributes：属性值集合
+ -->
 <#function getAttributes attributes>
     <#local attrs>
         <@compress single_line=true>
@@ -250,6 +323,13 @@
     <#return attrs>
 </#function>
 
+<#--
+ * 获取选项Map值。
+ *
+ * items：选项集合对象
+ * itemValue：值的属性名
+ * itemLabel：文本的属性名
+ -->
 <#function getOptions items itemValue itemLabel>
     <#local opts>
         <@compress single_line=true>

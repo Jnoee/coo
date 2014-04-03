@@ -1,3 +1,6 @@
+<#--
+ * 头部引用。
+ -->
 <#macro head>
     <@std.head />
     <link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css" />
@@ -23,6 +26,9 @@
     <#nested>
 </#macro>
 
+<#--
+ * 左边菜单。
+ -->
 <#macro leftside>
     <div id="leftside">
         <div id="sidebar_s">
@@ -47,6 +53,9 @@
     </div>
 </#macro>
 
+<#--
+ * 主页navTab容器。
+ -->
 <#macro container>
     <div id="container">
         <div id="navTab" class="tabsPage">
@@ -76,6 +85,16 @@
     </div>
 </#macro>
 
+<#--
+ * 分页表单。
+ *
+ * action：表单提交的相对路径
+ * searchModel：搜索条件对象
+ * showKeyword：是否显示全文搜索文本框
+ * buttonText：检索按钮的文本
+ * method：表单提交的方式
+ * onsubmit：表单提交时的回调函数
+ -->
 <#macro pageForm action searchModel=searchModel showKeyword=true buttonText="检索" method="post" onsubmit="return navTabSearch(this);">
     <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
         <input type="hidden" name="pageNo" value="${searchModel.pageNo}" />
@@ -102,7 +121,22 @@
     </@s.form>
 </#macro>
 
-<#macro pageNav pageModel targetType="navTab" onchange="navTabPageBreak({numPerPage:this.value});">
+<#--
+ * 分页导航条。
+ *
+ * pageModel：分页对象
+ * onchange：每页条数选择框的onchange事件。不设置时根据targetType类型自动设置适合的事件函数，设置时将覆盖默认设置。
+ * targetType：导航类型（navTab/dialog）
+ -->
+<#macro pageNav pageModel onchange targetType="navTab">
+    <#if !onchange??>
+        <#if targetType == "navTab">
+            <#assign onchange="navTabPageBreak({numPerPage:this.value});" />
+        </#if>
+        <#if targetType == "dialog">
+            <#assign onchange="dialogPageBreak({numPerPage:this.value});" />
+        </#if>
+    </#if>
     <div class="pages">
         <span>显示</span>
     	<#assign options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
@@ -114,6 +148,12 @@
     <div class="pagination" targetType="${targetType}" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
 </#macro>
 
+<#--
+ * 局部刷新时需要用到的表单宏。
+ *
+ * action：局部刷新需要提交地址
+ * params：局部刷新需要的参数
+ -->
 <#macro refresh action params...>
     <@s.form id="pagerForm" method="get" action=action>
         <#if params??>
