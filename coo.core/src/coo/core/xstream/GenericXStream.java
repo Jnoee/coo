@@ -17,6 +17,9 @@ public class GenericXStream extends XStream {
 	 * 构造方法。
 	 */
 	public GenericXStream() {
+		// 自动读取Annotations配置，不过该功能并不可靠，需注意。
+		autodetectAnnotations(true);
+		// 注册Hibernate懒加载converter。
 		registerConverter(new HibernateProxyConverter());
 		registerConverter(new HibernatePersistentCollectionConverter(
 				getMapper()));
