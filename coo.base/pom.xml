@@ -10,12 +10,18 @@
 	</parent>
 	<properties>
 		<joda.time.version>2.3</joda.time.version>
+		<codec.version>1.9</codec.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>${joda.time.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${codec.version}</version>
 		</dependency>
 	</dependencies>
 </project>
