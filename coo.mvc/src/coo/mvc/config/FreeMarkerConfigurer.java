@@ -13,6 +13,8 @@ import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 import org.springframework.ui.freemarker.SpringTemplateLoader;
 
@@ -31,15 +33,14 @@ import freemarker.template.TemplateModelException;
  * 自定义FreeMarker配置管理。
  */
 public class FreeMarkerConfigurer extends
-		org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer {
+		org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer
+		implements ApplicationContextAware {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private ServletContext servletContext;
 	private List<AbstractFreeMarkerSettings> settings = new ArrayList<AbstractFreeMarkerSettings>();
 
-	/**
-	 * 构造方法。
-	 */
-	public FreeMarkerConfigurer() {
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		Map<String, AbstractFreeMarkerSettings> freemarkerSettingsMap = SpringUtils
 				.getContext().getBeansOfType(AbstractFreeMarkerSettings.class);
 		settings.addAll(freemarkerSettingsMap.values());
@@ -162,7 +163,7 @@ public class FreeMarkerConfigurer extends
 	 * 
 	 * @return 返回枚举包列表。
 	 */
-	public String[] getEnumPackages() {
+	private String[] getEnumPackages() {
 		List<String> enumPackages = new ArrayList<String>();
 		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
 			for (String enumPackage : freeMarkerSettings.getEnumPackages()) {
@@ -181,7 +182,7 @@ public class FreeMarkerConfigurer extends
 	 * 
 	 * @return 返回静态类列表。
 	 */
-	public List<Class<?>> getStaticClasses() {
+	private List<Class<?>> getStaticClasses() {
 		List<Class<?>> staticClasses = new ArrayList<Class<?>>();
 		List<String> staticClassNames = new ArrayList<String>();
 		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
@@ -202,7 +203,7 @@ public class FreeMarkerConfigurer extends
 	 * 
 	 * @return 返回模版路径列表。
 	 */
-	public List<String> getTemplatePaths() {
+	private List<String> getTemplatePaths() {
 		List<String> templatePaths = new ArrayList<String>();
 		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
 			for (String templatePath : freeMarkerSettings.getTemplatePaths()) {
@@ -221,7 +222,7 @@ public class FreeMarkerConfigurer extends
 	 * 
 	 * @return 返回自动包含文件列表。
 	 */
-	public List<String> getAutoIncludes() {
+	private List<String> getAutoIncludes() {
 		List<String> autoIncludes = new ArrayList<String>();
 		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
 			for (String autoInclude : freeMarkerSettings.getAutoIncludes()) {
@@ -240,7 +241,7 @@ public class FreeMarkerConfigurer extends
 	 * 
 	 * @return 返回自动导入宏列表。
 	 */
-	public Map<String, String> getAutoImports() {
+	private Map<String, String> getAutoImports() {
 		Map<String, String> autoImports = new HashMap<String, String>();
 		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
 			for (Entry<String, String> autoImport : freeMarkerSettings

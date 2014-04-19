@@ -76,7 +76,7 @@
 	</bean>
 
 	<!-- 转换器配置 -->
-	<bean id="conversionService" class="coo.mvc.converter.ConversionServiceFactoryBean" />
+	<bean id="conversionService" class="coo.mvc.config.ConversionServiceFactoryBean" />
 
 	<mvc:view-controller path="/" view-name="forward:/index" />
 	<mvc:view-controller path="/500" view-name="/500" />
