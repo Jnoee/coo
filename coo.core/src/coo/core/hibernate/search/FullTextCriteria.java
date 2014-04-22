@@ -105,6 +105,18 @@ public class FullTextCriteria {
 	}
 
 	/**
+	 * 添加全文搜索字段。
+	 * 
+	 * @param fieldName
+	 *            字段名称
+	 * @param analyze
+	 *            是否分词
+	 */
+	public void addSearchField(String fieldName, Analyze analyze) {
+		searchFields.put(fieldName, analyze);
+	}
+
+	/**
 	 * 移除全文搜索字段。
 	 * 
 	 * @param fieldNames
