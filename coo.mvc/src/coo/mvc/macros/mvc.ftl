@@ -187,10 +187,21 @@
 <#--
  * 单选按钮。
  *
+ * path：单选组绑定的属性路径
+ * trueText：绑定的属性为true时显示的文本
+ * falseText：绑定的属性为false时显示的文本
  * attributes：单选按钮的其它属性
  -->
-<#macro radio attributes...>
-    <input type="radio" ${getAttributes(attributes)} />
+<#macro radio path trueText="是" falseText="否" attributes...>
+    <#if path??>
+        <@bind path />
+        <@replaceAttributes attributes />
+        <#assign isChecked = status.value?? && status.value?string=="true">
+        <input type="radio" id="${id}" name="${name}" value="1"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${trueText}
+        <input type="radio" id="${id}" name="${name}" value="0"<#if !isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${falseText}    
+    <#else>
+        <input type="radio" ${getAttributes(attributes)} />
+    </#if>
 </#macro>
 
 <#--
@@ -215,6 +226,7 @@
         ${optKey?html}${separator}
         </@compress>
     </#list>
+    <input type="hidden" name="_${status.expression}" value="on"/>
 </#macro>
 
 <#--
@@ -228,6 +240,7 @@
         <@bind path />
         <@replaceAttributes attributes />
         <#assign isChecked = status.value?? && status.value?string=="true">
+        <input type="hidden" name="_${status.expression}" value="on"/>
         <input type="checkbox" id="${id}" name="${name}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
     <#else>
         <input type="checkbox" ${getAttributes(attributes)} />
