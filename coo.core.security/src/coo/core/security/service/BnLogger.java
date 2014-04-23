@@ -97,9 +97,8 @@ public class BnLogger {
 	 * 
 	 * @return 返回当前登录用户的用户名。
 	 */
-	@SuppressWarnings("unchecked")
 	private String getCurrentUsername() {
-		AbstractSecurityService<?, ? extends UserEntity<?, ?, ?>, ?, ?, ?> securityService = (AbstractSecurityService<?, ? extends UserEntity<?, ?, ?>, ?, ?, ?>) SpringUtils
+		AbstractSecurityService<?, ? extends UserEntity<?, ?, ?>, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
 		return securityService.getCurrentUser().getUsername();
 	}

@@ -79,10 +79,9 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	 * 
 	 * @return 返回当前上下文中的用户对象。
 	 */
-	@SuppressWarnings("unchecked")
 	private U getCurrentUser() {
 		String userId = (String) SecurityUtils.getSubject().getPrincipal();
-		AbstractSecurityService<?, U, ?, ?, ?> securityService = (AbstractSecurityService<?, U, ?, ?, ?>) SpringUtils
+		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
 		return securityService.getUser(userId);
 	}

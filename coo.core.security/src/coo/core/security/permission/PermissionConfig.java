@@ -305,6 +305,6 @@ public class PermissionConfig {
 	 * @return 返回PermissionConfig组件实例。
 	 */
 	public static PermissionConfig instance() {
-		return (PermissionConfig) SpringUtils.getBean("permissionConfig");
+		return SpringUtils.getBean("permissionConfig");
 	}
 }
