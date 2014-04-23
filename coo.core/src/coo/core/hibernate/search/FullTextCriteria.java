@@ -295,8 +295,8 @@ public class FullTextCriteria {
 			query.add(
 					generateMultiFieldQuery(QueryParser.escape(keyword),
 							searchFields), Occur.MUST);
-			log.debug("全文搜索包含字段：{}", searchFields.keySet());
 		}
+		log.debug("全文搜索包含字段：{}", searchFields.keySet());
 		// 如果过滤条件字段设置不为空，则将过滤条件字段设置转换为Lucene的查询对象
 		if (!filterFields.isEmpty()) {
 			query.add(generateLuceneQueryFromFilterFields(), Occur.MUST);
