@@ -214,6 +214,24 @@ public class PermissionConfig {
 	}
 
 	/**
+	 * 根据权限ID列表获取指定长度的权限编码。
+	 * 
+	 * @param permissionIds
+	 *            权限ID列表
+	 * @param bitCodeLength
+	 *            权限编码长度
+	 * @return 返回权限ID列表对应的权限编码。
+	 */
+	public BitCode getPermissionCode(List<Integer> permissionIds,
+			Integer bitCodeLength) {
+		BitCode permissionCode = new BitCode(bitCodeLength);
+		for (Integer permissionId : permissionIds) {
+			permissionCode.setValue(permissionId, true);
+		}
+		return permissionCode;
+	}
+
+	/**
 	 * 从权限分组列表中清除权限集合为空的权限分组。
 	 * 
 	 * @param permissionGroups
