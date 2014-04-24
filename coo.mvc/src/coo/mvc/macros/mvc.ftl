@@ -155,8 +155,8 @@
     <@bindOptions items itemValue itemLabel values />
     <#list opts?keys as optKey>
         <#assign optVal = opts[optKey]>
-        <#assign isSelected = contains(vals, optVal)>
-        <option value="${optVal?html}"<#if isSelected> selected="selected"</#if>>${optKey?html}</option>
+        <#assign isSelected = contains(vals, optKey)>
+        <option value="${optKey?html}"<#if isSelected> selected="selected"</#if>>${optVal?html}</option>
     </#list>
 </#macro>
 
@@ -176,10 +176,10 @@
     <#list opts?keys as optKey>
         <#assign id="${id}${optKey_index}">
         <#assign optVal = opts[optKey]>
-        <#assign isChecked = contains(vals, optVal)>
+        <#assign isChecked = contains(vals, optKey)>
         <@compress single_line=true>
-        <input type="radio" id="${id}" name="${name}" value="${optVal?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
-        ${optKey?html}${separator}
+        <input type="radio" id="${id}" name="${name}" value="${optKey?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
+        ${optVal?html}${separator}
         </@compress>
     </#list>
 </#macro>
@@ -220,10 +220,10 @@
     <#list opts?keys as optKey>
         <#assign id="${id}${optKey_index}">
         <#assign optVal = opts[optKey]>
-        <#assign isChecked = contains(vals, optVal)>
+        <#assign isChecked = contains(vals, optKey)>
         <@compress single_line=true>
-        <input type="checkbox" id="${id}" name="${name}" value="${optVal?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
-        ${optKey?html}${separator}
+        <input type="checkbox" id="${id}" name="${name}" value="${optKey?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
+        ${optVal?html}${separator}
         </@compress>
     </#list>
     <input type="hidden" name="_${status.expression}" value="on"/>
@@ -349,7 +349,7 @@
         {
         <#if items?? && items?size gt 0>
             <#list items as item>
-                "${item[itemLabel]}":"${item[itemValue]}"<#if item_has_next>,</#if>
+                "${item[itemValue]}":"${item[itemLabel]}"<#if item_has_next>,</#if>
             </#list>
         </#if>
         }
