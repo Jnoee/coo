@@ -4,7 +4,7 @@
         <div class="pageFormContent" layoutH="60">
             <dl class="nowrap">
                 <dt>上级机构：</dt>
-                <dd><@s.select path="organ.parent" items=parentOrgans itemValue="id" itemLabel="name" class="combox" value="organ.parent.id" /></dd>
+                <dd><@s.select path="organ.parent" items=parentOrgans itemValue="id" itemLabel="selectText" class="combox" /></dd>
             </dl>
 			<div class="divider"></div>
             <dl>
