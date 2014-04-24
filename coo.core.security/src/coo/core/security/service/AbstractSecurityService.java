@@ -22,6 +22,8 @@ import org.apache.shiro.subject.Subject;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 import coo.base.model.BitCode;
@@ -72,9 +74,10 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Resource
 	protected PermissionConfig permissionConfig;
 	@Resource
-	protected AbstractBnLogger<? extends BnLogEntity> bnLogger;
-	@Resource
 	protected MessageSource messageSource;
+	@Autowired(required = false)
+	@Qualifier("bnLogger")
+	protected AbstractBnLogger<? extends BnLogEntity> bnLogger;
 
 	/**
 	 * 登录。
