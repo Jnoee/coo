@@ -5,24 +5,33 @@ import java.util.Date;
 import javax.annotation.Resource;
 
 import org.apache.lucene.search.SortField;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import coo.base.model.Page;
 import coo.core.hibernate.dao.Dao;
 import coo.core.hibernate.search.FullTextCriteria;
 import coo.core.model.SearchModel;
-import coo.core.security.entity.BnLog;
+import coo.core.security.entity.BnLogEntity;
 import coo.core.security.entity.UserEntity;
-import coo.core.util.SpringUtils;
 
 /**
- * 业务日志组件。
+ * 业务日志组件抽象基类。
+ * 
+ * @param <T>
+ *            业务日志类型
  */
-@Service
-public class BnLogger {
+public abstract class AbstractBnLogger<T extends BnLogEntity> {
 	@Resource
-	private Dao<BnLog> bnLogDao;
+	private AbstractSecurityService<?, ? extends UserEntity<?, ?, ?>, ?, ?, ?> securityService;
+	@Resource
+	private Dao<T> bnLogDao;
+
+	/**
+	 * 创建业务日志对象。
+	 * 
+	 * @return 返回业务日志对象。
+	 */
+	public abstract T newBnLog();
 
 	/**
 	 * 记录普通日志。
@@ -45,7 +54,8 @@ public class BnLogger {
 	 */
 	@Transactional
 	public void log(String username, String message) {
-		BnLog bnLog = new BnLog(message);
+		T bnLog = newBnLog();
+		bnLog.setMessage(message);
 		bnLog.setCreator(username);
 		bnLog.setCreateDate(new Date());
 		bnLogDao.save(bnLog);
@@ -57,11 +67,12 @@ public class BnLogger {
 	 * @param bnLog
 	 *            日志对象
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional
-	public void log(BnLog bnLog) {
+	public void log(BnLogEntity bnLog) {
 		bnLog.setCreator(getCurrentUsername());
 		bnLog.setCreateDate(new Date());
-		bnLogDao.save(bnLog);
+		bnLogDao.save((T) bnLog);
 	}
 
 	/**
@@ -72,7 +83,7 @@ public class BnLogger {
 	 * @return 返回符合条件的日志分页对象。
 	 */
 	@Transactional(readOnly = true)
-	public Page<BnLog> searchLog(SearchModel searchModel) {
+	public Page<T> searchLog(SearchModel searchModel) {
 		FullTextCriteria criteria = bnLogDao.createFullTextCriteria();
 		criteria.addSortDesc("createDate", SortField.LONG);
 		criteria.setKeyword(searchModel.getKeyword());
@@ -88,7 +99,7 @@ public class BnLogger {
 	 * @return 返回指定ID的日志记录。
 	 */
 	@Transactional(readOnly = true)
-	public BnLog getLog(String logId) {
+	public T getLog(String logId) {
 		return bnLogDao.get(logId);
 	}
 
@@ -98,8 +109,6 @@ public class BnLogger {
 	 * @return 返回当前登录用户的用户名。
 	 */
 	private String getCurrentUsername() {
-		AbstractSecurityService<?, ? extends UserEntity<?, ?, ?>, ?, ?, ?> securityService = SpringUtils
-				.getBean("securityService");
 		return securityService.getCurrentUser().getUsername();
 	}
 }

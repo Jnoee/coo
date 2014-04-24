@@ -34,6 +34,7 @@ import coo.core.model.SearchModel;
 import coo.core.security.annotations.AutoFillResourceEntity;
 import coo.core.security.constants.AdminIds;
 import coo.core.security.entity.ActorEntity;
+import coo.core.security.entity.BnLogEntity;
 import coo.core.security.entity.OrganEntity;
 import coo.core.security.entity.RoleEntity;
 import coo.core.security.entity.UserEntity;
@@ -71,7 +72,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Resource
 	protected PermissionConfig permissionConfig;
 	@Resource
-	protected BnLogger bnLogger;
+	protected AbstractBnLogger<? extends BnLogEntity> bnLogger;
 	@Resource
 	protected MessageSource messageSource;
 

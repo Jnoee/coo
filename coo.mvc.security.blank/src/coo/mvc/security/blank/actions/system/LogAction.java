@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import coo.core.model.SearchModel;
 import coo.core.security.annotations.Auth;
-import coo.core.security.entity.BnLog;
+import coo.core.security.entity.BnLogEntity;
 import coo.core.security.permission.AdminPermission;
-import coo.core.security.service.BnLogger;
+import coo.mvc.security.blank.service.BnLogger;
 
 /**
  * 日志管理。
@@ -45,7 +45,7 @@ public class LogAction {
 	 */
 	@RequestMapping("log-data-view")
 	public void logDataView(String logId, Model model) {
-		BnLog log = bnLogger.getLog(logId);
+		BnLogEntity log = bnLogger.getLog(logId);
 		model.addAttribute("datas", log.toLogData());
 	}
 }

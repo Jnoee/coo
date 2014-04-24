@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,12 +31,10 @@ import coo.core.security.annotations.LogField;
 import coo.core.security.model.LogData;
 
 /**
- * 业务日志。
+ * 业务日志基类。
  */
-@Entity
-@Table(name = "Syst_BnLog")
-@Indexed
-public class BnLog extends UuidEntity {
+@MappedSuperclass
+public abstract class BnLogEntity extends UuidEntity {
 	/** 创建人 */
 	@NotEmpty
 	@Field(analyze = Analyze.NO)
@@ -59,22 +55,6 @@ public class BnLog extends UuidEntity {
 	/** 新数据 */
 	@Field
 	private String newData;
-
-	/**
-	 * 构造方法。
-	 */
-	public BnLog() {
-	}
-
-	/**
-	 * 构造方法。
-	 * 
-	 * @param message
-	 *            日志信息
-	 */
-	public BnLog(String message) {
-		this.message = message;
-	}
 
 	public String getCreator() {
 		return creator;

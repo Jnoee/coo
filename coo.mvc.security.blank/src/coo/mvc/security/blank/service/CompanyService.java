@@ -12,7 +12,6 @@ import coo.core.hibernate.dao.Dao;
 import coo.core.message.MessageSource;
 import coo.core.security.annotations.Log;
 import coo.core.security.annotations.Log.LogType;
-import coo.core.security.service.BnLogger;
 import coo.mvc.security.blank.entity.Company;
 
 /**

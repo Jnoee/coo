@@ -12,7 +12,7 @@ import coo.core.hibernate.dao.Dao;
 import coo.core.message.MessageSource;
 import coo.core.security.annotations.Log;
 import coo.core.security.annotations.Log.LogType;
-import coo.core.security.service.BnLogger;
+import coo.mvc.boot.core.service.BnLogger;
 import coo.mvc.boot.demo.entity.Company;
 
 /**

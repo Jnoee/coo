@@ -10,7 +10,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.apache.shiro.SecurityUtils;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
@@ -80,10 +79,9 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	 * @return 返回当前上下文中的用户对象。
 	 */
 	private U getCurrentUser() {
-		String userId = (String) SecurityUtils.getSubject().getPrincipal();
 		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
-		return securityService.getUser(userId);
+		return securityService.getCurrentUser();
 	}
 
 	public U getCreator() {

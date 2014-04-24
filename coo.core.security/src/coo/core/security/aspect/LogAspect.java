@@ -14,8 +14,8 @@ import coo.base.util.StringUtils;
 import coo.core.message.MessageSource;
 import coo.core.model.UuidEntity;
 import coo.core.security.annotations.Log;
-import coo.core.security.entity.BnLog;
-import coo.core.security.service.BnLogger;
+import coo.core.security.entity.BnLogEntity;
+import coo.core.security.service.AbstractBnLogger;
 import coo.core.util.SpringUtils;
 
 /**
@@ -54,7 +54,9 @@ public class LogAspect {
 		Log log = getLogs(joinPoint);
 		UuidEntity entity = getEntity(joinPoint.getArgs()[log.target()]);
 
-		BnLog bnLog = new BnLog();
+		AbstractBnLogger<? extends BnLogEntity> bnLogger = SpringUtils
+				.getBean("bnLogger");
+		BnLogEntity bnLog = bnLogger.newBnLog();
 		bnLog.setMessage(getMessage(entity, log));
 
 		switch (log.type()) {
@@ -76,8 +78,6 @@ public class LogAspect {
 			joinPoint.proceed();
 			break;
 		}
-
-		BnLogger bnLogger = SpringUtils.getBean("bnLogger");
 		bnLogger.log(bnLog);
 	}
 
@@ -93,7 +93,9 @@ public class LogAspect {
 		Log log = getLogs(joinPoint);
 		Object bean = joinPoint.getArgs()[log.target()];
 
-		BnLog bnLog = new BnLog();
+		AbstractBnLogger<? extends BnLogEntity> bnLogger = SpringUtils
+				.getBean("bnLogger");
+		BnLogEntity bnLog = bnLogger.newBnLog();
 		bnLog.setMessage(getMessage(bean, log));
 
 		switch (log.type()) {
@@ -114,8 +116,6 @@ public class LogAspect {
 			joinPoint.proceed();
 			break;
 		}
-
-		BnLogger bnLogger = SpringUtils.getBean("bnLogger");
 		bnLogger.log(bnLog);
 	}
 
