@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 import coo.base.util.DateUtils;
 
@@ -22,5 +23,6 @@ public class GenericObjectMapper extends ObjectMapper {
 		hibernateModule.configure(Hibernate4Module.Feature.FORCE_LAZY_LOADING,
 				true);
 		registerModule(hibernateModule);
+		registerModule(new JodaModule());
 	}
 }
