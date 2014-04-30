@@ -15,12 +15,12 @@
 				<prop key="url_escaping_charset">${freemarker.encoding:UTF-8}</prop>
 				<prop key="default_encoding">${freemarker.encoding:UTF-8}</prop>
 				<prop key="output_encoding">${freemarker.encoding:UTF-8}</prop>
-				<prop key="locale">zh_CN</prop>
-				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-				<prop key="date_format">yyyy-MM-dd</prop>
-				<prop key="time_format">HH:mm:ss</prop>
-				<prop key="number_format">#</prop>
-				<prop key="boolean_format">true,false</prop>
+				<prop key="locale">${freemarker.locale:zh_CN}</prop>
+				<prop key="datetime_format">${freemarker.datetime:yyyy-MM-dd HH:mm:ss}</prop>
+				<prop key="date_format">${freemarker.date:yyyy-MM-dd}</prop>
+				<prop key="time_format">${freemarker.time:HH:mm:ss}</prop>
+				<prop key="number_format">${freemarker.number:#}</prop>
+				<prop key="boolean_format">${freemarker.boolean:true,false}</prop>
 				<prop key="classic_compatible">true</prop>
 				<prop key="whitespace_stripping">true</prop>
 			</props>
