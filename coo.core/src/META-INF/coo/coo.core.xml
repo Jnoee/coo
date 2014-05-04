@@ -18,6 +18,10 @@
 		<property name="maxActive" value="${db.maxActive:100}" />
 		<property name="maxIdle" value="${db.maxIdle:10}" />
 		<property name="maxWait" value="${db.maxWait:10000}" />
+		<property name="testWhileIdle" value="${db.testWhileIdle:true}" />
+		<property name="validationQuery" value="${db.validationQuery:SELECT 1}" />
+		<property name="validationInterval" value="${db.validationInterval:30000}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${db.timeBetweenEvictionRunsMillis:30000}" />
 	</bean>
 	<!-- 定义基本的Hibernate SessionFactory，供继承。 -->
 	<bean id="sessionFactory" class="coo.core.hibernate.LocalSessionFactoryBean">
