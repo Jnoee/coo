@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import javax.persistence.MapKey;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -54,8 +55,10 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 用户设置 */
-	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REMOVE })
+	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH, CascadeType.REMOVE })
 	@PrimaryKeyJoinColumn
+	@MapKey
 	private S settings;
 	/** 用户职务 */
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

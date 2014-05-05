@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import coo.base.model.BitCode;
 import coo.base.model.Page;
+import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.dao.Dao;
 import coo.core.hibernate.search.FullTextCriteria;
@@ -150,7 +151,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@AutoFillResourceEntity
 	public void updateOrgan(O organ) {
-		organDao.merge(organ);
+		O origOrgan = getOrgan(organ.getId());
+		BeanUtils.copyFields(organ, origOrgan, "ordinal", null);
 	}
 
 	/**
@@ -216,7 +218,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		if (!roleDao.isUnique(role, "name")) {
 			messageSource.thrown("role.name.exist", role.getName());
 		}
-		roleDao.merge(role);
+		R origRole = getRole(role.getId());
+		BeanUtils.copyFields(role, origRole);
 	}
 
 	/**
@@ -322,7 +325,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		if (!userDao.isUnique(user, "username")) {
 			messageSource.thrown("username.exist", user.getUsername());
 		}
-		userDao.merge(user);
+		U origUser = getUser(user.getId());
+		BeanUtils.copyFields(user, origUser, "enabled");
 	}
 
 	/**
@@ -346,7 +350,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	public void enableUser(String userId) {
 		U user = getUser(userId);
 		user.setEnabled(true);
-		userDao.merge(user);
 	}
 
 	/**
@@ -359,7 +362,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	public void disableUser(String userId) {
 		U user = getUser(userId);
 		user.setEnabled(false);
-		userDao.merge(user);
 	}
 
 	/**
@@ -379,7 +381,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		U user = getUser(userId);
 		user.setPassword(loginRealm
 				.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
-		userDao.merge(user);
 	}
 
 	/**
@@ -397,7 +398,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			messageSource.thrown("old.password.wrong");
 		}
 		user.setPassword(loginRealm.encryptPassword(newPwd));
-		userDao.merge(user);
 	}
 
 	/**
@@ -433,7 +433,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@AutoFillResourceEntity
 	public void updateActor(A actor) {
-		actorDao.save(actor);
+		A origActor = getActor(actor.getId());
+		BeanUtils.copyFields(actor, origActor);
 	}
 
 	/**
