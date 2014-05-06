@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -56,6 +57,7 @@ public class Company extends UuidEntity {
 	/** 关联职员 */
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@ContainedIn
 	private List<Employee> employees = new ArrayList<Employee>();
 
 	public String getName() {
