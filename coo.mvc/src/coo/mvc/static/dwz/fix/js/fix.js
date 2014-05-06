@@ -387,3 +387,23 @@ var dialogReloadDone = function(json){
 		}
     }
 }
+
+/** 表单提交后关闭指定dialog的回调函数 */
+var dialogCloseDone = function(json){
+    DWZ.ajaxDone(json);
+    if (json.statusCode == DWZ.statusCode.ok) {
+		if ("closeCurrent" == json.callbackType) {
+			$.pdialog.closeCurrent();
+		}
+		if (json.rel) {
+        	$.pdialog.close(json.rel);
+        }
+		if (json.navTabId){ //把指定navTab页面标记为需要“重新载入”。注意navTabId不能是当前navTab页面的
+			navTab.reloadFlag(json.navTabId);
+		} else { //重新载入当前navTab页面
+			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			navTabPageBreak(args, json.rel);
+		}
+    }
+}

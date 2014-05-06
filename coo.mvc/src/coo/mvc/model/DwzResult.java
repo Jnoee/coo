@@ -82,6 +82,27 @@ public class DwzResult {
 	}
 
 	/**
+	 * 构建用于刷新指定navTab并关闭当前页面及指定dialog的响应内容model。
+	 * 
+	 * @param message
+	 *            提示信息
+	 * @param navTabId
+	 *            待刷新的navTab的ID
+	 * @param rel
+	 *            待关闭的dialog的ID
+	 * @return 返回用于刷新并关闭当前页面及指定dialog的响应内容model。
+	 */
+	public static DwzResult close(String message, String navTabId, String rel) {
+		DwzResult model = new DwzResult();
+		model.setStatusCode(StatusCode.OK);
+		model.setMessage(message);
+		model.setNavTabId(navTabId);
+		model.setRel(rel);
+		model.setCallbackType(CallbackType.CLOSE_CURRENT);
+		return model;
+	}
+
+	/**
 	 * 构建用于刷新指定navTab并将当前页面跳转到其它页面的响应内容model。
 	 * 
 	 * @param message

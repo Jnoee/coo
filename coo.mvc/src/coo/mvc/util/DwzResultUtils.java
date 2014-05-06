@@ -33,6 +33,19 @@ public class DwzResultUtils {
 	}
 
 	/**
+	 * 提示操作成功（关闭当前页面 && 关闭指定dialog && 刷新指定navTab）。
+	 * 
+	 * @param message
+	 *            操作成功信息
+	 * @param navTabId
+	 *            待刷新的navTab的ID
+	 * @return 返回操作成功的服务器响应页面。
+	 */
+	public static ModelAndView close(String message, String navTabId, String rel) {
+		return callback(DwzResult.close(message, navTabId, rel));
+	}
+
+	/**
 	 * 提示操作成功（刷新指定navTab && 不关闭当前页面）。
 	 * 
 	 * @param message
