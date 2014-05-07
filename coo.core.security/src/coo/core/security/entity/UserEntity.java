@@ -46,17 +46,16 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	@NotEmpty
 	@LogField(text = "密码")
 	private String password;
-	/** 是否禁用 */
+	/** 启用状态 */
 	@NotNull
-	@LogField(text = "是否启用")
+	@LogField(text = "启用状态")
 	private Boolean enabled = Boolean.TRUE;
 	/** 排序 */
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 用户设置 */
-	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH,
-			CascadeType.REFRESH, CascadeType.REMOVE })
+	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REMOVE })
 	@PrimaryKeyJoinColumn
 	@MapKey
 	private S settings;
