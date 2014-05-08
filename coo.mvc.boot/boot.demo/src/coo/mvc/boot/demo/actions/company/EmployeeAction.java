@@ -13,7 +13,8 @@ import coo.core.security.annotations.Auth;
 import coo.mvc.boot.demo.entity.Employee;
 import coo.mvc.boot.demo.service.CompanyService;
 import coo.mvc.boot.demo.service.EmployeeService;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.DialogResultUtils;
+import coo.mvc.util.NavTabResultUtils;
 
 /**
  * 职员管理。
@@ -66,9 +67,8 @@ public class EmployeeAction {
 	@RequestMapping("employee-save")
 	public ModelAndView save(Employee employee) {
 		employeeService.createEmployee(employee);
-		return DwzResultUtils.close(
-				messageSource.get("employee.add.success"),
-				"employee-list");
+		return DialogResultUtils.closeAndReloadNavTab(messageSource
+				.get("employee.add.success"));
 	}
 
 	/**
@@ -96,9 +96,8 @@ public class EmployeeAction {
 	@RequestMapping("employee-update")
 	public ModelAndView update(Employee employee) {
 		employeeService.updateEmployee(employee);
-		return DwzResultUtils.close(
-				messageSource.get("employee.edit.success"),
-				"employee-list");
+		return DialogResultUtils.closeAndReloadNavTab(messageSource
+				.get("employee.edit.success"));
 	}
 
 	/**
@@ -112,8 +111,7 @@ public class EmployeeAction {
 	@RequestMapping("employee-delete")
 	public ModelAndView delete(String employeeId) {
 		employeeService.deleteEmployee(employeeId);
-		return DwzResultUtils.refresh(
-				messageSource.get("employee.delete.success"),
-				"employee-list");
+		return NavTabResultUtils.reload(messageSource
+				.get("employee.delete.success"));
 	}
 }

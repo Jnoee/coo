@@ -11,7 +11,7 @@ import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.core.security.model.PwdChangeModel;
 import coo.mvc.security.blank.service.SecurityService;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.DialogResultUtils;
 
 /**
  * 个人管理。
@@ -47,7 +47,7 @@ public class PersonAction {
 	public ModelAndView pwdChangeSave(PwdChangeModel pwdChangeModel) {
 		securityService.changePassword(pwdChangeModel.getOldPwd(),
 				pwdChangeModel.getNewPwd());
-		return DwzResultUtils.close(messageSource
+		return DialogResultUtils.close(messageSource
 				.get("person.pwd.change.success"));
 	}
 

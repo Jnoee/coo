@@ -1,6 +1,6 @@
 <div class="page">
     <div class="pageContent">
-        <@s.form action="/system/actor-update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+        <@s.form action="/system/actor-update" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogReloadDone)">
         <@s.hidden path="actor.id" />
         <div class="pageFormContent" layoutH="60">
         	<dl>

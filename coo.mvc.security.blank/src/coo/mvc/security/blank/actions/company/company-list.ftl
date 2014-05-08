@@ -1,3 +1,4 @@
+<@dwz.reload action="/company/company-list" />
 <div class="page">
     <div class="pageContent">
         <div class="panelBar">

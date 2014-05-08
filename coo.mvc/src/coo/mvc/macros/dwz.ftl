@@ -95,7 +95,18 @@
  * method：表单提交的方式
  * onsubmit：表单提交时的回调函数
  -->
-<#macro pageForm action searchModel=searchModel showKeyword=true buttonText="检索" method="post" onsubmit="return navTabSearch(this);">
+<#macro pageForm action onsubmit targetType="navTab" rel="" searchModel=searchModel showKeyword=true buttonText="检索" method="post">
+    <#if !onsubmit??>
+        <#if targetType == "navTab">
+            <#assign onsubmit="return navTabSearch(this, rel);" />
+        </#if>
+        <#if targetType == "dialog">
+            <#assign onsubmit="return dialogSearch(this);" />
+        </#if>
+        <#if targetType == "div">
+            <#assign onsubmit="return divSearch(this, rel);" />
+        </#if>
+    </#if>
     <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
         <input type="hidden" name="pageNo" value="${searchModel.pageNo}" />
         <input type="hidden" name="pageSize" value="${searchModel.pageSize}" />
@@ -128,13 +139,13 @@
  * onchange：每页条数选择框的onchange事件。不设置时根据targetType类型自动设置适合的事件函数，设置时将覆盖默认设置。
  * targetType：导航类型（navTab/dialog）
  -->
-<#macro pageNav pageModel onchange targetType="navTab">
+<#macro pageNav pageModel onchange targetType="navTab" rel="">
     <#if !onchange??>
         <#if targetType == "navTab">
-            <#assign onchange="navTabPageBreak({numPerPage:this.value});" />
+            <#assign onchange="navTabPageBreak({numPerPage:this.value}, rel);" />
         </#if>
         <#if targetType == "dialog">
-            <#assign onchange="dialogPageBreak({numPerPage:this.value});" />
+            <#assign onchange="dialogPageBreak({numPerPage:this.value}, rel);" />
         </#if>
     </#if>
     <div class="pages">
@@ -154,7 +165,7 @@
  * action：局部刷新需要提交地址
  * params：局部刷新需要的参数
  -->
-<#macro refresh action params...>
+<#macro reload action params...>
     <@s.form id="pagerForm" method="get" action=action>
         <#if params??>
             <#list params?keys as paramName>

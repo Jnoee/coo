@@ -368,11 +368,34 @@ $.fn.extend({
 });
 
 /** 重新加载指定的dialog */
-var reloadDialog = function(rel) {
-    var dialog = $("body").data(rel);
+var reloadDialog = function(dialog) {
+	if(typeof dialog == 'string') {
+		dialog = $("body").data(dialog);
+	}
     if(dialog){
-        $.pdialog.reload(dialog.data("url"),{dialogId:rel});
+        $.pdialog.reload(dialog.data("url"),{dialogId:dialog.data("id")});
     }
+}
+
+/** 覆盖原dialogAjaxDone函数 */
+function dialogAjaxDone(json){
+	DWZ.ajaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		if (json.navTabId && json.forwardUrl){
+			navTab.reload(json.forwardUrl, {navTabId: json.navTabId});
+		} else if(!json.navTabId && json.forwardUrl) {
+			navTab.reload(json.forwardUrl);
+		} else if(json.navTabId && !json.forwardUrl) {
+			navTab.reloadFlag(json.navTabId);
+		} else {
+			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			navTabPageBreak(args, json.rel);
+		}
+		if ("closeCurrent" == json.callbackType) {
+			$.pdialog.closeCurrent();
+		}
+	}
 }
 
 /** 表单提交后刷新指定dialog的回调函数 */
@@ -381,6 +404,8 @@ var dialogReloadDone = function(json){
     if (json.statusCode == DWZ.statusCode.ok) {
         if (json.rel) {
             reloadDialog(json.rel);
+        } else {
+        	reloadDialog($.pdialog._current);
         }
 		if ("closeCurrent" == json.callbackType) {
 			$.pdialog.closeCurrent();
@@ -398,12 +423,16 @@ var dialogCloseDone = function(json){
 		if (json.rel) {
         	$.pdialog.close(json.rel);
         }
-		if (json.navTabId){ //把指定navTab页面标记为需要“重新载入”。注意navTabId不能是当前navTab页面的
+		if (json.navTabId && json.forwardUrl){
+			navTab.reload(json.forwardUrl, {navTabId: json.navTabId});
+		} else if(!json.navTabId && json.forwardUrl) {
+			navTab.reload(json.forwardUrl);
+		} else if(json.navTabId && !json.forwardUrl) {
 			navTab.reloadFlag(json.navTabId);
-		} else { //重新载入当前navTab页面
+		} else {
 			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
 			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
-			navTabPageBreak(args, json.rel);
+			navTabPageBreak(args);
 		}
     }
 }

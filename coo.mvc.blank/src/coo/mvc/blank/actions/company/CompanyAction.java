@@ -10,7 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import coo.core.message.MessageSource;
 import coo.mvc.blank.entity.Company;
 import coo.mvc.blank.service.CompanyService;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.DialogResultUtils;
+import coo.mvc.util.NavTabResultUtils;
 
 /**
  * 公司管理。
@@ -55,8 +56,8 @@ public class CompanyAction {
 	@RequestMapping("company-save")
 	public ModelAndView save(Company company) {
 		companyService.createCompany(company);
-		return DwzResultUtils.close(
-				messageSource.get("company.add.success"), "company-list");
+		return DialogResultUtils.closeAndReloadNavTab(messageSource
+				.get("company.add.success"));
 	}
 
 	/**
@@ -82,9 +83,8 @@ public class CompanyAction {
 	@RequestMapping("company-update")
 	public ModelAndView update(Company company) {
 		companyService.updateCompany(company);
-		return DwzResultUtils
-				.close(messageSource.get("company.edit.success"),
-						"company-list");
+		return DialogResultUtils.closeAndReloadNavTab(messageSource
+				.get("company.edit.success"));
 	}
 
 	/**
@@ -97,8 +97,7 @@ public class CompanyAction {
 	@RequestMapping("company-delete")
 	public ModelAndView delete(String companyId) {
 		companyService.deleteCompany(companyId);
-		return DwzResultUtils.refresh(
-				messageSource.get("company.delete.success"),
-				"company-list");
+		return NavTabResultUtils.reload(messageSource
+				.get("company.delete.success"));
 	}
 }

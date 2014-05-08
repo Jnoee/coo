@@ -2,8 +2,10 @@
     <div class="pageContent">
         <@s.form action="/system/user-save" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
         <div class="pageFormContent" layoutH="60">
-        	<h2 class="contentTitle">用户信息</h2>
-			<div class="divider" />
+        	<dl class="nowrap">
+                <h3>用户信息</h3>
+            </dl>
+            <div class="divider"></div>
             <dl>
                 <dt>用户名：</dt>
                 <dd><@s.input path="user.username" size="30" maxlength="20" class="required" /></dd>
@@ -18,9 +20,11 @@
                 <dt>序号：</dt>
                 <dd><@s.input path="user.ordinal" size="30" min="0" max="99999" class="digits" /></dd>
             </dl>
-			<div class="divider" />
-			<h2 class="contentTitle">默认职务</h2>
-			<div class="divider" />
+			<div class="divider"></div>
+            <dl class="nowrap">
+                <h3>默认职务</h3>
+            </dl>
+            <div class="divider"></div>
             <dl>
                 <dt>关联机构：</dt>
                 <dd><@s.select path="actor.organ" items=rootOrgan.organTree itemLabel="selectText" itemValue="id" class="required combox" /></dd>

@@ -11,7 +11,7 @@ import coo.core.hibernate.search.FullTextIndexer;
 import coo.core.message.MessageSource;
 import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.NavTabResultUtils;
 
 /**
  * 全文索引管理。
@@ -47,8 +47,7 @@ public class FullTextIndexAction {
 	@RequestMapping("full-text-index-build")
 	public ModelAndView build(Class<?>[] entityClasses) {
 		fullTextIndexer.startAndWait(entityClasses);
-		return DwzResultUtils.refresh(
-				messageSource.get("full.text.index.build.success"),
-				"entity-list");
+		return NavTabResultUtils.reload(messageSource
+				.get("full.text.index.build.success"));
 	}
 }

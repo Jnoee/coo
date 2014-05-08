@@ -12,6 +12,95 @@ public class DwzResult {
 	private String forwardUrl = "";
 
 	/**
+	 * 构造方法。
+	 */
+	@Deprecated
+	private DwzResult() {
+	}
+
+	/**
+	 * 构造方法。
+	 * 
+	 * @param message
+	 *            提示信息
+	 * @param navTabId
+	 *            navTab的ID
+	 * @param rel
+	 *            div或dialog的ID
+	 * @param forwardUrl
+	 *            跳转页面的URL
+	 */
+	private DwzResult(String message, String navTabId, String rel,
+			String forwardUrl) {
+		this.message = message;
+		this.navTabId = navTabId;
+		this.rel = rel;
+		this.forwardUrl = forwardUrl;
+	}
+
+	/**
+	 * 构建操作成功的响应对象。
+	 * 
+	 * @param message
+	 *            提示信息
+	 * @param navTabId
+	 *            navTab的ID
+	 * @param rel
+	 *            div或dialog的ID
+	 * @param forwardUrl
+	 *            跳转页面的URL
+	 * @return 返回操作成功的响应对象。
+	 */
+	public static DwzResult success(String message, String navTabId,
+			String rel, String forwardUrl) {
+		DwzResult result = new DwzResult(message, navTabId, rel, forwardUrl);
+		result.setStatusCode(StatusCode.OK);
+		return result;
+	}
+
+	/**
+	 * 构建关闭页面的操作成功的响应对象。
+	 * 
+	 * @param message
+	 *            提示信息
+	 * @param navTabId
+	 *            navTab的ID
+	 * @param rel
+	 *            div或dialog的ID
+	 * @param forwardUrl
+	 *            跳转页面的URL
+	 * @return 返回关闭页面的操作成功的响应对象。
+	 */
+	public static DwzResult successClose(String message, String navTabId,
+			String rel, String forwardUrl) {
+		DwzResult result = new DwzResult(message, navTabId, rel, forwardUrl);
+		result.setStatusCode(StatusCode.OK);
+		result.setCallbackType(CallbackType.CLOSE_CURRENT);
+		return result;
+	}
+
+	/**
+	 * 构建跳转页面的操作成功的响应对象。
+	 * 
+	 * @param message
+	 *            提示信息
+	 * @param navTabId
+	 *            navTab的ID
+	 * @param rel
+	 *            div或dialog的ID
+	 * @param forwardUrl
+	 *            跳转页面的URL
+	 * @return 返回跳转页面的操作成功的响应对象。
+	 */
+	public static DwzResult successForward(String message, String navTabId,
+			String rel, String forwardUrl) {
+		DwzResult result = new DwzResult(message, navTabId, rel, forwardUrl);
+		result.setStatusCode(StatusCode.OK);
+		result.setCallbackType(CallbackType.FORWARD);
+		return result;
+	}
+
+	/**
 	 * 构建用于刷新指定navTab的响应内容model。
 	 * 
 	 * @param message
@@ -20,12 +109,13 @@ public class DwzResult {
 	 *            待刷新的navTab的ID
 	 * @return 返回用于刷新的响应内容model。
 	 */
+	@Deprecated
 	public static DwzResult refresh(String message, String navTabId) {
-		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.OK);
-		model.setMessage(message);
-		model.setNavTabId(navTabId);
-		return model;
+		DwzResult result = new DwzResult();
+		result.setStatusCode(StatusCode.OK);
+		result.setMessage(message);
+		result.setNavTabId(navTabId);
+		return result;
 	}
 
 	/**
@@ -37,6 +127,7 @@ public class DwzResult {
 	 *            待局部刷新容器ID
 	 * @return 返回用于局部刷新的响应内容model。
 	 */
+	@Deprecated
 	public static DwzResult flush(String message, String rel) {
 		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
@@ -54,6 +145,7 @@ public class DwzResult {
 	 *            待重新加载dialog的ID
 	 * @return 返回用于重新加载dialog的响应内容model。
 	 */
+	@Deprecated
 	public static DwzResult reload(String message, String rel) {
 		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
@@ -72,6 +164,7 @@ public class DwzResult {
 	 *            待刷新的navTab的ID
 	 * @return 返回用于刷新并关闭当前页面的响应内容model。
 	 */
+	@Deprecated
 	public static DwzResult close(String message, String navTabId) {
 		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
@@ -92,6 +185,7 @@ public class DwzResult {
 	 *            待关闭的dialog的ID
 	 * @return 返回用于刷新并关闭当前页面及指定dialog的响应内容model。
 	 */
+	@Deprecated
 	public static DwzResult close(String message, String navTabId, String rel) {
 		DwzResult model = new DwzResult();
 		model.setStatusCode(StatusCode.OK);
@@ -113,6 +207,7 @@ public class DwzResult {
 	 *            待跳转的url地址
 	 * @return 返回用于刷新指定navTab并将当前页面跳转到其它页面的响应内容model。
 	 */
+	@Deprecated
 	public static DwzResult forward(String message, String navTabId,
 			String forwardUrl) {
 		DwzResult model = new DwzResult();
@@ -132,10 +227,9 @@ public class DwzResult {
 	 * @return 返回用于提示错误的响应内容model。
 	 */
 	public static DwzResult error(String message) {
-		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.ERROR);
-		model.setMessage(message);
-		return model;
+		DwzResult result = new DwzResult(message, "", "", "");
+		result.setStatusCode(StatusCode.ERROR);
+		return result;
 	}
 
 	/**
@@ -144,11 +238,10 @@ public class DwzResult {
 	 * @return 返回用于提示系统异常的响应内容model。
 	 */
 	public static DwzResult fail() {
-		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.ERROR);
-		model.setMessage("系统发生未知的异常，请稍后再试。");
-		model.setCallbackType(CallbackType.CLOSE_CURRENT);
-		return model;
+		DwzResult result = new DwzResult("系统发生未知的异常，请稍后再试。", "", "", "");
+		result.setStatusCode(StatusCode.ERROR);
+		result.setCallbackType(CallbackType.CLOSE_CURRENT);
+		return result;
 	}
 
 	/**
@@ -157,10 +250,9 @@ public class DwzResult {
 	 * @return 返回用于提示超时的响应内容model。
 	 */
 	public static DwzResult denied() {
-		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.ERROR);
-		model.setMessage("您没有执行该操作的权限，请与管理员联系。");
-		return model;
+		DwzResult result = new DwzResult("您没有执行该操作的权限，请与管理员联系。", "", "", "");
+		result.setStatusCode(StatusCode.ERROR);
+		return result;
 	}
 
 	/**
@@ -169,9 +261,8 @@ public class DwzResult {
 	 * @return 返回用于提示超时的响应内容model。
 	 */
 	public static DwzResult timeout() {
-		DwzResult model = new DwzResult();
+		DwzResult model = new DwzResult("会话已超时，请重新登录。", "", "", "");
 		model.setStatusCode(StatusCode.TIMEOUT);
-		model.setMessage("会话已超时，请重新登录。");
 		return model;
 	}
 

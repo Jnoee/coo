@@ -12,7 +12,8 @@ import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
 import coo.mvc.security.blank.entity.Organ;
 import coo.mvc.security.blank.service.SecurityService;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.DialogResultUtils;
+import coo.mvc.util.NavTabResultUtils;
 
 /**
  * 机构管理
@@ -33,9 +34,14 @@ public class OrganAction {
 	 *            数据模型
 	 */
 	@RequestMapping("organ-list")
-	public void list(Model model) {
-		model.addAttribute("rootOrgan", securityService.getCurrentUser()
-				.getSettings().getDefaultActor().getOrgan());
+	public void list(String selectedOrganId, Model model) {
+		Organ rootOrgan = securityService.getCurrentUser().getSettings()
+				.getDefaultActor().getOrgan();
+		if (selectedOrganId == null) {
+			selectedOrganId = rootOrgan.getId();
+		}
+		model.addAttribute("selectedOrganId", selectedOrganId);
+		model.addAttribute("rootOrgan", rootOrgan);
 	}
 
 	/**
@@ -65,8 +71,9 @@ public class OrganAction {
 	@RequestMapping("organ-save")
 	public ModelAndView save(Organ organ) {
 		securityService.createOrgan(organ);
-		return DwzResultUtils.close(
-				messageSource.get("organ.add.success"), "organ-list");
+		return DialogResultUtils.closeAndForwardNavTab(
+				messageSource.get("organ.add.success"),
+				"/system/organ-list?selectedOrganId=" + organ.getId());
 	}
 
 	/**
@@ -96,8 +103,9 @@ public class OrganAction {
 	@RequestMapping("organ-update")
 	public ModelAndView update(Organ organ) {
 		securityService.updateOrgan(organ);
-		return DwzResultUtils.refresh(
-				messageSource.get("organ.edit.success"), "organ-list");
+		return NavTabResultUtils.forward(
+				messageSource.get("organ.edit.success"),
+				"/system/organ-list?selectedOrganId=" + organ.getId());
 	}
 
 	/**
@@ -110,8 +118,10 @@ public class OrganAction {
 	@RequestMapping("organ-delete")
 	public ModelAndView delete(String orgnId) {
 		securityService.deleteOrgan(orgnId);
-		return DwzResultUtils.refresh(
-				messageSource.get("organ.delete.success"), "organ-list");
+		return NavTabResultUtils.forward(
+				messageSource.get("organ.delete.success"),
+				"organ-list?selectedOrganId="
+						+ securityService.getCurrentUser().getSettings()
+								.getDefaultActor().getOrgan().getId());
 	}
-
 }

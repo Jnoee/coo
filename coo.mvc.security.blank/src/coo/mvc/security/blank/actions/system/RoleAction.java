@@ -2,6 +2,7 @@ package coo.mvc.security.blank.actions.system;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -16,7 +17,8 @@ import coo.core.security.permission.AdminPermission;
 import coo.core.security.permission.PermissionConfig;
 import coo.mvc.security.blank.entity.Role;
 import coo.mvc.security.blank.service.SecurityService;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.DialogResultUtils;
+import coo.mvc.util.NavTabResultUtils;
 
 /**
  * 角色管理。
@@ -39,8 +41,13 @@ public class RoleAction {
 	 *            数据模型
 	 */
 	@RequestMapping("role-list")
-	public void list(Model model) {
-		model.addAttribute("roles", securityService.getAllRole());
+	public void list(String selectedRoleId, Model model) {
+		List<Role> roles = securityService.getAllRole();
+		if (selectedRoleId == null) {
+			selectedRoleId = roles.get(0).getId();
+		}
+		model.addAttribute("selectedRoleId", selectedRoleId);
+		model.addAttribute("roles", roles);
 	}
 
 	/**
@@ -71,8 +78,9 @@ public class RoleAction {
 		role.setPermissions(permissionConfig.getPermissionCode(Arrays
 				.asList(permissionIds)));
 		securityService.createRole(role);
-		return DwzResultUtils.close(
-				messageSource.get("role.add.success"), "role-list");
+		return DialogResultUtils.closeAndForwardNavTab(
+				messageSource.get("role.add.success"),
+				"/system/role-list?selectedRoleId=" + role.getId());
 	}
 
 	/**
@@ -107,8 +115,8 @@ public class RoleAction {
 		role.setPermissions(permissionConfig.getPermissionCode(Arrays
 				.asList(permissionIds)));
 		securityService.updateRole(role);
-		return DwzResultUtils.refresh(
-				messageSource.get("role.edit.success"), "role-list");
+		return NavTabResultUtils.forward(
+				messageSource.get("role.edit.success"),
+				"/system/role-list?selectedRoleId=" + role.getId());
 	}
-
 }

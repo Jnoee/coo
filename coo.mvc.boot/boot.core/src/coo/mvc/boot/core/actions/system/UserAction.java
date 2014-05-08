@@ -17,7 +17,8 @@ import coo.mvc.boot.core.entity.Actor;
 import coo.mvc.boot.core.entity.User;
 import coo.mvc.boot.core.entity.UserSettings;
 import coo.mvc.boot.core.service.SecurityService;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.DialogResultUtils;
+import coo.mvc.util.NavTabResultUtils;
 
 /**
  * 用户管理。
@@ -96,8 +97,8 @@ public class UserAction {
 		settings.setDefaultActor(actor);
 		user.setSettings(settings);
 		securityService.createUser(user);
-		return DwzResultUtils.close(
-				messageSource.get("user.add.success"), "user-list");
+		return DialogResultUtils.closeAndReloadNavTab(messageSource
+				.get("user.add.success"));
 	}
 
 	/**
@@ -123,8 +124,8 @@ public class UserAction {
 	@RequestMapping("user-update")
 	public ModelAndView update(User user) {
 		securityService.updateUser(user);
-		return DwzResultUtils.close(
-				messageSource.get("user.edit.success"), "user-list");
+		return DialogResultUtils.closeAndReloadNavTab(messageSource
+				.get("user.edit.success"));
 	}
 
 	/**
@@ -137,8 +138,8 @@ public class UserAction {
 	@RequestMapping("user-disable")
 	public ModelAndView disable(String userId) {
 		securityService.disableUser(userId);
-		return DwzResultUtils.refresh(
-				messageSource.get("user.disable.success"), "user-list");
+		return NavTabResultUtils.reload(messageSource
+				.get("user.disable.success"));
 	}
 
 	/**
@@ -151,8 +152,8 @@ public class UserAction {
 	@RequestMapping("user-enable")
 	public ModelAndView enable(String userId) {
 		securityService.enableUser(userId);
-		return DwzResultUtils.refresh(
-				messageSource.get("user.enable.success"), "user-list");
+		return NavTabResultUtils.reload(messageSource
+				.get("user.enable.success"));
 	}
 
 	/**
@@ -181,7 +182,7 @@ public class UserAction {
 	@RequestMapping("user-pwd-reset-save")
 	public ModelAndView pwdResetSave(String managePassword, User user) {
 		securityService.resetPassword(managePassword, user.getId());
-		return DwzResultUtils.close(messageSource
+		return DialogResultUtils.close(messageSource
 				.get("user.pwd.reset.success"));
 	}
 }

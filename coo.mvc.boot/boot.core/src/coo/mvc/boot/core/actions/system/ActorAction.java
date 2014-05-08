@@ -12,7 +12,7 @@ import coo.core.security.annotations.Auth;
 import coo.core.security.permission.AdminPermission;
 import coo.mvc.boot.core.entity.Actor;
 import coo.mvc.boot.core.service.SecurityService;
-import coo.mvc.util.DwzResultUtils;
+import coo.mvc.util.DialogResultUtils;
 
 /**
  * 职务管理。
@@ -54,7 +54,7 @@ public class ActorAction {
 	@RequestMapping("actor-save")
 	public ModelAndView save(Actor actor) {
 		securityService.createActor(actor);
-		return DwzResultUtils.close(
+		return DialogResultUtils.closeAndReloadDialog(
 				messageSource.get("actor.add.success"), "user-edit");
 	}
 
@@ -84,7 +84,7 @@ public class ActorAction {
 	@RequestMapping("actor-update")
 	public ModelAndView update(Actor actor) {
 		securityService.updateActor(actor);
-		return DwzResultUtils.close(
+		return DialogResultUtils.closeAndReloadDialog(
 				messageSource.get("actor.update.success"), "user-edit");
 	}
 
@@ -98,7 +98,7 @@ public class ActorAction {
 	@RequestMapping("actor-delete")
 	public ModelAndView delete(String actorId) {
 		securityService.deleteActor(actorId);
-		return DwzResultUtils.refresh(
-				messageSource.get("actor.delete.success"), "user-edit");
+		return DialogResultUtils.reload(messageSource
+				.get("actor.delete.success"));
 	}
 }

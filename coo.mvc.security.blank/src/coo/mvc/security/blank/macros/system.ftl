@@ -1,7 +1,7 @@
 <#macro organTree organ isRootOrgan="true">
 <ul<#if isRootOrgan> class="tree treeFolder"</#if>>
     <li>
-		<a href="<@s.url "/system/organ-edit?organId=${organ.id}" />" target="ajax" rel="organBox">${organ.name}</a>
+		<a href="<@s.url "/system/organ-edit?organId=${organ.id}" />" target="ajax" rel="organBox" organId="${organ.id}">${organ.name}</a>
         <#list organ.childs as childOrgan>
         <@organTree childOrgan isRootOrgan="false" />
         </#list>

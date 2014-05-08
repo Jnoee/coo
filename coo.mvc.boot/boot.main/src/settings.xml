@@ -11,4 +11,6 @@
 	<entry key="db.password"></entry>
 	<!-- 数据库适配器 -->
 	<entry key="db.dialect">org.hibernate.dialect.H2Dialect</entry>
+	<!-- 是否打印sql语句 -->
+	<entry key="db.show_sql">true</entry>
 </properties>

@@ -4,5 +4,5 @@
 "navTabId":"${ajaxResult.navTabId}",
 "rel":"${ajaxResult.rel}",
 "callbackType":"${ajaxResult.callbackType}",
-"forwardUrl":"${ajaxResult.forwardUrl}"
+"forwardUrl":"<#if ajaxResult.forwardUrl?length gt 0>${ctx}${ajaxResult.forwardUrl}</#if>"
 }
