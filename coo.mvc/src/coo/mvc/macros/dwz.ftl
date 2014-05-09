@@ -98,13 +98,13 @@
 <#macro pageForm action onsubmit targetType="navTab" rel="" searchModel=searchModel showKeyword=true buttonText="检索" method="post">
     <#if !onsubmit??>
         <#if targetType == "navTab">
-            <#assign onsubmit="return navTabSearch(this, rel);" />
+            <#assign onsubmit="return navTabSearch(this, '${rel}');" />
         </#if>
         <#if targetType == "dialog">
             <#assign onsubmit="return dialogSearch(this);" />
         </#if>
         <#if targetType == "div">
-            <#assign onsubmit="return divSearch(this, rel);" />
+            <#assign onsubmit="return divSearch(this, '${rel}');" />
         </#if>
     </#if>
     <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
@@ -142,10 +142,10 @@
 <#macro pageNav pageModel onchange targetType="navTab" rel="">
     <#if !onchange??>
         <#if targetType == "navTab">
-            <#assign onchange="navTabPageBreak({numPerPage:this.value}, rel);" />
+            <#assign onchange="navTabPageBreak({numPerPage:this.value}, '${rel}');" />
         </#if>
         <#if targetType == "dialog">
-            <#assign onchange="dialogPageBreak({numPerPage:this.value}, rel);" />
+            <#assign onchange="dialogPageBreak({numPerPage:this.value}, '${rel}');" />
         </#if>
     </#if>
     <div class="pages">
