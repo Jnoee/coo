@@ -349,7 +349,7 @@
         {
         <#if items?? && items?size gt 0>
             <#list items as item>
-                "${item[itemValue]}":"${item[itemLabel]}"<#if item_has_next>,</#if>
+                "${("item." + itemValue)?eval}":"${("item." + itemLabel)?eval}"<#if item_has_next>,</#if>
             </#list>
         </#if>
         }
