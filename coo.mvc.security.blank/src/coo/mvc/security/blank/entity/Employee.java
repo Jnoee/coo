@@ -50,13 +50,11 @@ public class Employee extends ResourceEntity<User> {
 	private Integer age = 18;
 	/** 性别 */
 	@Type(type = "IEnum")
-	@Field(analyze = Analyze.NO)
-	@FieldBridge(impl = IEnumTextBridge.class)
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IEnumTextBridge.class))
 	private Sex sex = Sex.MALE;
 	/** 兴趣爱好 */
 	@Type(type = "Array")
-	@Field
-	@FieldBridge(impl = ArrayBridge.class)
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = ArrayBridge.class))
 	private String[] interests = new String[] {};
 
 	public Company getCompany() {

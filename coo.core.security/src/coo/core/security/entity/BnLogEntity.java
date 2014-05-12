@@ -42,8 +42,7 @@ public abstract class BnLogEntity extends UuidEntity {
 	/** 创建时间 */
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(analyze = Analyze.NO)
-	@FieldBridge(impl = DateBridge.class)
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
 	private Date createDate;
 	/** 日志信息 */
 	@NotEmpty

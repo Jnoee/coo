@@ -43,8 +43,7 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	@LogField(text = "创建时间", format = DateUtils.SECOND)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	@Field(analyze = Analyze.NO)
-	@FieldBridge(impl = DateBridge.class)
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
 	protected Date createDate;
 	@LogBean(@LogField(text = "修改人", property = "username"))
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -54,8 +53,7 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	@LogField(text = "修改时间", format = DateUtils.SECOND)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	@Field(analyze = Analyze.NO)
-	@FieldBridge(impl = DateBridge.class)
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
 	protected Date modifyDate;
 
 	/**
