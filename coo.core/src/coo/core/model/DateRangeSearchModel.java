@@ -8,7 +8,6 @@ import org.joda.time.DateTime;
 
 import coo.base.exception.BusinessException;
 import coo.base.util.DateUtils;
-import coo.core.model.SearchModel;
 
 /**
  * 日期区间查询条件模型。
@@ -31,10 +30,16 @@ public class DateRangeSearchModel extends SearchModel {
 		if (startDate == null || endDate == null) {
 			return null;
 		}
-		String startDateStr = DateUtils.format(startDate, DateUtils.DAY_N);
-		DateTime endDateTime = new DateTime(endDate).plusDays(1);
-		String endDateStr = DateUtils.format(endDateTime.toDate(),
-				DateUtils.DAY_N);
+		String startDateStr = "0001-01-01";
+		if (startDate != null) {
+			startDateStr = DateUtils.format(startDate, DateUtils.DAY_N);
+		}
+		String endDateStr = "9999-12-31";
+		if (endDate != null) {
+			DateTime endDateTime = new DateTime(endDate).plusDays(1);
+			endDateStr = DateUtils
+					.format(endDateTime.toDate(), DateUtils.DAY_N);
+		}
 		TermRangeQuery showTimeQuery = new TermRangeQuery(searchField,
 				startDateStr, endDateStr, true, false);
 		return showTimeQuery;
@@ -44,15 +49,10 @@ public class DateRangeSearchModel extends SearchModel {
 	 * 验证日期区间设置有效性。
 	 */
 	public void validate() {
-		if (startDate == null && endDate == null) {
-			return;
-		}
 		if (startDate != null && endDate != null) {
 			if (startDate.after(endDate)) {
 				throw new BusinessException("查询起始日期不能大于截止日期。");
 			}
-		} else {
-			throw new BusinessException("查询起始日期和截止日期需要同时指定。");
 		}
 	}
 
