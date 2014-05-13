@@ -2,6 +2,7 @@
 var clickNavMenu = function(index){
     $("a", $("#navMenu")).eq(index).click();
 }
+
 /** 隐藏左边菜单栏 */
 var hideMenuBar = function(){
     var sidebar = $("#sidebar");
@@ -10,6 +11,7 @@ var hideMenuBar = function(){
         sidebarBtn.click();
     }
 }
+
 /** 显示左边菜单栏 */
 var showMenuBar = function(){
     var sidebar = $("#sidebar_s");
@@ -18,6 +20,20 @@ var showMenuBar = function(){
         sidebarBtn.click();
     }
 }
+
+/** 扩展DWZ自定义验证函数，日期区间验证结束日期不能小于开始日期 */
+var dateGtTo = function(element, gtToDate) {
+	var endDate = $(element).val();
+	var startDate = $(gtToDate, $(element).closest("form")).val();
+	var pattern = $input.attr('dateFmt') || 'yyyy-MM-dd';
+	
+	if(endDate && startDate) {
+		return endDate.parseDate("yyyy-MM-dd") >= startDate.parseDate(pattern);
+	}
+
+	return true;
+}
+
 /** 扩展jQuery，实现页面元素可直接获取上级unit box容器 */
 $.fn.extend({
     getParentUnitBox: function(){
