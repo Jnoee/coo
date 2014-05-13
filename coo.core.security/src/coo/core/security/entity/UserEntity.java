@@ -49,7 +49,7 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	/** 启用状态 */
 	@NotNull
 	@LogField(text = "启用状态")
-	private Boolean enabled = Boolean.TRUE;
+	private Boolean enabled = true;
 	/** 排序 */
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "排序")
