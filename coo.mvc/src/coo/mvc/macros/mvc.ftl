@@ -170,16 +170,19 @@
  * separator：单选组项之间的分割符
  * attributes：单选组的其它属性
  -->
-<#macro radios path items itemValue itemLabel separator attributes...>
+<#macro radios path items itemValue itemLabel prefix suffix attributes...>
     <@bind path />
     <@bindOptions items itemValue itemLabel status.value />
     <#list opts?keys as optKey>
         <#assign id="${id}${optKey_index}">
         <#assign optVal = opts[optKey]>
         <#assign isChecked = contains(vals, optKey)>
+        <@replaceAttributes attributes />
         <@compress single_line=true>
+        ${prefix}
         <input type="radio" id="${id}" name="${name}" value="${optKey?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
-        ${optVal?html}${separator}
+        ${optVal?html}
+        ${suffix}
         </@compress>
     </#list>
 </#macro>
@@ -214,16 +217,19 @@
  * separator：多选组项之间的分割符
  * attributes：多选组的其它属性
  -->
-<#macro checkboxs path items itemValue itemLabel separator attributes...>
+<#macro checkboxs path items itemValue itemLabel prefix suffix attributes...>
     <@bind path />
     <@bindOptions items itemValue itemLabel status.actualValue />
     <#list opts?keys as optKey>
         <#assign id="${id}${optKey_index}">
         <#assign optVal = opts[optKey]>
         <#assign isChecked = contains(vals, optKey)>
+        <@replaceAttributes attributes />
         <@compress single_line=true>
+        ${prefix}
         <input type="checkbox" id="${id}" name="${name}" value="${optKey?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
-        ${optVal?html}${separator}
+        ${optVal?html}
+        ${suffix}
         </@compress>
     </#list>
     <input type="hidden" name="_${status.expression}" value="on"/>
