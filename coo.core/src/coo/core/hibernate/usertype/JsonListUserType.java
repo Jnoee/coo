@@ -15,13 +15,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import coo.base.util.BeanUtils;
 import coo.base.util.CollectionUtils;
+import coo.core.jackson.GenericObjectMapper;
 
 /**
  * Json格式自定义列表类型。
  */
 public class JsonListUserType extends AbstractUserType {
 	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
-	private ObjectMapper mapper = new ObjectMapper();
+	private ObjectMapper mapper = new GenericObjectMapper();
 
 	@Override
 	public Object nullSafeGet(ResultSet rs, String[] names,

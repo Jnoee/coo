@@ -10,12 +10,14 @@ import org.hibernate.engine.spi.SessionImplementor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import coo.core.jackson.GenericObjectMapper;
+
 /**
  * Json格式自定义类型。
  */
 public class JsonUserType extends AbstractUserType {
 	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
-	private ObjectMapper mapper = new ObjectMapper();
+	private ObjectMapper mapper = new GenericObjectMapper();
 
 	@Override
 	public Object nullSafeGet(ResultSet rs, String[] names,
