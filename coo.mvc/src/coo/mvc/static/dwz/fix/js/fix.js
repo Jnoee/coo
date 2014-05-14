@@ -23,12 +23,12 @@ var showMenuBar = function(){
 
 /** 扩展DWZ自定义验证函数，日期区间验证结束日期不能小于开始日期 */
 var dateGtTo = function(element, gtToDate) {
-	var endDate = $(element).val();
-	var startDate = $(gtToDate, $(element).closest("form")).val();
-	var pattern = $input.attr('dateFmt') || 'yyyy-MM-dd';
+	var endDate = $(element);
+	var startDate = $(gtToDate, $(element).closest("form"));
+	var pattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
 	
-	if(endDate && startDate) {
-		return endDate.parseDate("yyyy-MM-dd") >= startDate.parseDate(pattern);
+	if(endDate.val() && startDate.val()) {
+		return endDate.val().parseDate("yyyy-MM-dd") >= startDate.val().parseDate(pattern);
 	}
 
 	return true;
