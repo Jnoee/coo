@@ -27,7 +27,7 @@ public class DateRangeSearchModel extends SearchModel {
 	 * @return 返回日期区间全文搜索查询对象。
 	 */
 	public Query genQuery(String searchField) {
-		if (startDate == null || endDate == null) {
+		if (startDate == null && endDate == null) {
 			return null;
 		}
 		String startDateStr = "0001-01-01";
