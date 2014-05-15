@@ -6,12 +6,6 @@
 </#macro>
 
 <#macro errorHead>
-    <@head />
     <link href="${ctx}/std/models/error/error.css" rel="stylesheet" type="text/css" />
-    <script>
-    	$(document).ready(function(){
-    		$(".std-error-panel").center();
-    	});
-    </script>
     <#nested>
 </#macro>
