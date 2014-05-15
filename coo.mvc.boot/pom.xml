@@ -11,6 +11,7 @@
 		<encoding>UTF-8</encoding>
 		<plugin.compiler.version>3.1</plugin.compiler.version>
 		<plugin.resources.version>2.6</plugin.resources.version>
+		<plugin.war.version>2.4</plugin.war.version>
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
@@ -80,6 +81,17 @@
 				<version>${plugin.resources.version}</version>
 				<configuration>
 					<encoding>${encoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${plugin.war.version}</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>webapp</directory>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
