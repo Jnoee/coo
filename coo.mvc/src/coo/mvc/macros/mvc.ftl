@@ -142,15 +142,44 @@
  *
  * path：选择框绑定的属性路径
  * items：选择框选项集合对象
- * itemValue：选择项值的属性名
  * itemLabel：选择项文本的属性名
+ * itemValue：选择项值的属性名
  * attributes：选择框的其它属性
  -->
-<#macro select path items itemValue itemLabel attributes...>
+<#macro select path items itemLabel itemValue headerLabel headerValue="" attributes...>
     <@bind path />
     <@replaceAttributes attributes />
     <select id="${id}" name="${name}" ${getAttributes(attributes)}>
+    	<#if headerLabel??>
+    	<option value="${headerValue}">${headerLabel}</option>
+    	</#if>
         <@options items itemValue itemLabel status.value />
+    </select>
+</#macro>
+
+<#--
+ * 布尔选择框。
+ *
+ * path：选择框绑定的属性路径
+ * headerLabel：选择框首个选项的文本
+ * headerValue：选择框首个选项的值
+ * trueLabel：true选项的文本
+ * trueValue：true选项的值
+ * falseLabel：false选项的文本
+ * falseValue：false选项的值
+ * attributes：选择框的其它属性
+ -->
+<#macro boolSelect path headerLabel headerValue="" trueLabel="是" trueValue="1" falseLabel="否" falseValue="0" attributes...>
+	<@bind path />
+    <@replaceAttributes attributes />
+    <select id="${id}" name="${name}" ${getAttributes(attributes)}>
+    	<#if headerLabel??>
+    	<option value="${headerValue}">${headerLabel}</option>
+    	</#if>
+    	<#local isTrueSelected = status.value?? && status.value?string=="true">
+    	<#local isFalseSelected = status.value?? && status.value?string=="false">
+        <option value="${trueValue}" <#if isTrueSelected> selected="selected"</#if>>${trueLabel}</option>
+        <option value="${falseValue}" <#if isFalseSelected> selected="selected"</#if>>${falseLabel}</option>
     </select>
 </#macro>
 
