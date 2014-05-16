@@ -149,10 +149,10 @@
     			<#local width="500" />
     		</#if>
     		<#if width == "M">
-    			<#local width="800" />
+    			<#local width="900" />
     		</#if>
     		<#if width == "L">
-    			<#local width="1100" />
+    			<#local width="1200" />
     		</#if>
     		width="${width}"
     	</#if>
