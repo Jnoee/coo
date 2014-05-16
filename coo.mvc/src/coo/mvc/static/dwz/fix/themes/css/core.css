@@ -8,3 +8,4 @@ a:hover{text-decoration: underline;}
 .accordion .accordionHeader h2 span{background-image: none;margin-top: 5px;}
 .panelBar .toolBar a span{background-image: none;height: 19px;line-height: 15px;margin: 4px 0 4px 0;}
 .panelBar .toolBar li.hover a span{height: 19px;line-height: 15px;margin: 4px 0 4px 0;}
+span.error{/*width: 150px;left: 268px;height: 23px*/}
