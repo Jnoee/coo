@@ -86,6 +86,96 @@
 </#macro>
 
 <#--
+ * 表单组件。
+ *
+ * action：表单提交的相对路径
+ * method：表单提交的方式
+ * onsubmit：表单提交时的回调函数
+ * targetType：回调方式，支持navTab、dialog、dialogReload、dialogClose四种
+ * class：表单的样式
+ * attributes：表单的其它属性
+ -->
+<#macro form action onsubmit method="post" targetType="navTab" class="pageForm required-validate" attributes...>
+	<#if !onsubmit??>
+        <#if targetType == "navTab">
+            <#local onsubmit="return validateCallback(this, navTabAjaxDone);" />
+        </#if>
+        <#if targetType == "dialog">
+            <#local onsubmit="return validateCallback(this, dialogAjaxDone);" />
+        </#if>
+        <#if targetType == "dialogReload">
+            <#local onsubmit="return validateCallback(this, dialogReloadDone);" />
+        </#if>
+        <#if targetType == "dialogClose">
+            <#local onsubmit="return validateCallback(this, dialogCloseDone);" />
+        </#if>
+    </#if>
+    <form action="<@s.url "${action}" />" method="${method}" class="${class}" onsubmit="${onsubmit}" ${s.getAttributes(attributes)}>
+        <#nested>
+    </form>
+</#macro>
+
+<#--
+ * 链接组件。
+ *
+ * href：链接的相对路径
+ * rel：navTab和dialog链接用到的rel属性
+ * width：dialog链接用来指定打开窗口的宽度，可以指定为S（小）、M（中）、L（大）或具体的宽度
+ * height：dialog链接用来指定打开窗口的高度，可以指定为S（小）、M（中）、L（大）或具体的宽度
+ * target：链接类型，对应dwz使用的链接类型，如navTab、dialog、ajaxTodo、selectedTodo等
+ * mask：dialog链接用来指定打开窗口是否为模态窗口
+ * attributes：链接的其它属性
+ -->
+<#macro a href rel width height target="navTab" mask=true attributes...>
+	<#if !rel?? && (target == "navTab" || target == "dialog")>
+		<#local relStartIndex = href?last_index_of("/") />
+		<#local relEndIndex = href?last_index_of("?") />
+		<#if relStartIndex == -1>
+			<#local relStartIndex = 0 />
+		</#if>
+		<#if relEndIndex == -1>
+			<#local rel = href?substring(relStartIndex + 1)  />
+		<#else>
+			<#local rel = href?substring(relStartIndex + 1, relEndIndex)  />
+		</#if>
+	</#if>
+	<@compress single_line=true>
+	<a href="<@s.url href />" target="${target}"
+	<#if target == "dialog">
+    	rel="${rel}"
+    	<#if mask> mask="${mask}"</#if>
+    	<#if width??>
+    		<#if width == "S">
+    			<#local width="500" />
+    		</#if>
+    		<#if width == "M">
+    			<#local width="800" />
+    		</#if>
+    		<#if width == "L">
+    			<#local width="1100" />
+    		</#if>
+    		width="${width}"
+    	</#if>
+    	<#if height??>
+    		<#if height == "S">
+    			<#local height="300" />
+    		</#if>
+    		<#if height == "M">
+    			<#local height="500" />
+    		</#if>
+    		<#if height == "L">
+    			<#local height="700" />
+    		</#if>
+    		height="${height}"
+    	</#if>
+    <#else>
+    	<#if rel> rel="${rel}"</#if>
+    </#if>
+     ${s.getAttributes(attributes)}><#nested></a>
+    </@compress>
+</#macro>
+
+<#--
  * 分页表单。
  *
  * action：表单提交的相对路径
@@ -98,13 +188,13 @@
 <#macro pageForm action onsubmit targetType="navTab" rel="" searchModel=searchModel showKeyword=true buttonText="检索" method="post">
     <#if !onsubmit??>
         <#if targetType == "navTab">
-            <#assign onsubmit="return navTabSearch(this, '${rel}');" />
+            <#local onsubmit="return navTabSearch(this, '${rel}');" />
         </#if>
         <#if targetType == "dialog">
-            <#assign onsubmit="return dialogSearch(this);" />
+            <#local onsubmit="return dialogSearch(this);" />
         </#if>
         <#if targetType == "div">
-            <#assign onsubmit="return divSearch(this, '${rel}');" />
+            <#local onsubmit="return divSearch(this, '${rel}');" />
         </#if>
     </#if>
     <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
@@ -142,15 +232,15 @@
 <#macro pageNav pageModel onchange targetType="navTab" rel="">
     <#if !onchange??>
         <#if targetType == "navTab">
-            <#assign onchange="navTabPageBreak({numPerPage:this.value}, '${rel}');" />
+            <#local onchange="navTabPageBreak({numPerPage:this.value}, '${rel}');" />
         </#if>
         <#if targetType == "dialog">
-            <#assign onchange="dialogPageBreak({numPerPage:this.value}, '${rel}');" />
+            <#local onchange="dialogPageBreak({numPerPage:this.value}, '${rel}');" />
         </#if>
     </#if>
     <div class="pages">
         <span>显示</span>
-    	<#assign options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
+    	<#local options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
         <select name="pageSize" class="combox" onchange="${onchange}">
             <@s.options items=options values=pageModel.size />
         </select>
