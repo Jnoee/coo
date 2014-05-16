@@ -39,6 +39,18 @@
 </#macro>
 
 <#--
+ * 链接。
+ *
+ * href：链接的相对路径
+ * attributes：链接的其它属性
+ -->
+<#macro a href attributes...>
+	<@compress>
+    <a href="<@url href />" ${getAttributes(attributes)}><#nested></a>
+    </@compress>
+</#macro>
+
+<#--
  * 绑定变量。
  *
  * path：变量路径
@@ -154,8 +166,8 @@
 <#macro options items itemValue itemLabel values>
     <@bindOptions items itemValue itemLabel values />
     <#list opts?keys as optKey>
-        <#assign optVal = opts[optKey]>
-        <#assign isSelected = contains(vals, optKey)>
+        <#local optVal = opts[optKey]>
+        <#local isSelected = contains(vals, optKey)>
         <option value="${optKey?html}"<#if isSelected> selected="selected"</#if>>${optVal?html}</option>
     </#list>
 </#macro>
@@ -174,9 +186,9 @@
     <@bind path />
     <@bindOptions items itemValue itemLabel status.value />
     <#list opts?keys as optKey>
-        <#assign id="${id}${optKey_index}">
-        <#assign optVal = opts[optKey]>
-        <#assign isChecked = contains(vals, optKey)>
+        <#local id="${id}${optKey_index}">
+        <#local optVal = opts[optKey]>
+        <#local isChecked = contains(vals, optKey)>
         <@replaceAttributes attributes />
         <@compress single_line=true>
         ${prefix}
@@ -199,7 +211,7 @@
     <#if path??>
         <@bind path />
         <@replaceAttributes attributes />
-        <#assign isChecked = status.value?? && status.value?string=="true">
+        <#local isChecked = status.value?? && status.value?string=="true">
         <input type="radio" id="${id}" name="${name}" value="1"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${trueText}
         <input type="radio" id="${id}" name="${name}" value="0"<#if !isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${falseText}    
     <#else>
@@ -221,9 +233,9 @@
     <@bind path />
     <@bindOptions items itemValue itemLabel status.actualValue />
     <#list opts?keys as optKey>
-        <#assign id="${id}${optKey_index}">
-        <#assign optVal = opts[optKey]>
-        <#assign isChecked = contains(vals, optKey)>
+        <#local id="${id}${optKey_index}">
+        <#local optVal = opts[optKey]>
+        <#local isChecked = contains(vals, optKey)>
         <@replaceAttributes attributes />
         <@compress single_line=true>
         ${prefix}
@@ -245,7 +257,7 @@
     <#if path??>
         <@bind path />
         <@replaceAttributes attributes />
-        <#assign isChecked = status.value?? && status.value?string=="true">
+        <#local isChecked = status.value?? && status.value?string=="true">
         <input type="hidden" name="_${status.expression}" value="on"/>
         <input type="checkbox" id="${id}" name="${name}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
     <#else>
