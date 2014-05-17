@@ -260,7 +260,8 @@
  -->
 <#macro checkboxs path items itemValue itemLabel prefix suffix attributes...>
     <@bind path />
-    <@bindOptions items itemValue itemLabel status.actualValue />
+    <#local values = status.value?split(",")>
+    <@bindOptions items itemValue itemLabel values />
     <#list opts?keys as optKey>
         <#local id="${id}${optKey_index}">
         <#local optVal = opts[optKey]>
