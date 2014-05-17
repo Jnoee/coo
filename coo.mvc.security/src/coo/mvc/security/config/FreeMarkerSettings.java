@@ -16,5 +16,6 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
 		addTemplatePath("classpath:/coo/mvc/security/macros/");
 		addTemplatePath("classpath:/coo/mvc/security/actions/");
 		addAutoInclude("security.ftl");
+		addAutoImport("sec", "sec.ftl");
 	}
 }
