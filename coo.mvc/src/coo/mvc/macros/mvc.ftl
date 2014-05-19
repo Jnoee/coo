@@ -215,10 +215,10 @@
     <@bind path />
     <@bindOptions items itemValue itemLabel status.value />
     <#list opts?keys as optKey>
+    	<@replaceAttributes attributes />
         <#local id="${id}${optKey_index}">
         <#local optVal = opts[optKey]>
         <#local isChecked = contains(vals, optKey)>
-        <@replaceAttributes attributes />
         <@compress single_line=true>
         ${prefix}
         <input type="radio" id="${id}" name="${name}" value="${optKey?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
@@ -263,10 +263,10 @@
     <#local values = status.value?split(",")>
     <@bindOptions items itemValue itemLabel values />
     <#list opts?keys as optKey>
+    	<@replaceAttributes attributes />
         <#local id="${id}${optKey_index}">
         <#local optVal = opts[optKey]>
         <#local isChecked = contains(vals, optKey)>
-        <@replaceAttributes attributes />
         <@compress single_line=true>
         ${prefix}
         <input type="checkbox" id="${id}" name="${name}" value="${optKey?html}"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />
