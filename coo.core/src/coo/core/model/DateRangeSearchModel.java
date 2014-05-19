@@ -30,15 +30,14 @@ public class DateRangeSearchModel extends SearchModel {
 		if (startDate == null && endDate == null) {
 			return null;
 		}
-		String startDateStr = "0001-01-01";
+		String startDateStr = DateUtils.format(DateUtils.getMinDate());
 		if (startDate != null) {
-			startDateStr = DateUtils.format(startDate, DateUtils.DAY_N);
+			startDateStr = DateUtils.format(startDate);
 		}
-		String endDateStr = "9999-12-31";
+		String endDateStr = DateUtils.format(DateUtils.getMaxDate());
 		if (endDate != null) {
 			DateTime endDateTime = new DateTime(endDate).plusDays(1);
-			endDateStr = DateUtils
-					.format(endDateTime.toDate(), DateUtils.DAY_N);
+			endDateStr = DateUtils.format(endDateTime.toDate());
 		}
 		TermRangeQuery showTimeQuery = new TermRangeQuery(searchField,
 				startDateStr, endDateStr, true, false);

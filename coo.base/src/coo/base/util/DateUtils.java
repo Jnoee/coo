@@ -163,6 +163,24 @@ public class DateUtils {
 	}
 
 	/**
+	 * 获取最小日期。
+	 * 
+	 * @return 返回"0000-01-01"的日期。
+	 */
+	public static Date getMinDate() {
+		return parse("0000-01-01");
+	}
+
+	/**
+	 * 获取最大日期。
+	 * 
+	 * @return 返回"9999-12-31"的日期。
+	 */
+	public static Date getMaxDate() {
+		return parse("9999-12-31");
+	}
+
+	/**
 	 * 获取Joda Time的Duration对象。
 	 * 
 	 * @param beginDate
