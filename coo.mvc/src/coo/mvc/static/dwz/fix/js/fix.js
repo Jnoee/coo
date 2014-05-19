@@ -21,8 +21,21 @@ var showMenuBar = function(){
     }
 }
 
-/** 扩展DWZ自定义验证函数，日期区间验证结束日期不能小于开始日期 */
+/** 扩展DWZ自定义验证函数，日期区间验证结束日期必须大于开始日期 */
 var gtDate = function(element, gtToDate) {
+	var endDate = $(element);
+	var startDate = $(gtToDate, $(element).closest("form"));
+	var pattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
+	
+	if(endDate.val() && startDate.val()) {
+		return endDate.val().parseDate("yyyy-MM-dd") > startDate.val().parseDate(pattern);
+	}
+
+	return true;
+}
+
+/** 扩展DWZ自定义验证函数，日期区间验证结束必须大于等于开始日期 */
+var geDate = function(element, gtToDate) {
 	var endDate = $(element);
 	var startDate = $(gtToDate, $(element).closest("form"));
 	var pattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
