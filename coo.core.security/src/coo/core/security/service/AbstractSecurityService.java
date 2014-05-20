@@ -254,7 +254,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		BooleanQuery bq = new BooleanQuery();
 		bq.add(new TermQuery(new Term("id", AdminIds.USER_ID)), Occur.MUST_NOT);
 		bq.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
-		criteria.setLuceneQuery(bq, Occur.MUST);
+		criteria.addLuceneQuery(bq, Occur.MUST);
 
 		return userDao.searchPage(criteria, searchModel.getPageNo(),
 				searchModel.getPageSize());
