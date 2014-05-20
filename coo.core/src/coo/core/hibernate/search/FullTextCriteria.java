@@ -399,12 +399,23 @@ public class FullTextCriteria {
 		return embeddedIndexedFields;
 	}
 
+	/**
+	 * 附加Lucene查询条件。
+	 */
 	private class AttachLuceneQuery {
 		/** Lucene查询条件 */
 		private Query query;
-		/** Lucene查询条件的与或关系 */
+		/** Lucene查询条件关系 */
 		private Occur occur;
 
+		/**
+		 * 构造方法。
+		 * 
+		 * @param query
+		 *            Lucene查询条件
+		 * @param occur
+		 *            Lucene查询条件关系
+		 */
 		public AttachLuceneQuery(Query query, Occur occur) {
 			this.query = query;
 			this.occur = occur;
