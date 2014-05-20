@@ -133,11 +133,15 @@ public class FullTextCriteria {
 	 * 
 	 * @param fieldName
 	 *            字段名
-	 * @param fieldValue
+	 * @param fieldValues
 	 *            字段值
 	 */
-	public void addFilterField(String fieldName, Object fieldValue) {
-		filterFields.put(fieldName, fieldValue.toString());
+	public void addFilterField(String fieldName, Object... fieldValues) {
+		List<String> fieldValueStrs = new ArrayList<String>();
+		for (Object fieldValue : fieldValues) {
+			fieldValueStrs.add(fieldValue.toString());
+		}
+		filterFields.put(fieldName, StringUtils.join(fieldValueStrs, ","));
 	}
 
 	/**
@@ -210,12 +214,6 @@ public class FullTextCriteria {
 		FullTextQuery fullTextQuery = session.createFullTextQuery(
 				generateLuceneQuery(), clazz);
 		if (!sortFields.isEmpty()) {
-			for (SortField sortField : sortFields) {
-				if (!searchFields.containsKey(sortField.getField())) {
-					throw new HibernateException("全文搜索时指定的排序字段 "
-							+ sortField.getField() + " 必须包含在搜索字段中");
-				}
-			}
 			fullTextQuery.setSort(new Sort(sortFields
 					.toArray(new SortField[] {})));
 		}
@@ -305,6 +303,7 @@ public class FullTextCriteria {
 		if (luceneQuery != null) {
 			query.add(luceneQuery, luceneQueryOccur);
 		}
+		log.debug("全文搜索查询语句：{}", query);
 		return query;
 	}
 
@@ -315,9 +314,20 @@ public class FullTextCriteria {
 	 */
 	private BooleanQuery generateLuceneQueryFromFilterFields() {
 		BooleanQuery query = new BooleanQuery();
-		for (String filterKey : filterFields.keySet()) {
-			Term term = new Term(filterKey, filterFields.get(filterKey));
-			query.add(new TermQuery(term), Occur.MUST);
+		for (String filterFieldKey : filterFields.keySet()) {
+			String filterFieldValue = filterFields.get(filterFieldKey);
+			if (filterFieldValue.contains(",")) {
+				BooleanQuery multiFieldQuery = new BooleanQuery();
+				for (String fieldValue : filterFieldValue.split(",")) {
+					Term fieldTerm = new Term(filterFieldKey, fieldValue);
+					multiFieldQuery.add(new TermQuery(fieldTerm), Occur.SHOULD);
+				}
+				query.add(multiFieldQuery, Occur.MUST);
+			} else {
+				Term term = new Term(filterFieldKey,
+						filterFields.get(filterFieldKey));
+				query.add(new TermQuery(term), Occur.MUST);
+			}
 		}
 		return query;
 	}
