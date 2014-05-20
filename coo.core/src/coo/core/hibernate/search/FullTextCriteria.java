@@ -5,7 +5,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +20,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.Version;
 import org.hibernate.Criteria;
@@ -49,12 +49,8 @@ public class FullTextCriteria {
 	private Map<String, Analyze> searchFields = new LinkedHashMap<String, Analyze>();
 	/** 排序字段 */
 	private List<SortField> sortFields = new ArrayList<SortField>();
-	/** 过滤字段 */
-	private Map<String, String> filterFields = new HashMap<String, String>();
-	/** 附加Lucene查询条件 */
-	private Query luceneQuery;
-	/** 附加Lucene查询条件的与或关系 */
-	private Occur luceneQueryOccur;
+	/** 附加的Lucene查询条件列表 */
+	private List<AttachLuceneQuery> luceneQueries = new ArrayList<AttachLuceneQuery>();
 	private Filter filter;
 	private Criteria criteriaQuery;
 
@@ -137,11 +133,50 @@ public class FullTextCriteria {
 	 *            字段值
 	 */
 	public void addFilterField(String fieldName, Object... fieldValues) {
-		List<String> fieldValueStrs = new ArrayList<String>();
-		for (Object fieldValue : fieldValues) {
-			fieldValueStrs.add(fieldValue.toString());
+		if (fieldValues.length > 1) {
+			BooleanQuery multiFieldQuery = new BooleanQuery();
+			for (Object fieldValue : fieldValues) {
+				TermQuery query = new TermQuery(new Term(fieldName,
+						fieldValue.toString()));
+				multiFieldQuery.add(query, Occur.SHOULD);
+			}
+			addLuceneQuery(multiFieldQuery, Occur.MUST);
+		} else {
+			TermQuery query = new TermQuery(new Term(fieldName,
+					fieldValues[0].toString()));
+			addLuceneQuery(query, Occur.MUST);
 		}
-		filterFields.put(fieldName, StringUtils.join(fieldValueStrs, ","));
+	}
+
+	/**
+	 * 增加区间字段查询条件。
+	 * 
+	 * @param fieldName
+	 *            字段名
+	 * @param lowerTerm
+	 *            最小值
+	 * @param upperTerm
+	 *            最大值
+	 */
+	public void addRangeField(String fieldName, String lowerTerm,
+			String upperTerm) {
+		TermRangeQuery query = new TermRangeQuery(fieldName, lowerTerm,
+				upperTerm, true, false);
+		addLuceneQuery(query, Occur.MUST);
+	}
+
+	/**
+	 * 增加Lucene查询条件。
+	 * 
+	 * @param query
+	 *            Lucene查询条件
+	 * @param occur
+	 *            Lucene查询条件关系
+	 */
+	public void addLuceneQuery(Query query, Occur occur) {
+		if (query != null && occur != null) {
+			luceneQueries.add(new AttachLuceneQuery(query, occur));
+		}
 	}
 
 	/**
@@ -152,9 +187,9 @@ public class FullTextCriteria {
 	 * @param occur
 	 *            与或关系
 	 */
+	@Deprecated
 	public void setLuceneQuery(Query query, Occur occur) {
-		this.luceneQuery = query;
-		this.luceneQueryOccur = occur;
+		addLuceneQuery(query, occur);
 	}
 
 	/**
@@ -295,40 +330,11 @@ public class FullTextCriteria {
 							searchFields), Occur.MUST);
 		}
 		log.debug("全文搜索包含字段：{}", searchFields.keySet());
-		// 如果过滤条件字段设置不为空，则将过滤条件字段设置转换为Lucene的查询对象
-		if (!filterFields.isEmpty()) {
-			query.add(generateLuceneQueryFromFilterFields(), Occur.MUST);
-		}
-		// 如果Lucene查询对象不为空，则将该条件并到之前的Lucene查询条件中
-		if (luceneQuery != null) {
-			query.add(luceneQuery, luceneQueryOccur);
+		for (AttachLuceneQuery attachLuceneQuery : luceneQueries) {
+			query.add(attachLuceneQuery.getQuery(),
+					attachLuceneQuery.getOccur());
 		}
 		log.debug("全文搜索查询语句：{}", query);
-		return query;
-	}
-
-	/**
-	 * 将过滤条件字段设置转换为Lucene的查询对象。
-	 * 
-	 * @return 返回过滤条件字段设置转换为Lucene的查询对象。
-	 */
-	private BooleanQuery generateLuceneQueryFromFilterFields() {
-		BooleanQuery query = new BooleanQuery();
-		for (String filterFieldKey : filterFields.keySet()) {
-			String filterFieldValue = filterFields.get(filterFieldKey);
-			if (filterFieldValue.contains(",")) {
-				BooleanQuery multiFieldQuery = new BooleanQuery();
-				for (String fieldValue : filterFieldValue.split(",")) {
-					Term fieldTerm = new Term(filterFieldKey, fieldValue);
-					multiFieldQuery.add(new TermQuery(fieldTerm), Occur.SHOULD);
-				}
-				query.add(multiFieldQuery, Occur.MUST);
-			} else {
-				Term term = new Term(filterFieldKey,
-						filterFields.get(filterFieldKey));
-				query.add(new TermQuery(term), Occur.MUST);
-			}
-		}
 		return query;
 	}
 
@@ -391,5 +397,25 @@ public class FullTextCriteria {
 					indexedFields.get(fieldName));
 		}
 		return embeddedIndexedFields;
+	}
+
+	private class AttachLuceneQuery {
+		/** Lucene查询条件 */
+		private Query query;
+		/** Lucene查询条件的与或关系 */
+		private Occur occur;
+
+		public AttachLuceneQuery(Query query, Occur occur) {
+			this.query = query;
+			this.occur = occur;
+		}
+
+		public Query getQuery() {
+			return query;
+		}
+
+		public Occur getOccur() {
+			return occur;
+		}
 	}
 }
