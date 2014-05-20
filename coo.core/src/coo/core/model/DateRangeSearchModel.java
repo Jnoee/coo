@@ -30,11 +30,11 @@ public class DateRangeSearchModel extends SearchModel {
 		if (startDate == null && endDate == null) {
 			return null;
 		}
-		String startDateStr = DateUtils.format(DateUtils.getMinDate());
+		String startDateStr = null;
 		if (startDate != null) {
 			startDateStr = DateUtils.format(startDate);
 		}
-		String endDateStr = DateUtils.format(DateUtils.getMaxDate());
+		String endDateStr = null;
 		if (endDate != null) {
 			DateTime endDateTime = new DateTime(endDate).plusDays(1);
 			endDateStr = DateUtils.format(endDateTime.toDate());
