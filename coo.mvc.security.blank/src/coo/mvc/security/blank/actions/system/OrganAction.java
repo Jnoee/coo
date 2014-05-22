@@ -30,6 +30,8 @@ public class OrganAction {
 	/**
 	 * 查看机构列表。
 	 * 
+	 * @param selectedOrganId
+	 *            选中的机构ID
 	 * @param model
 	 *            数据模型
 	 */

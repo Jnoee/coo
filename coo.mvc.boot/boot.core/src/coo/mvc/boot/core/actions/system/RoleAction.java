@@ -37,6 +37,8 @@ public class RoleAction {
 	/**
 	 * 查看角色列表。
 	 * 
+	 * @param selectedRoleId
+	 *            选中的角色ID
 	 * @param model
 	 *            数据模型
 	 */
