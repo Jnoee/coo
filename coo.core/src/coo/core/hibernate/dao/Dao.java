@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import coo.base.constants.Chars;
+import coo.base.exception.UncheckedException;
 import coo.base.model.Page;
 import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
@@ -549,6 +550,29 @@ public class Dao<T> {
 		List<T> result = fullTextQuery.list();
 		page.setContents(result);
 		return page;
+	}
+
+	/**
+	 * 重建全文索引。
+	 * 
+	 * @param sync
+	 *            是否同步创建
+	 */
+	public void rebuildIndex(Boolean sync) {
+		try {
+			log.info("开始重建[{}]全文索引...", clazz.getSimpleName());
+			Long startTime = System.currentTimeMillis();
+			if (sync) {
+				getFullTextSession().createIndexer(clazz).startAndWait();
+			} else {
+				getFullTextSession().createIndexer(clazz).start();
+			}
+			Long endTime = System.currentTimeMillis();
+			log.info("完成重建[{}]全文索引...耗时[{}]毫秒。", clazz.getSimpleName(), endTime
+					- startTime);
+		} catch (Exception e) {
+			throw new UncheckedException("重建全文索引时发生异常。", e);
+		}
 	}
 
 	/**
