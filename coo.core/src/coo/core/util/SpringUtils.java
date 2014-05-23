@@ -3,7 +3,6 @@ package coo.core.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import coo.base.exception.UncheckedException;
 import coo.base.util.StringUtils;
-import coo.core.model.UuidEntity;
 
 /**
  * Spring工具类。
@@ -52,25 +50,6 @@ public class SpringUtils implements ApplicationContextAware {
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String beanName) {
 		return (T) context.getBean(beanName);
-	}
-
-	/**
-	 * 获取UuidEntity对象。
-	 * 
-	 * @param <T>
-	 *            实体类型
-	 * 
-	 * @param entityClass
-	 *            实体类
-	 * @param id
-	 *            实体ID
-	 * @return 返回对应的UuidEntity对象。
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T extends UuidEntity> T getUuidEntityObject(
-			Class<T> entityClass, String id) {
-		SessionFactory sessionFactory = getBean("sessionFactory");
-		return (T) sessionFactory.getCurrentSession().get(entityClass, id);
 	}
 
 	/**
