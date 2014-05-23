@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionImplementor;
 
 import coo.base.util.StringUtils;
 import coo.core.model.UuidEntity;
-import coo.core.util.SpringUtils;
 
 /**
  * 用于Hibernate的自定义类型，映射实现了UuidEntity列表的枚举类型。
@@ -37,8 +37,8 @@ public class UuidEntityListUserType extends AbstractUserType {
 						.getActualTypeArguments()[0];
 				List<Object> entities = new ArrayList<Object>();
 				for (String entityId : value.split(",")) {
-					entities.add(SpringUtils.getUuidEntityObject(
-							uuidEntityClass, entityId));
+					entities.add(((Session) session).get(uuidEntityClass,
+							entityId));
 				}
 				return entities;
 			} else {
