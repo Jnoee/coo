@@ -4,25 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 import org.hibernate.search.annotations.Indexed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
-import coo.base.exception.UncheckedException;
 import coo.core.hibernate.EntityClassBeanFactoryPostProcessor;
+import coo.core.hibernate.dao.DaoUtils;
 
 /**
  * 全文索引组件。
  */
 @Component
 public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
-	private final Logger log = LoggerFactory.getLogger(getClass());
 	private final ReentrantLock lock = new ReentrantLock();
-	private FullTextSession session;
 	private List<Class<?>> indexedEntityClasses = new ArrayList<Class<?>>();
 
 	@Override
@@ -34,7 +28,6 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 				indexedEntityClasses.add(entityClass);
 			}
 		}
-		session = Search.getFullTextSession(sessionFactory.openSession());
 	}
 
 	/**
@@ -47,15 +40,8 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 		lock.lock();
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
-				log.info("开始重建[{}]全文索引...", indexedEntityClass.getSimpleName());
-				Long startTime = System.currentTimeMillis();
-				session.createIndexer(indexedEntityClass).startAndWait();
-				Long endTime = System.currentTimeMillis();
-				log.info("完成重建[{}]全文索引...耗时[{}]毫秒。",
-						indexedEntityClass.getSimpleName(), endTime - startTime);
+				DaoUtils.getDao(indexedEntityClass).rebuildIndex(true);
 			}
-		} catch (Exception e) {
-			throw new UncheckedException("重建全文索引时发生异常。", e);
 		} finally {
 			lock.unlock();
 		}
@@ -71,11 +57,8 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 		lock.lock();
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
-				log.info("异步重建[{}]全文索引。", indexedEntityClass.getSimpleName());
-				session.createIndexer(indexedEntityClass).start();
+				DaoUtils.getDao(indexedEntityClass).rebuildIndex(false);
 			}
-		} catch (Exception e) {
-			throw new UncheckedException("重建全文索引时发生异常。", e);
 		} finally {
 			lock.unlock();
 		}
