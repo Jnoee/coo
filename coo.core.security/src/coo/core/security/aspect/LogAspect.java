@@ -11,6 +11,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
+import coo.core.hibernate.dao.DaoUtils;
 import coo.core.message.MessageSource;
 import coo.core.model.UuidEntity;
 import coo.core.security.annotations.Log;
@@ -142,8 +143,7 @@ public class LogAspect {
 	private UuidEntity getEntity(Object target) {
 		UuidEntity entity = (UuidEntity) target;
 		if (StringUtils.isNotBlank(entity.getId())) {
-			entity = SpringUtils.getUuidEntityObject(entity.getClass(),
-					entity.getId());
+			entity = DaoUtils.getUuidEntity(entity.getClass(), entity.getId());
 		}
 		return entity;
 	}

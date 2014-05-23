@@ -3,8 +3,8 @@ package coo.mvc.converter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
+import coo.core.hibernate.dao.DaoUtils;
 import coo.core.model.UuidEntity;
-import coo.core.util.SpringUtils;
 
 /**
  * 字符串转换成UuidEntity转换器工厂。
@@ -44,7 +44,7 @@ public class StringToUuidEntity implements ConverterFactory<String, UuidEntity> 
 			if (source.length() == 0) {
 				return null;
 			}
-			return (T) SpringUtils.getUuidEntityObject(toClass, source.trim());
+			return (T) DaoUtils.getUuidEntity(toClass, source.trim());
 		}
 	}
 }
