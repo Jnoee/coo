@@ -10,18 +10,37 @@
 	<!-- 默认以settings.xml为全局配置文件 -->
 	<context:property-placeholder location="classpath:settings.xml"	ignore-resource-not-found="true" />
 	<!-- 定义数据源 -->
-	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-		<property name="driverClassName" value="${db.driver:org.h2.Driver}" />
-		<property name="url" value="${db.url:jdbc:h2:mem:coo}" />
-		<property name="username" value="${db.username:su}" />
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<!-- 驱动类 -->
+		<property name="driverClass" value="${db.driver:org.h2.Driver}" />
+		<!-- 链接地址 -->
+		<property name="jdbcUrl" value="${db.url:jdbc:h2:mem:coo}" />
+		<!-- 用户名 -->
+		<property name="user" value="${db.username:su}" />
+		<!-- 密码 -->
 		<property name="password" value="${db.password:}" />
-		<property name="maxActive" value="${db.maxActive:100}" />
-		<property name="maxIdle" value="${db.maxIdle:10}" />
-		<property name="maxWait" value="${db.maxWait:10000}" />
-		<property name="testWhileIdle" value="${db.testWhileIdle:true}" />
-		<property name="validationQuery" value="${db.validationQuery:SELECT 1}" />
-		<property name="validationInterval" value="${db.validationInterval:30000}" />
-		<property name="timeBetweenEvictionRunsMillis" value="${db.timeBetweenEvictionRunsMillis:30000}" />
+		<!-- 最大连接数 -->
+		<property name="maxPoolSize" value="${db.maxPoolSize:100}" />
+		<!-- 最小连接数 -->
+		<property name="minPoolSize" value="${db.minPoolSize:10}" />
+		<!-- 最大空闲时间（秒） -->  
+		<property name="maxIdleTime" value="${db.maxIdleTime:60}" />
+		<!-- 初始化时创建的连接数，取值应在minPoolSize与maxPoolSize之间 -->  
+		<property name="initialPoolSize" value="${db.initialPoolSize:20}" />
+		<!-- 当连接池中的连接耗尽的时候一次同时获取的连接数 -->  
+		<property name="acquireIncrement" value="${db.acquireIncrement:5}" />
+		<!-- 每隔多少秒检查所有连接池中的空闲连接（秒） --> 
+    	<property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod:60}" />
+    	<!-- 从数据库获取新连接失败后重复尝试的次数 -->
+		<property name="acquireRetryAttempts" value="${db.acquireRetryAttempts:10}" />
+		<!-- 两次连接中间隔时间（毫秒） -->
+		<property name="acquireRetryDelay" value="${db.acquireRetryDelay:500}" />
+		<!-- 当连接池用完时客户端调用getConnection()后等待获取新连接的时间（毫秒） -->
+		<property name="checkoutTimeout" value="${db.checkoutTimeout:3000}" />
+		<!-- 取得连接的同时将校验连接的有效性 -->
+		<property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin:true}" />
+		<!-- 创建的测试表名，用于检查连接有效性 -->
+		<property name="automaticTestTable" value="${jdbc.automaticTestTable:C3P0_TEST_DONOT_DELETE}" />
 	</bean>
 	<!-- 定义基本的Hibernate SessionFactory，供继承。 -->
 	<bean id="sessionFactory" class="coo.core.hibernate.LocalSessionFactoryBean">
