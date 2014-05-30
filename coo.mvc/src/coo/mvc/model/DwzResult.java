@@ -238,7 +238,7 @@ public class DwzResult {
 	 * @return 返回用于提示系统异常的响应内容model。
 	 */
 	public static DwzResult fail() {
-		DwzResult result = new DwzResult("系统发生未知的异常，请稍后再试。", "", "", "");
+		DwzResult result = new DwzResult("服务器暂时繁忙，请稍候重试或与管理员联系。", "", "", "");
 		result.setStatusCode(StatusCode.ERROR);
 		result.setCallbackType(CallbackType.CLOSE_CURRENT);
 		return result;

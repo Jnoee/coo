@@ -64,7 +64,7 @@ $.extend(DWZ, {
 			if(xhr.status == "404") {
 				alertMsg.error("<div>您访问的页面未找到。</div>");
 			} else if(xhr.status == "500") {
-				alertMsg.error("<div>服务器发生未知的异常，请稍候重试或与管理员联系。</div>");
+				alertMsg.error("<div>服务器暂时繁忙，请稍候重试或与管理员联系。</div>");
 			} else if(xhr.status == "403") {
 				alertMsg.error("<div>您没有执行该操作的权限，请与管理员联系。</div>");
 			} else {
@@ -77,7 +77,7 @@ $.extend(DWZ, {
 			if(xhr.status == "404") {
 				alert("您访问的页面未找到。");
 			} else if(xhr.status == "500") {
-				alert("服务器发生未知的异常，请稍候重试或与管理员联系。");
+				alert("服务器暂时繁忙，请稍候重试或与管理员联系。");
 			} else if(xhr.status == "403") {
 				alert("您没有执行该操作的权限，请与管理员联系。");
 			} else {

@@ -7,7 +7,7 @@
 <body>
     <div class="std-error-panel">
         <div class="head">异常信息</div>
-        <div class="body">服务器发生未知的异常，请稍候重试或与管理员联系。</div>
+        <div class="body">服务器暂时繁忙，请稍候重试或与管理员联系。</div>
         <div class="foot">
             <a href="${ctx}/">返回首页</a>
         </div>
