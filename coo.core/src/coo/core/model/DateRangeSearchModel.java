@@ -32,12 +32,13 @@ public class DateRangeSearchModel extends SearchModel {
 		}
 		String startDateStr = null;
 		if (startDate != null) {
-			startDateStr = DateUtils.format(startDate);
+			startDateStr = DateUtils.format(startDate, DateUtils.MILLISECOND_N);
 		}
 		String endDateStr = null;
 		if (endDate != null) {
 			DateTime endDateTime = new DateTime(endDate).plusDays(1);
-			endDateStr = DateUtils.format(endDateTime.toDate());
+			endDateStr = DateUtils.format(endDateTime.toDate(),
+					DateUtils.MILLISECOND_N);
 		}
 		TermRangeQuery showTimeQuery = new TermRangeQuery(searchField,
 				startDateStr, endDateStr, true, false);
