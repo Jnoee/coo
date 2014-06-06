@@ -12,6 +12,7 @@ import org.hibernate.engine.spi.SessionImplementor;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import coo.base.util.BeanUtils;
 import coo.base.util.CollectionUtils;
@@ -49,6 +50,7 @@ public class JsonListUserType extends AbstractUserType {
 		try {
 			List<Object> values = (ArrayList<Object>) value;
 			if (CollectionUtils.isNotEmpty(values)) {
+				mapper.configure(SerializationFeature.INDENT_OUTPUT, false);
 				setValue(st, mapper.writeValueAsString(values), index, session);
 			} else {
 				setValue(st, null, index, session);

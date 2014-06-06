@@ -9,6 +9,7 @@ import java.sql.Types;
 import org.hibernate.engine.spi.SessionImplementor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import coo.core.jackson.GenericObjectMapper;
 
@@ -41,6 +42,7 @@ public class JsonUserType extends AbstractUserType {
 			SessionImplementor session) throws SQLException {
 		try {
 			if (value != null) {
+				mapper.configure(SerializationFeature.INDENT_OUTPUT, false);
 				setValue(st, mapper.writeValueAsString(value), index, session);
 			} else {
 				setValue(st, null, index, session);
