@@ -380,8 +380,12 @@ $.fn.extend({
 				case 'checkbox':
 					html = '<input type="checkbox" name="'+field.name+'" value="'+field.defaultVal+'" size="'+field.size+'" class="'+field.fieldClass+'" '+attrFrag+'/>';
 					break;
+				// 增加span文本支持
+				case 'span':
+					html = '<span class="' + field.fieldClass + '">' + field.defaultVal + '</span>';
+					break;
 				case 'del':
-					html = '<a href="javascript:void(0)" class="btnDel '+ field.fieldClass + '">删除</a>';
+					html = '<a href="javascript:void(0)" class="btnDel '+ field.fieldClass + '" style="float:none;">删除</a>';
 					break;
 				case 'lookup':
 					var suggestFrag = '';
@@ -409,14 +413,13 @@ $.fn.extend({
 					});
 					break;
 				case 'date':
-					html = '<input type="text" name="'+field.name+'" value="'+field.defaultVal+'" class="date '+field.fieldClass+'" dateFmt="'+field.patternDate+'" size="'+field.size+'"/>'
-						+'<a class="inputDateButton" href="javascript:void(0)">选择</a>';
+					html = '<input type="text" name="'+field.name+'" value="'+field.defaultVal+'" class="date '+field.fieldClass+'" dateFmt="'+field.patternDate+'" size="'+field.size+'"/>';
 					break;
 				default:
 					html = '<input type="text" name="'+field.name+'" value="'+field.defaultVal+'" size="'+field.size+'" class="'+field.fieldClass+'" '+attrFrag+'/>';
 					break;
 			}
-			return '<td>'+html+'</td>';
+			return '<td align="center">'+html+'</td>';
 		}
 		
 		function trHtml(fields){
