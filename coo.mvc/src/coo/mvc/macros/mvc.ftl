@@ -216,7 +216,6 @@
     <@bindOptions items itemValue itemLabel status.value />
     <#list opts?keys as optKey>
     	<@replaceAttributes attributes />
-        <#local id="${id}${optKey_index}">
         <#local optVal = opts[optKey]>
         <#local isChecked = contains(vals, optKey)>
         <@compress single_line=true>
@@ -264,7 +263,6 @@
     <@bindOptions items itemValue itemLabel values />
     <#list opts?keys as optKey>
     	<@replaceAttributes attributes />
-        <#local id="${id}${optKey_index}">
         <#local optVal = opts[optKey]>
         <#local isChecked = contains(vals, optKey)>
         <@compress single_line=true>
