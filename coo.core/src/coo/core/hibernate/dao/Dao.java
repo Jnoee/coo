@@ -57,29 +57,29 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 获取Hibernate的Session对象。
+	 * 获取Hibernate的Session。
 	 * 
-	 * @return 返回Hibernate的Session对象。
+	 * @return 返回Hibernate的Session。
 	 */
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
 	/**
-	 * 获取Hibernate的全文搜索Session对象。
+	 * 获取Hibernate的全文搜索Session。
 	 * 
-	 * @return 返回Hibernate的全文搜索Session对象。
+	 * @return 返回Hibernate的全文搜索Session。
 	 */
 	public FullTextSession getFullTextSession() {
 		return Search.getFullTextSession(getSession());
 	}
 
 	/**
-	 * 根据指定的ID加载实体对象。
+	 * 根据指定的ID加载业务实体。
 	 * 
 	 * @param id
 	 *            实体ID
-	 * @return 返回指定的ID加载实体对象，如果对象不存在抛出异常。
+	 * @return 返回指定的ID加载业务实体，如果对象不存在抛出异常。
 	 */
 	@SuppressWarnings("unchecked")
 	public T load(Serializable id) {
@@ -87,11 +87,11 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据指定的ID获取实体对象。
+	 * 根据指定的ID获取业务实体。
 	 * 
 	 * @param id
 	 *            实体ID
-	 * @return 返回指定ID的实体对象，如果没有找到则返回null。
+	 * @return 返回指定ID的业务实体，如果没有找到则返回null。
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(Serializable id) {
@@ -99,41 +99,41 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 持久化实体对象。
+	 * 持久化业务实体。
 	 * 
 	 * @param entity
-	 *            待持久化实体对象
+	 *            待持久化业务实体
 	 */
 	public void persist(T entity) {
 		getSession().persist(entity);
 	}
 
 	/**
-	 * 保存或更新实体对象。
+	 * 保存或更新业务实体。
 	 * 
 	 * @param entity
-	 *            待保存实体对象
+	 *            待保存业务实体
 	 */
 	public void save(T entity) {
 		getSession().saveOrUpdate(entity);
 	}
 
 	/**
-	 * 更新实体对象。
+	 * 更新业务实体。
 	 * 
 	 * @param entity
-	 *            待更新实体对象
+	 *            待更新业务实体
 	 */
 	public void update(T entity) {
 		getSession().update(entity);
 	}
 
 	/**
-	 * 合并实体对象。
+	 * 合并业务实体。
 	 * 
 	 * @param entity
-	 *            待更新实体对象
-	 * @return 返回更新后的实体对象（持久状态的）
+	 *            待更新业务实体
+	 * @return 返回更新后的业务实体（持久状态的）。
 	 */
 	@SuppressWarnings("unchecked")
 	public T merge(T entity) {
@@ -141,40 +141,40 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 保存实体对象。（复用已有的ID键值时使用）
+	 * 保存业务实体。（复用已有的ID键值时使用）
 	 * 
 	 * @param entity
-	 *            待保存的实体对象
+	 *            待保存的业务实体
 	 */
 	public void replicate(T entity) {
 		getSession().replicate(entity, ReplicationMode.EXCEPTION);
 	}
 
 	/**
-	 * 删除实体对象。
+	 * 删除业务实体。
 	 * 
 	 * @param entity
-	 *            待删除实体对象
+	 *            待删除业务实体
 	 */
 	public void remove(T entity) {
 		getSession().delete(entity);
 	}
 
 	/**
-	 * 根据ID删除实体对象。
+	 * 根据ID删除业务实体。
 	 * 
 	 * @param id
-	 *            待删除实体对象ID
+	 *            待删除业务实体ID
 	 */
 	public void remove(Serializable id) {
 		remove(get(id));
 	}
 
 	/**
-	 * 根据ID批量删除实体对象。
+	 * 根据ID批量删除业务实体。
 	 * 
 	 * @param ids
-	 *            待删除实体对象ID数组
+	 *            待删除业务实体ID数组
 	 */
 	public void remove(Serializable[] ids) {
 		for (Serializable id : ids) {
@@ -183,10 +183,10 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 删除多个实体对象。
+	 * 删除多个业务实体。
 	 * 
 	 * @param entitys
-	 *            待删除的实体对象列表
+	 *            待删除的业务实体列表
 	 */
 	public void remove(List<T> entitys) {
 		for (T entity : entitys) {
@@ -195,7 +195,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据属性批量删除实体对象
+	 * 根据属性批量删除业务实体
 	 * 
 	 * @param name
 	 *            属性名
@@ -216,11 +216,11 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 创建一个绑定实体类型的条件查询对象。
+	 * 创建一个绑定实体类型的查询条件。
 	 * 
 	 * @param criterions
 	 *            查询条件
-	 * @return 返回一个条件查询对象。
+	 * @return 返回一个查询条件。
 	 */
 	public Criteria createCriteria(Criterion... criterions) {
 		Criteria criteria = getSession().createCriteria(clazz);
@@ -265,7 +265,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 创建一个绑定实体并设定了排序的条件查询对象。
+	 * 创建一个绑定实体并设定了排序的查询条件。
 	 * 
 	 * @param orderBy
 	 *            排序属性
@@ -273,7 +273,7 @@ public class Dao<T> {
 	 *            是否升序
 	 * @param criterions
 	 *            查询条件
-	 * @return 返回一个已设定排序的条件查询对象。
+	 * @return 返回一个已设定排序的查询条件。
 	 */
 	public Criteria createCriteria(String orderBy, Boolean isAsc,
 			Criterion... criterions) {
@@ -287,9 +287,9 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 获取指定类型的所有实体对象。
+	 * 获取指定类型的所有业务实体。
 	 * 
-	 * @return 返回指定类型的所有实体对象。
+	 * @return 返回指定类型的所有业务实体。
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
@@ -298,13 +298,13 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 获取指定类型的所有实体对象并进行排序。
+	 * 获取指定类型的所有业务实体并进行排序。
 	 * 
 	 * @param orderBy
 	 *            排序的属性名
 	 * @param isAsc
 	 *            是否升序
-	 * @return 返回排序后的指定类型的所有实体对象。
+	 * @return 返回排序后的指定类型的所有业务实体。
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> getAll(String orderBy, Boolean isAsc) {
@@ -313,13 +313,13 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据属性的值查找实体对象。
+	 * 根据属性的值查找业务实体。
 	 * 
 	 * @param name
 	 *            属性名
 	 * @param value
 	 *            属性值
-	 * @return 返回属性值相符的实体对象集合，如果没有找到返回一个空的集合。
+	 * @return 返回属性值相符的业务实体集合，如果没有找到返回一个空的集合。
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findBy(String name, Object value) {
@@ -333,7 +333,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据属性的值查找实体对象并进行排序。
+	 * 根据属性的值查找业务实体并进行排序。
 	 * 
 	 * @param name
 	 *            属性名
@@ -343,7 +343,7 @@ public class Dao<T> {
 	 *            排序属性
 	 * @param isAsc
 	 *            是否升序
-	 * @return 返回排序后的属性值相符的实体对象集合，如果没有找到返回一个空的集合。
+	 * @return 返回排序后的属性值相符的业务实体集合，如果没有找到返回一个空的集合。
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findBy(String name, Object value, String orderBy,
@@ -358,13 +358,13 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 判断是否存在属性重复的实体对象。
+	 * 判断是否存在属性重复的业务实体。
 	 * 
 	 * @param entity
-	 *            待判断的实体对象
+	 *            待判断的业务实体
 	 * @param propNames
 	 *            属性名，可以多个属性名用","分割
-	 * @return 如果存在重复的实体对象返回false，否则返回true。
+	 * @return 如果存在重复的业务实体返回false，否则返回true。
 	 */
 	public Boolean isUnique(T entity, String propNames) {
 		Criteria criteria = createCriteria().setProjection(
@@ -388,18 +388,29 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据属性的值查找唯一的实体对象。
+	 * 查找唯一业务实体。
+	 * 
+	 * @param criteria
+	 *            查询条件
+	 * @return 返回唯一业务实体，如果没有找到返回null。
+	 */
+	@SuppressWarnings("unchecked")
+	public T findUnique(Criteria criteria) {
+		return (T) criteria.uniqueResult();
+	}
+
+	/**
+	 * 根据属性的值查找唯一的业务实体。
 	 * 
 	 * @param name
 	 *            属性名
 	 * @param value
 	 *            属性值
-	 * @return 返回指定唯一的实体对象，如果没有找到则返回null。
+	 * @return 返回指定唯一的业务实体，如果没有找到则返回null。
 	 */
-	@SuppressWarnings("unchecked")
 	public T findUnique(String name, Object value) {
 		Criteria criteria = createCriteria(Restrictions.eq(name, value));
-		return (T) criteria.uniqueResult();
+		return findUnique(criteria);
 	}
 
 	/**
@@ -453,10 +464,10 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据条件查询对象进行分页查询。
+	 * 根据查询条件进行分页查询。
 	 * 
 	 * @param criteria
-	 *            条件查询对象
+	 *            查询条件
 	 * @param pageNo
 	 *            待获取的页数
 	 * @param pageSize
@@ -481,10 +492,10 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据条件查询对象进行分页查询。
+	 * 根据查询条件进行分页查询。
 	 * 
 	 * @param criteria
-	 *            条件查询对象
+	 *            查询条件
 	 * @param pageNo
 	 *            待获取的页数
 	 * @param pageSize
@@ -497,31 +508,58 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 创建全文搜索查询对象。
+	 * 创建全文搜索查询条件。
 	 * 
-	 * @return 返回全文搜索查询对象。
+	 * @return 返回全文搜索查询条件。
 	 */
 	public FullTextCriteria createFullTextCriteria() {
 		return new FullTextCriteria(getFullTextSession(), clazz);
 	}
 
 	/**
-	 * 根据全文搜索查询对象进行全文搜索。
+	 * 根据全文搜索查询条件进行全文搜索。
 	 * 
-	 * @param fullTextCriteria
-	 *            全文搜索查询对象
-	 * @return 返回符合查询条件的实体对象列表。
+	 * @param criteria
+	 *            全文搜索查询条件
+	 * @return 返回符合查询条件的业务实体列表。
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> searchBy(FullTextCriteria fullTextCriteria) {
-		return fullTextCriteria.generateQuery().list();
+	public List<T> searchBy(FullTextCriteria criteria) {
+		return criteria.generateQuery().list();
 	}
 
 	/**
-	 * 根据全文搜索查询对象进行分页全文搜索。
+	 * 全文搜索唯一业务实体。
 	 * 
-	 * @param fullTextCriteria
-	 *            全文搜索查询对象
+	 * @param criteria
+	 *            全文搜索查询条件
+	 * @return 返回唯一业务实体，如果没有找到返回null。
+	 */
+	@SuppressWarnings("unchecked")
+	public T searchUnique(FullTextCriteria criteria) {
+		return (T) criteria.generateQuery().uniqueResult();
+	}
+
+	/**
+	 * 根据属性的值全文搜索唯一的业务实体。
+	 * 
+	 * @param name
+	 *            属性名
+	 * @param value
+	 *            属性值
+	 * @return 返回唯一业务实体，如果没有找到则返回null。
+	 */
+	public T searchUnique(String name, Object value) {
+		FullTextCriteria criteria = createFullTextCriteria();
+		criteria.addFilterField(name, value);
+		return searchUnique(criteria);
+	}
+
+	/**
+	 * 根据全文搜索查询条件进行分页全文搜索。
+	 * 
+	 * @param criteria
+	 *            全文搜索查询条件
 	 * @param pageNo
 	 *            待获取的页数
 	 * @param pageSize
@@ -529,9 +567,9 @@ public class Dao<T> {
 	 * @return 返回搜索得到的分页对象。
 	 */
 	@SuppressWarnings("unchecked")
-	public Page<T> searchPage(FullTextCriteria fullTextCriteria,
-			Integer pageNo, Integer pageSize) {
-		FullTextQuery fullTextQuery = fullTextCriteria.generateQuery();
+	public Page<T> searchPage(FullTextCriteria criteria, Integer pageNo,
+			Integer pageSize) {
+		FullTextQuery fullTextQuery = criteria.generateQuery();
 		int total = 0;
 		try {
 			// 当实体对应数据库中没有记录，其索引文件未生成时该方法会抛出异常
@@ -646,7 +684,7 @@ public class Dao<T> {
 	 * 获取实体类的主键值。
 	 * 
 	 * @param entity
-	 *            实体对象
+	 *            业务实体
 	 * @return 返回实体类的主键值。
 	 */
 	private Serializable getId(T entity) {
