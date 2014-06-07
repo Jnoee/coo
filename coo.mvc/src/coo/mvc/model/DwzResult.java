@@ -1,14 +1,17 @@
 package coo.mvc.model;
 
+import coo.mvc.constants.DwzCallbackType;
+import coo.mvc.constants.DwzStatusCode;
+
 /**
  * DWZ的Ajax响应内容Model。
  */
 public class DwzResult {
-	private StatusCode statusCode;
+	private String statusCode;
 	private String message;
 	private String navTabId = "";
 	private String rel = "";
-	private CallbackType callbackType = CallbackType.NONE;
+	private String callbackType = DwzCallbackType.NONE;
 	private String forwardUrl = "";
 
 	/**
@@ -54,7 +57,7 @@ public class DwzResult {
 	public static DwzResult success(String message, String navTabId,
 			String rel, String forwardUrl) {
 		DwzResult result = new DwzResult(message, navTabId, rel, forwardUrl);
-		result.setStatusCode(StatusCode.OK);
+		result.setStatusCode(DwzStatusCode.OK);
 		return result;
 	}
 
@@ -74,8 +77,8 @@ public class DwzResult {
 	public static DwzResult successClose(String message, String navTabId,
 			String rel, String forwardUrl) {
 		DwzResult result = new DwzResult(message, navTabId, rel, forwardUrl);
-		result.setStatusCode(StatusCode.OK);
-		result.setCallbackType(CallbackType.CLOSE_CURRENT);
+		result.setStatusCode(DwzStatusCode.OK);
+		result.setCallbackType(DwzCallbackType.CLOSE);
 		return result;
 	}
 
@@ -95,8 +98,8 @@ public class DwzResult {
 	public static DwzResult successForward(String message, String navTabId,
 			String rel, String forwardUrl) {
 		DwzResult result = new DwzResult(message, navTabId, rel, forwardUrl);
-		result.setStatusCode(StatusCode.OK);
-		result.setCallbackType(CallbackType.FORWARD);
+		result.setStatusCode(DwzStatusCode.OK);
+		result.setCallbackType(DwzCallbackType.FORWARD);
 		return result;
 	}
 
@@ -112,7 +115,7 @@ public class DwzResult {
 	@Deprecated
 	public static DwzResult refresh(String message, String navTabId) {
 		DwzResult result = new DwzResult();
-		result.setStatusCode(StatusCode.OK);
+		result.setStatusCode(DwzStatusCode.OK);
 		result.setMessage(message);
 		result.setNavTabId(navTabId);
 		return result;
@@ -130,7 +133,7 @@ public class DwzResult {
 	@Deprecated
 	public static DwzResult flush(String message, String rel) {
 		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.OK);
+		model.setStatusCode(DwzStatusCode.OK);
 		model.setMessage(message);
 		model.setRel(rel);
 		return model;
@@ -148,10 +151,10 @@ public class DwzResult {
 	@Deprecated
 	public static DwzResult reload(String message, String rel) {
 		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.OK);
+		model.setStatusCode(DwzStatusCode.OK);
 		model.setMessage(message);
 		model.setRel(rel);
-		model.setCallbackType(CallbackType.CLOSE_CURRENT);
+		model.setCallbackType(DwzCallbackType.CLOSE);
 		return model;
 	}
 
@@ -167,10 +170,10 @@ public class DwzResult {
 	@Deprecated
 	public static DwzResult close(String message, String navTabId) {
 		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.OK);
+		model.setStatusCode(DwzStatusCode.OK);
 		model.setMessage(message);
 		model.setNavTabId(navTabId);
-		model.setCallbackType(CallbackType.CLOSE_CURRENT);
+		model.setCallbackType(DwzCallbackType.CLOSE);
 		return model;
 	}
 
@@ -188,11 +191,11 @@ public class DwzResult {
 	@Deprecated
 	public static DwzResult close(String message, String navTabId, String rel) {
 		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.OK);
+		model.setStatusCode(DwzStatusCode.OK);
 		model.setMessage(message);
 		model.setNavTabId(navTabId);
 		model.setRel(rel);
-		model.setCallbackType(CallbackType.CLOSE_CURRENT);
+		model.setCallbackType(DwzCallbackType.CLOSE);
 		return model;
 	}
 
@@ -211,10 +214,10 @@ public class DwzResult {
 	public static DwzResult forward(String message, String navTabId,
 			String forwardUrl) {
 		DwzResult model = new DwzResult();
-		model.setStatusCode(StatusCode.OK);
+		model.setStatusCode(DwzStatusCode.OK);
 		model.setMessage(message);
 		model.setNavTabId(navTabId);
-		model.setCallbackType(CallbackType.FORWARD);
+		model.setCallbackType(DwzCallbackType.FORWARD);
 		model.setForwardUrl(forwardUrl);
 		return model;
 	}
@@ -228,7 +231,7 @@ public class DwzResult {
 	 */
 	public static DwzResult error(String message) {
 		DwzResult result = new DwzResult(message, "", "", "");
-		result.setStatusCode(StatusCode.ERROR);
+		result.setStatusCode(DwzStatusCode.ERROR);
 		return result;
 	}
 
@@ -239,8 +242,8 @@ public class DwzResult {
 	 */
 	public static DwzResult fail() {
 		DwzResult result = new DwzResult("服务器暂时繁忙，请稍候重试或与管理员联系。", "", "", "");
-		result.setStatusCode(StatusCode.ERROR);
-		result.setCallbackType(CallbackType.CLOSE_CURRENT);
+		result.setStatusCode(DwzStatusCode.ERROR);
+		result.setCallbackType(DwzCallbackType.CLOSE);
 		return result;
 	}
 
@@ -251,7 +254,7 @@ public class DwzResult {
 	 */
 	public static DwzResult denied() {
 		DwzResult result = new DwzResult("您没有执行该操作的权限，请与管理员联系。", "", "", "");
-		result.setStatusCode(StatusCode.ERROR);
+		result.setStatusCode(DwzStatusCode.ERROR);
 		return result;
 	}
 
@@ -262,15 +265,15 @@ public class DwzResult {
 	 */
 	public static DwzResult timeout() {
 		DwzResult model = new DwzResult("会话已超时，请重新登录。", "", "", "");
-		model.setStatusCode(StatusCode.TIMEOUT);
+		model.setStatusCode(DwzStatusCode.TIMEOUT);
 		return model;
 	}
 
-	public StatusCode getStatusCode() {
+	public String getStatusCode() {
 		return statusCode;
 	}
 
-	public void setStatusCode(StatusCode statusCode) {
+	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
 	}
 
@@ -298,11 +301,11 @@ public class DwzResult {
 		this.rel = rel;
 	}
 
-	public CallbackType getCallbackType() {
+	public String getCallbackType() {
 		return callbackType;
 	}
 
-	public void setCallbackType(CallbackType callbackType) {
+	public void setCallbackType(String callbackType) {
 		this.callbackType = callbackType;
 	}
 
@@ -312,53 +315,5 @@ public class DwzResult {
 
 	public void setForwardUrl(String forwardUrl) {
 		this.forwardUrl = forwardUrl;
-	}
-
-	/**
-	 * 结果状态枚举值。
-	 */
-	protected enum StatusCode {
-		OK("200"), ERROR("300"), TIMEOUT("301");
-
-		private String value;
-
-		/**
-		 * 构造方法。
-		 * 
-		 * @param value
-		 *            结果状态值
-		 */
-		private StatusCode(String value) {
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return value;
-		}
-	}
-
-	/**
-	 * callback类型枚举值。
-	 */
-	protected enum CallbackType {
-		NONE(""), CLOSE_CURRENT("closeCurrent"), FORWARD("forward");
-
-		private String value;
-
-		/**
-		 * 构造方法。
-		 * 
-		 * @param value
-		 *            callback类型
-		 */
-		private CallbackType(String value) {
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return value;
-		}
 	}
 }
