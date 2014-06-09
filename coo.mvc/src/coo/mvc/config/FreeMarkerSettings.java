@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
+import coo.mvc.constants.DwzTargetType;
 
 /**
  * FreeMarker配置组件。
@@ -21,5 +22,6 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
 		addAutoImport("dwz", "dwz.ftl");
 		addStaticClass(StringUtils.class);
 		addStaticClass(DateUtils.class);
+		addStaticClass(DwzTargetType.class);
 	}
 }
