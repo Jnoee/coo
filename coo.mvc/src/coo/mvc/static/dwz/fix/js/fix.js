@@ -47,10 +47,10 @@ var geDate = function(element, gtToDate) {
 	return true;
 }
 
-/** 扩展jQuery，实现页面元素可直接获取上级unit box容器 */
+/** 扩展jQuery，实现页面元素可直接获取上级标识为page的div容器 */
 $.fn.extend({
-    getParentUnitBox: function(){
-        return $(this).parents(".unitBox:first");
+    getPageDiv: function(){
+        return $(this).parents("div.page:first");
     }
 });
 
