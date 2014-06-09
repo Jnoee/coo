@@ -9,7 +9,7 @@
 			</dl>
 			<dl>
                 <dt>关联角色：</dt>
-                <dd><@s.select path="actor.role" items=roles itemValue="id" itemLabel="name" class="required combox" onchange="actorAdd_roleSelectorOnChange(this)" /></dd>
+                <dd><@s.select path="actor.role" items=roles itemValue="id" itemLabel="name" class="required combox" /></dd>
             </dl>
             <dl>
                 <dt>职务名称：</dt>
@@ -37,10 +37,3 @@
         </@s.form>
     </div>
 </div>
-<script type="text/javascript" charset="utf-8">
-	function actorAdd_roleSelectorOnChange(roleSelector) {
-		var $roleSelector = $(roleSelector);
-		var $roleName = $roleSelector.getParentUnitBox().find("input[name='actor.name']")
-		$roleName.val($roleSelector.children("option:selected").text());
-	}
-</script>
