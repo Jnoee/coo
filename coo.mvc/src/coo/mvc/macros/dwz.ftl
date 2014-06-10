@@ -95,7 +95,7 @@
  * class：表单的样式
  * attributes：表单的其它属性
  -->
-<#macro form action onsubmit method="post" targetType="navTab" class="pageForm required-validate" attributes...>
+<#macro form action onsubmit method="post" targetType="dialog" class="pageForm required-validate" attributes...>
 	<#if !onsubmit??>
         <#if targetType == "navTab">
             <#local onsubmit="return validateCallback(this, navTabAjaxDone);" />
@@ -113,6 +113,46 @@
     <form action="<@s.url "${action}" />" method="${method}" class="${class}" onsubmit="${onsubmit}" ${s.getAttributes(attributes)}>
         <#nested>
     </form>
+</#macro>
+
+<#--
+ * 表单按钮栏。
+ *
+ * showSubmitBtn：是否显示提交按钮
+ * submitBtnText：提交按钮上的文字
+ * showCancelBtn：是否显示取消按钮
+ * cancelBtnText：取消按钮上的文字
+ -->
+<#macro formBar showSubmitBtn=true submitBtnText="保存" showCancelBtn=true cancelBtnText="取消">
+	<div class="formBar">
+		<ul>
+			<#nested>
+			<#if showSubmitBtn>
+				<@submitBtn text="${submitBtnText}" />
+			</#if>
+			<#if showCancelBtn>
+				<@cancelBtn text="${cancelBtnText}" />
+			</#if>
+		</ul>
+	</div>
+</#macro>
+
+<#--
+ * 保存按钮。
+ *
+ * text：按钮文本
+ -->
+<#macro submitBtn text="保存">
+	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">${text}</button></div></div></li>
+</#macro>
+
+<#--
+ * 取消按钮。
+ *
+ * text：按钮文本
+ -->
+<#macro cancelBtn text="取消">
+	<li><div class="button"><div class="buttonContent"><button type="button" class="close">${text}</button></div></div></li>
 </#macro>
 
 <#--

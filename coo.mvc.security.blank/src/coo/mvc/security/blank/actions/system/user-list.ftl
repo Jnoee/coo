@@ -5,9 +5,7 @@
     <div class="pageContent">
         <div class="panelBar">
             <ul class="toolBar">
-                <li>
-                    <a href="<@s.url "/system/user-add" />" target="dialog" rel="user-add" mask="true" title="新增用户" width="900" height="480"><span class="a09">新增</span> </a>
-                </li>
+                <li><@dwz.a href="/system/user-add" target="dialog" title="新增用户" width="M" height="M"><span class="a09">新增</span></@dwz.a></li>
             </ul>
         </div>
         <table class="table" width="100%" layoutH="112">
@@ -34,16 +32,16 @@
 					<td>${user.modifier.name}</td>
                     <td>${user.enabled?string("启用","停用")}</td>
                     <td>
-                        <a href="<@s.url "/system/user-edit?userId=${user.id}" />" target="dialog" rel="user-edit" mask="true" title="编辑用户" width="900" height="480">编辑</a>
+                        <@dwz.a href="/system/user-edit?userId=${user.id}" target="dialog" title="编辑用户" width="M" height="M">编辑</@dwz.a>
                         |
                         <#if user.enabled>
-                            <a href="<@s.url "/system/user-disable?userId=${user.id}" />" target="ajaxTodo" title="确定要禁用吗？">禁用</a>
+                            <@dwz.a href="/system/user-disable?userId=${user.id}" target="ajaxTodo" title="确定要禁用吗？">禁用</@dwz.a>
                         <#else>
-                            <a href="<@s.url "/system/user-enable?userId=${user.id}" />" target="ajaxTodo" title="确定要启用吗？">启用</a>
+                            <@dwz.a href="/system/user-enable?userId=${user.id}" target="ajaxTodo" title="确定要启用吗？">启用</@dwz.a>
                         </#if>
                         |
-                        <a href="<@s.url "/system/user-pwd-reset?userId=${user.id}"/>" target="dialog" rel="user-pwd-reset" mask="true" title="重置密码">重置密码</a>
-                        </td>
+                        <@dwz.a href="/system/user-pwd-reset?userId=${user.id}" target="dialog">重置密码</@dwz.a>
+                    </td>
                 </tr>
                 </#list>
             </tbody>

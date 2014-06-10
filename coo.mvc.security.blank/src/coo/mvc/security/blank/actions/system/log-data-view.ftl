@@ -9,11 +9,11 @@
 		</thead>
 		<tbody>
 			<#list datas as data>
-			<tr>
-				<td style="font-weight:bold">${data.text}</td>
-				<td>${data.origData}</td>
-				<td <#if data.isChanged()>style="color:red"</#if>>${data.newData}</td>
-			</tr>
+				<tr>
+					<td style="font-weight:bold">${data.text}</td>
+					<td>${data.origData}</td>
+					<td <#if data.isChanged()>style="color:red"</#if>>${data.newData}</td>
+				</tr>
 			</#list>
 		</tbody>
 	</table>

@@ -14,12 +14,16 @@
             </thead>
             <tbody>
                 <#list logPage.contents as log>
-                <tr target="sid_user" rel="1">
-                    <td>${log.createDate}</td>
-                    <td>${log.creator}</td>
-                    <td style="text-align:left">${log.message}</td>
-                    <td><#if log.hasData()><a href="<@s.url "/system/log-data-view?logId=${log.id}" />" target="dialog" rel="log-data-view" mask="true" title="查看业务数据" width="800" height="480">查看</a></#if></td>
-                </tr>
+	                <tr target="sid_user" rel="1">
+	                    <td>${log.createDate}</td>
+	                    <td>${log.creator}</td>
+	                    <td style="text-align:left">${log.message}</td>
+	                    <td>
+	                    	<#if log.hasData()>
+	                    		<@dwz.a href="/system/log-data-view?logId=${log.id}" target="dialog" title="查看业务数据" width="M" height="M">查看</@dwz.a>
+	                    	</#if>
+	                    </td>
+	                </tr>
                 </#list>
             </tbody>
         </table>
