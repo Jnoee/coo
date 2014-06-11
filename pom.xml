@@ -122,8 +122,8 @@
 	</modules>
 	<scm>
 		<url>https://github.com/jnoee/coo.git</url>
-		<connection>scm:git:git://github.com/jnoee/coo.git</connection>
-		<developerConnection>scm:git:git://github.com/jnoee/coo.git</developerConnection>
+		<connection>scm:git:https://github.com/jnoee/coo.git</connection>
+		<developerConnection>scm:git:https://github.com/jnoee/coo.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 	<distributionManagement>
