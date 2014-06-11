@@ -1,1 +1,13 @@
 @charset "utf-8";
+
+a {
+	color: #336699;
+}
+
+span.error {
+	cursor: help;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url('images/warn.png');
+}

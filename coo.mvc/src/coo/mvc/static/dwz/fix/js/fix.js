@@ -21,6 +21,22 @@ var showMenuBar = function(){
     }
 }
 
+/** 自定义jqeury validator错误信息显示方法 */
+$(function(){
+	if ($.validator) {
+		$.validator.setDefaults({
+			errorPlacement: function(error, element) {
+				if(element.hasClass("hideError")) {
+					
+				} else {
+					element.parents("dd:first").append(error);
+					error.attr("title", error.text());
+				}
+			}
+		});
+	}
+});
+
 /** 扩展DWZ自定义验证函数，日期区间验证结束日期必须大于开始日期 */
 var gtDate = function(element, gtToDate) {
 	var endDate = $(element);

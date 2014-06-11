@@ -1,11 +1,74 @@
 ﻿@charset "utf-8";
-*{font-family: "Microsoft YaHei", sans-serif!important;}
-a{color: #336699;text-decoration: none;}
-a:hover{text-decoration: underline;}
-#header{height:85px;}
-#leftside, #container, #splitBar, #splitBarProxy{top:90px;}
-.page .searchBar .subBar li input{margin-top:2px;}
-.accordion .accordionHeader h2 span{background-image: none;margin-top: 5px;}
-.panelBar .toolBar a span{background-image: none;height: 19px;line-height: 15px;margin: 4px 0 4px 0;}
-.panelBar .toolBar li.hover a span{height: 19px;line-height: 15px;margin: 4px 0 4px 0;}
-span.error{/*width: 150px;left: 268px;height: 23px*/}
+
+* {
+	font-family: "Microsoft YaHei", sans-serif !important;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#header {
+	height: 85px;
+}
+
+#leftside,#container,#splitBar,#splitBarProxy {
+	top: 90px;
+}
+
+.page .searchBar .subBar li input {
+	margin-top: 2px;
+}
+
+.accordion .accordionHeader h2 span {
+	background-image: none;
+	margin-top: 5px;
+}
+
+.panelBar .toolBar a span {
+	background-image: none;
+	height: 19px;
+	line-height: 15px;
+	margin: 4px 0 4px 0;
+}
+
+.panelBar .toolBar li.hover a span {
+	height: 19px;
+	line-height: 15px;
+	margin: 4px 0 4px 0;
+}
+
+.pageFormContent dl {
+	width: 350px;
+}
+
+.pageFormContent dt {
+	width: 100px;
+}
+
+.pageFormContent dd {
+	width: 200px;
+}
+
+span.error {
+	width: 1px;
+	height: 21px;
+	padding-left: 20px;
+	position: static;
+}
+
+.sText {
+	width: 60px;
+}
+
+.mText {
+	width: 150px;
+}
+
+.lText {
+	width: 500px;
+}

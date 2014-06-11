@@ -166,7 +166,7 @@
  * mask：dialog链接用来指定打开窗口是否为模态窗口
  * attributes：链接的其它属性
  -->
-<#macro a href rel width height target="navTab" mask=true attributes...>
+<#macro a href rel width="M" height="M" target="navTab" mask=true attributes...>
 	<#if !rel?? && (target == "navTab" || target == "dialog")>
 		<#local relStartIndex = href?last_index_of("/") />
 		<#local relEndIndex = href?last_index_of("?") />
@@ -184,30 +184,26 @@
 	<#if target == "dialog">
     	rel="${rel}"
     	<#if mask> mask="${mask}"</#if>
-    	<#if width??>
-    		<#if width == "S">
-    			<#local width="500" />
-    		</#if>
-    		<#if width == "M">
-    			<#local width="900" />
-    		</#if>
-    		<#if width == "L">
-    			<#local width="1200" />
-    		</#if>
-    		width="${width}"
-    	</#if>
-    	<#if height??>
-    		<#if height == "S">
-    			<#local height="300" />
-    		</#if>
-    		<#if height == "M">
-    			<#local height="500" />
-    		</#if>
-    		<#if height == "L">
-    			<#local height="700" />
-    		</#if>
-    		height="${height}"
-    	</#if>
+   		<#if width == "S">
+   			<#local width="400" />
+   		</#if>
+   		<#if width == "M">
+   			<#local width="750" />
+   		</#if>
+   		<#if width == "L">
+   			<#local width="1200" />
+   		</#if>
+   		width="${width}"
+   		<#if height == "S">
+   			<#local height="250" />
+   		</#if>
+   		<#if height == "M">
+   			<#local height="500" />
+   		</#if>
+   		<#if height == "L">
+   			<#local height="700" />
+   		</#if>
+   		height="${height}"
     <#else>
     	<#if rel> rel="${rel}"</#if>
     </#if>
