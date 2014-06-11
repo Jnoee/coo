@@ -11,6 +11,10 @@
 		<encoding>UTF-8</encoding>
 		<plugin.compiler.version>3.1</plugin.compiler.version>
 		<plugin.resources.version>2.6</plugin.resources.version>
+		<plugin.source.version>2.2.1</plugin.source.version>
+		<plugin.javadoc.version>2.9.1</plugin.javadoc.version>
+		<plugin.scm.version>1.9</plugin.scm.version>
+		<plugin.release.version>2.5</plugin.release.version>
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
@@ -69,6 +73,51 @@
 					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${plugin.javadoc.version}</version>
+				<configuration>
+					<encoding>${encoding}</encoding>
+					<outputEncoding>${encoding}</outputEncoding>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${plugin.source.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>${plugin.scm.version}</version>
+				<configuration>
+					<scmVersionType>branch</scmVersionType>
+					<scmVersion>master</scmVersion>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${plugin.release.version}</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<scmCommentPrefix></scmCommentPrefix>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<modules>
@@ -80,9 +129,10 @@
 		<module>coo.mvc.security</module>
 	</modules>
 	<scm>
-		<connection>scm:git:git@github.com:jnoee/coo.git</connection>
-		<url>scm:git:git@github.com:jnoee/coo.git</url>
-		<developerConnection>scm:git:git@github.com:jnoee/coo.git</developerConnection>
+		<url>scm:git:git://github.com/jnoee/coo.git</url>
+		<connection>scm:git:git://github.com/jnoee/coo.git</connection>
+		<developerConnection>scm:git:git://git@github.com/jnoee/coo.git</developerConnection>
+		<tag>HEAD</tag>
 	</scm>
 	<distributionManagement>
 		<repository>
@@ -94,16 +144,7 @@
 			<url>http://192.168.9.100:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	<!--
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>file:///d:/Work/Git/github/maven/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>file:///d:/Work/Git/github/maven/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-	-->
+	<!-- <distributionManagement> <repository> <id>releases</id> <url>file:///d:/Work/Git/github/maven/releases</url> 
+		</repository> <snapshotRepository> <id>snapshots</id> <url>file:///d:/Work/Git/github/maven/snapshots</url> 
+		</snapshotRepository> </distributionManagement> -->
 </project>
