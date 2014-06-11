@@ -103,19 +103,10 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-scm-plugin</artifactId>
-				<version>${plugin.scm.version}</version>
-				<configuration>
-					<scmVersionType>branch</scmVersionType>
-					<scmVersion>master</scmVersion>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>${plugin.release.version}</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<scmCommentPrefix></scmCommentPrefix>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -129,7 +120,7 @@
 		<module>coo.mvc.security</module>
 	</modules>
 	<scm>
-		<url>scm:git:git://github.com/jnoee/coo.git</url>
+		<url>https://github.com/jnoee/coo.git</url>
 		<connection>scm:git:git://github.com/jnoee/coo.git</connection>
 		<developerConnection>scm:git:git://git@github.com/jnoee/coo.git</developerConnection>
 		<tag>HEAD</tag>
