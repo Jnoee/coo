@@ -107,6 +107,7 @@
 				<version>${plugin.release.version}</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<arguments>-DskipTests</arguments>
 				</configuration>
 			</plugin>
 		</plugins>
