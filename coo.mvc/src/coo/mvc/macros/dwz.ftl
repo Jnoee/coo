@@ -160,8 +160,8 @@
  *
  * href：链接的相对路径
  * rel：navTab和dialog链接用到的rel属性
- * width：dialog链接用来指定打开窗口的宽度，可以指定为S（小）、M（中）、L（大）或具体的宽度
- * height：dialog链接用来指定打开窗口的高度，可以指定为S（小）、M（中）、L（大）或具体的宽度
+ * width：dialog链接用来指定打开窗口的宽度，可以指定为SS、S、M、L、XL或具体的宽度
+ * height：dialog链接用来指定打开窗口的高度，可以指定为SS、S、M、L、XL或具体的宽度
  * target：链接类型，对应dwz使用的链接类型，如navTab、dialog、ajaxTodo、selectedTodo等
  * mask：dialog链接用来指定打开窗口是否为模态窗口
  * attributes：链接的其它属性
@@ -184,23 +184,35 @@
 	<#if target == "dialog">
     	rel="${rel}"
     	<#if mask> mask="${mask}"</#if>
+    	<#if width == "SS">
+   			<#local width="300" />
+   		</#if>
    		<#if width == "S">
-   			<#local width="400" />
+   			<#local width="500" />
    		</#if>
    		<#if width == "M">
    			<#local width="750" />
    		</#if>
    		<#if width == "L">
-   			<#local width="1200" />
+   			<#local width="900" />
+   		</#if>
+   		<#if width == "XL">
+   			<#local width="1100" />
    		</#if>
    		width="${width}"
+   		<#if height == "SS">
+   			<#local height="300" />
+   		</#if>
    		<#if height == "S">
-   			<#local height="250" />
+   			<#local height="400" />
    		</#if>
    		<#if height == "M">
    			<#local height="500" />
    		</#if>
    		<#if height == "L">
+   			<#local height="600" />
+   		</#if>
+   		<#if height == "XL">
    			<#local height="700" />
    		</#if>
    		height="${height}"
