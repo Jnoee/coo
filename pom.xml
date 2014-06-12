@@ -108,7 +108,9 @@
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<arguments>-DskipTests</arguments>
-					<git>jgit</git>
+					<providerImplementations>
+						<git>jgit</git>
+					</providerImplementations>
 				</configuration>
 				<dependencies>
 					<dependency>
