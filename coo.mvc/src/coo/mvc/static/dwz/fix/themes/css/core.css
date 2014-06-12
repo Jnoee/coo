@@ -61,14 +61,14 @@ span.error {
 	position: static;
 }
 
-.sText {
+.s-input {
 	width: 60px;
 }
 
-.mText {
+.m-input {
 	width: 150px;
 }
 
-.lText {
+.l-input {
 	width: 500px;
 }
