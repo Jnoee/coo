@@ -22,6 +22,8 @@ public abstract class AbstractFreeMarkerSettings implements
 	private List<String> autoIncludes = new ArrayList<String>();
 	/** 自动导入宏列表 */
 	private Map<String, String> autoImports = new HashMap<String, String>();
+	/** 全局组件变量列表 */
+	private Map<String, String> globalBeans = new HashMap<String, String>();
 
 	/**
 	 * 添加枚举包名。
@@ -75,6 +77,18 @@ public abstract class AbstractFreeMarkerSettings implements
 		autoImports.put(alias, templateName);
 	}
 
+	/**
+	 * 添加全局组件变量。
+	 * 
+	 * @param varName
+	 *            变量名称
+	 * @param beanName
+	 *            组件名称
+	 */
+	public void addGlobalBean(String varName, String beanName) {
+		globalBeans.put(varName, beanName);
+	}
+
 	@Override
 	public int compareTo(AbstractFreeMarkerSettings other) {
 		return other.getOrder() - order;
@@ -106,5 +120,9 @@ public abstract class AbstractFreeMarkerSettings implements
 
 	public Map<String, String> getAutoImports() {
 		return autoImports;
+	}
+
+	public Map<String, String> getGlobalBeans() {
+		return globalBeans;
 	}
 }

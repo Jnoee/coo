@@ -37,6 +37,7 @@ public class FreeMarkerConfigurer extends
 		implements ApplicationContextAware {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private ServletContext servletContext;
+	private ApplicationContext context;
 	private List<AbstractFreeMarkerSettings> settings = new ArrayList<AbstractFreeMarkerSettings>();
 
 	@Override
@@ -45,6 +46,7 @@ public class FreeMarkerConfigurer extends
 				.getContext().getBeansOfType(AbstractFreeMarkerSettings.class);
 		settings.addAll(freemarkerSettingsMap.values());
 		Collections.sort(settings);
+		this.context = applicationContext;
 	}
 
 	@Override
@@ -137,6 +139,10 @@ public class FreeMarkerConfigurer extends
 	protected void initSharedVariables() throws TemplateModelException {
 		getConfiguration().setSharedVariable("ctx",
 				servletContext.getContextPath());
+		for (Entry<String, String> globalBean : getGlobalBeans().entrySet()) {
+			getConfiguration().setSharedVariable(globalBean.getKey(),
+					context.getBean(globalBean.getValue()));
+		}
 	}
 
 	/**
@@ -255,5 +261,26 @@ public class FreeMarkerConfigurer extends
 			}
 		}
 		return autoImports;
+	}
+
+	/**
+	 * 获取全局组件变量列表。
+	 * 
+	 * @return 返回全局组件变量列表。
+	 */
+	private Map<String, String> getGlobalBeans() {
+		Map<String, String> globalBeans = new HashMap<String, String>();
+		for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
+			for (Entry<String, String> globalBean : freeMarkerSettings
+					.getGlobalBeans().entrySet()) {
+				if (globalBeans.containsKey(globalBean.getKey())) {
+					throw new UncheckedException("加载全局组件变量["
+							+ globalBean.getKey() + ":" + globalBean.getValue()
+							+ "]时发生冲突。");
+				}
+				globalBeans.put(globalBean.getKey(), globalBean.getValue());
+			}
+		}
+		return globalBeans;
 	}
 }
