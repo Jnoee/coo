@@ -13,8 +13,8 @@
 		<plugin.resources.version>2.6</plugin.resources.version>
 		<plugin.source.version>2.2.1</plugin.source.version>
 		<plugin.javadoc.version>2.9.1</plugin.javadoc.version>
-		<plugin.scm.version>1.9</plugin.scm.version>
 		<plugin.release.version>2.5</plugin.release.version>
+		<jgit.version>1.9</jgit.version>
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
@@ -108,7 +108,15 @@
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<arguments>-DskipTests</arguments>
+					<git>jgit</git>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-jgit</artifactId>
+						<version>${jgit.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
@@ -122,8 +130,8 @@
 	</modules>
 	<scm>
 		<url>https://github.com/jnoee/coo.git</url>
-		<connection>scm:git:git://github.com/jnoee/coo.git</connection>
-		<developerConnection>scm:git:git://git@github.com/jnoee/coo.git</developerConnection>
+		<connection>scm:git:https://github.com/jnoee/coo.git</connection>
+		<developerConnection>scm:git:https://github.com/jnoee/coo.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 	<distributionManagement>
