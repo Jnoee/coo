@@ -1,10 +1,10 @@
 <div class="page">
     <div class="pageContent">
-        <@dwz.form action="/company/employee-save" targetType="dialog">
-	        <div class="pageFormContent" layoutH="60">
+        <@dwz.form action="/company/employee-save">
+	        <div class="pageFormContent s-cols" layoutH="60">
 	            <dl>
 	                <dt>姓名：</dt>
-	                <dd><@s.input path="employee.name" size="30" maxlength="60" class="required" /></dd>
+	                <dd><@s.input path="employee.name" maxlength="60" class="required" /></dd>
 				</dl>
 	            <dl>
 					<dt>所属公司：</dt>
@@ -15,7 +15,7 @@
 				<div class="divider" />
 				<dl>
 	                <dt>年龄：</dt>
-	                <dd><@s.input path="employee.age" size="30" min="1" max="999" class="required number" /></dd>
+	                <dd><@s.input path="employee.age" min="1" max="999" class="required number" /></dd>
 	            </dl>
 				<dl>
 	                <dt>性别：</dt>
@@ -23,10 +23,10 @@
 	                    <@s.select path="employee.sex" items=Sex?values itemValue="value" itemLabel="text" class="required combox" />
 	                </dd>
 	            </dl>
-				<dl>
+				<dl class="nowrap">
 	                <dt>兴趣爱好：</dt>
 	                <dd>
-	                    <@s.checkboxs path="employee.interests" items=Interest?values itemValue="text" itemLabel="text" />
+	                    <@s.checkboxs path="employee.interests" items=Interest?values itemValue="text" itemLabel="text" prefix="<span class='dd-span'>" suffix="</span>" class="required" />
 	                </dd>
 	            </dl>
 	        </div>

@@ -1,11 +1,11 @@
 <div class="page">
     <div class="pageContent">
-        <@dwz.form action="/company/employee-update" targetType="dialog">
+        <@dwz.form action="/company/employee-update">
 	        <@s.hidden path="employee.id" />
 	        <div class="pageFormContent" layoutH="60">
 	            <dl>
 	                <dt>姓名：</dt>
-	                <dd><@s.input path="employee.name" size="30" maxlength="60" class="required" /></dd>
+	                <dd><@s.input path="employee.name" maxlength="60" class="required" /></dd>
 	            </dl>
 	            <dl>
 	                <dt>所属公司：</dt>
@@ -16,7 +16,7 @@
 	            <div class="divider" />
 	            <dl>
 	                <dt>年龄：</dt>
-	                <dd><@s.input path="employee.age" size="30" min="1" max="999" class="required number" /></dd>
+	                <dd><@s.input path="employee.age" min="1" max="999" class="required number" /></dd>
 	            </dl>
 	            <dl>
 	                <dt>性别：</dt>
