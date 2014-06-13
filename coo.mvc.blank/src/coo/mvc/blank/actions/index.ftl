@@ -16,52 +16,22 @@
 				<div class="headerNav">
 					<a class="logo" href="javascript:;">标志</a>
 					<ul class="nav">
-						<li>
-							<a href="javascript:;">顶部菜单1</a>
-						</li>
-						<li>
-							<a href="javascript:;">顶部菜单2</a>
-						</li>
+						<li><a href="javascript:;">顶部菜单1</a></li>
+						<li><a href="javascript:;">顶部菜单2</a></li>
 					</ul>
 					<ul class="themeList" id="themeList">
-						<li theme="default">
-							<div class="selected">
-								蓝色
-							</div>
-						</li>
-						<li theme="green">
-							<div>
-								绿色
-							</div>
-						</li>
-						<li theme="purple">
-							<div>
-								紫色
-							</div>
-						</li>
-						<li theme="silver">
-							<div>
-								银色
-							</div>
-						</li>
-						<li theme="azure">
-							<div>
-								天蓝
-							</div>
-						</li>
-					</ul>
+                        <li theme="default"><div class="selected">蓝色</div></li>
+                        <li theme="green"><div>绿色</div></li>
+                        <li theme="purple"><div>紫色</div></li>
+                        <li theme="silver"><div>银色</div></li>
+                        <li theme="azure"><div>天蓝</div></li>
+                    </ul>
 				</div>
 				<div id="navMenu">
 					<ul>
-						<li class="selected">
-							<a href="<@s.url "/company/menu" />"><span>公司管理</span> </a>
-						</li>
-						<li>
-							<a href="<@s.url "/module1/menu" />"><span>模块1</span> </a>
-						</li>
-						<li>
-							<a href="<@s.url "/module2/menu" />"><span>模块2</span> </a>
-						</li>
+						<li><@s.a href="/company/menu"><span>公司管理</span></@s.a></li>
+						<li><@s.a href="/module1/menu"><span>模块一</span></@s.a></li>
+						<li><@s.a href="/module2/menu"><span>模块二</span></@s.a></li>
 					</ul>
 				</div>
 			</div>
