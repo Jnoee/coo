@@ -5,11 +5,7 @@
     <div class="pageContent">
         <div class="panelBar">
             <ul class="toolBar">
-                <li>
-					<a href="<@s.url "/company/employee-add" />" target="dialog" rel="employee-add" mask="true" title="新增职员">
-						<span class="a09">新增职员</span>
-					</a>
-				</li>
+                <li><@dwz.a href="/company/employee-add" target="dialog" width="S" height="SS" title="新增职员"><span class="a09">新增</span></@dwz.a></li>
             </ul>
         </div>
         <table class="table" width="100%" layoutH="112">
@@ -32,9 +28,9 @@
 					<td>${employee.sex.text}</td>
 					<td>${employee.interests?join(",")}</td>
                     <td>
-						<a href="<@s.url "/company/employee-edit?employeeId=${employee.id}" />" target="dialog" mask="true" rel="employee-edit" title="编辑职员">编辑</a>
-						&nbsp;|&nbsp;
-						<a href="<@s.url "/company/employee-delete?employeeId=${employee.id}" />" target="ajaxTodo" title="您确定要删除该职员吗？">删除</a>
+						<@dwz.a href="/company/employee-edit?employeeId=${employee.id}" target="dialog" width="S" height="SS" title="编辑职员">编辑</@dwz.a>
+						|
+						<@dwz.a href="/company/employee-delete?employeeId=${employee.id}" target="ajaxTodo" title="您确定要删除该职员吗？">删除</@dwz.a>
 					</td>
                 </tr>
                 </#list>
