@@ -12,16 +12,16 @@
 				</#if>
 	            <dl>
 	                <dt>机构名称：</dt>
-	                <dd><@s.input path="organ.name" size="30" maxlength="60" class="required" /></dd>
+	                <dd><@s.input path="organ.name" maxlength="60" class="required" /></dd>
 	            </dl>
 	            <dl>
 	                <dt>序号：</dt>
-	                <dd><@s.input path="organ.ordinal" size="30" min="0" max="99999" class="digits" /></dd>
+	                <dd><@s.input path="organ.ordinal" min="0" max="99999" class="digits" /></dd>
 	            </dl>
 	        </div>
 	        <@dwz.formBar showCancelBtn=false>
 	       		<li>
-	               	<@dwz.a class="button" href="/system/organ-add?organId=${organ.id}" target="dialog" width="M" height="M"><span>新增子机构</span></@dwz.a>
+	               	<@dwz.a class="button" href="/system/organ-add?organId=${organ.id}" target="dialog"><span>新增子机构</span></@dwz.a>
 				</li>
 	        </@dwz.formBar>
         </@dwz.form>

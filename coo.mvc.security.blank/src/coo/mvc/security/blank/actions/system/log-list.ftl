@@ -20,7 +20,7 @@
 	                    <td style="text-align:left">${log.message}</td>
 	                    <td>
 	                    	<#if log.hasData()>
-	                    		<@dwz.a href="/system/log-data-view?logId=${log.id}" target="dialog" title="查看业务数据" width="M" height="M">查看</@dwz.a>
+	                    		<@dwz.a href="/system/log-data-view?logId=${log.id}" target="dialog" title="查看业务数据">查看</@dwz.a>
 	                    	</#if>
 	                    </td>
 	                </tr>

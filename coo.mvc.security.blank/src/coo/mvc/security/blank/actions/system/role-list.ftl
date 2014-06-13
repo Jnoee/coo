@@ -11,7 +11,7 @@
 	        </li>
 	    </ul>
 	    <@dwz.formBar showSubmitBtn=false showCancelBtn=false>
-    		<li><@dwz.a href="/system/role-add" target="dialog" width="M" height="M" class="button"><span>新增角色</span></@dwz.a></li>
+    		<li><@dwz.a href="/system/role-add" target="dialog" class="button"><span>新增角色</span></@dwz.a></li>
 	    </@dwz.formBar>
 	</div>
 	<div id="roleBox" style="float:left; display:block;padding:3px; overflow:auto; width:74%;" layoutH="0"></div>
