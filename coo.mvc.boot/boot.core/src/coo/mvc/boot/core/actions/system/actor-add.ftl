@@ -13,7 +13,7 @@
 	            </dl>
 	            <dl>
 	                <dt>职务名称：</dt>
-	                <dd><@s.input path="actor.name" size="30" maxlength="20" class="required" /></dd>
+	                <dd><@s.input path="actor.name" maxlength="20" class="required" /></dd>
 	            </dl>
 	        </div>
 	        <@dwz.formBar />

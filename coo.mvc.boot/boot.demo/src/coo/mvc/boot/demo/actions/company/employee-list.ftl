@@ -5,7 +5,7 @@
     <div class="pageContent">
         <div class="panelBar">
             <ul class="toolBar">
-                <li><@dwz.a href="/company/employee-add" target="dialog" title="新增职员"><span class="a09">新增</span></@dwz.a></li>
+                <li><@dwz.a href="/company/employee-add" target="dialog" width="S" height="SS" title="新增职员"><span class="a09">新增</span></@dwz.a></li>
             </ul>
         </div>
         <table class="table" width="100%" layoutH="112">
@@ -28,7 +28,7 @@
 					<td>${employee.sex.text}</td>
 					<td>${employee.interests?join(",")}</td>
                     <td>
-						<@dwz.a href="/company/employee-edit?employeeId=${employee.id}" target="dialog" title="编辑职员">编辑</@dwz.a>
+						<@dwz.a href="/company/employee-edit?employeeId=${employee.id}" target="dialog" width="S" height="SS" title="编辑职员">编辑</@dwz.a>
 						|
 						<@dwz.a href="/company/employee-delete?employeeId=${employee.id}" target="ajaxTodo" title="您确定要删除该职员吗？">删除</@dwz.a>
 					</td>

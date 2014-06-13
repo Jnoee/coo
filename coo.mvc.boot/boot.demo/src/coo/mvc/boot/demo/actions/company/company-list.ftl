@@ -3,7 +3,7 @@
     <div class="pageContent">
         <div class="panelBar">
             <ul class="toolBar">
-                <li><@dwz.a href="/company/company-add" target="dialog" title="新增公司"><span class="a09">新增</span></@dwz.a></li>
+                <li><@dwz.a href="/company/company-add" target="dialog" title="新增公司" height="SS"><span class="a09">新增</span></@dwz.a></li>
             </ul>
         </div>
         <table class="table" width="100%" layoutH="75">
@@ -28,7 +28,7 @@
 					<td>${company.extendInfo.fax}</td>
                     <td>${company.enabled?string("√","×")}</td>
                     <td>
-                    	<@dwz.a href="/company/company-edit?companyId=${company.id}" target="dialog" title="编辑公司">编辑</@dwz.a>
+                    	<@dwz.a href="/company/company-edit?companyId=${company.id}" target="dialog" title="编辑公司" height="SS">编辑</@dwz.a>
 						|
 						<@dwz.a href="/company/company-delete?companyId=${company.id}" target="ajaxTodo" title="确定要删除该公司吗？">删除</@dwz.a>
 					</td>

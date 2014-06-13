@@ -27,7 +27,7 @@
                                 </#list>
                             </ul>
                         </li>
-                        <li><@dwz.a href="/system/person-pwd-change" target="dialog">修改密码</@dwz.a></li>
+                        <li><@dwz.a href="/system/person-pwd-change" target="dialog" width="SS" height="SSS">修改密码</@dwz.a></li>
                         <li><@s.a href="/logout">退出</@s.a></li>
                     </ul>
                     <ul class="themeList" id="themeList">

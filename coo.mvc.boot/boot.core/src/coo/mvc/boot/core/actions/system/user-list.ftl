@@ -5,7 +5,7 @@
     <div class="pageContent">
         <div class="panelBar">
             <ul class="toolBar">
-                <li><@dwz.a href="/system/user-add" target="dialog" title="新增用户" width="M" height="M"><span class="a09">新增</span></@dwz.a></li>
+                <li><@dwz.a href="/system/user-add" target="dialog" title="新增用户"><span class="a09">新增</span></@dwz.a></li>
             </ul>
         </div>
         <table class="table" width="100%" layoutH="112">
@@ -32,7 +32,7 @@
 					<td>${user.modifier.name}</td>
                     <td>${user.enabled?string("启用","停用")}</td>
                     <td>
-                        <@dwz.a href="/system/user-edit?userId=${user.id}" target="dialog" title="编辑用户" width="M" height="M">编辑</@dwz.a>
+                        <@dwz.a href="/system/user-edit?userId=${user.id}" target="dialog" title="编辑用户">编辑</@dwz.a>
                         |
                         <#if user.enabled>
                             <@dwz.a href="/system/user-disable?userId=${user.id}" target="ajaxTodo" title="确定要禁用吗？">禁用</@dwz.a>
@@ -40,7 +40,7 @@
                             <@dwz.a href="/system/user-enable?userId=${user.id}" target="ajaxTodo" title="确定要启用吗？">启用</@dwz.a>
                         </#if>
                         |
-                        <@dwz.a href="/system/user-pwd-reset?userId=${user.id}" target="dialog">重置密码</@dwz.a>
+                        <@dwz.a href="/system/user-pwd-reset?userId=${user.id}" target="dialog" width="SS" height="SSS">重置密码</@dwz.a>
                     </td>
                 </tr>
                 </#list>
