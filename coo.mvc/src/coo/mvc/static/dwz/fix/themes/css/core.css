@@ -56,6 +56,10 @@ a:hover {
 	line-height: 23px;
 }
 
+.pageFormContent dl.nowrap dd, .nowrap dd {
+	width: 540px;
+}
+
 .dd-span {
 	line-height: 23px;
 	float: left;
