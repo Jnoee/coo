@@ -184,14 +184,17 @@
 	<#if target == "dialog">
     	rel="${rel}"
     	<#if mask> mask="${mask}"</#if>
-    	<#if width == "SS">
+    	<#if width == "SSS">
    			<#local width="300" />
+   		</#if>
+    	<#if width == "SS">
+   			<#local width="400" />
    		</#if>
    		<#if width == "S">
    			<#local width="500" />
    		</#if>
    		<#if width == "M">
-   			<#local width="750" />
+   			<#local width="700" />
    		</#if>
    		<#if width == "L">
    			<#local width="900" />
@@ -200,6 +203,9 @@
    			<#local width="1100" />
    		</#if>
    		width="${width}"
+   		<#if height == "SSS">
+   			<#local height="250" />
+   		</#if>
    		<#if height == "SS">
    			<#local height="300" />
    		</#if>

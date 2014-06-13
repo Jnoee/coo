@@ -43,15 +43,34 @@ a:hover {
 }
 
 .pageFormContent dl {
-	width: 350px;
+	width: 320px;
 }
 
 .pageFormContent dt {
 	width: 100px;
+	line-height: 23px;
 }
 
 .pageFormContent dd {
 	width: 200px;
+	line-height: 23px;
+}
+
+.dd-span {
+	line-height: 23px;
+	float: left;
+}
+
+.s-cols dl {
+	width: 450px;
+}
+
+.s-cols dd {
+	width: 340px;
+}
+
+.s-cols dl.nowrap dd {
+	width: 340px;
 }
 
 span.error {
@@ -66,9 +85,9 @@ span.error {
 }
 
 .m-input {
-	width: 150px;
+	width: 310px;
 }
 
 .l-input {
-	width: 500px;
+	width: 451px;
 }
