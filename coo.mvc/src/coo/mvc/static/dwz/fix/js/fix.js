@@ -66,7 +66,7 @@ var geDate = function(element, gtToDate) {
 /** 扩展jQuery，实现页面元素可直接获取上级标识为page的div容器 */
 $.fn.extend({
     getPageDiv: function(){
-        return $(this).parents("div.page:first");
+        return $(this).closest("div.page");
     }
 });
 
