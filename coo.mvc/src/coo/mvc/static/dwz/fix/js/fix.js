@@ -27,7 +27,7 @@ $(function(){
 		$.validator.setDefaults({
 			errorPlacement: function(error, element) {
 				if(element.hasClass("hideError")) {
-					
+					element.attr("title",error.text());
 				} else {
 					element.parents("dd:first").append(error);
 					error.attr("title", error.text());
