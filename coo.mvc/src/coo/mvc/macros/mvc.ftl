@@ -323,6 +323,9 @@
         <#if contains(attributes?keys, "name")>
             <#assign name = attributes["name"]>
         </#if>
+        <#if contains(attributes?keys, "value")>
+            <#assign stringStatusValue = attributes["value"]>
+        </#if>
     </#if>
 </#macro>
 
