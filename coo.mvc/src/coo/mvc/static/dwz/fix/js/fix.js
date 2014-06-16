@@ -50,16 +50,26 @@ var gtDate = function(element, gtToDate) {
 	return true;
 }
 
-/** 扩展DWZ自定义验证函数，日期区间验证结束必须大于等于开始日期 */
-var geDate = function(element, gtToDate) {
+/** 扩展DWZ自定义验证函数，日期区间验证结束日期必须大于等于开始日期 */
+var geDate = function(element, geToDate) {
 	var endDate = $(element);
-	var startDate = $(gtToDate, $(element).closest("form"));
+	var startDate = $(geToDate, $(element).closest("form"));
 	var pattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
 	
 	if(endDate.val() && startDate.val()) {
 		return endDate.val().parseDate("yyyy-MM-dd") >= startDate.val().parseDate(pattern);
 	}
 
+	return true;
+}
+
+/** 扩展DWZ自定义验证函数，验证正则表达式 */
+var regex = function(element, pattern) {
+	var $element = $(element);
+	if($element.val()) {
+		var ex = new RegExp(pattern);
+		return ex.test($element.val());
+	}
 	return true;
 }
 
