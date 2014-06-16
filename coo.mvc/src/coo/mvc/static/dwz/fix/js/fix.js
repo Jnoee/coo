@@ -344,13 +344,15 @@ $.fn.extend({
 			var addButTxt = $table.attr('addButton') || "Add New";
 			if (addButTxt) {
 				var $addBut = $('<div class="button"><div class="buttonContent"><button type="button">'+addButTxt+'</button></div></div>').insertBefore($table).find("button");
-				var $rowNum = $('<input type="text" name="dwz_rowNum" class="textInput" style="margin:2px;" value="1" size="2"/>').insertBefore($table);
+				// 屏蔽批量增加输入框
+				// var $rowNum = $('<input type="text" name="dwz_rowNum" class="textInput" style="margin:2px;" value="1" size="2"/>').insertBefore($table);
 				
 				var trTm = "";
 				$addBut.click(function(){
 					if (! trTm) trTm = trHtml(fields);
 					var rowNum = 1;
-					try{rowNum = parseInt($rowNum.val())} catch(e){}
+					// 屏蔽批量增加输入框
+					// try{rowNum = parseInt($rowNum.val())} catch(e){}
 	
 					for (var i=0; i<rowNum; i++){
 						var $tr = $(trTm);
