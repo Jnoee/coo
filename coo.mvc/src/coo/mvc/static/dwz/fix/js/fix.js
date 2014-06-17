@@ -21,6 +21,11 @@ var showMenuBar = function(){
     }
 }
 
+/** 处理jquery选择表达式中的特殊字符 */
+var escapeSelector = function(selector) {
+	return selector.replace(/[#;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, "\\$&");
+}
+
 /** 自定义jqeury validator错误信息显示方法 */
 $(function(){
 	if ($.validator) {
@@ -64,11 +69,16 @@ var geDate = function(element, geToDate) {
 }
 
 /** 扩展DWZ自定义验证函数，验证正则表达式 */
-var regex = function(element, pattern) {
+var regex = function(element, pattern, attrs) {
 	var $element = $(element);
 	if($element.val()) {
-		var ex = new RegExp(pattern);
-		return ex.test($element.val());
+		if(pattern instanceof RegExp) {
+			return pattern.test($element.val());
+		} else {
+			attrs = attrs || "g";
+			var ex = new RegExp(pattern, attrs);
+			return ex.test($element.val());
+		}
 	}
 	return true;
 }
