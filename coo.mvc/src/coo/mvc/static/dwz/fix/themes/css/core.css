@@ -84,6 +84,10 @@ span.error {
 	position: static;
 }
 
+.ss-input {
+	width: 35px;
+}
+
 .s-input {
 	width: 60px;
 }
