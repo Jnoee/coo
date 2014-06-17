@@ -91,7 +91,7 @@ public abstract class StringUtils {
 	 * @return 返回最后一个分隔符前的字符串内容。
 	 */
 	public static String substringBeforeLast(String str, String separator) {
-		Assert.notEmpty(str);
+		Assert.notNull(str);
 		Assert.notEmpty(separator);
 
 		int pos = str.lastIndexOf(separator);
@@ -200,7 +200,7 @@ public abstract class StringUtils {
 	 * @return 返回串联起来的字符串。
 	 */
 	public static String join(String[] strs, String separator) {
-		Assert.notEmpty(strs);
+		Assert.notNull(strs);
 		Assert.notNull(separator);
 
 		StringBuffer buf = new StringBuffer(256);
