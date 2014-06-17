@@ -42,7 +42,7 @@ public class UuidEntityListUserType extends AbstractUserType {
 				}
 				return entities;
 			} else {
-				return null;
+				return new ArrayList<UuidEntity>();
 			}
 		} catch (Exception e) {
 			throw new HibernateException("转换UuidEntity列表类型时发生异常。", e);
