@@ -42,6 +42,10 @@ a:hover {
 	margin: 4px 0 4px 0;
 }
 
+table.list td {
+	border-bottom: solid 1px #ededed;
+}
+
 .pageFormContent dl {
 	width: 320px;
 }
