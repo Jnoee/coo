@@ -264,7 +264,7 @@
                 <ul>
                     <#nested>
                     <#if showKeyword>
-                    <li><input type="text" name="keyword" value="${searchModel.keyword}" alt="${alt}" /></li>
+                    <li><input type="text" name="keyword" value="${searchModel.keyword}" title="${alt}" /></li>
                     </#if>
                     <li>
                         <div class="buttonActive">
