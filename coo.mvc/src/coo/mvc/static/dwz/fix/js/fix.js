@@ -470,6 +470,47 @@ $.fn.extend({
 	}
 });
 
+(function($){
+	$.fn.extend({
+		inputAlert: function(){
+			return this.each(function(){
+				
+				var $this = $(this);
+				
+				function getAltBox(){
+					return $this.parent().find("label.alt");
+				}
+				function altBoxCss(opacity){
+					var position = $this.position();
+					return {
+						width:$this.width(),
+						// 增加2像素调整位置。
+						top:position.top+2+'px',
+						left:position.left +'px',
+						opacity:opacity || 0.5
+					};
+				}
+				if (getAltBox().size() < 1) {
+					if (!$this.attr("id")) $this.attr("id", $this.attr("name") + "_" +Math.round(Math.random()*10000));
+					// 先设置为隐藏，避免占位影响input的位置。
+					var $label = $('<label class="alt" style="display:none;" for="'+$this.attr("id")+'">'+$this.attr("alt")+'</label>').appendTo($this.parent());
+					// 然后再显示出来，这样定位准确。
+					$label.css(altBoxCss(0.5)).show();
+					if ($this.val()) $label.hide();
+				}
+				
+				$this.focus(function(){
+					getAltBox().css(altBoxCss(0.3));
+				}).blur(function(){
+					if (!$(this).val()) getAltBox().show().css("opacity",0.5);
+				}).keydown(function(){
+					getAltBox().hide();
+				});
+			});
+		}
+	});
+})(jQuery);
+
 /** 重新加载指定的dialog */
 var reloadDialog = function(dialog) {
 	if(typeof dialog == 'string') {

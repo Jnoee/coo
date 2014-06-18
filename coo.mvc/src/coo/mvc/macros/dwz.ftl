@@ -233,13 +233,16 @@
  * 分页表单。
  *
  * action：表单提交的相对路径
+ * onsubmit：表单提交时的回调函数
+ * targetType：分页表单类型，支持navTab、dialog、div类型。
+ * rel：局部刷新的div的id
+ * alt：全文检索输入框上的提示信息
  * searchModel：搜索条件对象
  * showKeyword：是否显示全文搜索文本框
  * buttonText：检索按钮的文本
  * method：表单提交的方式
- * onsubmit：表单提交时的回调函数
  -->
-<#macro pageForm action onsubmit targetType="navTab" rel="" searchModel=searchModel showKeyword=true buttonText="检索" method="post">
+<#macro pageForm action onsubmit targetType="navTab" rel="" alt="" searchModel=searchModel showKeyword=true buttonText="检索" method="post">
     <#if !onsubmit??>
         <#if targetType == "navTab">
             <#local onsubmit="return navTabSearch(this, '${rel}');" />
@@ -261,7 +264,7 @@
                 <ul>
                     <#nested>
                     <#if showKeyword>
-                    <li><input type="text" name="keyword" value="${searchModel.keyword}" /></li>
+                    <li><input type="text" name="keyword" value="${searchModel.keyword}" alt="${alt}" /></li>
                     </#if>
                     <li>
                         <div class="buttonActive">
