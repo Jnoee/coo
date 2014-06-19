@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface AutoFillResourceEntity {
-
+public @interface AutoFillIn {
+	/** 是否用管理员用户填充 */
+	boolean admin() default false;
 }

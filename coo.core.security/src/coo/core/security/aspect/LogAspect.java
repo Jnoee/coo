@@ -34,7 +34,7 @@ public class LogAspect {
 	 */
 	@Around("@annotation(coo.core.security.annotations.Log)")
 	public void around(ProceedingJoinPoint joinPoint) throws Throwable {
-		Log log = getLogs(joinPoint);
+		Log log = getLog(joinPoint);
 		Object target = joinPoint.getArgs()[log.target()];
 		if (target instanceof UuidEntity) {
 			processEntity(joinPoint);
@@ -52,7 +52,7 @@ public class LogAspect {
 	 *             切入方法执行失败时抛出异常。
 	 */
 	private void processEntity(ProceedingJoinPoint joinPoint) throws Throwable {
-		Log log = getLogs(joinPoint);
+		Log log = getLog(joinPoint);
 		UuidEntity entity = getEntity(joinPoint.getArgs()[log.target()]);
 
 		AbstractBnLogger<? extends BnLogEntity> bnLogger = SpringUtils
@@ -91,7 +91,7 @@ public class LogAspect {
 	 *             切入方法执行失败时抛出异常。
 	 */
 	private void processBean(ProceedingJoinPoint joinPoint) throws Throwable {
-		Log log = getLogs(joinPoint);
+		Log log = getLog(joinPoint);
 		Object bean = joinPoint.getArgs()[log.target()];
 
 		AbstractBnLogger<? extends BnLogEntity> bnLogger = SpringUtils
@@ -127,7 +127,7 @@ public class LogAspect {
 	 *            切入点
 	 * @return 返回切入方法上的注解。
 	 */
-	private Log getLogs(JoinPoint joinPoint) {
+	private Log getLog(JoinPoint joinPoint) {
 		MethodSignature methodSignature = (MethodSignature) joinPoint
 				.getSignature();
 		return methodSignature.getMethod().getAnnotation(Log.class);

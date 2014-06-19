@@ -34,7 +34,7 @@ import coo.core.hibernate.dao.Dao;
 import coo.core.hibernate.search.FullTextCriteria;
 import coo.core.message.MessageSource;
 import coo.core.model.SearchModel;
-import coo.core.security.annotations.AutoFillResourceEntity;
+import coo.core.security.annotations.AutoFillIn;
 import coo.core.security.constants.AdminIds;
 import coo.core.security.entity.ActorEntity;
 import coo.core.security.entity.BnLogEntity;
@@ -134,7 +134,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            机构
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void createOrgan(O organ) {
 		if (organ.getParent() == null) {
 			messageSource.thrown("organ.add.no.parent");
@@ -149,7 +149,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            机构
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void updateOrgan(O organ) {
 		O origOrgan = getOrgan(organ.getId());
 		BeanUtils.copyFields(organ, origOrgan, "ordinal", null);
@@ -198,7 +198,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            角色
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void createRole(R role) {
 		if (!roleDao.isUnique(role, "name")) {
 			messageSource.thrown("role.name.exist", role.getName());
@@ -213,7 +213,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            角色
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void updateRole(R role) {
 		if (!roleDao.isUnique(role, "name")) {
 			messageSource.thrown("role.name.exist", role.getName());
@@ -291,7 +291,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            用户
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void createUser(U user) {
 		if (!userDao.isUnique(user, "username")) {
 			messageSource.thrown("username.exist", user.getUsername());
@@ -320,7 +320,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            用户
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void updateUser(U user) {
 		if (!userDao.isUnique(user, "username")) {
 			messageSource.thrown("username.exist", user.getUsername());
@@ -419,7 +419,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            职务
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void createActor(A actor) {
 		actorDao.save(actor);
 	}
@@ -431,7 +431,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            职务
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void updateActor(A actor) {
 		A origActor = getActor(actor.getId());
 		BeanUtils.copyFields(actor, origActor);

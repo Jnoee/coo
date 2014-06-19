@@ -57,7 +57,7 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	protected Date modifyDate;
 
 	/**
-	 * 根据上下文自动填充自身属性。
+	 * 以当前登录用户自动填充创建人、创建时间、修改人、修改时间。
 	 */
 	public void autoFillIn() {
 		if (StringUtils.isEmpty(getId())) {
@@ -72,6 +72,21 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	}
 
 	/**
+	 * 以超级管理员用户自动填充创建人、创建时间、修改人、修改时间。
+	 */
+	public void autoFillInByAdmin() {
+		if (StringUtils.isEmpty(getId())) {
+			creator = getAdminUser();
+			createDate = new Date();
+			modifier = getAdminUser();
+			modifyDate = new Date();
+		} else {
+			modifier = getAdminUser();
+			modifyDate = new Date();
+		}
+	}
+
+	/**
 	 * 从当前上下文中获取用户对象。
 	 * 
 	 * @return 返回当前上下文中的用户对象。
@@ -80,6 +95,17 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
 		return securityService.getCurrentUser();
+	}
+
+	/**
+	 * 获取超级管理员用户对象。
+	 * 
+	 * @return 返回超级管理员用户对象。
+	 */
+	private U getAdminUser() {
+		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
+				.getBean("securityService");
+		return securityService.getAdminUser();
 	}
 
 	public U getCreator() {

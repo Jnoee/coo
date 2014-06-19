@@ -10,7 +10,7 @@ import coo.base.util.BeanUtils;
 import coo.core.hibernate.dao.Dao;
 import coo.core.hibernate.search.FullTextCriteria;
 import coo.core.model.SearchModel;
-import coo.core.security.annotations.AutoFillResourceEntity;
+import coo.core.security.annotations.AutoFillIn;
 import coo.mvc.boot.demo.entity.Employee;
 
 /**
@@ -55,7 +55,7 @@ public class EmployeeService {
 	 *            职员
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void createEmployee(Employee employee) {
 		employeeDao.save(employee);
 	}
@@ -67,7 +67,7 @@ public class EmployeeService {
 	 *            职员
 	 */
 	@Transactional
-	@AutoFillResourceEntity
+	@AutoFillIn
 	public void updateEmployee(Employee employee) {
 		Employee origEmployee = employeeDao.get(employee.getId());
 		BeanUtils.copyFields(employee, origEmployee);
