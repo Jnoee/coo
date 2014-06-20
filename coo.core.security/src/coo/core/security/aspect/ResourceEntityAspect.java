@@ -14,7 +14,7 @@ import coo.core.security.entity.ResourceEntity;
 @Aspect
 public class ResourceEntityAspect {
 	/**
-	 * 在方法执行之前对ResourceEntity进行自动填充。
+	 * 切面处理方法。
 	 * 
 	 * @param joinPoint
 	 *            切入点

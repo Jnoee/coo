@@ -10,10 +10,10 @@ import java.lang.annotation.Target;
 /**
  * 权限注解。
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD })
 @Documented
 @Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD })
 public @interface Auth {
 	/** 权限代码 */
 	String[] value() default {};

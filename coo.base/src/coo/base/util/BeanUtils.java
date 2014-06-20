@@ -18,7 +18,7 @@ import coo.base.exception.UncheckedException;
  */
 public abstract class BeanUtils {
 	/**
-	 * 获取类中指定名称的属性。
+	 * 获取类中指定名称的属性，支持多层级。
 	 * 
 	 * @param targetClass
 	 *            类
@@ -29,12 +29,11 @@ public abstract class BeanUtils {
 	public static Field findField(Class<?> targetClass, String fieldName) {
 		Assert.notNull(targetClass);
 		Assert.notBlank(fieldName);
-		for (Field field : getAllDeclaredField(targetClass)) {
-			if (fieldName.equals(field.getName())) {
-				return field;
-			}
+		if (fieldName.contains(".")) {
+			return findNestedField(targetClass, fieldName);
+		} else {
+			return findDirectField(targetClass, fieldName);
 		}
-		return null;
 	}
 
 	/**
@@ -82,7 +81,7 @@ public abstract class BeanUtils {
 	}
 
 	/**
-	 * 获取对象中指定属性的值。
+	 * 获取对象中指定属性的值，支持多层级。
 	 * 
 	 * @param target
 	 *            对象
@@ -91,20 +90,13 @@ public abstract class BeanUtils {
 	 * @return 返回对象中指定属性的值。
 	 */
 	public static Object getField(Object target, String fieldName) {
-		return getField(target, findField(target.getClass(), fieldName));
-	}
-
-	/**
-	 * 获取类中指定静态属性的值。
-	 * 
-	 * @param targetClass
-	 *            类
-	 * @param fieldName
-	 *            属性名
-	 * @return 返回类中指定静态属性的值。
-	 */
-	public static Object getStaticField(Class<?> targetClass, String fieldName) {
-		return getField(targetClass, findField(targetClass, fieldName));
+		Assert.notNull(target);
+		Assert.notBlank(fieldName);
+		if (fieldName.contains(".")) {
+			return getNestedField(target, fieldName);
+		} else {
+			return getDirectField(target, fieldName);
+		}
 	}
 
 	/**
@@ -130,7 +122,7 @@ public abstract class BeanUtils {
 	}
 
 	/**
-	 * 设置对象中指定属性的值。
+	 * 设置对象中指定属性的值，支持多层级。
 	 * 
 	 * @param target
 	 *            对象
@@ -140,53 +132,10 @@ public abstract class BeanUtils {
 	 *            值
 	 */
 	public static void setField(Object target, String fieldName, Object value) {
-		setField(target, findField(target.getClass(), fieldName), value);
-	}
-
-	/**
-	 * 设置类中指定静态属性的值。
-	 * 
-	 * @param targetClass
-	 *            类
-	 * @param fieldName
-	 *            属性名
-	 * @param value
-	 *            值
-	 */
-	public static void setStaticField(Class<?> targetClass, String fieldName,
-			Object value) {
-		setField(targetClass, findField(targetClass, fieldName), value);
-	}
-
-	/**
-	 * 设置类中指定final类型静态属性的值。
-	 * 
-	 * @param targetClass
-	 *            类
-	 * @param fieldName
-	 *            属性名
-	 * @param value
-	 *            值
-	 */
-	public static void setStaticFinalField(Class<?> targetClass,
-			String fieldName, Object value) {
-		Field field = findField(targetClass, fieldName);
-		try {
-			boolean accessible = field.isAccessible();
-			field.setAccessible(true);
-
-			Field modifiersField = Field.class.getDeclaredField("modifiers");
-			boolean modifiersAccessible = modifiersField.isAccessible();
-			modifiersField.setAccessible(true);
-			modifiersField
-					.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-			field.set(targetClass, value);
-
-			modifiersField.setAccessible(modifiersAccessible);
-			field.setAccessible(accessible);
-		} catch (Exception e) {
-			throw new IllegalStateException("设置对象的属性[" + field.getName()
-					+ "]值失败", e);
+		if (fieldName.contains(".")) {
+			setNestedField(target, fieldName, value);
+		} else {
+			setDirectField(target, fieldName, value);
 		}
 	}
 
@@ -419,5 +368,116 @@ public abstract class BeanUtils {
 		} catch (Exception e) {
 			throw new UncheckedException("复制Map对象属性到Bean对象时发生异常。", e);
 		}
+	}
+
+	/**
+	 * 获取类中指定名称的单层级属性。
+	 * 
+	 * @param targetClass
+	 *            类
+	 * @param fieldName
+	 *            属性名
+	 * @return 返回对应的属性，如果没找到返回null。
+	 */
+	private static Field findDirectField(Class<?> targetClass, String fieldName) {
+		Assert.notNull(targetClass);
+		Assert.notBlank(fieldName);
+		for (Field field : getAllDeclaredField(targetClass)) {
+			if (fieldName.equals(field.getName())) {
+				return field;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 获取类中指定名称的多层级属性。
+	 * 
+	 * @param targetClass
+	 *            类
+	 * @param fieldName
+	 *            属性名
+	 * @return 返回对应的属性，如果没找到返回null。
+	 */
+	private static Field findNestedField(Class<?> targetClass, String fieldName) {
+		Assert.notNull(targetClass);
+		Assert.notBlank(fieldName);
+		String[] nestedFieldNames = fieldName.split("\\.");
+		Field field = null;
+		for (String nestedFieldName : nestedFieldNames) {
+			field = findDirectField(targetClass, nestedFieldName);
+			targetClass = field.getType();
+		}
+		return field;
+	}
+
+	/**
+	 * 获取对象中指定单层级属性的值。
+	 * 
+	 * @param target
+	 *            对象
+	 * @param fieldName
+	 *            属性名
+	 * @return 返回对象中指定属性的值。
+	 */
+	private static Object getDirectField(Object target, String fieldName) {
+		Assert.notNull(target);
+		Assert.notBlank(fieldName);
+		return getField(target, findDirectField(target.getClass(), fieldName));
+	}
+
+	/**
+	 * 获取对象中指定多层级属性的值。
+	 * 
+	 * @param target
+	 *            对象
+	 * @param fieldName
+	 *            属性名
+	 * @return 返回对象中指定属性的值。
+	 */
+	private static Object getNestedField(Object target, String fieldName) {
+		Assert.notNull(target);
+		Assert.notBlank(fieldName);
+		String[] nestedFieldNames = fieldName.split("\\.");
+		for (String nestedFieldName : nestedFieldNames) {
+			target = getDirectField(target, nestedFieldName);
+		}
+		return target;
+	}
+
+	/**
+	 * 设置对象中指定单层级属性的值。
+	 * 
+	 * @param target
+	 *            对象
+	 * @param fieldName
+	 *            属性名
+	 * @param value
+	 *            值
+	 */
+	private static void setDirectField(Object target, String fieldName,
+			Object value) {
+		setField(target, findDirectField(target.getClass(), fieldName), value);
+	}
+
+	/**
+	 * 设置对象中指定多层级属性的值。
+	 * 
+	 * @param target
+	 *            对象
+	 * @param fieldName
+	 *            属性名
+	 * @param value
+	 *            值
+	 */
+	private static void setNestedField(Object target, String fieldName,
+			Object value) {
+		String[] nestedFieldNames = StringUtils.substringBeforeLast(fieldName,
+				".").split("\\.");
+		for (String nestedFieldName : nestedFieldNames) {
+			target = getDirectField(target, nestedFieldName);
+		}
+		setDirectField(target, StringUtils.substringAfterLast(fieldName, "."),
+				value);
 	}
 }

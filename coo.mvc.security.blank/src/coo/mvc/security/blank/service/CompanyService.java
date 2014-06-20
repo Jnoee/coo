@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import coo.base.util.BeanUtils;
 import coo.core.hibernate.dao.Dao;
 import coo.core.message.MessageSource;
-import coo.core.security.annotations.Log;
-import coo.core.security.annotations.Log.LogType;
+import coo.core.security.annotations.DetailLog;
+import coo.core.security.annotations.DetailLog.LogType;
+import coo.core.security.annotations.SimpleLog;
 import coo.mvc.security.blank.entity.Company;
 
 /**
@@ -55,7 +56,7 @@ public class CompanyService {
 	 *            公司
 	 */
 	@Transactional
-	@Log(code = "company.add.log", vars = "name", type = LogType.NEW)
+	@DetailLog(target = "company", code = "company.add.log", vars = "name", type = LogType.NEW)
 	public void createCompany(Company company) {
 		if (!companyDao.isUnique(company, "name")) {
 			messageSource.thrown("company.name.exist");
@@ -70,7 +71,7 @@ public class CompanyService {
 	 *            公司
 	 */
 	@Transactional
-	@Log(code = "company.edit.log", vars = "name", type = LogType.ALL)
+	@DetailLog(target = "company", code = "company.edit.log", vars = "name", type = LogType.ALL)
 	public void updateCompany(Company company) {
 		if (!companyDao.isUnique(company, "name")) {
 			messageSource.thrown("company.name.exist");
@@ -86,9 +87,8 @@ public class CompanyService {
 	 *            公司ID
 	 */
 	@Transactional
-	@Log(code = "company.delete.success")
+	@SimpleLog(entityId = "companyId", code = "company.delete.success")
 	public void deleteCompany(String companyId) {
 		companyDao.remove(companyId);
-		bnLogger.log(messageSource.get("company.delete.success"));
 	}
 }

@@ -10,13 +10,11 @@ import java.util.Map.Entry;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,17 +34,17 @@ import coo.core.security.model.LogData;
 @MappedSuperclass
 public abstract class BnLogEntity extends UuidEntity {
 	/** 创建人 */
-	@NotEmpty
 	@Field(analyze = Analyze.NO)
 	private String creator;
 	/** 创建时间 */
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
 	private Date createDate;
+	/** 实体ID */
+	@Field(analyze = Analyze.NO)
+	private String entityId;
 	/** 日志信息 */
-	@NotEmpty
-	@Field
+	@Field(analyze = Analyze.NO)
 	private String message;
 	/** 原数据 */
 	@Field
@@ -69,6 +67,14 @@ public abstract class BnLogEntity extends UuidEntity {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public String getEntityId() {
+		return entityId;
+	}
+
+	public void setEntityId(String entityId) {
+		this.entityId = entityId;
 	}
 
 	public String getMessage() {
