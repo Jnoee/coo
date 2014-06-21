@@ -1,6 +1,7 @@
 package coo.core.security.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -89,6 +90,21 @@ public abstract class AbstractBnLogger<T extends BnLogEntity> {
 		criteria.setKeyword(searchModel.getKeyword());
 		return bnLogDao.searchPage(criteria, searchModel.getPageNo(),
 				searchModel.getPageSize());
+	}
+
+	/**
+	 * 全文搜索指定业务实体ID的业务日志记录。
+	 * 
+	 * @param entityId
+	 *            业务实体ID
+	 * @return 返回指定业务实体ID的业务日志记录列表。
+	 */
+	@Transactional(readOnly = true)
+	public List<T> searchEntityLog(String entityId) {
+		FullTextCriteria criteria = bnLogDao.createFullTextCriteria();
+		criteria.addFilterField("entityId", entityId);
+		criteria.addSortDesc("createDate", SortField.LONG);
+		return bnLogDao.searchBy(criteria);
 	}
 
 	/**

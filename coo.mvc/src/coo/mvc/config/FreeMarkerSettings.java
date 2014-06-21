@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
 import coo.mvc.constants.DwzTargetType;
+import coo.mvc.constants.StatusColor;
 
 /**
  * FreeMarker配置组件。
@@ -23,5 +24,6 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
 		addStaticClass(StringUtils.class);
 		addStaticClass(DateUtils.class);
 		addStaticClass(DwzTargetType.class);
+		addStaticClass(StatusColor.class);
 	}
 }

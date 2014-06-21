@@ -31,6 +31,8 @@
                     	<@dwz.a href="/company/company-edit?companyId=${company.id}" target="dialog" title="编辑公司" height="SS">编辑</@dwz.a>
 						|
 						<@dwz.a href="/company/company-delete?companyId=${company.id}" target="ajaxTodo" title="确定要删除该公司吗？">删除</@dwz.a>
+						|
+						<@dwz.a href="/system/log-detail-list?entityId=${company.id}" target="dialog" title="查看操作记录">操作记录</@dwz.a>
 					</td>
                 </tr>
                 </#list>

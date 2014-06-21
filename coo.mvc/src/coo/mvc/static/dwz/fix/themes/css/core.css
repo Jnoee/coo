@@ -119,3 +119,52 @@ span.error {
 	border-style: double;
 	border-width: 0 0 3px 0;
 }
+/* 颜色样式 */
+.green {
+	color: green;
+}
+
+.gray {
+	color: gray;
+}
+
+.orange {
+	color: orange;
+}
+
+.red {
+	color: red;
+}
+/* 文本位置 */
+.c-text {
+	text-align: center !important;
+}
+
+.l-text {
+	text-align: left !important;
+}
+
+.r-text {
+	text-align: right !important;
+}
+/* 主页面左右结构样式 */
+.tree-l-box {
+	float: left;
+	display: block;
+	overflow: auto;
+	width: 25%;
+	border-right: solid 1px #CCC;
+}
+
+.tree-r-box {
+	float: left;
+	display: block;
+	padding: 3px;
+	overflow: auto;
+	width: 74%;
+}
+
+.tree-msg {
+	text-align: center;
+	padding: 10px;
+}

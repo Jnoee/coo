@@ -30,7 +30,7 @@
 					<td>${user.creator.name}</td>
 					<td>${user.modifyDate}</td>
 					<td>${user.modifier.name}</td>
-                    <td>${user.enabled?string("启用","停用")}</td>
+                    <td class="${user.enabled?string(StatusColor.GREEN, StatusColor.GRAY)}">${user.enabled?string("启用","停用")}</td>
                     <td>
                         <@dwz.a href="/system/user-edit?userId=${user.id}" target="dialog" title="编辑用户">编辑</@dwz.a>
                         |

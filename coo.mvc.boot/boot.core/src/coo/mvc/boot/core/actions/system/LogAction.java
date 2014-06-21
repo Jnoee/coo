@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import coo.core.model.SearchModel;
 import coo.core.security.annotations.Auth;
-import coo.core.security.entity.BnLogEntity;
 import coo.core.security.permission.AdminPermission;
 import coo.mvc.boot.core.service.BnLogger;
 
@@ -43,9 +42,21 @@ public class LogAction {
 	 * @param model
 	 *            数据模型
 	 */
-	@RequestMapping("log-data-view")
-	public void logDataView(String logId, Model model) {
-		BnLogEntity log = bnLogger.getLog(logId);
-		model.addAttribute("datas", log.toLogData());
+	@RequestMapping("log-view")
+	public void view(String logId, Model model) {
+		model.addAttribute("log", bnLogger.getLog(logId));
+	}
+
+	/**
+	 * 查看指定业务实体ID的日志详细记录列表。
+	 * 
+	 * @param entityId
+	 *            业务实体ID
+	 * @param model
+	 *            数据模型
+	 */
+	@RequestMapping("log-detail-list")
+	public void listDetail(String entityId, Model model) {
+		model.addAttribute("entityLogs", bnLogger.searchEntityLog(entityId));
 	}
 }
