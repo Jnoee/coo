@@ -21,10 +21,6 @@
 	                <dd><@s.input path="user.ordinal" min="0" max="99999" class="digits" /></dd>
 	            </dl>
 	            <div class="divider"></div>
-	            <dl class="nowrap">
-	                <h3>职务信息</h3>
-	            </dl>
-	            <div class="divider"></div>
 	            <div class="panel">
 	                <h1>职务列表[<@dwz.a href="/system/actor-add?userId=${user.id}" target="dialog">新增职务</@dwz.a>]</h1>
 	                <div>
