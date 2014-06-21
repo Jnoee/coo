@@ -1,5 +1,6 @@
 ﻿@charset "utf-8";
 
+/*------------------------------ 全局样式定义 ------------------------------*/
 * {
 	font-family: "Microsoft YaHei", sans-serif !important;
 }
@@ -12,6 +13,7 @@ a:hover {
 	text-decoration: underline;
 }
 
+/*------------------------------ 覆盖dwz样式定义 ------------------------------*/
 #header {
 	height: 85px;
 }
@@ -60,15 +62,19 @@ table.list td {
 	line-height: 23px;
 }
 
-.pageFormContent dl.nowrap dd, .nowrap dd {
+.pageFormContent dl.nowrap dd,.nowrap dd {
 	width: 540px;
 }
 
-.dd-span {
-	line-height: 23px;
-	float: left;
+span.error {
+	width: 1px;
+	height: 21px;
+	padding-left: 20px;
+	position: static;
 }
 
+/*------------------------------ 新增自定义样式 ------------------------------*/
+/* 单列表单样式，应用到div.pageFormContent元素上 */
 .s-cols dl {
 	width: 450px;
 }
@@ -80,14 +86,12 @@ table.list td {
 .s-cols dl.nowrap dd {
 	width: 340px;
 }
-
-span.error {
-	width: 1px;
-	height: 21px;
-	padding-left: 20px;
-	position: static;
+/* 表单dd中放置文本或其它元素时使用 */
+.dd-span {
+	line-height: 23px;
+	float: left;
 }
-
+/* 文本框宽度 */
 .ss-input {
 	width: 35px;
 }
@@ -102,4 +106,16 @@ span.error {
 
 .l-input {
 	width: 451px;
+}
+/* 双线分割线 */
+.d-line {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	text-indent: -1000px;
+	width: auto;
+	height: 2px;
+	margin: 5px 0px 5px 0px;
+	border-style: double;
+	border-width: 0 0 3px 0;
 }
