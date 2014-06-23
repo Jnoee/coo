@@ -555,7 +555,14 @@ $.extend(navTab, {
 				} else {
 					if ($.isEmptyObject(op.data)) { //获取pagerForm参数
 						var $pagerForm = $("#pagerForm", $panel);
-						op.data = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+						//op.data = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+						// 把pagerForm中带的参数从数组形式转换成op.data上的属性，方便后面对参数进行覆盖。
+						var params = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {};
+						if(!$.isEmptyObject(params)) {
+							jQuery.each(params, function(i, param){
+								op.data[param.name]=param.value;
+							});
+						}
 					}
 					
 					// 如果url上带有参数，则将url参数覆盖掉op.data上的参数。
