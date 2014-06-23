@@ -21,6 +21,32 @@ var showMenuBar = function(){
     }
 }
 
+/**
+ * 扩展String方法
+ */
+$(function(){
+	$.extend(String.prototype, {
+		escape: function() { // 处理jquery选择表达式中的特殊字符
+			return this.replace(/[#;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, "\\$&");
+		},
+		cleanParams: function() { // 清除参数
+			var index = this.indexOf("?");
+			if(index == -1) {
+				return this;
+			}
+			return this.substring(0, index);
+		},
+		getParams: function() { // 获取参数
+			var index = this.indexOf("?");
+			if(index == -1) {
+				return {};
+			}
+			var params = this.substring(index + 1);
+			return $.parseJSON('{"' + decodeURI(params.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
+		}
+	});
+});
+
 /** 处理jquery选择表达式中的特殊字符 */
 var escapeSelector = function(selector) {
 	return selector.replace(/[#;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, "\\$&");
@@ -470,6 +496,7 @@ $.fn.extend({
 	}
 });
 
+/** 覆盖dwz的输入框提示信息实现函数 */
 (function($){
 	$.fn.extend({
 		inputAlert: function(){
@@ -510,6 +537,41 @@ $.fn.extend({
 		}
 	});
 })(jQuery);
+
+/** 覆盖dwz的navTab的reload方法 */
+$.extend(navTab, {
+	reload: function(url, options){
+		var op = $.extend({data:{}, navTabId:"", callback:null}, options);
+		var $tab = op.navTabId ? this._getTab(op.navTabId) : this._getTabs().eq(this._currentIndex);
+		var $panel =  op.navTabId ? this.getPanel(op.navTabId) : this._getPanels().eq(this._currentIndex);
+		
+		if ($panel){
+			if (!url) {
+				url = $tab.attr("url");
+			}
+			if (url) {
+				if ($tab.hasClass("external")) {
+					navTab.openExternal(url, $panel);
+				} else {
+					if ($.isEmptyObject(op.data)) { //获取pagerForm参数
+						var $pagerForm = $("#pagerForm", $panel);
+						op.data = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+					}
+					
+					// 如果url上带有参数，则将url参数覆盖掉op.data上的参数。
+					$.extend(op.data, url.getParams());
+					
+					$panel.ajaxUrl({
+						type:"POST", url:url.cleanParams(), data:op.data, callback:function(response){
+							navTab._loadUrlCallback($panel);
+							if ($.isFunction(op.callback)) op.callback(response);
+						}
+					});
+				}
+			}
+		}
+	}
+});
 
 /** 重新加载指定的dialog */
 var reloadDialog = function(dialog) {
