@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import coo.base.util.BeanUtils;
 import coo.base.util.CollectionUtils;
-import coo.base.util.StringUtils;
 import coo.core.message.MessageSource;
 import coo.core.security.entity.BnLogEntity;
 import coo.core.security.service.AbstractBnLogger;
+import coo.core.util.AspectUtils;
 import coo.core.util.SpringUtils;
 
 /**
@@ -55,16 +54,7 @@ public abstract class AbstractLogAspect {
 		List<Object> vars = new ArrayList<Object>();
 		if (CollectionUtils.isNotEmpty(varFieldNames)) {
 			for (String fieldName : varFieldNames) {
-				if (fieldName.contains(".")) {
-					String targetName = StringUtils.substringBefore(fieldName,
-							".");
-					String targetFieldName = StringUtils.substringAfter(
-							fieldName, ".");
-					vars.add(BeanUtils.getField(params.get(targetName),
-							targetFieldName));
-				} else {
-					vars.add(params.get(fieldName));
-				}
+				vars.add(AspectUtils.getParam(fieldName, params));
 			}
 		}
 		MessageSource messageSource = SpringUtils.getBean("messageSource");

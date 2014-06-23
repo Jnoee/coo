@@ -8,6 +8,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import coo.base.util.BeanUtils;
+import coo.base.util.StringUtils;
+
 /**
  * 切面工具类。
  */
@@ -30,6 +33,25 @@ public class AspectUtils {
 			params.put(paramNames[i], paramValues[i]);
 		}
 		return params;
+	}
+
+	/**
+	 * 获取指定名称的参数值。
+	 * 
+	 * @param paramName
+	 *            参数名称
+	 * @param params
+	 *            参数集合
+	 * @return 返回指定名称的参数值。
+	 */
+	public static Object getParam(String paramName, Map<String, Object> params) {
+		if (paramName.contains(".")) {
+			String targetName = StringUtils.substringBefore(paramName, ".");
+			String targetFieldName = StringUtils.substringAfter(paramName, ".");
+			return BeanUtils.getField(params.get(targetName), targetFieldName);
+		} else {
+			return params.get(paramName);
+		}
 	}
 
 	/**

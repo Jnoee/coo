@@ -6,7 +6,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
 import coo.core.security.annotations.SimpleLog;
 import coo.core.security.entity.BnLogEntity;
@@ -50,14 +49,7 @@ public class SimpleLogAspect extends AbstractLogAspect {
 		if (StringUtils.isBlank(entityId)) {
 			return null;
 		}
-		Object entityField = null;
-		if (entityId.contains(".")) {
-			String targetName = StringUtils.substringBefore(entityId, ".");
-			entityId = StringUtils.substringAfter(entityId, ".");
-			entityField = BeanUtils.getField(params.get(targetName), entityId);
-		} else {
-			entityField = params.get(entityId);
-		}
+		Object entityField = AspectUtils.getParam(entityId, params);
 		if (entityField != null) {
 			return entityField.toString();
 		}
