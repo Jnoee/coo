@@ -159,9 +159,8 @@ span.error {
 .tree-r-box {
 	float: left;
 	display: block;
-	padding: 3px;
 	overflow: auto;
-	width: 74%;
+	width: 74.8%;
 }
 
 .tree-msg {

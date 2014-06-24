@@ -2,7 +2,7 @@
     <div class="pageContent">
         <@dwz.form action="/system/organ-update">
 			<@s.hidden path="organ.id" />
-	        <div class="pageFormContent" layoutH="60">
+	        <div class="pageFormContent" layoutH="56">
 	        	<#if organ.parent??>
 	            <dl class="nowrap">
 	                <dt>上级机构：</dt>
