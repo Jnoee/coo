@@ -303,7 +303,7 @@
         </select>
         <span>条，共${pageModel.count}条</span>
     </div>
-    <div class="pagination" targetType="${targetType}" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
+    <div class="pagination" targetType="${targetType}" rel="${rel}" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
 </#macro>
 
 <#--

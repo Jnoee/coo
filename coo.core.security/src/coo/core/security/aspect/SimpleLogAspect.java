@@ -25,15 +25,16 @@ public class SimpleLogAspect extends AbstractLogAspect {
 	 *             切面处理失败时抛出异常。
 	 */
 	@Around("@annotation(coo.core.security.annotations.SimpleLog)")
-	public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		SimpleLog simpleLog = AspectUtils.getAnnotation(joinPoint,
 				SimpleLog.class);
 		Map<String, Object> params = AspectUtils.getMethodParams(joinPoint);
 		BnLogEntity bnLog = newBnLog();
 		bnLog.setEntityId(getEntityId(simpleLog.entityId(), params));
 		bnLog.setMessage(getMessage(simpleLog.code(), simpleLog.vars(), params));
-		joinPoint.proceed();
+		Object result = joinPoint.proceed();
 		saveBnLog(bnLog);
+		return result;
 	}
 
 	/**

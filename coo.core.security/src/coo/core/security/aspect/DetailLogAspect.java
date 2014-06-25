@@ -28,7 +28,7 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 *             切面处理失败时抛出异常。
 	 */
 	@Around("@annotation(coo.core.security.annotations.DetailLog)")
-	public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		DetailLog log = AspectUtils.getAnnotation(joinPoint, DetailLog.class);
 		Map<String, Object> params = AspectUtils.getMethodParams(joinPoint);
 
@@ -38,19 +38,21 @@ public class DetailLogAspect extends AbstractLogAspect {
 		BnLogEntity bnLog = newBnLog();
 		bnLog.setMessage(getMessage(log.code(), log.vars(), params));
 
+		Object result = null;
 		switch (log.type()) {
 		case ALL:
-			processAll(bnLog, target, joinPoint);
+			result = processAll(bnLog, target, joinPoint);
 			break;
 		case ORIG:
-			processOrig(bnLog, target, joinPoint);
+			result = processOrig(bnLog, target, joinPoint);
 			break;
 		case NEW:
-			processNew(bnLog, target, joinPoint);
+			result = processNew(bnLog, target, joinPoint);
 			break;
 		}
 
 		saveBnLog(bnLog);
+		return result;
 	}
 
 	/**
@@ -65,15 +67,16 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 * @throws Throwable
 	 *             切面处理失败时抛出异常。
 	 */
-	private void processAll(BnLogEntity bnLog, Object target,
+	private Object processAll(BnLogEntity bnLog, Object target,
 			ProceedingJoinPoint joinPoint) throws Throwable {
 		bnLog.setEntityId(getEntityId(target));
 		bnLog.setOrigData(target);
-		joinPoint.proceed();
+		Object result = joinPoint.proceed();
 		if (target instanceof UuidEntity) {
 			target = getEntity(target);
 		}
 		bnLog.setNewData(target);
+		return result;
 	}
 
 	/**
@@ -88,11 +91,11 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 * @throws Throwable
 	 *             切面处理失败时抛出异常。
 	 */
-	private void processOrig(BnLogEntity bnLog, Object target,
+	private Object processOrig(BnLogEntity bnLog, Object target,
 			ProceedingJoinPoint joinPoint) throws Throwable {
 		bnLog.setEntityId(getEntityId(target));
 		bnLog.setOrigData(target);
-		joinPoint.proceed();
+		return joinPoint.proceed();
 	}
 
 	/**
@@ -107,11 +110,12 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 * @throws Throwable
 	 *             切面处理失败时抛出异常。
 	 */
-	private void processNew(BnLogEntity bnLog, Object target,
+	private Object processNew(BnLogEntity bnLog, Object target,
 			ProceedingJoinPoint joinPoint) throws Throwable {
-		joinPoint.proceed();
+		Object result = joinPoint.proceed();
 		bnLog.setEntityId(getEntityId(target));
 		bnLog.setNewData(target);
+		return result;
 	}
 
 	/**
