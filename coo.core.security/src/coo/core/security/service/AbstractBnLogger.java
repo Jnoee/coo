@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.lucene.search.SortField;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import coo.base.model.Page;
@@ -125,6 +126,10 @@ public abstract class AbstractBnLogger<T extends BnLogEntity> {
 	 * @return 返回当前登录用户的用户名。
 	 */
 	private String getCurrentUsername() {
-		return securityService.getCurrentUser().getUsername();
+		if (SecurityUtils.getSubject().isAuthenticated()) {
+			return securityService.getCurrentUser().getUsername();
+		} else {
+			return securityService.getAdminUser().getUsername();
+		}
 	}
 }
