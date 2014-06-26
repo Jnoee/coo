@@ -288,9 +288,16 @@ public abstract class BnLogEntity extends UuidEntity {
 			bean = ((HibernateProxy) bean).getHibernateLazyInitializer()
 					.getImplementation();
 		}
-		for (LogField logField : logBean.value()) {
-			Object fieldValue = BeanUtils.getField(bean, logField.property());
-			datas.putAll(getLogFieldData(fieldValue, logField));
+		if (bean != null) {
+			for (LogField logField : logBean.value()) {
+				Object fieldValue = BeanUtils.getField(bean,
+						logField.property());
+				datas.putAll(getLogFieldData(fieldValue, logField));
+			}
+		} else {
+			for (LogField logField : logBean.value()) {
+				datas.putAll(getLogFieldData(null, logField));
+			}
 		}
 		return datas;
 	}
