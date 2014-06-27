@@ -11,7 +11,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
@@ -284,10 +283,6 @@ public abstract class BnLogEntity extends UuidEntity {
 	 */
 	private Map<String, String> getLogBeanDatas(Object bean, LogBean logBean) {
 		Map<String, String> datas = new LinkedHashMap<String, String>();
-		if (bean instanceof HibernateProxy) {
-			bean = ((HibernateProxy) bean).getHibernateLazyInitializer()
-					.getImplementation();
-		}
 		if (bean != null) {
 			for (LogField logField : logBean.value()) {
 				Object fieldValue = BeanUtils.getField(bean,
