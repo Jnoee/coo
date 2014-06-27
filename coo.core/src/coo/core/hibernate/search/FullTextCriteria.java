@@ -334,7 +334,7 @@ public class FullTextCriteria {
 			query.add(attachLuceneQuery.getQuery(),
 					attachLuceneQuery.getOccur());
 		}
-		log.debug("全文搜索查询语句：{}", query);
+		log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), query);
 		return query;
 	}
 
