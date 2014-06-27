@@ -2,6 +2,7 @@ package coo.base.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -73,7 +74,7 @@ public abstract class BeanUtils {
 			field.setAccessible(true);
 			Object result = field.get(target);
 			field.setAccessible(accessible);
-			return result;
+			return processHibernateLazyField(result);
 		} catch (Exception e) {
 			throw new IllegalStateException("获取对象的属性[" + field.getName()
 					+ "]值失败", e);
@@ -479,5 +480,31 @@ public abstract class BeanUtils {
 		}
 		setDirectField(target, StringUtils.substringAfterLast(fieldName, "."),
 				value);
+	}
+
+	/**
+	 * 处理Hibernate懒加载属性。
+	 * 
+	 * @param fieldValue
+	 *            属性值
+	 * @return 如果是Hibernate懒加载属性则执行代理方法返回实际的属性对象，否则直接返回。
+	 */
+	private static Object processHibernateLazyField(Object fieldValue) {
+		try {
+			Class<?> hibernateProxyClass = Class
+					.forName("org.hibernate.proxy.HibernateProxy");
+			if (hibernateProxyClass.isAssignableFrom(fieldValue.getClass())) {
+				Method method = fieldValue.getClass().getMethod(
+						"getHibernateLazyInitializer");
+				Object lazyInitializer = method.invoke(fieldValue);
+				method = lazyInitializer.getClass().getMethod(
+						"getImplementation");
+				return method.invoke(lazyInitializer);
+			} else {
+				return fieldValue;
+			}
+		} catch (Exception e) {
+			return fieldValue;
+		}
 	}
 }
