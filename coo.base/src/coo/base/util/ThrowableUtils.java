@@ -1,5 +1,8 @@
 package coo.base.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * 异常工具类。
  */
@@ -17,5 +20,18 @@ public class ThrowableUtils {
 		} else {
 			return throwable;
 		}
+	}
+
+	/**
+	 * 获取Throwable对象的异常堆栈信息。
+	 * 
+	 * @param throwable
+	 *            Throwable对象
+	 * @return 返回Throwable对象的异常堆栈信息。
+	 */
+	public static String getStackTrace(Throwable throwable) {
+		StringWriter stingWriter = new StringWriter();
+		throwable.printStackTrace(new PrintWriter(stingWriter));
+		return stingWriter.toString();
 	}
 }
