@@ -22,7 +22,6 @@ import coo.base.util.BeanUtils;
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.search.DateBridge;
-import coo.core.model.IEnum;
 import coo.core.model.UuidEntity;
 import coo.core.security.annotations.LogBean;
 import coo.core.security.annotations.LogField;
@@ -267,9 +266,6 @@ public abstract class BnLogEntity extends UuidEntity {
 			value = fieldValue.toString();
 			if (fieldValue instanceof Date) {
 				value = DateUtils.format((Date) fieldValue, logField.format());
-			}
-			if (fieldValue instanceof IEnum) {
-				value = ((IEnum) fieldValue).getText();
 			}
 		}
 		datas.put(logField.text(), value);
