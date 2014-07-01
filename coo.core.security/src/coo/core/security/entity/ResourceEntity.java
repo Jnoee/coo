@@ -10,6 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.apache.shiro.SecurityUtils;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
@@ -57,55 +58,33 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	protected Date modifyDate;
 
 	/**
-	 * 以当前登录用户自动填充创建人、创建时间、修改人、修改时间。
+	 * 自动填充创建人、创建时间、修改人、修改时间。
 	 */
 	public void autoFillIn() {
 		if (StringUtils.isEmpty(getId())) {
-			creator = getCurrentUser();
+			creator = getOperator();
 			createDate = new Date();
-			modifier = getCurrentUser();
+			modifier = getOperator();
 			modifyDate = new Date();
 		} else {
-			modifier = getCurrentUser();
+			modifier = getOperator();
 			modifyDate = new Date();
 		}
 	}
 
 	/**
-	 * 以超级管理员用户自动填充创建人、创建时间、修改人、修改时间。
+	 * 从当前上下文中获取操作人。
+	 * 
+	 * @return 如果存在当前登录用户返回当前登录用户，否则返回系统管理员用户。
 	 */
-	public void autoFillInByAdmin() {
-		if (StringUtils.isEmpty(getId())) {
-			creator = getAdminUser();
-			createDate = new Date();
-			modifier = getAdminUser();
-			modifyDate = new Date();
+	private U getOperator() {
+		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
+				.getBean("securityService");
+		if (SecurityUtils.getSubject().isAuthenticated()) {
+			return securityService.getCurrentUser();
 		} else {
-			modifier = getAdminUser();
-			modifyDate = new Date();
+			return securityService.getAdminUser();
 		}
-	}
-
-	/**
-	 * 从当前上下文中获取用户对象。
-	 * 
-	 * @return 返回当前上下文中的用户对象。
-	 */
-	private U getCurrentUser() {
-		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
-				.getBean("securityService");
-		return securityService.getCurrentUser();
-	}
-
-	/**
-	 * 获取超级管理员用户对象。
-	 * 
-	 * @return 返回超级管理员用户对象。
-	 */
-	private U getAdminUser() {
-		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
-				.getBean("securityService");
-		return securityService.getAdminUser();
 	}
 
 	public U getCreator() {
