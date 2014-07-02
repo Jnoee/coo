@@ -48,17 +48,17 @@
 		<table class="list" width="98%">
 			<thead>
 				<tr>
-					<th width="100">字段</th>
-					<th width="120">原值</th>
-					<th width="120">新值</th>
+					<th width="20%">字段</th>
+					<th width="40%">原值</th>
+					<th width="40%">新值</th>
 				</tr>
 			</thead>
 			<tbody>
 				<#list log.toLogData() as data>
 					<tr>
 						<td style="font-weight:bold">${data.text}</td>
-						<td>${data.origData}</td>
-						<td <#if data.isChanged()>style="color:red"</#if>>${data.newData}</td>
+						<td style="word-break:break-all">${data.origData}</td>
+						<td style="word-break:break-all;<#if data.isChanged()>color:red;</#if>">${data.newData}</td>
 					</tr>
 				</#list>
 			</tbody>
