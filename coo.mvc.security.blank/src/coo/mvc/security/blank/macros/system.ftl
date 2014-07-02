@@ -40,26 +40,28 @@
 		<dt>操作用户：</dt>
 		<dd>${log.creator}</dd>
 	</dl>
-	<dl>
+	<dl class="nowrap">
 		<dt>操作内容：</dt>
 		<dd>${log.message}</dd>
 	</dl>
-	<table class="list" width="98%">
-		<thead>
-			<tr>
-				<th width="100">字段</th>
-				<th width="120">原值</th>
-				<th width="120">新值</th>
-			</tr>
-		</thead>
-		<tbody>
-			<#list log.toLogData() as data>
+	<#if log.hasData()>
+		<table class="list" width="98%">
+			<thead>
 				<tr>
-					<td style="font-weight:bold">${data.text}</td>
-					<td>${data.origData}</td>
-					<td <#if data.isChanged()>style="color:red"</#if>>${data.newData}</td>
+					<th width="100">字段</th>
+					<th width="120">原值</th>
+					<th width="120">新值</th>
 				</tr>
-			</#list>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<#list log.toLogData() as data>
+					<tr>
+						<td style="font-weight:bold">${data.text}</td>
+						<td>${data.origData}</td>
+						<td <#if data.isChanged()>style="color:red"</#if>>${data.newData}</td>
+					</tr>
+				</#list>
+			</tbody>
+		</table>
+	</#if>
 </#macro>
