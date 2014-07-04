@@ -310,7 +310,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		actorDao.save(defaultActor);
 
 		settings.setId(user.getId());
-		userDao.merge(user);
+		userSettingsDao.save(settings);
 	}
 
 	/**
@@ -326,7 +326,23 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			messageSource.thrown("username.exist", user.getUsername());
 		}
 		U origUser = getUser(user.getId());
-		BeanUtils.copyFields(user, origUser, "enabled");
+		BeanUtils.copyFields(user, origUser, "enabled,settings");
+		// 如果关联的用户设置不为空，则同时更新用户设置。
+		if (user.getSettings() != null) {
+			BeanUtils.copyFields(user.getSettings(), origUser.getSettings());
+		}
+	}
+
+	/**
+	 * 更新用户设置。
+	 * 
+	 * @param userSettings
+	 *            用户设置
+	 */
+	@Transactional
+	public void updateUserSettings(S userSettings) {
+		S origUserSettings = userSettingsDao.get(userSettings.getId());
+		BeanUtils.copyFields(userSettings, origUserSettings);
 	}
 
 	/**
