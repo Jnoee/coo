@@ -80,7 +80,8 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	private U getOperator() {
 		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
-		if (SecurityUtils.getSubject().isAuthenticated()) {
+		if (SecurityUtils.getSecurityManager() != null
+				&& SecurityUtils.getSubject().isAuthenticated()) {
 			return securityService.getCurrentUser();
 		} else {
 			return securityService.getAdminUser();
