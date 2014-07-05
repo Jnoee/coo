@@ -11,6 +11,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.util.ThreadContext;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
@@ -80,11 +81,11 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	private U getOperator() {
 		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
-		if (SecurityUtils.getSecurityManager() != null
-				&& SecurityUtils.getSubject().isAuthenticated()) {
-			return securityService.getCurrentUser();
-		} else {
+		if (ThreadContext.getSecurityManager() == null
+				|| SecurityUtils.getSubject().isAuthenticated()) {
 			return securityService.getAdminUser();
+		} else {
+			return securityService.getCurrentUser();
 		}
 	}
 
