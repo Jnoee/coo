@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.apache.lucene.search.SortField;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.util.ThreadContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import coo.base.model.Page;
@@ -121,15 +122,16 @@ public abstract class AbstractBnLogger<T extends BnLogEntity> {
 	}
 
 	/**
-	 * 获取当前登录用户的用户名。
+	 * 获取当前登录用户的用户名，如果没有当前登录用户则返回系统管理员的用户名。
 	 * 
 	 * @return 返回当前登录用户的用户名。
 	 */
 	private String getCurrentUsername() {
-		if (SecurityUtils.getSubject().isAuthenticated()) {
-			return securityService.getCurrentUser().getUsername();
-		} else {
+		if (ThreadContext.getSecurityManager() == null
+				|| !SecurityUtils.getSubject().isAuthenticated()) {
 			return securityService.getAdminUser().getUsername();
+		} else {
+			return securityService.getCurrentUser().getUsername();
 		}
 	}
 }
