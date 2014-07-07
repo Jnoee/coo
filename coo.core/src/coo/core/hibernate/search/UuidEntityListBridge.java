@@ -16,7 +16,7 @@ public class UuidEntityListBridge implements StringBridge {
 	@Override
 	public String objectToString(Object object) {
 		@SuppressWarnings("unchecked")
-		List<UuidEntity> entities = (ArrayList<UuidEntity>) object;
+		List<UuidEntity> entities = (List<UuidEntity>) object;
 		if (CollectionUtils.isEmpty(entities)) {
 			return "";
 		}

@@ -16,7 +16,7 @@ public class IEnumListValueBridge implements StringBridge {
 	@Override
 	public String objectToString(Object object) {
 		@SuppressWarnings("unchecked")
-		List<IEnum> ienums = (ArrayList<IEnum>) object;
+		List<IEnum> ienums = (List<IEnum>) object;
 		if (CollectionUtils.isEmpty(ienums)) {
 			return "";
 		}
