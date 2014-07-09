@@ -532,6 +532,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 				trueBits.toArray(new Integer[] {}),
 				falseBits.toArray(new Integer[] {}));
 		Criteria criteria = userDao.createCriteria();
+		criteria.createAlias("actors", "actors");
 		criteria.createAlias("actors.role", "role");
 		criteria.add(Restrictions.like("role.permissions",
 				permissionCode.toString()));
