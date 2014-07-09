@@ -33,7 +33,7 @@
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" />
 	<!-- 邮件发送组件 -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${mail.host:smtp.163.com}" />
 		<property name="port" value="${mail.port:25}" />
 		<property name="username" value="${mail.username:coo_mail_test}" />
