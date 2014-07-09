@@ -16,6 +16,8 @@ import freemarker.template.Template;
 public class TemplateMail extends Mail {
 	/** 邮件模版名称 */
 	private String templateName;
+	/** 邮件模版对象 */
+	private String model;
 	/** 邮件模版数据 */
 	private Map<String, Object> templateModel = new HashMap<String, Object>();
 
@@ -30,8 +32,13 @@ public class TemplateMail extends Mail {
 			Configuration configuration = SpringUtils
 					.getBean("commonsFreemarkerConfiguration");
 			Template template = configuration.getTemplate(templateName);
-			return FreeMarkerTemplateUtils.processTemplateIntoString(template,
-					templateModel);
+			if (model == null) {
+				return FreeMarkerTemplateUtils.processTemplateIntoString(
+						template, templateModel);
+			} else {
+				return FreeMarkerTemplateUtils.processTemplateIntoString(
+						template, model);
+			}
 		} catch (Exception e) {
 			throw new UncheckedException("解析模版邮件时反生异常。", e);
 		}
@@ -46,7 +53,19 @@ public class TemplateMail extends Mail {
 	 *            变量值
 	 */
 	public void setVar(String name, Object value) {
+		// 如果已经设置了邮件模版对象，则将邮件模版对象置空。
+		if (model != null) {
+			model = null;
+		}
 		templateModel.put(name, value);
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 	public String getTemplateName() {
