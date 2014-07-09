@@ -17,7 +17,7 @@ public class TemplateMail extends Mail {
 	/** 邮件模版名称 */
 	private String templateName;
 	/** 邮件模版对象 */
-	private String model;
+	private Object model;
 	/** 邮件模版数据 */
 	private Map<String, Object> templateModel = new HashMap<String, Object>();
 
@@ -60,11 +60,11 @@ public class TemplateMail extends Mail {
 		templateModel.put(name, value);
 	}
 
-	public String getModel() {
+	public Object getModel() {
 		return model;
 	}
 
-	public void setModel(String model) {
+	public void setModel(Object model) {
 		this.model = model;
 	}
 
