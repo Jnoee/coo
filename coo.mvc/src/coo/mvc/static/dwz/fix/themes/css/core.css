@@ -66,6 +66,11 @@ table.list td {
 	width: 540px;
 }
 
+.checkboxCtrl {
+	width: auto;
+	height: auto;
+}
+
 span.error {
 	width: 1px;
 	height: 21px;
@@ -90,6 +95,16 @@ span.error {
 .dd-span {
 	line-height: 23px;
 	float: left;
+}
+/** 处理checkbox、radio样式 */
+.dd-span input[type=checkbox],input[type=radio] {
+	margin: 0px;
+	vertical-align: -3px;
+}
+/** 处理label样式 */
+label.dd-span {
+	width: auto;
+	padding-left: 0px;
 }
 /* 文本框宽度 */
 .ss-input {
