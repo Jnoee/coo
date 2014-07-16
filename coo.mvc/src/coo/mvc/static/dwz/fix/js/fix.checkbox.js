@@ -5,7 +5,7 @@
 			return this.each(function() {
 				var $parent = $(parent || document);
 				var $checkAllBtn = $(this);
-				var checkboxName = $(this).attr("group");
+				var checkboxName = $(this).attr("group").escape();
 				var $checkboxs = $parent.find(":checkbox[name=" + checkboxName + "]");
 				
 				$(this).bind("checkSelected", function() {
