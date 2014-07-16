@@ -230,6 +230,53 @@
 </#macro>
 
 <#--
+ * 多选组。
+ *
+ * path：多选组绑定的属性路径
+ * items：多选组选项集合对象
+ * itemValue：多选组值的属性名
+ * itemLabel：多选组文本的属性名
+ * required: 是否必填
+ * showCheckAllBtn: 是否显示全选按钮
+ -->
+<#macro checkboxs path items itemValue itemLabel required=true showCheckAllBtn=true>
+	<@s.bind path />
+	<#if items?size gt 0 && showCheckAllBtn>
+    	<label class="dd-span"><input id="${path}CheckAll" type="checkbox" class="checkboxCtrl" group="${s.name}"/>全选</label><br/>
+    </#if>
+    <#if required>
+		<@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path class="required" />
+	<#else>
+		<@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path />
+	</#if>
+	<#if items?size gt 0 && showCheckAllBtn>
+		<script>
+			$(function() {
+				var checkboxSelector = "input[id=" + "${path}".escape() + "]";
+				var allCheckboxs = $(checkboxSelector);
+				var checkedCheckboxs = $(checkboxSelector + ":checked");
+				var checkAllBtn = $("input[id=" + "${path}".escape() + "CheckAll]");
+				if (checkedCheckboxs.size() == allCheckboxs.size()){
+					checkAllBtn.attr("checked",true);
+				} else {
+					checkAllBtn.attr("checked",false);
+				}
+				allCheckboxs.each(function(){
+					$(this).change(function(){
+						var checkedCheckboxs = $(checkboxSelector + ":checked");
+						if (checkedCheckboxs.size() == allCheckboxs.size()){
+							checkAllBtn.attr("checked",true);
+						} else {
+							checkAllBtn.attr("checked",false);
+						}
+					});
+				});
+			});
+		</script>
+	</#if>
+</#macro>
+
+<#--
  * 分页表单。
  *
  * action：表单提交的相对路径
