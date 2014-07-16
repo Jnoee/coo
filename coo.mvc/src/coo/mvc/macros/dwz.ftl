@@ -22,7 +22,16 @@
     <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
     <link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css" />
-    <script src="${ctx}/fix/js/fix.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.validator.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.ui.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.theme.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.switchEnv.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.navTab.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.ajax.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.database.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.panel.js" type="text/javascript"></script>
+    <script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
@@ -242,37 +251,12 @@
 <#macro checkboxs path items itemValue itemLabel required=true showCheckAllBtn=true>
 	<@s.bind path />
 	<#if items?size gt 0 && showCheckAllBtn>
-    	<label class="dd-span"><input id="${path}CheckAll" type="checkbox" class="checkboxCtrl" group="${s.name}"/>全选</label><br/>
+    	<label class="dd-span"><input type="checkbox" class="checkboxCtrl" group="${s.name}"/>全选</label><br/>
     </#if>
     <#if required>
 		<@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path class="required" />
 	<#else>
 		<@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path />
-	</#if>
-	<#if items?size gt 0 && showCheckAllBtn>
-		<script>
-			$(function() {
-				var checkboxSelector = "input[id=" + "${path}".escape() + "]";
-				var allCheckboxs = $(checkboxSelector);
-				var checkedCheckboxs = $(checkboxSelector + ":checked");
-				var checkAllBtn = $("input[id=" + "${path}".escape() + "CheckAll]");
-				if (checkedCheckboxs.size() == allCheckboxs.size()){
-					checkAllBtn.attr("checked",true);
-				} else {
-					checkAllBtn.attr("checked",false);
-				}
-				allCheckboxs.each(function(){
-					$(this).change(function(){
-						var checkedCheckboxs = $(checkboxSelector + ":checked");
-						if (checkedCheckboxs.size() == allCheckboxs.size()){
-							checkAllBtn.attr("checked",true);
-						} else {
-							checkAllBtn.attr("checked",false);
-						}
-					});
-				});
-			});
-		</script>
 	</#if>
 </#macro>
 
