@@ -10,7 +10,7 @@
 				
 				$(this).bind("checkSelected", function() {
 					var $checkedCheckboxs = $parent.find(":checkbox[name=" + checkboxName + "]:checked");
-					if($checkedCheckboxs.size() == $checkboxs.size()) {
+					if($checkboxs.size() > 0 && $checkedCheckboxs.size() == $checkboxs.size()) {
 						$(this).attr("checked", true);
 					} else {
 						$(this).attr("checked", false);
