@@ -2,15 +2,19 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 	<!-- 默认以settings.xml为全局配置文件 -->
-	<context:property-placeholder location="classpath:settings.xml"	ignore-resource-not-found="true" />
+	<context:property-placeholder location="classpath:settings.xml"
+		ignore-resource-not-found="true" />
 	<!-- 定义数据源 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
 		<!-- 驱动类 -->
 		<property name="driverClass" value="${db.driver:org.h2.Driver}" />
 		<!-- 链接地址 -->
@@ -23,15 +27,15 @@
 		<property name="maxPoolSize" value="${db.maxPoolSize:100}" />
 		<!-- 最小连接数 -->
 		<property name="minPoolSize" value="${db.minPoolSize:10}" />
-		<!-- 最大空闲时间（秒） -->  
+		<!-- 最大空闲时间（秒） -->
 		<property name="maxIdleTime" value="${db.maxIdleTime:60}" />
-		<!-- 初始化时创建的连接数，取值应在minPoolSize与maxPoolSize之间 -->  
+		<!-- 初始化时创建的连接数，取值应在minPoolSize与maxPoolSize之间 -->
 		<property name="initialPoolSize" value="${db.initialPoolSize:20}" />
-		<!-- 当连接池中的连接耗尽的时候一次同时获取的连接数 -->  
+		<!-- 当连接池中的连接耗尽的时候一次同时获取的连接数 -->
 		<property name="acquireIncrement" value="${db.acquireIncrement:5}" />
-		<!-- 每隔多少秒检查所有连接池中的空闲连接（秒） --> 
-    	<property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod:60}" />
-    	<!-- 从数据库获取新连接失败后重复尝试的次数 -->
+		<!-- 每隔多少秒检查所有连接池中的空闲连接（秒） -->
+		<property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod:60}" />
+		<!-- 从数据库获取新连接失败后重复尝试的次数 -->
 		<property name="acquireRetryAttempts" value="${db.acquireRetryAttempts:10}" />
 		<!-- 两次连接中间隔时间（毫秒） -->
 		<property name="acquireRetryDelay" value="${db.acquireRetryDelay:500}" />
@@ -40,7 +44,8 @@
 		<!-- 取得连接的同时将校验连接的有效性 -->
 		<property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin:true}" />
 		<!-- 创建的测试表名，用于检查连接有效性 -->
-		<property name="automaticTestTable" value="${jdbc.automaticTestTable:C3P0_TEST_DONOT_DELETE}" />
+		<property name="automaticTestTable"
+			value="${jdbc.automaticTestTable:C3P0_TEST_DONOT_DELETE}" />
 	</bean>
 	<!-- 定义基本的Hibernate SessionFactory，供继承。 -->
 	<bean id="sessionFactory" class="coo.core.hibernate.LocalSessionFactoryBean">
@@ -54,7 +59,8 @@
 				<!-- 二级缓存设置 -->
 				<prop key="hibernate.cache.use_query_cache">${db.cache.use_query_cache:false}</prop>
 				<prop key="hibernate.cache.use_second_level_cache">${db.cache.use_second_level_cache:true}</prop>
-				<prop key="hibernate.cache.region.factory_class">${db.cache.region.factory_class:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}</prop>
+				<prop key="hibernate.cache.region.factory_class">${db.cache.region.factory_class:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}
+				</prop>
 				<prop key="hibernate.jdbc.fetch_size">${db.jdbc.fetch_size:50}</prop>
 				<prop key="hibernate.jdbc.batch_size">${db.jdbc.batch_size:25}</prop>
 				<!-- 使用的Lucene版本 -->
@@ -62,22 +68,29 @@
 				<!-- 是否独占式使用索引文件 -->
 				<prop key="hibernate.search.default.exclusive_index_use">${search.exclusive_index_use:false}</prop>
 				<!-- 全文索引设置 -->
-				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:org.hibernate.search.store.impl.FSDirectoryProvider}</prop>
+				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:org.hibernate.search.store.impl.FSDirectoryProvider}
+				</prop>
 				<!-- 全文索引保存目录 -->
 				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.coo/indexed}</prop>
 				<!-- 全文索引分词器 -->
-				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}</prop>
+				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}
+				</prop>
 			</props>
 		</property>
 	</bean>
 	<!-- 定义事务管理 -->
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<!-- 设置事务的annotation生效 -->
 	<tx:annotation-driven />
 	<!-- 启动Spring AOP -->
 	<aop:aspectj-autoproxy />
+	<!-- 设置定时器的annotation生效 -->
+	<task:annotation-driven />
+	<!-- 定义默认异步任务组件 -->
+	<task:executor id="taskExecutor" />
 	<!-- 加载coo.core下的组件 -->
 	<context:component-scan base-package="coo.core" />
 </beans>
