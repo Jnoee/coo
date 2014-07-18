@@ -81,12 +81,12 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	}
 
 	/**
-	 * 获取职务的完整名称。（机构名+职务名）
+	 * 获取职务的完整名称。（机构名-职务名）
 	 * 
 	 * @return 返回职务的完整名称。
 	 */
 	public String getFullName() {
-		return organ.getName() + name;
+		return organ.getName() + "-" + name;
 	}
 
 	/**

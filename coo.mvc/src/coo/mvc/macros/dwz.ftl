@@ -175,7 +175,7 @@
  * mask：dialog链接用来指定打开窗口是否为模态窗口
  * attributes：链接的其它属性
  -->
-<#macro a href rel width="M" height="M" target="navTab" mask=true attributes...>
+<#macro a href rel width="M" height="M" target="navTab" mask=true minable=false maxable=false resizable=false drawable=false attributes...>
 	<#if !rel?? && (target == "navTab" || target == "dialog")>
 		<#local relStartIndex = href?last_index_of("/") />
 		<#local relEndIndex = href?last_index_of("?") />
@@ -192,7 +192,11 @@
 	<a href="<@s.url href />" target="${target}"
 	<#if target == "dialog">
     	rel="${rel}"
-    	<#if mask> mask="${mask}"</#if>
+    	mask="${mask?c}"
+    	minable="${minable?c}"
+    	maxable="${maxable?c}"
+    	resizable="${resizable?c}"
+    	drawable="${drawable?c}"
     	<#if width == "SSS">
    			<#local width="300" />
    		</#if>
