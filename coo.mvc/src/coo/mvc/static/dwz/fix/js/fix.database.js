@@ -88,9 +88,9 @@ $.fn.extend({
 			$tbody.find('>tr').each(function(i){
 				$(':input, a.btnLook, a.btnAttach', this).each(function(){
 					var $this = $(this), name = $this.attr('name'), val = $this.val();
-	
 					if (name) $this.attr('name', name.replaceSuffix(i));
-					
+					if ($this.attr('id')) $this.attr('id', $this.attr('id').replaceSuffix(i));
+					if ($this.attr('customvalid')) $this.attr('customvalid', $this.attr('customvalid').replaceSuffix(i));
 					var lookupGroup = $this.attr('lookupGroup');
 					if (lookupGroup) {$this.attr('lookupGroup', lookupGroup.replaceSuffix(i));}
 					
