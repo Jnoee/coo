@@ -28,8 +28,8 @@ $.fn.extend({
 			
 			$tbody.find("a.btnDel").click(function(){
 				var $btnDel = $(this);
-				
-				if ($btnDel.is("[href^=javascript:]")){
+				//：影响时间限制组件的删除功能。
+				if ($btnDel.is("[href^=javascript]")){
 					$btnDel.parents("tr:first").remove();
 					initSuffix($tbody);
 					return false;
