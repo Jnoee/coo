@@ -23,6 +23,7 @@ public class SimpleLogAspect extends AbstractLogAspect {
 	 *            切入点
 	 * @throws Throwable
 	 *             切面处理失败时抛出异常。
+	 * @return 返回方法本身返回的对象。
 	 */
 	@Around("@annotation(coo.core.security.annotations.SimpleLog)")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {

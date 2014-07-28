@@ -26,6 +26,7 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 *            切入点
 	 * @throws Throwable
 	 *             切面处理失败时抛出异常。
+	 * @return 返回方法本身返回的对象。
 	 */
 	@Around("@annotation(coo.core.security.annotations.DetailLog)")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -66,6 +67,7 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 *            切入点
 	 * @throws Throwable
 	 *             切面处理失败时抛出异常。
+	 * @return 返回方法本身返回的对象。
 	 */
 	private Object processAll(BnLogEntity bnLog, Object target,
 			ProceedingJoinPoint joinPoint) throws Throwable {
@@ -90,6 +92,7 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 *            切入点
 	 * @throws Throwable
 	 *             切面处理失败时抛出异常。
+	 * @return 返回方法本身返回的对象。
 	 */
 	private Object processOrig(BnLogEntity bnLog, Object target,
 			ProceedingJoinPoint joinPoint) throws Throwable {
@@ -108,7 +111,8 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 * @param joinPoint
 	 *            切入点
 	 * @throws Throwable
-	 *             切面处理失败时抛出异常。
+	 *             切面处理失败时抛出异常。.
+	 * @return 返回方法本身返回的对象。
 	 */
 	private Object processNew(BnLogEntity bnLog, Object target,
 			ProceedingJoinPoint joinPoint) throws Throwable {
