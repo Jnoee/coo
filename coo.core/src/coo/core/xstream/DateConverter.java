@@ -25,7 +25,7 @@ public class DateConverter extends AbstractSingleValueConverter {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean canConvert(Class type) {
-		return type.equals(Date.class);
+		return Date.class.isAssignableFrom(type);
 	}
 
 	@Override
