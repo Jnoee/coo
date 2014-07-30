@@ -40,7 +40,7 @@ public class TemplateMail extends Mail {
 						template, model);
 			}
 		} catch (Exception e) {
-			throw new UncheckedException("解析模版邮件时反生异常。", e);
+			throw new UncheckedException("解析邮件模版时发生异常。", e);
 		}
 	}
 
