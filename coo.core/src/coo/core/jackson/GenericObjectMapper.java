@@ -4,9 +4,9 @@ import java.text.SimpleDateFormat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-
 import coo.base.util.DateUtils;
 
 /**
@@ -24,5 +24,8 @@ public class GenericObjectMapper extends ObjectMapper {
 				true);
 		registerModule(hibernateModule);
 		registerModule(new JodaModule());
+		SimpleModule enumModule = new SimpleModule();
+		enumModule.addSerializer(new JsonIEnumSerializer());
+		registerModule(enumModule);
 	}
 }
