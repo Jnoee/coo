@@ -2,6 +2,7 @@ package coo.core.jackson;
 
 import java.text.SimpleDateFormat;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -18,6 +19,7 @@ public class GenericObjectMapper extends ObjectMapper {
 	 */
 	public GenericObjectMapper() {
 		configure(SerializationFeature.INDENT_OUTPUT, true);
+		configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		setDateFormat(new SimpleDateFormat(DateUtils.SECOND));
 		Hibernate4Module hibernateModule = new Hibernate4Module();
 		hibernateModule.configure(Hibernate4Module.Feature.FORCE_LAZY_LOADING,
