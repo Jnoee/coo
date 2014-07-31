@@ -12,7 +12,7 @@ public class GenericJacksonView extends MappingJackson2JsonView {
 	 * 构造方法。
 	 */
 	public GenericJacksonView() {
-		setObjectMapper(new GenericObjectMapper());
+		setObjectMapper(new GenericObjectMapper().registerEnumModule());
 		setExtractValueFromSingleKeyModel(true);
 	}
 }
