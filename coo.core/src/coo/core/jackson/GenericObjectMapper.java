@@ -26,8 +26,17 @@ public class GenericObjectMapper extends ObjectMapper {
 				true);
 		registerModule(hibernateModule);
 		registerModule(new JodaModule());
+	}
+
+	/**
+	 * 注册枚举转换模块
+	 * 
+	 * @return
+	 */
+	public GenericObjectMapper registerEnumModule() {
 		SimpleModule enumModule = new SimpleModule();
 		enumModule.addSerializer(new JsonIEnumSerializer());
-		registerModule(enumModule);
+		this.registerModule(enumModule);
+		return this;
 	}
 }
