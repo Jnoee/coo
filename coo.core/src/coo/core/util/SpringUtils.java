@@ -42,14 +42,27 @@ public class SpringUtils implements ApplicationContextAware {
 	 * 从Spring容器中获取指定名称的Bean。
 	 * 
 	 * @param <T>
-	 *            Bean类型
+	 *            bean类型
 	 * @param beanName
 	 *            bean名称
-	 * @return 返回指定名称的Bean。
+	 * @return 返回指定名称的bean。
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String beanName) {
 		return (T) context.getBean(beanName);
+	}
+
+	/**
+	 * 从Spring容器中获取指定类型的Bean。
+	 * 
+	 * @param <T>
+	 *            bean类型
+	 * @param beanType
+	 *            bean类型
+	 * @return 返回指定类型的bean。
+	 */
+	public static <T> T getBean(Class<T> beanType) {
+		return context.getBean(beanType);
 	}
 
 	/**

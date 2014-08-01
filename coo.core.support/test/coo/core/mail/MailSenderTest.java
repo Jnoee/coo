@@ -20,10 +20,8 @@ public class MailSenderTest {
 		Mail mail = new Mail();
 		mail.setFrom("coo_mail_test@163.com");
 		mail.addTo("hesong.sz@mopon.cn");
-		mail.setSubject("测试邮件" + Math.random());
+		mail.setSubject("文本邮件" + System.currentTimeMillis());
 		mail.setText("这是一封测试邮件。");
-		File attachement = new File("test/coo/core/mail/测试附件.txt");
-		mail.addAttachement(attachement);
 		mailService.send(mail);
 	}
 
@@ -32,7 +30,7 @@ public class MailSenderTest {
 		TemplateMail templateMail = new TemplateMail();
 		templateMail.setFrom("coo_mail_test@163.com");
 		templateMail.addTo("hesong.sz@mopon.cn");
-		templateMail.setSubject("测试邮件");
+		templateMail.setSubject("模版邮件" + System.currentTimeMillis());
 		templateMail.setTemplateName("test-mail.ftl");
 		templateMail.setVar("name", "coo");
 
@@ -40,6 +38,6 @@ public class MailSenderTest {
 		templateMail.addAttachement(attachement);
 
 		mailService.sendAsync(templateMail);
-		Thread.sleep(30000);
+		Thread.sleep(10000);
 	}
 }

@@ -30,7 +30,7 @@ public class TemplateMail extends Mail {
 	public String getText() {
 		try {
 			Configuration configuration = SpringUtils
-					.getBean("commonsFreemarkerConfiguration");
+					.getBean(Configuration.class);
 			Template template = configuration.getTemplate(templateName);
 			if (model == null) {
 				return FreeMarkerTemplateUtils.processTemplateIntoString(

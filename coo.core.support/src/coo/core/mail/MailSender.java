@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import coo.base.constants.Encoding;
@@ -22,8 +22,17 @@ public class MailSender {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
 	private JavaMailSender javaMailSender;
-	@Resource
-	private TaskExecutor taskExecutor;
+
+	/**
+	 * 异步发送邮件。
+	 * 
+	 * @param mail
+	 *            邮件
+	 */
+	@Async
+	public void sendAsync(Mail mail) {
+		send(mail);
+	}
 
 	/**
 	 * 同步发送邮件。
@@ -47,26 +56,8 @@ public class MailSender {
 			}
 			javaMailSender.send(helper.getMimeMessage());
 		} catch (Exception e) {
+			log.error("发送邮件时发生异常。", e);
 			throw new UncheckedException("发送邮件时发生异常。", e);
 		}
-	}
-
-	/**
-	 * 异步发送邮件。
-	 * 
-	 * @param mail
-	 *            邮件
-	 */
-	public void sendAsync(final Mail mail) {
-		taskExecutor.execute(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					send(mail);
-				} catch (Exception e) {
-					log.error("发送邮件时发生异常。", e);
-				}
-			}
-		});
 	}
 }
