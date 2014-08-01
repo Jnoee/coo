@@ -10,7 +10,7 @@ import coo.base.util.DateUtils;
  * 日期转换器。
  */
 public class DateConverter extends AbstractSingleValueConverter {
-	private String format;
+	private String format = DateUtils.SECOND;
 
 	/**
 	 * 构造方法。
