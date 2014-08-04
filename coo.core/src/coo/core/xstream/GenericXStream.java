@@ -8,7 +8,6 @@ import com.thoughtworks.xstream.hibernate.converter.HibernatePersistentSortedSet
 import com.thoughtworks.xstream.hibernate.converter.HibernateProxyConverter;
 import com.thoughtworks.xstream.hibernate.mapper.HibernateMapper;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
-import coo.core.model.IEnum;
 
 /**
  * 对XStream的封装。支持Hibernate懒加载。
@@ -27,7 +26,6 @@ public class GenericXStream extends XStream {
 		registerConverter(new HibernatePersistentMapConverter(getMapper()));
 		registerConverter(new HibernatePersistentSortedMapConverter(getMapper()));
 		registerConverter(new HibernatePersistentSortedSetConverter(getMapper()));
-		registerConverter(new IEnumConverter(IEnum.class));
 		// 不输出class属性
 		aliasSystemAttribute(null, "class");
 	}
