@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import coo.base.constants.Encoding;
 import coo.base.exception.UncheckedException;
+import coo.base.util.CollectionUtils;
 
 /**
  * 邮件组件。
@@ -42,6 +43,11 @@ public class MailSender {
 	 */
 	public void send(Mail mail) {
 		try {
+			// 如果收件方邮件地址列表为空，直接返回。
+			if (CollectionUtils.isEmpty(mail.getTo())) {
+				log.warn("发送邮件时，收件人邮件地址列表为空。");
+				return;
+			}
 			MimeMessageHelper helper = new MimeMessageHelper(
 					javaMailSender.createMimeMessage(), true, Encoding.UTF_8);
 			helper.setSubject(mail.getSubject());
