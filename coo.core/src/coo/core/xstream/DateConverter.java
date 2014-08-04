@@ -3,7 +3,6 @@ package coo.core.xstream;
 import java.util.Date;
 
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
-
 import coo.base.util.DateUtils;
 
 /**
@@ -20,6 +19,12 @@ public class DateConverter extends AbstractSingleValueConverter {
 	 */
 	public DateConverter(String format) {
 		this.format = format;
+	}
+
+	/**
+	 * 默认构造方法。
+	 */
+	public DateConverter() {
 	}
 
 	@SuppressWarnings("rawtypes")
