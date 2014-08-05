@@ -6,9 +6,15 @@
 			$box.find("li>a").click(function(){
 				var $a = $(this);
 				$.post($a.attr("href"), {}, function(html){
-					$("#sidebar").find(".accordion").remove().end().append(html).initUI();
-					$box.find("li").removeClass("selected");
-					$a.parent().addClass("selected");
+					try {
+						// 如果是会话超时，调用DWZ的弹出提示框重新登录。
+						var json = $.parseJSON(html);
+						DWZ.ajaxDone(json);
+					} catch(err) {
+						$("#sidebar").find(".accordion").remove().end().append(html).initUI();
+						$box.find("li").removeClass("selected");
+						$a.parent().addClass("selected");
+					}
 				});
 				return false;
 			});
