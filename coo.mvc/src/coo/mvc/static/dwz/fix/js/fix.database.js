@@ -171,5 +171,60 @@ $.fn.extend({
 			});
 			return '<tr class="unitBox">'+html+'</tr>';
 		}
+	},
+	
+	selectedTodo: function(){
+		function _getIds($element, selectedIds){
+			var ids = "";
+			var $box = $element.getPageDiv();
+			$box.find("input:checked").filter("[name='"+selectedIds+"']").each(function(i){
+				var val = $(this).val();
+				ids += i==0 ? val : ","+val;
+			});
+			return ids;
+		}
+		return this.each(function(){
+			var $this = $(this);
+			var selectedIds = $this.attr("rel") || "ids";
+			var postType = $this.attr("postType") || "map";
+
+			$this.click(function(){
+				var targetType = $this.attr("targetType");
+				var ids = _getIds($this, selectedIds);
+				if (!ids) {
+					alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+					return false;
+				}
+				
+				var _callback = $this.attr("callback") || (targetType == "dialog" ? dialogAjaxDone : navTabAjaxDone);
+				if (! $.isFunction(_callback)) _callback = eval('(' + _callback + ')');
+				
+				function _doPost(){
+					$.ajax({
+						type:'POST', url:$this.attr('href'), dataType:'json', cache: false,
+						data: function(){
+							if (postType == 'map'){
+								return $.map(ids.split(','), function(val, i) {
+									return {name: selectedIds, value: val};
+								})
+							} else {
+								var _data = {};
+								_data[selectedIds] = ids;
+								return _data;
+							}
+						}(),
+						success: _callback,
+						error: DWZ.ajaxError
+					});
+				}
+				var title = $this.attr("title");
+				if (title) {
+					alertMsg.confirm(title, {okCall: _doPost});
+				} else {
+					_doPost();
+				}
+				return false;
+			});
+		});
 	}
 });
