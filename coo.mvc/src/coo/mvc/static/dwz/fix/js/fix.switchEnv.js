@@ -1,5 +1,20 @@
-/** 覆盖DWZ的switchEnv函数 */
+/** 覆盖DWZ的navMenum和switchEnv函数 */
 (function($){
+	$.fn.navMenu = function(){
+		return this.each(function(){
+			var $box = $(this);
+			$box.find("li>a").click(function(){
+				var $a = $(this);
+				$.post($a.attr("href"), {}, function(html){
+					$("#sidebar").find(".accordion").remove().end().append(html).initUI();
+					$box.find("li").removeClass("selected");
+					$a.parent().addClass("selected");
+				});
+				return false;
+			});
+		});
+	}
+	
     $.fn.switchEnv = function(){
         return this.each(function(){
             var $this = $(this);
