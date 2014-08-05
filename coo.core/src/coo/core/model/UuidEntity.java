@@ -41,9 +41,6 @@ public abstract class UuidEntity {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
 		UuidEntity other = (UuidEntity) obj;
 		return new EqualsBuilder().append(id, other.getId()).isEquals();
 	}
