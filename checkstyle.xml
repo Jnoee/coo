@@ -57,8 +57,6 @@
 		<!-- 编码方面的检查 -->
 		<!-- 不许出现空语句 -->
 		<module name="EmptyStatement" />
-		<!-- 每个类都实现了equals()和hashCode() -->
-		<module name="EqualsHashCode" />
 		<!-- 不许内部赋值 -->
 		<module name="InnerAssignment" />
 		<!-- 循环控制变量不能被修改 -->

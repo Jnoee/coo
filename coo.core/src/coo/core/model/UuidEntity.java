@@ -4,6 +4,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.DocumentId;
 
@@ -28,10 +30,7 @@ public abstract class UuidEntity {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return new HashCodeBuilder().append(id).hashCode();
 	}
 
 	@Override
@@ -42,14 +41,10 @@ public abstract class UuidEntity {
 		if (obj == null) {
 			return false;
 		}
-		UuidEntity other = (UuidEntity) obj;
-		if (id == null) {
-			if (other.getId() != null) {
-				return false;
-			}
-		} else if (!id.equals(other.getId())) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		return true;
+		UuidEntity other = (UuidEntity) obj;
+		return new EqualsBuilder().append(id, other.getId()).isEquals();
 	}
 }
