@@ -30,7 +30,7 @@ public abstract class UuidEntity {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(id).hashCode();
+		return new HashCodeBuilder().append(getId()).hashCode();
 	}
 
 	@Override
@@ -41,10 +41,7 @@ public abstract class UuidEntity {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
 		UuidEntity other = (UuidEntity) obj;
-		return new EqualsBuilder().append(id, other.getId()).isEquals();
+		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
 	}
 }
