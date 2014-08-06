@@ -16,7 +16,7 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
 		<servlet.version>2.5</servlet.version>
-		<coo.version>2.0.1-SNAPSHOT</coo.version>
+		<coo.version>2.0.2-SNAPSHOT</coo.version>
 	</properties>
 	<dependencies>
 		<dependency>
