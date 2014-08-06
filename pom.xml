@@ -12,7 +12,7 @@
 		<plugin.resources.version>2.6</plugin.resources.version>
 		<plugin.source.version>2.2.1</plugin.source.version>
 		<plugin.javadoc.version>2.9.1</plugin.javadoc.version>
-		<plugin.release.version>2.5</plugin.release.version>
+		<plugin.release.version>2.3</plugin.release.version>
 		<jgit.version>1.9.1</jgit.version>
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
