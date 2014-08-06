@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 	<properties>
 		<!-- 编译参数 -->
-		<jdk.version>1.6</jdk.version>
+		<jdk.version>1.7</jdk.version>
 		<encoding>UTF-8</encoding>
 		<plugin.compiler.version>3.1</plugin.compiler.version>
 		<plugin.resources.version>2.6</plugin.resources.version>
@@ -16,7 +16,7 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
 		<servlet.version>2.5</servlet.version>
-		<coo.version>2.0.2</coo.version>
+		<coo.version>2.0.3-SNAPSHOT</coo.version>
 	</properties>
 	<dependencies>
 		<dependency>
