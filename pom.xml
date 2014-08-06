@@ -13,7 +13,7 @@
 		<plugin.source.version>2.2.1</plugin.source.version>
 		<plugin.javadoc.version>2.9.1</plugin.javadoc.version>
 		<plugin.release.version>2.5</plugin.release.version>
-		<jgit.version>1.9</jgit.version>
+		<jgit.version>1.9.1</jgit.version>
 		<!-- 公共包 -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
