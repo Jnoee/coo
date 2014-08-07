@@ -32,7 +32,7 @@ public class NumberUtils {
 	}
 
 	/**
-	 * 四舍五入保留两位小数。
+	 * 四舍五入（保留两位小数）。
 	 * 
 	 * @param value
 	 *            值
@@ -57,7 +57,7 @@ public class NumberUtils {
 	}
 
 	/**
-	 * 加。
+	 * 加（保留两位小数）。
 	 * 
 	 * @param value1
 	 *            值1
@@ -66,9 +66,7 @@ public class NumberUtils {
 	 * @return 返回相加后的值。
 	 */
 	public static Double add(Double value1, Double value2) {
-		BigDecimal bValue1 = new BigDecimal(value1.toString());
-		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.add(bValue2).doubleValue();
+		return add(value1, value2, 2);
 	}
 
 	/**
@@ -78,16 +76,48 @@ public class NumberUtils {
 	 *            值1
 	 * @param value2
 	 *            值2
+	 * @param scale
+	 *            保留小数位数
 	 * @return 返回相加后的值。
 	 */
-	public static Float add(Float value1, Float value2) {
+	public static Double add(Double value1, Double value2, Integer scale) {
 		BigDecimal bValue1 = new BigDecimal(value1.toString());
 		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.add(bValue2).floatValue();
+		return halfUp(bValue1.add(bValue2).doubleValue(), scale);
 	}
 
 	/**
-	 * 减。
+	 * 加（保留两位小数）。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
+	 * @return 返回相加后的值。
+	 */
+	public static Float add(Float value1, Float value2) {
+		return add(value1, value2, 2);
+	}
+
+	/**
+	 * 加。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
+	 * @param scale
+	 *            保留小数位数
+	 * @return 返回相加后的值。
+	 */
+	public static Float add(Float value1, Float value2, Integer scale) {
+		BigDecimal bValue1 = new BigDecimal(value1.toString());
+		BigDecimal bValue2 = new BigDecimal(value2.toString());
+		return halfUp(bValue1.add(bValue2).floatValue(), scale);
+	}
+
+	/**
+	 * 减（保留两位小数）。
 	 * 
 	 * @param value1
 	 *            值1
@@ -96,9 +126,7 @@ public class NumberUtils {
 	 * @return 返回相减后的值。
 	 */
 	public static Double sub(Double value1, Double value2) {
-		BigDecimal bValue1 = new BigDecimal(value1.toString());
-		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.subtract(bValue2).doubleValue();
+		return sub(value1, value2, 2);
 	}
 
 	/**
@@ -108,16 +136,48 @@ public class NumberUtils {
 	 *            值1
 	 * @param value2
 	 *            值2
+	 * @param scale
+	 *            保留小数位数
 	 * @return 返回相减后的值。
 	 */
-	public static Float sub(Float value1, Float value2) {
+	public static Double sub(Double value1, Double value2, Integer scale) {
 		BigDecimal bValue1 = new BigDecimal(value1.toString());
 		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.subtract(bValue2).floatValue();
+		return halfUp(bValue1.subtract(bValue2).doubleValue(), scale);
 	}
 
 	/**
-	 * 乘。
+	 * 减（保留两位小数）。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
+	 * @return 返回相减后的值。
+	 */
+	public static Float sub(Float value1, Float value2) {
+		return sub(value1, value2, 2);
+	}
+
+	/**
+	 * 减。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
+	 * @param scale
+	 *            保留小数位数
+	 * @return 返回相减后的值。
+	 */
+	public static Float sub(Float value1, Float value2, Integer scale) {
+		BigDecimal bValue1 = new BigDecimal(value1.toString());
+		BigDecimal bValue2 = new BigDecimal(value2.toString());
+		return halfUp(bValue1.subtract(bValue2).floatValue(), scale);
+	}
+
+	/**
+	 * 乘（保留两位小数）。
 	 * 
 	 * @param value1
 	 *            值1
@@ -126,9 +186,7 @@ public class NumberUtils {
 	 * @return 返回相乘后的值。
 	 */
 	public static Double mul(Double value1, Double value2) {
-		BigDecimal bValue1 = new BigDecimal(value1.toString());
-		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.multiply(bValue2).doubleValue();
+		return mul(value1, value2, 2);
 	}
 
 	/**
@@ -138,16 +196,48 @@ public class NumberUtils {
 	 *            值1
 	 * @param value2
 	 *            值2
+	 * @param scale
+	 *            保留小数位数
 	 * @return 返回相乘后的值。
 	 */
-	public static Float mul(Float value1, Float value2) {
+	public static Double mul(Double value1, Double value2, Integer scale) {
 		BigDecimal bValue1 = new BigDecimal(value1.toString());
 		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.multiply(bValue2).floatValue();
+		return halfUp(bValue1.multiply(bValue2).doubleValue(), scale);
 	}
 
 	/**
-	 * 除。
+	 * 乘（保留两位小数）。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
+	 * @return 返回相乘后的值。
+	 */
+	public static Float mul(Float value1, Float value2) {
+		return mul(value1, value2, 2);
+	}
+
+	/**
+	 * 乘。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
+	 * @param scale
+	 *            保留小数位数
+	 * @return 返回相乘后的值。
+	 */
+	public static Float mul(Float value1, Float value2, Integer scale) {
+		BigDecimal bValue1 = new BigDecimal(value1.toString());
+		BigDecimal bValue2 = new BigDecimal(value2.toString());
+		return halfUp(bValue1.multiply(bValue2).floatValue(), scale);
+	}
+
+	/**
+	 * 除（保留两位小数）。
 	 * 
 	 * @param value1
 	 *            值1
@@ -156,9 +246,7 @@ public class NumberUtils {
 	 * @return 返回相除后的值。
 	 */
 	public static Double div(Double value1, Double value2) {
-		BigDecimal bValue1 = new BigDecimal(value1.toString());
-		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.divide(bValue2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return div(value1, value2, 2);
 	}
 
 	/**
@@ -168,11 +256,45 @@ public class NumberUtils {
 	 *            值1
 	 * @param value2
 	 *            值2
+	 * @param scale
+	 *            保留小数位数
+	 * @return 返回相除后的值。
+	 */
+	public static Double div(Double value1, Double value2, Integer scale) {
+		BigDecimal bValue1 = new BigDecimal(value1.toString());
+		BigDecimal bValue2 = new BigDecimal(value2.toString());
+		return bValue1.divide(bValue2, scale, BigDecimal.ROUND_HALF_UP)
+				.doubleValue();
+	}
+
+	/**
+	 * 除（保留两位小数）。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
 	 * @return 返回相除后的值。
 	 */
 	public static Float div(Float value1, Float value2) {
+		return div(value1, value2, 2);
+	}
+
+	/**
+	 * 除。
+	 * 
+	 * @param value1
+	 *            值1
+	 * @param value2
+	 *            值2
+	 * @param scale
+	 *            保留小数位数
+	 * @return 返回相除后的值。
+	 */
+	public static Float div(Float value1, Float value2, Integer scale) {
 		BigDecimal bValue1 = new BigDecimal(value1.toString());
 		BigDecimal bValue2 = new BigDecimal(value2.toString());
-		return bValue1.divide(bValue2, BigDecimal.ROUND_HALF_UP).floatValue();
+		return bValue1.divide(bValue2, scale, BigDecimal.ROUND_HALF_UP)
+				.floatValue();
 	}
 }

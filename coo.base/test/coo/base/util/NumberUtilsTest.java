@@ -35,16 +35,15 @@ public class NumberUtilsTest {
 		log.debug("{}", NumberUtils.halfUp(f2, 3));
 		log.debug("{}", NumberUtils.halfUp(f3, 3));
 
+		d1 = 9.99D;
+		d2 = 3.34D;
 		log.debug("{}", NumberUtils.add(d1, d2));
-		log.debug("{}", NumberUtils.halfUp(NumberUtils.add(d1, d2)));
-
+		log.debug("{}", NumberUtils.add(d1, d2, 3));
 		log.debug("{}", NumberUtils.sub(d1, d2));
-		log.debug("{}", NumberUtils.halfUp(NumberUtils.sub(d1, d2)));
-
+		log.debug("{}", NumberUtils.sub(d1, d2, 3));
 		log.debug("{}", NumberUtils.mul(d1, d2));
-		log.debug("{}", NumberUtils.halfUp(NumberUtils.mul(d1, d2)));
-
+		log.debug("{}", NumberUtils.mul(d1, d2, 3));
 		log.debug("{}", NumberUtils.div(d1, d2));
-		log.debug("{}", NumberUtils.halfUp(NumberUtils.div(d1, d2)));
+		log.debug("{}", NumberUtils.div(d1, d2, 3));
 	}
 }
