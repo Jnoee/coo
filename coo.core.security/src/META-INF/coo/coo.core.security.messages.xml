@@ -4,8 +4,8 @@
 	<entry key="login.success">登录系统成功。</entry>
 
 	<entry key="user.disabled">用户被禁用。</entry>
-	<entry key="user.not.exist">用户不存在。</entry>
-	<entry key="password.wrong">密码错误。</entry>
+	<entry key="user.not.exist">用户名或密码错误。</entry>
+	<entry key="password.wrong">用户名或密码错误。</entry>
 	<entry key="login.failed">登录失败。</entry>
 
 	<entry key="organ.add.no.parent">新增机构时必须指定上级机构。</entry>
