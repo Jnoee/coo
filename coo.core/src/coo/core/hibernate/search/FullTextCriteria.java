@@ -29,6 +29,8 @@ import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.query.DatabaseRetrievalMethod;
+import org.hibernate.search.query.ObjectLookupMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +55,8 @@ public class FullTextCriteria {
 	private List<AttachLuceneQuery> luceneQueries = new ArrayList<AttachLuceneQuery>();
 	private Filter filter;
 	private Criteria criteriaQuery;
+	/** 是否优先从二级缓存中获取数据 */
+	private Boolean lookupCache = false;
 
 	/**
 	 * 构造方法。
@@ -258,6 +262,11 @@ public class FullTextCriteria {
 		if (criteriaQuery != null) {
 			fullTextQuery.setCriteriaQuery(criteriaQuery);
 		}
+		if (lookupCache) {
+			fullTextQuery.initializeObjectsWith(
+					ObjectLookupMethod.SECOND_LEVEL_CACHE,
+					DatabaseRetrievalMethod.QUERY);
+		}
 		return fullTextQuery;
 	}
 
@@ -397,6 +406,14 @@ public class FullTextCriteria {
 					indexedFields.get(fieldName));
 		}
 		return embeddedIndexedFields;
+	}
+
+	public Boolean getLookupCache() {
+		return lookupCache;
+	}
+
+	public void setLookupCache(Boolean lookupCache) {
+		this.lookupCache = lookupCache;
 	}
 
 	/**
