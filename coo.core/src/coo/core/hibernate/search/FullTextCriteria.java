@@ -56,7 +56,7 @@ public class FullTextCriteria {
 	private Filter filter;
 	private Criteria criteriaQuery;
 	/** 是否优先从二级缓存中获取数据 */
-	private Boolean lookupCache = false;
+	private Boolean lookupCache = true;
 
 	/**
 	 * 构造方法。
