@@ -141,17 +141,33 @@ function initUI(_box){
 	});
 
 	if ($.fn.datepicker){
-		$('input.date', $p).each(function(){
-			var $this = $(this);
-			var opts = {};
-			if ($this.attr("dateFmt")) opts.pattern = $this.attr("dateFmt");
-			if ($this.attr("minDate")) opts.minDate = $this.attr("minDate");
-			if ($this.attr("maxDate")) opts.maxDate = $this.attr("maxDate");
-			if ($this.attr("mmStep")) opts.mmStep = $this.attr("mmStep");
-			if ($this.attr("ssStep")) opts.ssStep = $this.attr("ssStep");
-			$this.datepicker(opts);
-		});
-	}
+        $('input.date', $p).each(initDatePicker);
+        $('input.date', $p).live("focus", initDatePicker);
+    }
+
+    function initDatePicker() {
+        var $this = $(this);
+        var opts = {};
+        if ($this.attr("dateFmt")) opts.pattern = $this.attr("dateFmt");
+        if ($this.attr("min")) {
+            if ($this.attr("min").startsWith("#")) {
+                opts.minDate = $($this.attr("min"), $this.closest("form")).val();
+            } else {
+                opts.minDate = $this.attr("min");
+            }
+        }
+
+        if ($this.attr("max")) {
+            if ($this.attr("max").startsWith("#")) {
+                opts.maxDate = $($this.attr("max"), $this.closest("form")).val();
+            } else {
+                opts.maxDate = $this.attr("max");
+            }
+        }
+        if ($this.attr("mmStep")) opts.mmStep = $this.attr("mmStep");
+        if ($this.attr("ssStep")) opts.ssStep = $this.attr("ssStep");
+        $this.datepicker(opts);
+    }
 
 	// navTab
 	$("a[target=navTab]", $p).each(function(){

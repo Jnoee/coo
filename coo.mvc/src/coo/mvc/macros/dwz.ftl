@@ -3,35 +3,36 @@
  -->
 <#macro head>
     <@std.head />
-    <link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
-    <link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" />
-    <!--[if IE]>
-    <link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
-    <![endif]-->
-    <!--[if lte IE 9]>
-    <script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
-    <![endif]-->
-    <script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="${ctx}/dwz/js/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
-    <script src="${ctx}/dwz/xheditor/xheditor-1.1.14-zh-cn.min.js" type="text/javascript"></script>
-    <script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
-    <script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
-    <script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-    <link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css" />
-    <script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.validator.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.ui.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.theme.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.switchEnv.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.navTab.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.ajax.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.database.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.panel.js" type="text/javascript"></script>
-    <script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
+<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
+<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
+<!--[if IE]>
+<link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css"/>
+<![endif]-->
+<!--[if lte IE 9]>
+<script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
+<![endif]-->
+<script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/xheditor/xheditor-1.1.14-zh-cn.min.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
+<script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+<link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.validator.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.ui.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.theme.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.switchEnv.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.navTab.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.ajax.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.database.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.panel.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
+<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
@@ -39,59 +40,60 @@
  * 左边菜单。
  -->
 <#macro leftside>
-    <div id="leftside">
-        <div id="sidebar_s">
-            <div class="collapse">
-                <div class="toggleCollapse">
-                    <div></div>
-                </div>
-            </div>
-        </div>
-        <div id="sidebar">
+<div id="leftside">
+    <div id="sidebar_s">
+        <div class="collapse">
             <div class="toggleCollapse">
-                <h2>主菜单</h2>
-                <div>收缩 </div>
-            </div>
-            <div class="accordion" fillSpace="sideBar">
-                <div class="accordionHeader">
-                    <h2><span class="a05">Folder</span>子菜单</h2>
-                </div>
-                <div class="accordionContent"></div>
+                <div></div>
             </div>
         </div>
     </div>
+    <div id="sidebar">
+        <div class="toggleCollapse">
+            <h2>主菜单</h2>
+
+            <div>收缩</div>
+        </div>
+        <div class="accordion" fillSpace="sideBar">
+            <div class="accordionHeader">
+                <h2><span class="a05">Folder</span>子菜单</h2>
+            </div>
+            <div class="accordionContent"></div>
+        </div>
+    </div>
+</div>
 </#macro>
 
 <#--
  * 主页navTab容器。
  -->
 <#macro container>
-    <div id="container">
-        <div id="navTab" class="tabsPage">
-            <div class="tabsPageHeader">
-                <div class="tabsPageHeaderContent">
-                    <ul class="navTab-tab">
-                        <li tabid="main" class="main">
-                            <a href="javascript:;"><span><span class="home_icon">我的主页</span></span></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tabsLeft">left</div>
-                <div class="tabsRight">right</div>
-                <div class="tabsMore">more</div>
+<div id="container">
+    <div id="navTab" class="tabsPage">
+        <div class="tabsPageHeader">
+            <div class="tabsPageHeaderContent">
+                <ul class="navTab-tab">
+                    <li tabid="main" class="main">
+                        <a href="javascript:;"><span><span class="home_icon">我的主页</span></span></a>
+                    </li>
+                </ul>
             </div>
-            <ul class="tabsMoreList">
-                <li>
-                    <a href="javascript:;">我的主页</a>
-                </li>
-            </ul>
-            <div class="navTab-panel tabsPageContent layoutBox">
-                <div class="page unitBox">
-                    <div style="width:300px;"></div>
-                </div>
+            <div class="tabsLeft">left</div>
+            <div class="tabsRight">right</div>
+            <div class="tabsMore">more</div>
+        </div>
+        <ul class="tabsMoreList">
+            <li>
+                <a href="javascript:;">我的主页</a>
+            </li>
+        </ul>
+        <div class="navTab-panel tabsPageContent layoutBox">
+            <div class="page unitBox">
+                <div style="width:300px;"></div>
             </div>
         </div>
     </div>
+</div>
 </#macro>
 
 <#--
@@ -105,7 +107,7 @@
  * attributes：表单的其它属性
  -->
 <#macro form action onsubmit method="post" targetType="dialog" class="pageForm required-validate" attributes...>
-	<#if !onsubmit??>
+    <#if !onsubmit??>
         <#if targetType == "navTab">
             <#local onsubmit="return validateCallback(this, navTabAjaxDone);" />
         </#if>
@@ -119,9 +121,10 @@
             <#local onsubmit="return validateCallback(this, dialogCloseDone);" />
         </#if>
     </#if>
-    <form action="<@s.url "${action}" />" method="${method}" class="${class}" onsubmit="${onsubmit}" ${s.getAttributes(attributes)}>
-        <#nested>
-    </form>
+<form action="<@s.url "${action}" />" method="${method}" class="${class}"
+      onsubmit="${onsubmit}" ${s.getAttributes(attributes)}>
+    <#nested>
+</form>
 </#macro>
 
 <#--
@@ -133,17 +136,17 @@
  * cancelBtnText：取消按钮上的文字
  -->
 <#macro formBar showSubmitBtn=true submitBtnText="保存" showCancelBtn=true cancelBtnText="取消">
-	<div class="formBar">
-		<ul>
-			<#nested>
+<div class="formBar">
+    <ul>
+        <#nested>
 			<#if showSubmitBtn>
-				<@submitBtn text="${submitBtnText}" />
-			</#if>
+        <@submitBtn text="${submitBtnText}" />
+    </#if>
 			<#if showCancelBtn>
-				<@cancelBtn text="${cancelBtnText}" />
-			</#if>
-		</ul>
-	</div>
+        <@cancelBtn text="${cancelBtnText}" />
+    </#if>
+    </ul>
+</div>
 </#macro>
 
 <#--
@@ -152,7 +155,13 @@
  * text：按钮文本
  -->
 <#macro submitBtn text="保存">
-	<li><div class="buttonActive"><div class="buttonContent"><button type="submit">${text}</button></div></div></li>
+<li>
+    <div class="buttonActive">
+        <div class="buttonContent">
+            <button type="submit">${text}</button>
+        </div>
+    </div>
+</li>
 </#macro>
 
 <#--
@@ -161,7 +170,13 @@
  * text：按钮文本
  -->
 <#macro cancelBtn text="取消">
-	<li><div class="button"><div class="buttonContent"><button type="button" class="close">${text}</button></div></div></li>
+<li>
+    <div class="button">
+        <div class="buttonContent">
+            <button type="button" class="close">${text}</button>
+        </div>
+    </div>
+</li>
 </#macro>
 
 <#--
@@ -176,69 +191,69 @@
  * attributes：链接的其它属性
  -->
 <#macro a href rel width="M" height="M" target="navTab" mask=true minable=false maxable=false resizable=false drawable=true attributes...>
-	<#if !rel?? && (target == "navTab" || target == "dialog")>
-		<#local relStartIndex = href?last_index_of("/") />
-		<#local relEndIndex = href?last_index_of("?") />
-		<#if relStartIndex == -1>
-			<#local relStartIndex = 0 />
-		</#if>
-		<#if relEndIndex == -1>
-			<#local rel = href?substring(relStartIndex + 1)  />
-		<#else>
-			<#local rel = href?substring(relStartIndex + 1, relEndIndex)  />
-		</#if>
-	</#if>
-	<@compress single_line=true>
-	<a href="<@s.url href />" target="${target}"
-	<#if target == "dialog">
-    	rel="${rel}"
-    	mask="${mask?c}"
-    	minable="${minable?c}"
-    	maxable="${maxable?c}"
-    	resizable="${resizable?c}"
-    	drawable="${drawable?c}"
-    	<#if width == "SSS">
-   			<#local width="300" />
-   		</#if>
-    	<#if width == "SS">
-   			<#local width="400" />
-   		</#if>
-   		<#if width == "S">
-   			<#local width="500" />
-   		</#if>
-   		<#if width == "M">
-   			<#local width="700" />
-   		</#if>
-   		<#if width == "L">
-   			<#local width="900" />
-   		</#if>
-   		<#if width == "XL">
-   			<#local width="1100" />
-   		</#if>
-   		width="${width}"
-   		<#if height == "SSS">
-   			<#local height="250" />
-   		</#if>
-   		<#if height == "SS">
-   			<#local height="300" />
-   		</#if>
-   		<#if height == "S">
-   			<#local height="400" />
-   		</#if>
-   		<#if height == "M">
-   			<#local height="500" />
-   		</#if>
-   		<#if height == "L">
-   			<#local height="600" />
-   		</#if>
-   		<#if height == "XL">
-   			<#local height="700" />
-   		</#if>
-   		height="${height}"
-    <#else>
-    	<#if rel> rel="${rel}"</#if>
+    <#if !rel?? && (target == "navTab" || target == "dialog")>
+        <#local relStartIndex = href?last_index_of("/") />
+        <#local relEndIndex = href?last_index_of("?") />
+        <#if relStartIndex == -1>
+            <#local relStartIndex = 0 />
+        </#if>
+        <#if relEndIndex == -1>
+            <#local rel = href?substring(relStartIndex + 1)  />
+        <#else>
+            <#local rel = href?substring(relStartIndex + 1, relEndIndex)  />
+        </#if>
     </#if>
-     ${s.getAttributes(attributes)}><#nested></a>
+    <@compress single_line=true>
+    <a href="<@s.url href />" target="${target}"
+        <#if target == "dialog">
+       rel="${rel}"
+       mask="${mask?c}"
+       minable="${minable?c}"
+       maxable="${maxable?c}"
+       resizable="${resizable?c}"
+       drawable="${drawable?c}"
+            <#if width == "SSS">
+                <#local width="300" />
+            </#if>
+            <#if width == "SS">
+                <#local width="400" />
+            </#if>
+            <#if width == "S">
+                <#local width="500" />
+            </#if>
+            <#if width == "M">
+                <#local width="700" />
+            </#if>
+            <#if width == "L">
+                <#local width="900" />
+            </#if>
+            <#if width == "XL">
+                <#local width="1100" />
+            </#if>
+       width="${width}"
+            <#if height == "SSS">
+                <#local height="250" />
+            </#if>
+            <#if height == "SS">
+                <#local height="300" />
+            </#if>
+            <#if height == "S">
+                <#local height="400" />
+            </#if>
+            <#if height == "M">
+                <#local height="500" />
+            </#if>
+            <#if height == "L">
+                <#local height="600" />
+            </#if>
+            <#if height == "XL">
+                <#local height="700" />
+            </#if>
+       height="${height}"
+        <#else>
+            <#if rel> rel="${rel}"</#if>
+        </#if>
+    ${s.getAttributes(attributes)}><#nested></a>
     </@compress>
 </#macro>
 
@@ -253,15 +268,15 @@
  * showCheckAllBtn: 是否显示全选按钮
  -->
 <#macro checkboxs path items itemValue itemLabel required=true showCheckAllBtn=true>
-	<@s.bind path />
-	<#if items?size gt 0 && showCheckAllBtn>
-    	<label class="dd-span"><input type="checkbox" class="checkboxCtrl" group="${s.name}"/>全选</label><br/>
+    <@s.bind path />
+    <#if items?size gt 0 && showCheckAllBtn>
+    <label class="dd-span"><input type="checkbox" class="checkboxCtrl" group="${s.name}"/>全选</label><br/>
     </#if>
     <#if required>
-		<@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path class="required" />
-	<#else>
-		<@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path />
-	</#if>
+        <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path class="required" />
+    <#else>
+        <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path />
+    </#if>
 </#macro>
 
 <#--
@@ -290,27 +305,27 @@
         </#if>
     </#if>
     <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
-        <input type="hidden" name="pageNo" value="${searchModel.pageNo}" />
-        <input type="hidden" name="pageSize" value="${searchModel.pageSize}" />
-        <input type="hidden" name="orderBy" value="${searchModel.orderBy}" />
-        <input type="hidden" name="sort" value="${searchModel.sort}" />
-        <div class="searchBar">
-            <div class="subBar">
-                <ul>
-                    <#nested>
-                    <#if showKeyword>
-                    <li><input type="text" name="keyword" value="${searchModel.keyword}" title="${alt}" /></li>
-                    </#if>
-                    <li>
-                        <div class="buttonActive">
-                            <div class="buttonContent">
-                                <button type="submit">${buttonText}</button>
-                            </div>
+    <input type="hidden" name="pageNo" value="${searchModel.pageNo}"/>
+    <input type="hidden" name="pageSize" value="${searchModel.pageSize}"/>
+    <input type="hidden" name="orderBy" value="${searchModel.orderBy}"/>
+    <input type="hidden" name="sort" value="${searchModel.sort}"/>
+    <div class="searchBar">
+        <div class="subBar">
+            <ul>
+                <#nested>
+                <#if showKeyword>
+                    <li><input type="text" name="keyword" value="${searchModel.keyword}" title="${alt}"/></li>
+                </#if>
+                <li>
+                    <div class="buttonActive">
+                        <div class="buttonContent">
+                            <button type="submit">${buttonText}</button>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </div>
     </@s.form>
 </#macro>
 
@@ -330,15 +345,16 @@
             <#local onchange="dialogPageBreak({numPerPage:this.value}, '${rel}');" />
         </#if>
     </#if>
-    <div class="pages">
-        <span>显示</span>
-    	<#local options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
-        <select name="pageSize" class="combox" onchange="${onchange}">
-            <@s.options items=options values=pageModel.size />
-        </select>
-        <span>条，共${pageModel.count}条</span>
-    </div>
-    <div class="pagination" targetType="${targetType}" rel="${rel}" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
+<div class="pages">
+    <span>显示</span>
+    <#local options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
+    <select name="pageSize" class="combox" onchange="${onchange}">
+        <@s.options items=options values=pageModel.size />
+    </select>
+    <span>条，共${pageModel.count}条</span>
+</div>
+<div class="pagination" targetType="${targetType}" rel="${rel}" totalCount="${pageModel.count}"
+     numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
 </#macro>
 
 <#--
@@ -351,7 +367,7 @@
     <@s.form id="pagerForm" method="get" action=action>
         <#if params??>
             <#list params?keys as paramName>
-            	<input type="hidden" name="${paramName}" value="${params[paramName]}" />
+            <input type="hidden" name="${paramName}" value="${params[paramName]}"/>
             </#list>
         </#if>
     </@s.form>
