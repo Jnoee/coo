@@ -182,3 +182,10 @@ label.dd-span {
 	text-align: center;
 	padding: 10px;
 }
+
+#calendar .todayBut {
+    background-color: #CFEBEE;
+    border: 1px solid #38B1B9;
+    color: #08575B;
+    width: 40px;
+}
