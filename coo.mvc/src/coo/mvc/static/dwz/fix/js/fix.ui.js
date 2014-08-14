@@ -159,7 +159,10 @@ function initUI(_box){
                 opts.minDate = $this.attr("minDate");
             }
         }
-
+        opts.showToDay = true;
+        if (opts.minDate && opts.minDate > new Date().formatDate(opts.pattern)) {
+            opts.showToDay = false;
+        }
         if ($this.attr("maxDate")) {
             if ($this.attr("maxDate").startsWith("#")) {
                 var maxValue = $($this.attr("maxDate"), $this.closest("form")).val();
@@ -170,9 +173,14 @@ function initUI(_box){
                 opts.maxDate = $this.attr("maxDate");
             }
         }
+        if (opts.maxDate && opts.maxDate < new Date().formatDate(opts.pattern)) {
+            opts.showToDay = false;
+        }
         if ($this.attr("mmStep")) opts.mmStep = $this.attr("mmStep");
         if ($this.attr("ssStep")) opts.ssStep = $this.attr("ssStep");
         $this.datepicker(opts);
+
+
     }
 
 	// navTab

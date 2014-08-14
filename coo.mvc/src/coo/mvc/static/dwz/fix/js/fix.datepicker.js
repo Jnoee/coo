@@ -139,6 +139,9 @@
                     if (!dp.hasMinute())$minute.attr("disabled", true);
                     if (!dp.hasSecond())$second.attr("disabled", true);
                 }
+                if (!opts.showToDay) {
+                    $(setting.todayBut$).hide();
+                }
             }
 
             function closeCalendar() {
