@@ -149,25 +149,25 @@ function initUI(_box){
         var $this = $(this);
         var opts = {};
         if ($this.attr("dateFmt")) opts.pattern = $this.attr("dateFmt");
-        if ($this.attr("min")) {
-            if ($this.attr("min").startsWith("#")) {
-                var minValue = $($this.attr("min"), $this.closest("form")).val();
+        if ($this.attr("minDate")) {
+            if ($this.attr("minDate").startsWith("#")) {
+                var minValue = $($this.attr("minDate"), $this.closest("form")).val();
                 if (minValue) {
                     opts.minDate = minValue;
                 }
             } else {
-                opts.minDate = $this.attr("min");
+                opts.minDate = $this.attr("minDate");
             }
         }
 
-        if ($this.attr("max")) {
-            if ($this.attr("max").startsWith("#")) {
-                var maxValue = $($this.attr("max"), $this.closest("form")).val();
+        if ($this.attr("maxDate")) {
+            if ($this.attr("maxDate").startsWith("#")) {
+                var maxValue = $($this.attr("maxDate"), $this.closest("form")).val();
                 if (maxValue) {
                     opts.maxDate = maxValue;
                 }
             } else {
-                opts.maxDate = $this.attr("max");
+                opts.maxDate = $this.attr("maxDate");
             }
         }
         if ($this.attr("mmStep")) opts.mmStep = $this.attr("mmStep");
