@@ -1,5 +1,6 @@
 package coo.mvc.security.config;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 
 import coo.mvc.config.AbstractFreeMarkerSettings;
@@ -15,6 +16,7 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
 	public FreeMarkerSettings() {
 		addTemplatePath("classpath:/coo/mvc/security/macros/");
 		addTemplatePath("classpath:/coo/mvc/security/actions/");
+		addStaticClass(SecurityUtils.class);
 		addAutoInclude("security.ftl");
 		addAutoImport("sec", "sec.ftl");
 	}
