@@ -91,6 +91,8 @@ $.fn.extend({
 					if (name) $this.attr('name', name.replaceSuffix(i));
 					if ($this.attr('id')) $this.attr('id', $this.attr('id').replaceSuffix(i));
 					if ($this.attr('customvalid')) $this.attr('customvalid', $this.attr('customvalid').replaceSuffix(i));
+                    if ($this.attr('maxDate')) $this.attr('maxDate', $this.attr('maxDate').replaceSuffix(i));
+                    if ($this.attr('minDate')) $this.attr('minDate', $this.attr('minDate').replaceSuffix(i));
 					var lookupGroup = $this.attr('lookupGroup');
 					if (lookupGroup) {$this.attr('lookupGroup', lookupGroup.replaceSuffix(i));}
 					
