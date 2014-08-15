@@ -151,7 +151,10 @@ function initUI(_box){
         if ($this.attr("dateFmt")) opts.pattern = $this.attr("dateFmt");
         if ($this.attr("min")) {
             if ($this.attr("min").startsWith("#")) {
-                opts.minDate = $($this.attr("min"), $this.closest("form")).val();
+                var minValue = $($this.attr("min"), $this.closest("form")).val();
+                if (minValue) {
+                    opts.minDate = minValue;
+                }
             } else {
                 opts.minDate = $this.attr("min");
             }
@@ -159,7 +162,10 @@ function initUI(_box){
 
         if ($this.attr("max")) {
             if ($this.attr("max").startsWith("#")) {
-                opts.maxDate = $($this.attr("max"), $this.closest("form")).val();
+                var maxValue = $($this.attr("max"), $this.closest("form")).val();
+                if (maxValue) {
+                    opts.maxDate = maxValue;
+                }
             } else {
                 opts.maxDate = $this.attr("max");
             }

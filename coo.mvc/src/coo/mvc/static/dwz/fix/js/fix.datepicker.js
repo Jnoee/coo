@@ -151,14 +151,16 @@
                 var dp = new Datepicker($this.val(), opts);
                 if ($this.attr("min") && $this.attr("min").startsWith("#")) {
                     var _min = $($this.attr("min"), $this.closest("form")).val();
-                    if (_min && $this.val() && dp.parseDate(_min).getTime() > dp.parseDate($this.val()).getTime()) {
+                    if ((_min && $this.val() && dp.parseDate(_min).getTime() > dp.parseDate($this.val()).getTime()) || (_min && !$this.val())) {
                         dp = new Datepicker(_min, opts);
                     }
                 }
 
                 if ($this.attr("max") && $this.attr("max").startsWith("#")) {
                     var _max = $($this.attr("max"), $this.closest("form")).val();
-                    if (_max && $this.val() && dp.parseDate(_max).getTime() < dp.parseDate($this.val()).getTime()) {
+                    if ((_max && $this.val() && dp.parseDate(_max).getTime() < dp.parseDate($this.val()).getTime())) {
+                        dp = new Datepicker(_max, opts);
+                    } else if (_max && !$this.val() && dp.parseDate(_max).getTime() < new Date().getTime()) {
                         dp = new Datepicker(_max, opts);
                     }
                 }
