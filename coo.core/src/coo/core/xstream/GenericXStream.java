@@ -26,6 +26,8 @@ public class GenericXStream extends XStream {
 		registerConverter(new HibernatePersistentMapConverter(getMapper()));
 		registerConverter(new HibernatePersistentSortedMapConverter(getMapper()));
 		registerConverter(new HibernatePersistentSortedSetConverter(getMapper()));
+		// 设置取消references属性
+		setMode(XStream.NO_REFERENCES);
 		// 不输出class属性
 		aliasSystemAttribute(null, "class");
 	}
