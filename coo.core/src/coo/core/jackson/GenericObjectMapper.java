@@ -8,11 +8,13 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+
 import coo.base.util.DateUtils;
 
 /**
  * 对Jackson的ObjectMapper封装。设置json的输出格式、时间格式及Hibernate懒加载支持。
  */
+@SuppressWarnings("serial")
 public class GenericObjectMapper extends ObjectMapper {
 	/**
 	 * 构造方法。

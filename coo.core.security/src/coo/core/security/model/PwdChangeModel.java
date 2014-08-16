@@ -1,11 +1,9 @@
 package coo.core.security.model;
 
-import java.io.Serializable;
-
 /**
  * 修改密码表单Model。
  */
-public class PwdChangeModel implements Serializable {
+public class PwdChangeModel {
 	/** 旧密码 */
 	private String oldPwd;
 	/** 新密码 */

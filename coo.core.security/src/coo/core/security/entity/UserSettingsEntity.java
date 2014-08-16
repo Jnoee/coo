@@ -1,7 +1,5 @@
 package coo.core.security.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,8 +13,7 @@ import javax.persistence.OneToOne;
  *            职务类型
  */
 @MappedSuperclass
-public abstract class UserSettingsEntity<A extends ActorEntity<?, ?, ?>>
-		implements Serializable {
+public abstract class UserSettingsEntity<A extends ActorEntity<?, ?, ?>> {
 	@Id
 	private String id;
 	@OneToOne(fetch = FetchType.LAZY)

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * 验证次数计数器。
  */
+@SuppressWarnings("serial")
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class AuthCounter implements Serializable {

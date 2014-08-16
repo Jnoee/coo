@@ -1,13 +1,11 @@
 package coo.base.model;
 
-import java.io.Serializable;
-
 import coo.base.util.Assert;
 
 /**
  * 位编码对象。位编码对象以指定位上的0和1表示是否具有某种特性。
  */
-public class BitCode implements Serializable {
+public class BitCode {
 	public static final Integer DEFAULT_LENGTH = 300;
 	private String code;
 

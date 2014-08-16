@@ -3,6 +3,7 @@ package coo.base.exception;
 /**
  * 无需捕获处理的异常。
  */
+@SuppressWarnings("serial")
 public class UncheckedException extends RuntimeException {
 	/**
 	 * 构造方法。

@@ -13,6 +13,7 @@ import coo.base.util.StringUtils;
 /**
  * 参数对象，实现Map与分行的键值对之间的转换，便于存取参数型数据。
  */
+@SuppressWarnings("serial")
 public class Params extends LinkedHashMap<String, String> {
 	/**
 	 * 获取指定键名的整型值。

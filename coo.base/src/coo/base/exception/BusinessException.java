@@ -3,6 +3,7 @@ package coo.base.exception;
 /**
  * 业务异常。
  */
+@SuppressWarnings("serial")
 public class BusinessException extends RuntimeException {
 	/**
 	 * 构造方法。

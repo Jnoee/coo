@@ -42,6 +42,7 @@ create table Syst_BnLog  (
    id                   CHAR(36)                        not null,
    creator              VARCHAR(20)                     not null,
    createDate           DATETIME                        not null,
+   entityId				CHAR(36),
    message              VARCHAR(800)                    not null,
    origData             VARCHAR(2000),
    newData              VARCHAR(2000),

@@ -1,12 +1,10 @@
 package coo.core.model;
 
-import java.io.Serializable;
-
 /**
  * 用于分页/全文检索的查询条件模型。<br/>
  * 更多条件的查询条件模型可继承该类进行定义。
  */
-public class SearchModel implements Serializable {
+public class SearchModel {
 	/** 当前页码 */
 	protected Integer pageNo = 1;
 	/** 每页记录数 */
