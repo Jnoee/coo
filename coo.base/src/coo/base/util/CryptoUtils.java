@@ -19,6 +19,28 @@ import coo.base.exception.UncheckedException;
  */
 public class CryptoUtils {
 	/**
+	 * 生成随机字符串。
+	 * 
+	 * @param src
+	 *            源字符串（随机字符从源字符串中取）
+	 * @param length
+	 *            生成字符串长度
+	 * @return 返回生成的随机字符串。
+	 */
+	public static String genRandomCode(String src, Integer length) {
+		char[] chars = src.toCharArray();
+		StringBuffer challengeString = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			double randomValue = Math.random();
+			int randomIndex = (int) Math
+					.round(randomValue * (chars.length - 1));
+			char characterToShow = chars[randomIndex];
+			challengeString.append(characterToShow);
+		}
+		return challengeString.toString();
+	}
+
+	/**
 	 * Base64编码。
 	 * 
 	 * @param content
