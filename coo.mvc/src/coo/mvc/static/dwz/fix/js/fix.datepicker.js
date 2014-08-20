@@ -168,6 +168,19 @@
                     }
                 }
 
+                if (opts.minRelation) {
+                    if ($this.val()) {
+                        if (opts.minRelation > $this.val()) {
+                            dp = new Datepicker(opts.minRelation, opts);
+                        }
+                    } else {
+                        if (opts.minRelation > dp.formatDate(new Date())) {
+                            dp = new Datepicker(opts.minRelation, opts);
+                        }
+                    }
+
+                }
+
                 var offset = $this.offset();
                 var iTop = offset.top + this.offsetHeight;
                 $(DWZ.frag['calendarFrag']).appendTo("body").css({

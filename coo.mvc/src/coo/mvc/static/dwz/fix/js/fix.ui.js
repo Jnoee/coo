@@ -149,6 +149,7 @@ function initUI(_box){
         var $this = $(this);
         var opts = {};
         if ($this.attr("dateFmt")) opts.pattern = $this.attr("dateFmt");
+        if ($this.attr("minRelation"))opts.minRelation = $($this.attr("minRelation"), $this.closest("form")).val();
         if ($this.attr("minDate")) {
             if ($this.attr("minDate").startsWith("#")) {
                 var minValue = $($this.attr("minDate"), $this.closest("form")).val();

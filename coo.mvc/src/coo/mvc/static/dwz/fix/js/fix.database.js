@@ -93,6 +93,7 @@ $.fn.extend({
 					if ($this.attr('customvalid')) $this.attr('customvalid', $this.attr('customvalid').replaceSuffix(i));
                     if ($this.attr('maxDate')) $this.attr('maxDate', $this.attr('maxDate').replaceSuffix(i));
                     if ($this.attr('minDate')) $this.attr('minDate', $this.attr('minDate').replaceSuffix(i));
+                    if ($this.attr('minRelation')) $this.attr('minRelation', $this.attr('minRelation').replaceSuffix(i));
 					var lookupGroup = $this.attr('lookupGroup');
 					if (lookupGroup) {$this.attr('lookupGroup', lookupGroup.replaceSuffix(i));}
 					
