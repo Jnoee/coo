@@ -30,6 +30,11 @@ public class DateRangeSearchModel extends SearchModel {
 		if (startDate == null && endDate == null) {
 			return null;
 		}
+		if (startDate != null && endDate != null) {
+			if (startDate.after(endDate)) {
+				throw new BusinessException("查询起始日期不能大于截止日期。");
+			}
+		}
 		String startDateStr = null;
 		if (startDate != null) {
 			startDateStr = DateUtils.format(startDate, DateUtils.MILLISECOND_N);
@@ -43,17 +48,6 @@ public class DateRangeSearchModel extends SearchModel {
 		TermRangeQuery showTimeQuery = new TermRangeQuery(searchField,
 				startDateStr, endDateStr, true, false);
 		return showTimeQuery;
-	}
-
-	/**
-	 * 验证日期区间设置有效性。
-	 */
-	public void validate() {
-		if (startDate != null && endDate != null) {
-			if (startDate.after(endDate)) {
-				throw new BusinessException("查询起始日期不能大于截止日期。");
-			}
-		}
 	}
 
 	public Date getStartDate() {
