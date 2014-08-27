@@ -240,10 +240,10 @@
         <@bind path />
         <@replaceAttributes attributes />
         <#local isChecked = status.value?? && status.value?string=="true">
-        <input type="radio" id="${id}" name="${name}" value="1"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${trueText}
-        <input type="radio" id="${id}" name="${name}" value="0"<#if !isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${falseText}    
+        <label class='dd-span'><input type="radio" id="${id}" name="${name}" value="1"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${trueText}</label>
+        <label class='dd-span'><input type="radio" id="${id}" name="${name}" value="0"<#if !isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${falseText}</label>
     <#else>
-        <input type="radio" ${getAttributes(attributes)} />
+        <label class='dd-span'><input type="radio" ${getAttributes(attributes)} /></label>
     </#if>
 </#macro>
 
