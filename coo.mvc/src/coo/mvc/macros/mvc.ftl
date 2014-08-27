@@ -235,7 +235,7 @@
  * falseText：绑定的属性为false时显示的文本
  * attributes：单选按钮的其它属性
  -->
-<#macro radio path trueText="是" falseText="否" prefix suffix attributes...>
+<#macro radio path prefix suffix trueText="是" falseText="否" attributes...>
     <#if path??>
         <@bind path />
         <@replaceAttributes attributes />
