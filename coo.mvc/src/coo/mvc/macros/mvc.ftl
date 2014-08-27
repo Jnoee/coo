@@ -235,15 +235,15 @@
  * falseText：绑定的属性为false时显示的文本
  * attributes：单选按钮的其它属性
  -->
-<#macro radio path trueText="是" falseText="否" attributes...>
+<#macro radio path trueText="是" falseText="否" prefix suffix attributes...>
     <#if path??>
         <@bind path />
         <@replaceAttributes attributes />
         <#local isChecked = status.value?? && status.value?string=="true">
-        <label class='dd-span'><input type="radio" id="${id}" name="${name}" value="1"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${trueText}</label>
-        <label class='dd-span'><input type="radio" id="${id}" name="${name}" value="0"<#if !isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${falseText}</label>
+        ${prefix}<input type="radio" id="${id}" name="${name}" value="1"<#if isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${trueText}${suffix}
+        ${prefix}<input type="radio" id="${id}" name="${name}" value="0"<#if !isChecked> checked="checked"</#if> ${getAttributes(attributes)} />${falseText}${suffix}
     <#else>
-        <label class='dd-span'><input type="radio" ${getAttributes(attributes)} /></label>
+        ${prefix}<input type="radio" ${getAttributes(attributes)} />${suffix}
     </#if>
 </#macro>
 
