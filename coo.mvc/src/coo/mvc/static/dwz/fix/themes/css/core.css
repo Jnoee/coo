@@ -66,6 +66,12 @@ table.list td {
 	width: 540px;
 }
 
+.pageFormContent fieldset legend label {
+	float: none;
+	width: auto;
+	line-height: normal;
+}
+
 .checkboxCtrl {
 	width: auto;
 	height: auto;
