@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
@@ -28,17 +27,5 @@ public class GenericObjectMapper extends ObjectMapper {
 				true);
 		registerModule(hibernateModule);
 		registerModule(new JodaModule());
-	}
-
-	/**
-	 * 注册枚举转换模块
-	 * 
-	 * @return
-	 */
-	public GenericObjectMapper registerEnumModule() {
-		SimpleModule enumModule = new SimpleModule();
-		enumModule.addSerializer(new JsonIEnumSerializer());
-		this.registerModule(enumModule);
-		return this;
 	}
 }

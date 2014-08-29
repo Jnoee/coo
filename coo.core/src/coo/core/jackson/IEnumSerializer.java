@@ -8,10 +8,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import coo.core.model.IEnum;
 
 /**
- * json 格式下的 IEnum 类型的序列化类。
+ * IEnum枚举转换器。
  */
-public class JsonIEnumSerializer extends JsonSerializer<IEnum> {
-
+public class IEnumSerializer extends JsonSerializer<IEnum> {
 	@Override
 	public Class<IEnum> handledType() {
 		return IEnum.class;
