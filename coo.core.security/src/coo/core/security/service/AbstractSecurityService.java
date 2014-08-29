@@ -158,12 +158,12 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	/**
 	 * 删除机构。
 	 * 
-	 * @param id
-	 *            机构ID
+	 * @param organ
+	 *            机构
 	 */
 	@Transactional
-	public void deleteOrgan(String id) {
-		organDao.remove(id);
+	public void deleteOrgan(O organ) {
+		organDao.remove(organ);
 	}
 
 	/**
@@ -235,6 +235,16 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		} catch (Exception e) {
 			throw new UnauthenticatedException();
 		}
+	}
+
+	/**
+	 * 获取当前登录用户默认职务所属机构。
+	 * 
+	 * @return 返回当前登录用户默认职务所属机构。
+	 */
+	@Transactional(readOnly = true)
+	public O getCurrentOrgan() {
+		return getCurrentUser().getSettings().getDefaultActor().getOrgan();
 	}
 
 	/**
@@ -359,24 +369,22 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	/**
 	 * 启用用户。
 	 * 
-	 * @param userId
-	 *            用户ID
+	 * @param user
+	 *            用户
 	 */
 	@Transactional
-	public void enableUser(String userId) {
-		U user = getUser(userId);
+	public void enableUser(U user) {
 		user.setEnabled(true);
 	}
 
 	/**
 	 * 禁用用户。
 	 * 
-	 * @param userId
-	 *            用户ID
+	 * @param user
+	 *            用户
 	 */
 	@Transactional
-	public void disableUser(String userId) {
-		U user = getUser(userId);
+	public void disableUser(U user) {
 		user.setEnabled(false);
 	}
 
@@ -385,16 +393,15 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 * 
 	 * @param managePassword
 	 *            管理员密码
-	 * @param userId
-	 *            重置用户ID
+	 * @param user
+	 *            重置用户
 	 */
 	@Transactional
-	public void resetPassword(String managePassword, String userId) {
+	public void resetPassword(String managePassword, U user) {
 		if (!loginRealm.checkPassword(managePassword, getCurrentUser()
 				.getPassword())) {
 			messageSource.thrown("admin.password.wrong");
 		}
-		U user = getUser(userId);
 		user.setPassword(loginRealm
 				.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
 	}
@@ -454,14 +461,13 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	}
 
 	/**
-	 * 删除指定ID的职务。
+	 * 删除指定的职务。
 	 * 
-	 * @param actorId
-	 *            职务ID
+	 * @param actor
+	 *            职务
 	 */
 	@Transactional
-	public void deleteActor(String actorId) {
-		A actor = getActor(actorId);
+	public void deleteActor(A actor) {
 		if (actor.isDefaultActor()) {
 			messageSource.thrown("default.actor.not.allow.delete");
 		}
