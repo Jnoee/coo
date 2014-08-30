@@ -15,6 +15,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.base.model.BitCode;
+import coo.core.security.annotations.LogField;
 
 /**
  * 角色实体基类。
@@ -30,10 +31,12 @@ public abstract class RoleEntity<U extends UserEntity<U, A, ?>, A extends ActorE
 	/** 名称 */
 	@NotEmpty
 	@Field(analyze = Analyze.NO)
+	@LogField(text = "名称")
 	private String name;
 	/** 权限 */
 	@NotNull
 	@Type(type = "BitCode")
+	@LogField(text = "权限")
 	private BitCode permissions;
 	/** 关联职务 */
 	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

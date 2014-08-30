@@ -35,6 +35,9 @@ import coo.core.hibernate.search.FullTextCriteria;
 import coo.core.message.MessageSource;
 import coo.core.model.SearchModel;
 import coo.core.security.annotations.AutoFillIn;
+import coo.core.security.annotations.DetailLog;
+import coo.core.security.annotations.DetailLog.LogType;
+import coo.core.security.annotations.SimpleLog;
 import coo.core.security.constants.AdminIds;
 import coo.core.security.entity.ActorEntity;
 import coo.core.security.entity.BnLogEntity;
@@ -87,15 +90,17 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            用户名
 	 * @param password
 	 *            密码
+	 * @param ip
+	 *            IP地址
 	 */
-	public void signIn(String username, String password) {
+	@SimpleLog(code = "user.logon.log", vars = "ip")
+	public void signIn(String username, String password, String ip) {
 		try {
 			AuthenticationToken token = new UsernamePasswordToken(username,
 					password);
 			Subject subject = SecurityUtils.getSubject();
 			subject.login(token);
 			loginRealm.clearCache();
-			bnLogger.log(username, messageSource.get("login.success"));
 		} catch (DisabledAccountException de) {
 			messageSource.thrown(de, "user.disabled");
 		} catch (UnknownAccountException ue) {
@@ -135,6 +140,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@SimpleLog(code = "organ.add.log", vars = "organ.name")
 	public void createOrgan(O organ) {
 		if (organ.getParent() == null) {
 			messageSource.thrown("organ.add.no.parent");
@@ -150,6 +156,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@DetailLog(target = "organ", code = "organ.edit.log", vars = "organ.name", type = LogType.ALL)
 	public void updateOrgan(O organ) {
 		O origOrgan = getOrgan(organ.getId());
 		BeanUtils.copyFields(organ, origOrgan, "ordinal", null);
@@ -162,6 +169,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            机构
 	 */
 	@Transactional
+	@DetailLog(target = "organ", code = "organ.delete.log", vars = "organ.name", type = LogType.ORIG)
 	public void deleteOrgan(O organ) {
 		organDao.remove(organ);
 	}
@@ -199,6 +207,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@SimpleLog(code = "role.add.log", vars = "role.name")
 	public void createRole(R role) {
 		if (!roleDao.isUnique(role, "name")) {
 			messageSource.thrown("role.name.exist", role.getName());
@@ -214,6 +223,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@DetailLog(target = "role", code = "role.edit.log", vars = "role.name", type = LogType.ALL)
 	public void updateRole(R role) {
 		if (!roleDao.isUnique(role, "name")) {
 			messageSource.thrown("role.name.exist", role.getName());
@@ -302,6 +312,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@SimpleLog(code = "user.add.log", vars = "user.name")
 	public void createUser(U user) {
 		if (!userDao.isUnique(user, "username")) {
 			messageSource.thrown("username.exist", user.getUsername());
@@ -331,6 +342,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@DetailLog(target = "user", code = "user.edit.log", vars = "user.name", type = LogType.ALL)
 	public void updateUser(U user) {
 		if (!userDao.isUnique(user, "username")) {
 			messageSource.thrown("username.exist", user.getUsername());
@@ -356,14 +368,15 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	}
 
 	/**
-	 * 删除指定ID的用户。
+	 * 删除指定的用户。
 	 * 
-	 * @param id
-	 *            用户ID
+	 * @param user
+	 *            用户
 	 */
 	@Transactional
-	public void deleteUser(String id) {
-		userDao.remove(id);
+	@DetailLog(target = "user", code = "user.delete.log", vars = "user.name", type = LogType.ORIG)
+	public void deleteUser(U user) {
+		userDao.remove(user);
 	}
 
 	/**
@@ -373,6 +386,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            用户
 	 */
 	@Transactional
+	@SimpleLog(code = "user.enable.log", vars = "user.name")
 	public void enableUser(U user) {
 		user.setEnabled(true);
 	}
@@ -384,6 +398,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            用户
 	 */
 	@Transactional
+	@SimpleLog(code = "user.disable.log", vars = "user.name")
 	public void disableUser(U user) {
 		user.setEnabled(false);
 	}
@@ -397,6 +412,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            重置用户
 	 */
 	@Transactional
+	@SimpleLog(code = "user.reset.password.log", vars = "user.name")
 	public void resetPassword(String managePassword, U user) {
 		if (!loginRealm.checkPassword(managePassword, getCurrentUser()
 				.getPassword())) {
@@ -415,6 +431,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            新密码
 	 */
 	@Transactional
+	@SimpleLog(code = "user.change.password.log")
 	public void changePassword(String oldPwd, String newPwd) {
 		U user = getCurrentUser();
 		if (!loginRealm.checkPassword(oldPwd, user.getPassword())) {
@@ -443,6 +460,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@SimpleLog(code = "actor.add.log", vars = "actor.name")
 	public void createActor(A actor) {
 		actorDao.save(actor);
 	}
@@ -455,6 +473,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
+	@DetailLog(target = "actor", code = "actor.edit.log", vars = "actor.name", type = LogType.ALL)
 	public void updateActor(A actor) {
 		A origActor = getActor(actor.getId());
 		BeanUtils.copyFields(actor, origActor);
@@ -467,6 +486,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            职务
 	 */
 	@Transactional
+	@DetailLog(target = "actor", code = "actor.delete.log", vars = "actor.name", type = LogType.ORIG)
 	public void deleteActor(A actor) {
 		if (actor.isDefaultActor()) {
 			messageSource.thrown("default.actor.not.allow.delete");

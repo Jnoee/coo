@@ -36,16 +36,17 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
 	@IndexedEmbedded(depth = 1)
-	@LogBean(@LogField(text = "所属用户", property = "username"))
+	@LogBean(@LogField(text = "关联用户", property = "username"))
 	private U user;
 	/** 关联角色 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "roleId")
+	@LogBean(@LogField(text = "关联角色", property = "name"))
 	private R role;
-	/** 职务名称 */
+	/** 名称 */
 	@NotEmpty
 	@Field(analyze = Analyze.NO)
-	@LogField(text = "职务名称")
+	@LogField(text = "名称")
 	private String name;
 
 	public O getOrgan() {

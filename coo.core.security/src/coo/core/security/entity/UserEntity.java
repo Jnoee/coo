@@ -43,7 +43,6 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	private String username;
 	/** 密码 */
 	@NotEmpty
-	@LogField(text = "密码")
 	private String password;
 	/** 启用状态 */
 	@NotNull

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="login.success">登录系统成功。</entry>
-
 	<entry key="user.disabled">用户被禁用。</entry>
 	<entry key="user.not.exist">用户名或密码错误。</entry>
 	<entry key="password.wrong">用户名或密码错误。</entry>
@@ -15,4 +13,21 @@
 	<entry key="old.password.wrong">原密码错误。</entry>
 	<entry key="default.actor.not.allow.delete">该职务被设置为用户默认职务无法删除。</entry>
 	<entry key="actor.change.not.allow">试图切换为非法的职务。</entry>
+
+	<entry key="user.logon.log">登录系统[{0}]。</entry>
+	<entry key="organ.add.log">新增机构[{0}]。</entry>
+	<entry key="organ.edit.log">编辑机构[{0}]。</entry>
+	<entry key="organ.delete.log">删除机构[{0}]。</entry>
+	<entry key="role.add.log">新增角色[{0}]。</entry>
+	<entry key="role.edit.log">编辑角色[{0}]。</entry>
+	<entry key="user.add.log">新增用户[{0}]。</entry>
+	<entry key="user.edit.log">编辑用户[{0}]。</entry>
+	<entry key="user.delete.log">删除用户[{0}]。</entry>
+	<entry key="user.enable.log">启用用户[{0}]。</entry>
+	<entry key="user.disable.log">停用用户[{0}]。</entry>
+	<entry key="user.reset.password.log">重置用户[{0}]的密码。</entry>
+	<entry key="user.change.password.log">修改密码。</entry>
+	<entry key="actor.add.log">新增职务[{0}]。</entry>
+	<entry key="actor.edit.log">编辑职务[{0}]。</entry>
+	<entry key="actor.delete.log">删除职务[{0}]。</entry>
 </properties>

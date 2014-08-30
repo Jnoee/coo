@@ -4,6 +4,7 @@ import java.io.OutputStream;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,17 +42,20 @@ public abstract class AbstractLoginAction {
 	/**
 	 * 验证登录。
 	 * 
+	 * @param model
+	 *            数据模型
+	 * @param request
+	 *            请求对象
 	 * @param loginModel
 	 *            登录数据模型
 	 * @param errors
 	 *            错误信息
-	 * @param model
-	 *            数据模型
 	 * 
 	 * @return 登录成功返回系统首页，失败返回登录页面。
 	 */
 	@RequestMapping("login-auth")
-	public String auth(LoginModel loginModel, BindingResult errors, Model model) {
+	public String auth(Model model, HttpServletRequest request,
+			LoginModel loginModel, BindingResult errors) {
 		if (authCounter.isOver()) {
 			if (!captcha.validate(loginModel.getCode())) {
 				errors.reject("security.code.wrong");
@@ -61,7 +65,7 @@ public abstract class AbstractLoginAction {
 		}
 		try {
 			securityService.signIn(loginModel.getUsername(),
-					loginModel.getPassword());
+					loginModel.getPassword(), request.getRemoteAddr());
 			authCounter.clean();
 			return "redirect:/index";
 		} catch (BusinessException e) {
