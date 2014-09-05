@@ -115,7 +115,7 @@ public class Dao<T> {
 	 *            待保存业务实体
 	 */
 	public void save(T entity) {
-		getSession().saveOrUpdate(entity);
+		getSession().save(entity);
 	}
 
 	/**
