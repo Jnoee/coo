@@ -53,7 +53,7 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 用户设置 */
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@PrimaryKeyJoinColumn
 	private S settings;
 	/** 用户职务 */
