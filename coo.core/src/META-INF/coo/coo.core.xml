@@ -30,9 +30,9 @@
 		<!-- 最大空闲时间（秒） -->
 		<property name="maxIdleTime" value="${db.maxIdleTime:60}" />
 		<!-- 初始化时创建的连接数，取值应在minPoolSize与maxPoolSize之间 -->
-		<property name="initialPoolSize" value="${db.initialPoolSize:20}" />
+		<property name="initialPoolSize" value="${db.initialPoolSize:10}" />
 		<!-- 当连接池中的连接耗尽的时候一次同时获取的连接数 -->
-		<property name="acquireIncrement" value="${db.acquireIncrement:5}" />
+		<property name="acquireIncrement" value="${db.acquireIncrement:10}" />
 		<!-- 每隔多少秒检查所有连接池中的空闲连接（秒） -->
 		<property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod:60}" />
 		<!-- 从数据库获取新连接失败后重复尝试的次数 -->
