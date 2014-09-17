@@ -142,7 +142,7 @@ function initUI(_box){
 
 	if ($.fn.datepicker){
         $('input.date', $p).each(initDatePicker);
-        $('input.date', $p).live("focus", initDatePicker);
+        $('input.date', $p).bind("focus", initDatePicker);
     }
 
     function initDatePicker() {
@@ -180,8 +180,6 @@ function initUI(_box){
         if ($this.attr("mmStep")) opts.mmStep = $this.attr("mmStep");
         if ($this.attr("ssStep")) opts.ssStep = $this.attr("ssStep");
         $this.datepicker(opts);
-
-
     }
 
 	// navTab
