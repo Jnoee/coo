@@ -172,7 +172,7 @@ label.dd-span {
 .tree-l-box {
 	float: left;
 	display: block;
-	overflow: auto;
+	overflow: hidden;
 	width: 25%;
 	border-right: solid 1px #CCC;
 }
@@ -180,7 +180,7 @@ label.dd-span {
 .tree-r-box {
 	float: left;
 	display: block;
-	overflow: auto;
+	overflow: hidden;
 	width: 74.8%;
 }
 
