@@ -2,6 +2,7 @@ package coo.base.util;
 
 import java.util.Date;
 
+import org.joda.time.Interval;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -31,5 +32,18 @@ public class DateUtilsTest {
 		Date endDate = DateUtils.parse("2012-10-02 00:00:00");
 		Assert.assertEquals(1, DateUtils.getPeriod(beginDate, endDate)
 				.getDays());
+	}
+
+	@Test
+	public void tsetGetInterval() {
+		Date beginDate = DateUtils.parse("2012-10-01");
+		Date endDate = DateUtils.parse("2012-10-02");
+		Interval interval = DateUtils.getInterval(beginDate, endDate);
+		Date targetDate = DateUtils.parse("2012-10-01 00:00:00");
+		log.debug("{}", interval.contains(targetDate.getTime()));
+		targetDate = DateUtils.parse("2012-10-01 23:59:59");
+		log.debug("{}", interval.contains(targetDate.getTime()));
+		targetDate = DateUtils.parse("2012-10-02 00:00:00");
+		log.debug("{}", interval.contains(targetDate.getTime()));
 	}
 }
