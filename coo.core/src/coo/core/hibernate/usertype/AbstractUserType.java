@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.annotations.Type;
 import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.internal.util.compare.EqualsHelper;
 import org.hibernate.type.StringType;
 import org.hibernate.usertype.UserType;
 
@@ -103,10 +104,7 @@ public abstract class AbstractUserType implements UserType {
 
 	@Override
 	public boolean equals(Object x, Object y) {
-		if (x != null) {
-			return x.equals(y);
-		}
-		return false;
+		return EqualsHelper.equals(x, y);
 	}
 
 	@Override
