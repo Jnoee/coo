@@ -90,6 +90,8 @@
 		location="classpath:/coo/mvc/static/dwz/dwz/" />
 	<mvc:resources mapping="/fix/**"
 		location="classpath:/coo/mvc/static/dwz/fix/" />
+	<mvc:resources mapping="/dwz.frag.xml"
+		location="classpath:/coo/mvc/static/dwz/fix/dwz.frag.xml" />
 
 	<mvc:annotation-driven conversion-service="conversionService" />
 
