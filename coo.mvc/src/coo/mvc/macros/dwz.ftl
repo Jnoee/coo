@@ -3,36 +3,37 @@
  -->
 <#macro head>
     <@std.head />
-<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
-<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
-<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
-<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
-<!--[if IE]>
-<link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css"/>
-<![endif]-->
-<!--[if lte IE 9]>
-<script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
-<![endif]-->
-<script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/xheditor/xheditor-1.1.14-zh-cn.min.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
-<script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-<link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css"/>
-<link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css"/>
-<script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.validator.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.ui.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.theme.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.switchEnv.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.navTab.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.ajax.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.database.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.panel.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
-<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
+	<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
+	<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
+	<!--[if IE]>
+	<link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<!--[if lte IE 9]>
+	<script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
+	<![endif]-->
+	<script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/js/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+	<link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css"/>
+	<script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.validator.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.ui.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.theme.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.switchEnv.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.navTab.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.ajax.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.database.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.panel.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
@@ -40,60 +41,59 @@
  * 左边菜单。
  -->
 <#macro leftside>
-<div id="leftside">
-    <div id="sidebar_s">
-        <div class="collapse">
-            <div class="toggleCollapse">
-                <div></div>
-            </div>
-        </div>
-    </div>
-    <div id="sidebar">
-        <div class="toggleCollapse">
-            <h2>主菜单</h2>
-
-            <div>收缩</div>
-        </div>
-        <div class="accordion" fillSpace="sideBar">
-            <div class="accordionHeader">
-                <h2><span class="a05">Folder</span>子菜单</h2>
-            </div>
-            <div class="accordionContent"></div>
-        </div>
-    </div>
-</div>
+	<div id="leftside">
+	    <div id="sidebar_s">
+	        <div class="collapse">
+	            <div class="toggleCollapse">
+	                <div></div>
+	            </div>
+	        </div>
+	    </div>
+	    <div id="sidebar">
+	        <div class="toggleCollapse">
+	            <h2>主菜单</h2>
+	            <div>收缩</div>
+	        </div>
+	        <div class="accordion" fillSpace="sideBar">
+	            <div class="accordionHeader">
+	                <h2><span class="a05">Folder</span>子菜单</h2>
+	            </div>
+	            <div class="accordionContent"></div>
+	        </div>
+	    </div>
+	</div>
 </#macro>
 
 <#--
  * 主页navTab容器。
  -->
 <#macro container>
-<div id="container">
-    <div id="navTab" class="tabsPage">
-        <div class="tabsPageHeader">
-            <div class="tabsPageHeaderContent">
-                <ul class="navTab-tab">
-                    <li tabid="main" class="main">
-                        <a href="javascript:;"><span><span class="home_icon">我的主页</span></span></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tabsLeft">left</div>
-            <div class="tabsRight">right</div>
-            <div class="tabsMore">more</div>
-        </div>
-        <ul class="tabsMoreList">
-            <li>
-                <a href="javascript:;">我的主页</a>
-            </li>
-        </ul>
-        <div class="navTab-panel tabsPageContent layoutBox">
-            <div class="page unitBox">
-                <div style="width:300px;"></div>
-            </div>
-        </div>
-    </div>
-</div>
+	<div id="container">
+	    <div id="navTab" class="tabsPage">
+	        <div class="tabsPageHeader">
+	            <div class="tabsPageHeaderContent">
+	                <ul class="navTab-tab">
+	                    <li tabid="main" class="main">
+	                        <a href="javascript:;"><span><span class="home_icon">我的主页</span></span></a>
+	                    </li>
+	                </ul>
+	            </div>
+	            <div class="tabsLeft">left</div>
+	            <div class="tabsRight">right</div>
+	            <div class="tabsMore">more</div>
+	        </div>
+	        <ul class="tabsMoreList">
+	            <li>
+	                <a href="javascript:;">我的主页</a>
+	            </li>
+	        </ul>
+	        <div class="navTab-panel tabsPageContent layoutBox">
+	            <div class="page unitBox">
+	                <div style="width:300px;"></div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </#macro>
 
 <#--
@@ -121,10 +121,10 @@
             <#local onsubmit="return validateCallback(this, dialogCloseDone);" />
         </#if>
     </#if>
-<form action="<@s.url "${action}" />" method="${method}" class="${class}"
-      onsubmit="${onsubmit}" ${s.getAttributes(attributes)}>
-    <#nested>
-</form>
+	<form action="<@s.url "${action}" />" method="${method}" class="${class}"
+	      onsubmit="${onsubmit}" ${s.getAttributes(attributes)}>
+	    <#nested>
+	</form>
 </#macro>
 
 <#--
@@ -136,17 +136,17 @@
  * cancelBtnText：取消按钮上的文字
  -->
 <#macro formBar showSubmitBtn=true submitBtnText="保存" showCancelBtn=true cancelBtnText="取消">
-<div class="formBar">
-    <ul>
-        <#nested>
-			<#if showSubmitBtn>
-        <@submitBtn text="${submitBtnText}" />
-    </#if>
-			<#if showCancelBtn>
-        <@cancelBtn text="${cancelBtnText}" />
-    </#if>
-    </ul>
-</div>
+	<div class="formBar">
+	    <ul>
+	        <#nested>
+				<#if showSubmitBtn>
+	        <@submitBtn text="${submitBtnText}" />
+	    </#if>
+				<#if showCancelBtn>
+	        <@cancelBtn text="${cancelBtnText}" />
+	    </#if>
+	    </ul>
+	</div>
 </#macro>
 
 <#--
@@ -155,13 +155,13 @@
  * text：按钮文本
  -->
 <#macro submitBtn text="保存">
-<li>
-    <div class="buttonActive">
-        <div class="buttonContent">
-            <button type="submit">${text}</button>
-        </div>
-    </div>
-</li>
+	<li>
+	    <div class="buttonActive">
+	        <div class="buttonContent">
+	            <button type="submit">${text}</button>
+	        </div>
+	    </div>
+	</li>
 </#macro>
 
 <#--
@@ -170,13 +170,13 @@
  * text：按钮文本
  -->
 <#macro cancelBtn text="取消">
-<li>
-    <div class="button">
-        <div class="buttonContent">
-            <button type="button" class="close">${text}</button>
-        </div>
-    </div>
-</li>
+	<li>
+	    <div class="button">
+	        <div class="buttonContent">
+	            <button type="button" class="close">${text}</button>
+	        </div>
+	    </div>
+	</li>
 </#macro>
 
 <#--
