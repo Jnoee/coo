@@ -28,19 +28,19 @@
 		<!-- 最小连接数 -->
 		<property name="minPoolSize" value="${db.minPoolSize:10}" />
 		<!-- 最大空闲时间（秒） -->
-		<property name="maxIdleTime" value="${db.maxIdleTime:60}" />
+		<property name="maxIdleTime" value="${db.maxIdleTime:1800}" />
 		<!-- 初始化时创建的连接数，取值应在minPoolSize与maxPoolSize之间 -->
 		<property name="initialPoolSize" value="${db.initialPoolSize:10}" />
 		<!-- 当连接池中的连接耗尽的时候一次同时获取的连接数 -->
-		<property name="acquireIncrement" value="${db.acquireIncrement:10}" />
+		<property name="acquireIncrement" value="${db.acquireIncrement:5}" />
 		<!-- 每隔多少秒检查所有连接池中的空闲连接（秒） -->
-		<property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod:60}" />
+		<property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod:1800}" />
 		<!-- 从数据库获取新连接失败后重复尝试的次数 -->
 		<property name="acquireRetryAttempts" value="${db.acquireRetryAttempts:10}" />
 		<!-- 两次连接中间隔时间（毫秒） -->
-		<property name="acquireRetryDelay" value="${db.acquireRetryDelay:500}" />
+		<property name="acquireRetryDelay" value="${db.acquireRetryDelay:1000}" />
 		<!-- 当连接池用完时客户端调用getConnection()后等待获取新连接的时间（毫秒） -->
-		<property name="checkoutTimeout" value="${db.checkoutTimeout:3000}" />
+		<property name="checkoutTimeout" value="${db.checkoutTimeout:1000}" />
 		<!-- 取得连接的同时将校验连接的有效性 -->
 		<property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin:true}" />
 		<!-- 创建的测试表名，用于检查连接有效性 -->
@@ -59,8 +59,7 @@
 				<!-- 二级缓存设置 -->
 				<prop key="hibernate.cache.use_query_cache">${db.cache.use_query_cache:false}</prop>
 				<prop key="hibernate.cache.use_second_level_cache">${db.cache.use_second_level_cache:true}</prop>
-				<prop key="hibernate.cache.region.factory_class">${db.cache.region.factory_class:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}
-				</prop>
+				<prop key="hibernate.cache.region.factory_class">${db.cache.region.factory_class:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}</prop>
 				<prop key="hibernate.jdbc.fetch_size">${db.jdbc.fetch_size:50}</prop>
 				<prop key="hibernate.jdbc.batch_size">${db.jdbc.batch_size:25}</prop>
 				<!-- 使用的Lucene版本 -->
@@ -68,13 +67,11 @@
 				<!-- 是否独占式使用索引文件 -->
 				<prop key="hibernate.search.default.exclusive_index_use">${search.exclusive_index_use:false}</prop>
 				<!-- 全文索引设置 -->
-				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:org.hibernate.search.store.impl.FSDirectoryProvider}
-				</prop>
+				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:org.hibernate.search.store.impl.FSDirectoryProvider}</prop>
 				<!-- 全文索引保存目录 -->
 				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.coo/indexed}</prop>
 				<!-- 全文索引分词器 -->
-				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}
-				</prop>
+				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}</prop>
 			</props>
 		</property>
 	</bean>
