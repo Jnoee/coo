@@ -4,6 +4,10 @@ a {
 	color: #336699;
 }
 
+input.error,textarea.error {
+	border-color: #F80C11 #FB7E81 #FB7E81 #F80C11;
+}
+
 span.error {
 	cursor: help;
 	background-color: transparent;
