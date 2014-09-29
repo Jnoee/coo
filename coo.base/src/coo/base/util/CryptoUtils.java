@@ -1,5 +1,6 @@
 package coo.base.util;
 
+import java.io.UnsupportedEncodingException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -9,9 +10,13 @@ import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import coo.base.constants.Encoding;
 import coo.base.exception.UncheckedException;
 
 /**
@@ -48,7 +53,11 @@ public class CryptoUtils {
 	 * @return 返回编码后的内容。
 	 */
 	public static String encodeBase64(String content) {
-		return new String(encodeBase64(content.getBytes()));
+		try {
+			return new String(encodeBase64(content.getBytes(Encoding.UTF_8)));
+		} catch (UnsupportedEncodingException e) {
+			throw new UncheckedException("Base64编码时发生异常。", e);
+		}
 	}
 
 	/**
@@ -59,7 +68,11 @@ public class CryptoUtils {
 	 * @return 返回解码后的内容。
 	 */
 	public static String decodeBase64(String content) {
-		return new String(decodeBase64(content.getBytes()));
+		try {
+			return new String(decodeBase64(content.getBytes(Encoding.UTF_8)));
+		} catch (UnsupportedEncodingException e) {
+			throw new UncheckedException("Base64解码时发生异常。", e);
+		}
 	}
 
 	/**
@@ -93,6 +106,52 @@ public class CryptoUtils {
 	 */
 	public static String md5(String content) {
 		return DigestUtils.md5Hex(content);
+	}
+
+	/**
+	 * AES加密。
+	 * 
+	 * @param content
+	 *            待加密的内容
+	 * @param password
+	 *            密码
+	 * @return 返回加密后的内容。
+	 */
+	public static String aesEncrypt(String content, String password) {
+		try {
+			byte[] raw = password.getBytes(Encoding.UTF_8);
+			SecretKeySpec key = new SecretKeySpec(raw, "AES");
+			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, key);
+			byte[] encrypted = cipher.doFinal(content.getBytes(Encoding.UTF_8));
+			Base64 encoder = new Base64();
+			return encoder.encodeToString(encrypted);
+		} catch (Exception e) {
+			throw new UncheckedException("AES加密时发生异常。", e);
+		}
+	}
+
+	/**
+	 * AES解密。
+	 * 
+	 * @param content
+	 *            待解密的内容
+	 * @param password
+	 *            密码
+	 * @return 返回解密后的内容。
+	 */
+	public static String aesDecrypt(String content, String password) {
+		try {
+			byte[] raw = password.getBytes(Encoding.UTF_8);
+			SecretKeySpec key = new SecretKeySpec(raw, "AES");
+			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+			cipher.init(Cipher.DECRYPT_MODE, key);
+			byte[] encrypted = new Base64().decode(content);
+			byte[] original = cipher.doFinal(encrypted);
+			return new String(original, Encoding.UTF_8);
+		} catch (Exception e) {
+			throw new UncheckedException("AES解密时发生异常。", e);
+		}
 	}
 
 	/**
