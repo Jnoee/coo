@@ -143,41 +143,69 @@ public class DateUtils {
 	}
 
 	/**
-	 * 获取下一天日期。（只取到日期，时间部分都为0）。
+	 * 获取当前日期前一天日期。
 	 * 
-	 * @return 返回下一天日期。
+	 * @return 返回当前日期前一天日期。
+	 */
+	public static Date getPrevDay() {
+		return getPrevDay(getToday());
+	}
+
+	/**
+	 * 获取指定日期前一天日期。
+	 * 
+	 * @param date
+	 *            指定日期
+	 * @return 返回指定日期前一天日期。
+	 */
+	public static Date getPrevDay(Date date) {
+		return getMinusDay(date, 1);
+	}
+
+	/**
+	 * 获取当前日期后一天日期（只取到日期，时间部分都为0）。
+	 * 
+	 * @return 返回后一天日期。
 	 */
 	public static Date getNextDay() {
 		return getNextDay(getToday());
 	}
 
 	/**
-	 * 获取指定日期的下一天日期。
+	 * 获取指定日期后一天日期。
 	 * 
 	 * @param date
 	 *            指定日期
-	 * @return 返回指定日期的下一天日期。
+	 * @return 返回指定日期的后一天日期。
 	 */
 	public static Date getNextDay(Date date) {
-		return new DateTime(date).plusDays(1).toLocalDate().toDate();
+		return getPlusDay(getToday(), 1);
 	}
 
 	/**
-	 * 获取最小日期。
+	 * 获取指定日期后几天日期。
 	 * 
-	 * @return 返回"0000-01-01"的日期。
+	 * @param date
+	 *            指定日期
+	 * @param days
+	 *            后几天
+	 * @return 返回指定日期后几天日期。
 	 */
-	public static Date getMinDate() {
-		return parse("0000-01-01");
+	public static Date getPlusDay(Date date, Integer days) {
+		return new DateTime(date).plusDays(days).toLocalDate().toDate();
 	}
 
 	/**
-	 * 获取最大日期。
+	 * 获取指定日期前几天日期。
 	 * 
-	 * @return 返回"9999-12-31"的日期。
+	 * @param date
+	 *            指定日期
+	 * @param days
+	 *            前几天
+	 * @return 返回指定日期前几天日期。
 	 */
-	public static Date getMaxDate() {
-		return parse("9999-12-31");
+	public static Date getMinusDay(Date date, Integer days) {
+		return new DateTime(date).minusDays(days).toLocalDate().toDate();
 	}
 
 	/**
