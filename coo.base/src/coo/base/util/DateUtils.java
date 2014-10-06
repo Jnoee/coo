@@ -152,6 +152,17 @@ public class DateUtils {
 	}
 
 	/**
+	 * 获取当前日期前几天日期。
+	 * 
+	 * @param days
+	 *            天数
+	 * @return 返回当前日期前几天日期。
+	 */
+	public static Date getPrevDay(Integer days) {
+		return getPrevDay(getToday(), days);
+	}
+
+	/**
 	 * 获取指定日期前一天日期。
 	 * 
 	 * @param date
@@ -159,7 +170,20 @@ public class DateUtils {
 	 * @return 返回指定日期前一天日期。
 	 */
 	public static Date getPrevDay(Date date) {
-		return getMinusDay(date, 1);
+		return getPrevDay(date, 1);
+	}
+
+	/**
+	 * 获取指定日期前几天日期。
+	 * 
+	 * @param date
+	 *            指定日期
+	 * @param days
+	 *            天数
+	 * @return 返回指定日期前几天日期。
+	 */
+	public static Date getPrevDay(Date date, Integer days) {
+		return new DateTime(date).minusDays(days).toLocalDate().toDate();
 	}
 
 	/**
@@ -172,6 +196,17 @@ public class DateUtils {
 	}
 
 	/**
+	 * 获取当前日期后几天日期。
+	 * 
+	 * @param days
+	 *            天数
+	 * @return 返回当前日期后几天日期。
+	 */
+	public static Date getNextDay(Integer days) {
+		return getNextDay(getToday(), days);
+	}
+
+	/**
 	 * 获取指定日期后一天日期。
 	 * 
 	 * @param date
@@ -179,7 +214,7 @@ public class DateUtils {
 	 * @return 返回指定日期的后一天日期。
 	 */
 	public static Date getNextDay(Date date) {
-		return getPlusDay(getToday(), 1);
+		return getNextDay(getToday(), 1);
 	}
 
 	/**
@@ -188,24 +223,11 @@ public class DateUtils {
 	 * @param date
 	 *            指定日期
 	 * @param days
-	 *            后几天
+	 *            天数
 	 * @return 返回指定日期后几天日期。
 	 */
-	public static Date getPlusDay(Date date, Integer days) {
+	public static Date getNextDay(Date date, Integer days) {
 		return new DateTime(date).plusDays(days).toLocalDate().toDate();
-	}
-
-	/**
-	 * 获取指定日期前几天日期。
-	 * 
-	 * @param date
-	 *            指定日期
-	 * @param days
-	 *            前几天
-	 * @return 返回指定日期前几天日期。
-	 */
-	public static Date getMinusDay(Date date, Integer days) {
-		return new DateTime(date).minusDays(days).toLocalDate().toDate();
 	}
 
 	/**
