@@ -459,8 +459,7 @@ public class Dao<T> {
 	 */
 	public Page<T> findPage(String hql, Integer pageNo, Integer pageSize,
 			Object... values) {
-		return findPage(hql, pageNo, pageSize, countHqlResult(hql, values),
-				values);
+		return findPage(hql, pageNo, pageSize, count(hql, values), values);
 	}
 
 	/**
@@ -503,8 +502,7 @@ public class Dao<T> {
 	 * @return 返回查询得到的分页对象。
 	 */
 	public Page<T> findPage(Criteria criteria, Integer pageNo, Integer pageSize) {
-		return findPage(criteria, pageNo, pageSize,
-				countCriteriaResult(criteria));
+		return findPage(criteria, pageNo, pageSize, count(criteria));
 	}
 
 	/**
@@ -614,16 +612,35 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 执行count查询获得本次Hql查询所能获得的对象总数。<br/>
+	 * 获取查询所能获得的对象总数。
+	 * 
+	 * @param criteria
+	 *            全文搜索查询对象
+	 * @return 返回查询结果总数。
+	 */
+	public Integer count(FullTextCriteria criteria) {
+		FullTextQuery fullTextQuery = criteria.generateQuery();
+		try {
+			// 当实体对应数据库中没有记录，其索引文件未生成时该方法会抛出异常
+			// 这里捕捉后忽略该异常
+			return fullTextQuery.getResultSize();
+		} catch (Exception e) {
+			log.warn("实体[" + clazz + "]全文索引文件尚未生成。", e);
+			return 0;
+		}
+	}
+
+	/**
+	 * 获取查询所能获得的对象总数。<br/>
 	 * 本函数只能自动处理简单的hql语句,复杂的hql查询请另行编写count语句查询。
 	 * 
 	 * @param hql
 	 *            查询语句
 	 * @param values
 	 *            查询参数
-	 * @return 返回查询结果总数
+	 * @return 返回查询结果总数。
 	 */
-	public Integer countHqlResult(String hql, Object... values) {
+	public Integer count(String hql, Object... values) {
 		String fromHql = hql;
 		fromHql = "from " + StringUtils.substringAfter(fromHql, "from");
 		fromHql = StringUtils.substringBefore(fromHql, "order by");
@@ -634,13 +651,13 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 执行count查询获得本次Criteria查询所能获得的对象总数。
+	 * 获取查询所能获得的对象总数。
 	 * 
 	 * @param criteria
 	 *            查询对象
-	 * @return 返回查询结果总数
+	 * @return 返回查询结果总数。
 	 */
-	public Integer countCriteriaResult(Criteria criteria) {
+	public Integer count(Criteria criteria) {
 		CriteriaImpl impl = (CriteriaImpl) criteria;
 		Projection projection = impl.getProjection();
 		ResultTransformer transformer = impl.getResultTransformer();
