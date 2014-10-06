@@ -214,7 +214,7 @@ public class DateUtils {
 	 * @return 返回指定日期的后一天日期。
 	 */
 	public static Date getNextDay(Date date) {
-		return getNextDay(getToday(), 1);
+		return getNextDay(date, 1);
 	}
 
 	/**
