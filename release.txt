@@ -1,0 +1,2 @@
+v2.0.9
+1. Dao增加searchAll方法。
