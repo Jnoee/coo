@@ -527,6 +527,36 @@ public class Dao<T> {
 	}
 
 	/**
+	 * 全文搜索指定类型的所有业务实体。
+	 * 
+	 * @return 返回指定类型的所有业务实体。
+	 */
+	public List<T> searchAll() {
+		return searchBy(createFullTextCriteria());
+	}
+
+	/**
+	 * 全文搜索指定类型的所有业务实体并进行排序。
+	 * 
+	 * @param orderBy
+	 *            排序的属性名
+	 * @param isAsc
+	 *            是否升序
+	 * @param type
+	 *            类型
+	 * @return 返回排序后的指定类型的所有业务实体。
+	 */
+	public List<T> searchAll(String orderBy, Boolean isAsc, Integer type) {
+		FullTextCriteria criteria = createFullTextCriteria();
+		if (isAsc) {
+			criteria.addSortAsc(orderBy, type);
+		} else {
+			criteria.addSortDesc(orderBy, type);
+		}
+		return searchBy(criteria);
+	}
+
+	/**
 	 * 全文搜索唯一业务实体。
 	 * 
 	 * @param criteria
