@@ -1,5 +1,6 @@
 package coo.core.security.aspect;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -7,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import coo.base.util.Assert;
+import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.dao.DaoUtils;
 import coo.core.model.UuidEntity;
@@ -74,9 +76,7 @@ public class DetailLogAspect extends AbstractLogAspect {
 		bnLog.setEntityId(getEntityId(target));
 		bnLog.setOrigData(target);
 		Object result = joinPoint.proceed();
-		if (target instanceof UuidEntity) {
-			target = getEntity(target);
-		}
+		target = getEntity(target);
 		bnLog.setNewData(target);
 		return result;
 	}
@@ -130,11 +130,12 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 * @return 如果目标对象是UuidEntity返回对应的业务实体，否则返回原目标对象。
 	 */
 	private Object getEntity(Object target) {
-		if (target instanceof UuidEntity) {
-			UuidEntity entity = (UuidEntity) target;
-			if (StringUtils.isNotBlank(entity.getId())) {
-				return DaoUtils
-						.getUuidEntity(entity.getClass(), entity.getId());
+		Field idField = BeanUtils.findField(target.getClass(), "id");
+		if (idField != null) {
+			Object entityId = BeanUtils.getField(target, idField);
+			if (entityId != null && StringUtils.isNotBlank(entityId.toString())) {
+				return DaoUtils.getEntity(target.getClass(),
+						entityId.toString());
 			}
 		}
 		return target;

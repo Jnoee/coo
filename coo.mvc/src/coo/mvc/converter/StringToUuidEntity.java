@@ -44,7 +44,7 @@ public class StringToUuidEntity implements ConverterFactory<String, UuidEntity> 
 			if (source.length() == 0) {
 				return null;
 			}
-			return (T) DaoUtils.getUuidEntity(toClass, source.trim());
+			return (T) DaoUtils.getEntity(toClass, source.trim());
 		}
 	}
 }

@@ -5,8 +5,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import coo.core.model.UuidEntity;
-
 /**
  * Dao组件工具类。
  */
@@ -16,7 +14,7 @@ public class DaoUtils implements ApplicationContextAware {
 	private static ApplicationContext context;
 
 	/**
-	 * 获取UuidEntity对象。
+	 * 获取实体对象。
 	 * 
 	 * @param <T>
 	 *            实体类型
@@ -26,8 +24,7 @@ public class DaoUtils implements ApplicationContextAware {
 	 *            实体ID
 	 * @return 返回对应的UuidEntity对象。
 	 */
-	public static <T extends UuidEntity> T getUuidEntity(Class<T> entityClass,
-			String id) {
+	public static <T> T getEntity(Class<T> entityClass, String id) {
 		return getDao(entityClass).get(id);
 	}
 
