@@ -2,7 +2,7 @@
 <configuration>
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level \(%F:%L\) %m%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %m \(%F:%L\)%n</pattern>
 		</encoder>
 	</appender>
 	<logger name="coo" level="DEBUG" />
