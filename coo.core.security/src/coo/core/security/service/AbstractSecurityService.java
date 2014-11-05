@@ -460,7 +460,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
-	@SimpleLog(code = "actor.add.log", vars = "actor.name")
+	@SimpleLog(code = "actor.add.log", vars = { "actor.user.name", "actor.name" })
 	public void createActor(A actor) {
 		actorDao.save(actor);
 	}
@@ -473,7 +473,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
-	@DetailLog(target = "actor", code = "actor.edit.log", vars = "actor.name", type = LogType.ALL)
+	@DetailLog(target = "actor", code = "actor.edit.log", vars = {
+			"actor.user.name", "actor.name" }, type = LogType.ALL)
 	public void updateActor(A actor) {
 		A origActor = getActor(actor.getId());
 		BeanUtils.copyFields(actor, origActor);
@@ -486,7 +487,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            职务
 	 */
 	@Transactional
-	@DetailLog(target = "actor", code = "actor.delete.log", vars = "actor.name", type = LogType.ORIG)
+	@SimpleLog(code = "actor.delete.log", vars = { "actor.user.name",
+			"actor.name" })
 	public void deleteActor(A actor) {
 		if (actor.isDefaultActor()) {
 			messageSource.thrown("default.actor.not.allow.delete");

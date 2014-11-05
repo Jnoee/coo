@@ -27,7 +27,7 @@
 	<entry key="user.disable.log">停用用户[{0}]。</entry>
 	<entry key="user.reset.password.log">重置用户[{0}]的密码。</entry>
 	<entry key="user.change.password.log">修改密码。</entry>
-	<entry key="actor.add.log">新增职务[{0}]。</entry>
-	<entry key="actor.edit.log">编辑职务[{0}]。</entry>
-	<entry key="actor.delete.log">删除职务[{0}]。</entry>
+	<entry key="actor.add.log">新增职务[{0}-{1}]。</entry>
+	<entry key="actor.edit.log">编辑职务[{0}-{1}]。</entry>
+	<entry key="actor.delete.log">删除职务[{0}-{1}]。</entry>
 </properties>
