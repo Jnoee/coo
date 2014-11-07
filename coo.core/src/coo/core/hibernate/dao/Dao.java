@@ -20,6 +20,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.metadata.ClassMetadata;
+import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -95,7 +96,13 @@ public class Dao<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(Serializable id) {
-		return (T) getSession().get(clazz, id);
+		Object entity = getSession().get(clazz, id);
+		// 如果获取的是一个代理对象，则从代理对象中获取实际的实体对象返回。
+		if (entity instanceof HibernateProxy) {
+			entity = ((HibernateProxy) entity).getHibernateLazyInitializer()
+					.getImplementation();
+		}
+		return (T) entity;
 	}
 
 	/**

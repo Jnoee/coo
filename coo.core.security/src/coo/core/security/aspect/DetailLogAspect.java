@@ -11,7 +11,6 @@ import coo.base.util.Assert;
 import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.dao.DaoUtils;
-import coo.core.model.UuidEntity;
 import coo.core.security.annotations.DetailLog;
 import coo.core.security.entity.BnLogEntity;
 import coo.core.util.AspectUtils;
@@ -130,13 +129,9 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 * @return 如果目标对象是UuidEntity返回对应的业务实体，否则返回原目标对象。
 	 */
 	private Object getEntity(Object target) {
-		Field idField = BeanUtils.findField(target.getClass(), "id");
-		if (idField != null) {
-			Object entityId = BeanUtils.getField(target, idField);
-			if (entityId != null && StringUtils.isNotBlank(entityId.toString())) {
-				return DaoUtils.getEntity(target.getClass(),
-						entityId.toString());
-			}
+		String entityId = getEntityId(target);
+		if (StringUtils.isNotBlank(entityId.toString())) {
+			return DaoUtils.getEntity(target.getClass(), entityId);
 		}
 		return target;
 	}
@@ -149,8 +144,10 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 * @return 返回业务实体ID。
 	 */
 	private String getEntityId(Object target) {
-		if (target instanceof UuidEntity) {
-			return ((UuidEntity) target).getId();
+		Field idField = BeanUtils.findField(target.getClass(), "id");
+		if (idField != null) {
+			Object idValue = BeanUtils.getField(target, idField);
+			return idValue != null ? idValue.toString() : null;
 		} else {
 			return null;
 		}
