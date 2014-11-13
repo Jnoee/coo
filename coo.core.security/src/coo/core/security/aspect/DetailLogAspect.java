@@ -130,7 +130,7 @@ public class DetailLogAspect extends AbstractLogAspect {
 	 */
 	private Object getEntity(Object target) {
 		String entityId = getEntityId(target);
-		if (StringUtils.isNotBlank(entityId.toString())) {
+		if (StringUtils.isNotBlank(entityId)) {
 			return DaoUtils.getEntity(target.getClass(), entityId);
 		}
 		return target;
