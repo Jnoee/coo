@@ -67,7 +67,8 @@
 				<!-- 是否独占式使用索引文件 -->
 				<prop key="hibernate.search.default.exclusive_index_use">${search.exclusive_index_use:false}</prop>
 				<!-- 全文索引设置 -->
-				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:org.hibernate.search.store.impl.FSDirectoryProvider}</prop>
+				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:filesystem}</prop>
+				<prop key="hibernate.search.infinispan.configuration_resourcename">${search.infinispan.configuration_resourcename:infinispan.xml}</prop>
 				<!-- 全文索引保存目录 -->
 				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.coo/indexed}</prop>
 				<!-- 全文索引分词器 -->
