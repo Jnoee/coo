@@ -40,7 +40,7 @@
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
 		<property name="poolPreparedStatements" value="${db.poolPreparedStatements:false}" />
 		<property name="maxPoolPreparedStatementPerConnectionSize"
-			value="${db.maxPoolPreparedStatementPerConnectionSize:20}" />
+			value="${db.maxPoolPreparedStatementPerConnectionSize:0}" />
 
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="${db.filters:slf4j}" />
