@@ -44,6 +44,13 @@
 
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="${db.filters:slf4j}" />
+
+		<!-- 启用自动关闭长时间不使用连接的功能（怀疑存在连接泄漏时启用） -->
+		<property name="removeAbandoned" value="${db.removeAbandoned:false}" />
+		<!-- 自动关闭超过1800秒未关闭的连接 -->
+		<property name="removeAbandonedTimeout" value="${db.removeAbandonedTimeout:1800}" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="${db.logAbandoned:true}" />
 	</bean>
 	<!-- 定义基本的Hibernate SessionFactory，供继承。 -->
 	<bean id="sessionFactory" class="coo.core.hibernate.LocalSessionFactoryBean">
