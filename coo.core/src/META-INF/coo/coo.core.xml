@@ -34,7 +34,7 @@
 
 		<property name="validationQuery" value="${db.validationQuery:SELECT 'x'}" />
 		<property name="testWhileIdle" value="${db.testWhileIdle:true}" />
-		<property name="testOnBorrow" value="${db.testOnBorrow:false}" />
+		<property name="testOnBorrow" value="${db.testOnBorrow:true}" />
 		<property name="testOnReturn" value="${db.testOnReturn:false}" />
 
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
@@ -68,6 +68,8 @@
 				</prop>
 				<prop key="hibernate.jdbc.fetch_size">${db.jdbc.fetch_size:50}</prop>
 				<prop key="hibernate.jdbc.batch_size">${db.jdbc.batch_size:25}</prop>
+				<prop key="hibernate.connection.characterEncoding">${db.mysql.encoding:UTF-8}</prop>
+				<prop key="hibernate.connection.autoReconnect">${db.mysql.reconnect:true}</prop>
 				<!-- 使用的Lucene版本 -->
 				<prop key="hibernate.search.lucene_version">${search.lucene.version:LUCENE_36}</prop>
 				<!-- 是否独占式使用索引文件 -->
