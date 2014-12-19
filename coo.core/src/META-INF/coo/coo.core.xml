@@ -34,7 +34,7 @@
 
 		<property name="validationQuery" value="${db.validationQuery:SELECT 'x'}" />
 		<property name="testWhileIdle" value="${db.testWhileIdle:true}" />
-		<property name="testOnBorrow" value="${db.testOnBorrow:false}" />
+		<property name="testOnBorrow" value="${db.testOnBorrow:true}" />
 		<property name="testOnReturn" value="${db.testOnReturn:false}" />
 
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
