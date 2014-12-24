@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 import javax.persistence.Column;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.annotations.Type;
 import org.hibernate.engine.spi.SessionImplementor;
@@ -18,6 +17,7 @@ import org.hibernate.usertype.UserType;
 
 import coo.base.exception.UncheckedException;
 import coo.base.util.BeanUtils;
+import coo.base.util.StringUtils;
 
 /**
  * 用户自定义类型抽象基类。

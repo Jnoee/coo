@@ -7,7 +7,6 @@ import javax.persistence.MappedSuperclass;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.core.security.annotations.LogBean;
@@ -29,13 +28,11 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	/** 关联机构 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "organId")
-	@IndexedEmbedded(depth = 1)
 	@LogBean(@LogField(text = "关联机构", property = "name"))
 	private O organ;
 	/** 关联用户 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
-	@IndexedEmbedded(depth = 1)
 	@LogBean(@LogField(text = "关联用户", property = "username"))
 	private U user;
 	/** 关联角色 */

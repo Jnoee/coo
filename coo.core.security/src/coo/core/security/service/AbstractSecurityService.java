@@ -268,7 +268,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	public Page<U> searchUser(SearchModel searchModel) {
 		FullTextCriteria criteria = userDao.createFullTextCriteria();
 		criteria.setKeyword(searchModel.getKeyword());
-		criteria.addSortDesc("createDate", SortField.LONG);
+		criteria.addSortDesc("createDate", SortField.Type.LONG);
 
 		// 将系统管理员从搜索的用户结果中排除
 		BooleanQuery bq = new BooleanQuery();

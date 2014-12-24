@@ -99,8 +99,8 @@ public class FreeMarkerConfigurer extends
 	 *             初始化枚举变量失败时抛出异常
 	 */
 	protected void initEnums() throws TemplateModelException {
-		TemplateHashModel enums = BeansWrapper.getDefaultInstance()
-				.getEnumModels();
+		TemplateHashModel enums = ((BeansWrapper) getConfiguration()
+				.getObjectWrapper()).getEnumModels();
 		getConfiguration().setSharedVariable("enums", enums);
 		for (Class<?> enumClass : ClassUtils.findClassesByParentClass(
 				IEnum.class, getEnumPackages())) {
@@ -118,8 +118,8 @@ public class FreeMarkerConfigurer extends
 	 *             初始化静态变量失败时抛出异常。
 	 */
 	protected void initStatics() throws TemplateModelException {
-		TemplateHashModel statics = BeansWrapper.getDefaultInstance()
-				.getStaticModels();
+		TemplateHashModel statics = ((BeansWrapper) getConfiguration()
+				.getObjectWrapper()).getStaticModels();
 		getConfiguration().setSharedVariable("statics", statics);
 		for (Class<?> staticClass : getStaticClasses()) {
 			getConfiguration().setSharedVariable(staticClass.getSimpleName(),

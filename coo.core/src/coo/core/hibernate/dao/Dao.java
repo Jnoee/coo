@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.search.SortField;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
@@ -553,7 +554,7 @@ public class Dao<T> {
 	 *            类型
 	 * @return 返回排序后的指定类型的所有业务实体。
 	 */
-	public List<T> searchAll(String orderBy, Boolean isAsc, Integer type) {
+	public List<T> searchAll(String orderBy, Boolean isAsc, SortField.Type type) {
 		FullTextCriteria criteria = createFullTextCriteria();
 		if (isAsc) {
 			criteria.addSortAsc(orderBy, type);

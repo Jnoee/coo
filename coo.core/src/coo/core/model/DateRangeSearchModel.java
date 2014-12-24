@@ -45,8 +45,8 @@ public class DateRangeSearchModel extends SearchModel {
 			endDateStr = DateUtils.format(endDateTime.toDate(),
 					DateUtils.MILLISECOND_N);
 		}
-		TermRangeQuery showTimeQuery = new TermRangeQuery(searchField,
-				startDateStr, endDateStr, true, false);
+		TermRangeQuery showTimeQuery = TermRangeQuery.newStringRange(
+				searchField, startDateStr, endDateStr, true, false);
 		return showTimeQuery;
 	}
 

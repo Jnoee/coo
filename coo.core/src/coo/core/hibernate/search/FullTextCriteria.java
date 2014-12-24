@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Filter;
@@ -22,7 +22,6 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.WildcardQuery;
-import org.apache.lucene.util.Version;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.search.FullTextQuery;
@@ -164,8 +163,8 @@ public class FullTextCriteria {
 	 */
 	public void addRangeField(String fieldName, String lowerTerm,
 			String upperTerm) {
-		TermRangeQuery query = new TermRangeQuery(fieldName, lowerTerm,
-				upperTerm, true, false);
+		TermRangeQuery query = TermRangeQuery.newStringRange(fieldName,
+				lowerTerm, upperTerm, true, false);
 		addLuceneQuery(query, Occur.MUST);
 	}
 
@@ -205,7 +204,7 @@ public class FullTextCriteria {
 	 * @param type
 	 *            类型
 	 */
-	public void addSortAsc(String fieldName, Integer type) {
+	public void addSortAsc(String fieldName, SortField.Type type) {
 		sortFields.add(new SortField(fieldName, type));
 	}
 
@@ -218,7 +217,7 @@ public class FullTextCriteria {
 	 * @param type
 	 *            类型
 	 */
-	public void addSortDesc(String fieldName, Integer type) {
+	public void addSortDesc(String fieldName, SortField.Type type) {
 		sortFields.add(new SortField(fieldName, type, true));
 	}
 
@@ -289,9 +288,8 @@ public class FullTextCriteria {
 				WildcardQuery fuzzyQuery = new WildcardQuery(term);
 				multiFieldWildcardQuery.add(fuzzyQuery, Occur.SHOULD);
 			} else {
-				QueryParser parser = new QueryParser(Version.LUCENE_36,
-						field.getKey(), session.getSearchFactory().getAnalyzer(
-								clazz));
+				QueryParser parser = new QueryParser(field.getKey(), session
+						.getSearchFactory().getAnalyzer(clazz));
 				parser.setPhraseSlop(0);
 				parser.setAutoGeneratePhraseQueries(true);
 				try {
