@@ -46,6 +46,7 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	private String password;
 	/** 启用状态 */
 	@NotNull
+	@Field(analyze = Analyze.NO)
 	@LogField(text = "启用状态")
 	private Boolean enabled = true;
 	/** 排序 */
