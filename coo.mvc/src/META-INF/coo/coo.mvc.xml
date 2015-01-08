@@ -44,7 +44,8 @@
 				<bean
 					class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 					<property name="suffix" value=".ftl" />
-					<property name="contentType" value="text/html;charset=${freemarker.view.encoding:UTF-8}" />
+					<property name="contentType"
+						value="text/html;charset=${freemarker.view.encoding:UTF-8}" />
 					<property name="exposeRequestAttributes" value="true" />
 					<property name="exposeSessionAttributes" value="true" />
 					<property name="exposeSpringMacroHelpers" value="true" />
@@ -90,8 +91,6 @@
 		location="classpath:/coo/mvc/static/dwz/dwz/" />
 	<mvc:resources mapping="/fix/**"
 		location="classpath:/coo/mvc/static/dwz/fix/" />
-	<mvc:resources mapping="/dwz.frag.xml"
-		location="classpath:/coo/mvc/static/dwz/fix/dwz.frag.xml" />
 
 	<mvc:annotation-driven conversion-service="conversionService" />
 

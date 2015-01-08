@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>coo.mvc</artifactId>
 	<properties>
-		<spring.version>4.0.0.RELEASE</spring.version>
+		<spring.version>4.1.4.RELEASE</spring.version>
 		<servlet.version>2.5</servlet.version>
 	</properties>
 	<dependencies>
