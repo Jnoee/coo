@@ -627,26 +627,27 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 重建全文索引。
-	 * 
-	 * @param sync
-	 *            是否同步创建
+	 * 同步重建全文索引。
 	 */
-	public void rebuildIndex(Boolean sync) {
+	public void rebuildIndexSync() {
 		try {
 			log.info("开始重建[{}]全文索引...", clazz.getSimpleName());
 			Long startTime = System.currentTimeMillis();
-			if (sync) {
-				getFullTextSession().createIndexer(clazz).startAndWait();
-			} else {
-				getFullTextSession().createIndexer(clazz).start();
-			}
+			getFullTextSession().createIndexer(clazz).startAndWait();
 			Long endTime = System.currentTimeMillis();
 			log.info("完成重建[{}]全文索引...耗时[{}]毫秒。", clazz.getSimpleName(), endTime
 					- startTime);
 		} catch (Exception e) {
 			throw new UncheckedException("重建全文索引时发生异常。", e);
 		}
+	}
+
+	/**
+	 * 异步重建全文索引。
+	 */
+	public void rebuildIndexAsync() {
+		getFullTextSession().createIndexer(clazz).start();
+		log.info("重建[{}]全文索引已启动。", clazz.getSimpleName());
 	}
 
 	/**

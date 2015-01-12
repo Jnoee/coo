@@ -40,7 +40,7 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 		lock.lock();
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
-				DaoUtils.getDao(indexedEntityClass).rebuildIndex(true);
+				DaoUtils.getDao(indexedEntityClass).rebuildIndexSync();
 			}
 		} finally {
 			lock.unlock();
@@ -57,7 +57,7 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 		lock.lock();
 		try {
 			for (Class<?> indexedEntityClass : entityClasses) {
-				DaoUtils.getDao(indexedEntityClass).rebuildIndex(false);
+				DaoUtils.getDao(indexedEntityClass).rebuildIndexAsync();
 			}
 		} finally {
 			lock.unlock();
