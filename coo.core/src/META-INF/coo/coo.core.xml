@@ -73,7 +73,7 @@
 				<prop key="hibernate.search.default.exclusive_index_use">${search.exclusive_index_use:false}</prop>
 				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:filesystem}</prop>
 				<prop key="hibernate.search.infinispan.configuration_resourcename">${search.infinispan.xml:infinispan.xml}</prop>
-				<prop key="hibernate.search.default.worker.execution">${search.worker.execution:async}</prop>
+				<prop key="hibernate.search.default.worker.execution">${search.worker.execution:sync}</prop>
 				<prop key="hibernate.search.default.worker.backend">${search.default.worker.backend:}</prop>
 				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.coo/indexed}</prop>
 				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}
