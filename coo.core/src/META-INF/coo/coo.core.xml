@@ -64,7 +64,8 @@
 				<!-- 二级缓存设置 -->
 				<prop key="hibernate.cache.use_query_cache">${db.cache.use_query_cache:false}</prop>
 				<prop key="hibernate.cache.use_second_level_cache">${db.cache.use_second_level_cache:true}</prop>
-				<prop key="hibernate.cache.region.factory_class">${db.cache.region.factory_class:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}
+				<prop key="hibernate.cache.region.factory_class">
+					${db.cache.region.factory_class:org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory}
 				</prop>
 				<prop key="hibernate.jdbc.fetch_size">${db.jdbc.fetch_size:50}</prop>
 				<prop key="hibernate.jdbc.batch_size">${db.jdbc.batch_size:25}</prop>
@@ -72,8 +73,8 @@
 				<prop key="hibernate.search.default.exclusive_index_use">${search.exclusive_index_use:false}</prop>
 				<!-- 全文索引设置 -->
 				<prop key="hibernate.search.default.directory_provider">${search.directory_provider:filesystem}</prop>
-				<prop key="hibernate.search.infinispan.configuration_resourcename">${search.infinispan.configuration_resourcename:infinispan.xml}
-				</prop>
+				<prop key="hibernate.search.infinispan.configuration_resourcename">${search.infinispan.xml:infinispan.xml}</prop>
+				<prop key="hibernate.search.default.worker.backend">${search.default.worker.backend:}</prop>
 				<!-- 全文索引保存目录 -->
 				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.coo/indexed}</prop>
 				<!-- 全文索引分词器 -->
