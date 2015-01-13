@@ -160,11 +160,11 @@
 	<distributionManagement>
 		<repository>
 			<id>mopon-nexus</id>
-			<url>http://192.168.9.100:8081/nexus/content/repositories/releases</url>
+			<url>http://172.16.35.13:8081/nexus/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>mopon-nexus</id>
-			<url>http://192.168.9.100:8081/nexus/content/repositories/snapshots</url>
+			<url>http://172.16.35.13:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<!-- <distributionManagement> <repository> <id>releases</id> <url>file:///d:/Work/Git/github/maven/releases</url> 
