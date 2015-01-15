@@ -76,6 +76,7 @@
 				<prop key="hibernate.search.default.worker.execution">${search.worker.execution:sync}</prop>
 				<prop key="hibernate.search.default.worker.backend">${search.default.worker.backend:}</prop>
 				<prop key="hibernate.search.default.indexBase">${search.indexBase:${user.home}/.coo/indexed}</prop>
+				<prop key="hibernate.search.default.writeLockTimeout">${search.default.writeLockTimeout:1000}</prop>
 				<prop key="hibernate.search.analyzer">${search.analyzer:org.apache.lucene.analysis.standard.StandardAnalyzer}
 				</prop>
 			</props>
@@ -93,7 +94,7 @@
 	<!-- 设置定时器的annotation生效 -->
 	<task:annotation-driven />
 	<!-- 定义默认异步任务组件 -->
-	<task:executor id="taskExecutor" pool-size="5-1000"
+	<task:executor id="taskExecutor" pool-size="300"
 		queue-capacity="3000" />
 	<!-- 加载coo.core下的组件 -->
 	<context:component-scan base-package="coo.core" />
