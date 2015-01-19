@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import coo.base.constants.Chars;
-import coo.base.exception.UncheckedException;
 import coo.base.model.Page;
 import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
@@ -624,30 +623,6 @@ public class Dao<T> {
 		List<T> result = fullTextQuery.list();
 		page.setContents(result);
 		return page;
-	}
-
-	/**
-	 * 同步重建全文索引。
-	 */
-	public void rebuildIndexSync() {
-		try {
-			log.info("开始重建[{}]全文索引...", clazz.getSimpleName());
-			Long startTime = System.currentTimeMillis();
-			getFullTextSession().createIndexer(clazz).startAndWait();
-			Long endTime = System.currentTimeMillis();
-			log.info("完成重建[{}]全文索引...耗时[{}]毫秒。", clazz.getSimpleName(), endTime
-					- startTime);
-		} catch (Exception e) {
-			throw new UncheckedException("重建全文索引时发生异常。", e);
-		}
-	}
-
-	/**
-	 * 异步重建全文索引。
-	 */
-	public void rebuildIndexAsync() {
-		getFullTextSession().createIndexer(clazz).start();
-		log.info("重建[{}]全文索引已启动。", clazz.getSimpleName());
 	}
 
 	/**

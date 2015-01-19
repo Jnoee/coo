@@ -2,21 +2,23 @@ package coo.core.hibernate.search;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
+import org.hibernate.CacheMode;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.MassIndexer;
+import org.hibernate.search.Search;
 import org.hibernate.search.annotations.Indexed;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
+import coo.base.exception.UncheckedException;
 import coo.core.hibernate.EntityClassBeanFactoryPostProcessor;
-import coo.core.hibernate.dao.DaoUtils;
 
 /**
  * 全文索引组件。
  */
 @Component
 public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
-	private final ReentrantLock lock = new ReentrantLock();
 	private List<Class<?>> indexedEntityClasses = new ArrayList<Class<?>>();
 
 	@Override
@@ -37,13 +39,10 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 	 *            实体类列表
 	 */
 	public void startAndWait(Class<?>... entityClasses) {
-		lock.lock();
 		try {
-			for (Class<?> indexedEntityClass : entityClasses) {
-				DaoUtils.getDao(indexedEntityClass).rebuildIndexSync();
-			}
-		} finally {
-			lock.unlock();
+			createIndexer(entityClasses).startAndWait();
+		} catch (Exception e) {
+			throw new UncheckedException("重建全文索引时发生异常。", e);
 		}
 	}
 
@@ -54,14 +53,26 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 	 *            实体类列表
 	 */
 	public void start(Class<?>... entityClasses) {
-		lock.lock();
 		try {
-			for (Class<?> indexedEntityClass : entityClasses) {
-				DaoUtils.getDao(indexedEntityClass).rebuildIndexAsync();
-			}
-		} finally {
-			lock.unlock();
+			createIndexer(entityClasses).start();
+		} catch (Exception e) {
+			throw new UncheckedException("重建全文索引时发生异常。", e);
 		}
+	}
+
+	/**
+	 * 创建索引构建组件。
+	 * 
+	 * @param entityClasses
+	 *            业务实体类
+	 * @return 返回索引构建组件。
+	 */
+	private MassIndexer createIndexer(Class<?>... entityClasses) {
+		FullTextSession session = Search.getFullTextSession(sessionFactory
+				.getCurrentSession());
+		return session.createIndexer(entityClasses).typesToIndexInParallel(2)
+				.threadsToLoadObjects(20).batchSizeToLoadObjects(25)
+				.cacheMode(CacheMode.NORMAL);
 	}
 
 	public List<Class<?>> getIndexedEntityClasses() {
