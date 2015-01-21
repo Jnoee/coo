@@ -14,12 +14,12 @@
 		<dependency>
 			<groupId>jnoee</groupId>
 			<artifactId>coo.mvc</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>jnoee</groupId>
 			<artifactId>coo.core.security</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

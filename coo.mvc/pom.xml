@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>jnoee</groupId>
 			<artifactId>coo.core</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
