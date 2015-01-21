@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>jnoee</groupId>
 			<artifactId>coo.core</artifactId>
-			<version>${parent.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jxls</groupId>
