@@ -37,7 +37,7 @@ public class ClassUtils {
 			String... packageNames) {
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		for (Class<?> targetClass : findClasses(packageNames)) {
-			if (targetClass != parentClass
+			if (!targetClass.equals(parentClass)
 					&& parentClass.isAssignableFrom(targetClass)
 					&& !Modifier.isAbstract(targetClass.getModifiers())) {
 				classes.add(targetClass);
