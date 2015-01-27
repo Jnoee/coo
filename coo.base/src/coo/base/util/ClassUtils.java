@@ -78,7 +78,7 @@ public class ClassUtils {
 		for (String className : findClassNames(packageNames)) {
 			try {
 				classes.add(Class.forName(className));
-			} catch (Throwable e) {
+			} catch (Exception e) {
 				log.warn("加载[" + className + "]类时发生异常。", e);
 			}
 		}
