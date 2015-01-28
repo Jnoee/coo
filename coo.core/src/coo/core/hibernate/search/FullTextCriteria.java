@@ -336,16 +336,12 @@ public class FullTextCriteria {
 					generateMultiFieldQuery(QueryParser.escape(keyword),
 							searchFields), Occur.MUST);
 		}
-		if(log.isDebugEnabled()) {
-			log.debug("全文搜索包含字段：{}", searchFields.keySet());
-		}
+		log.debug("全文搜索包含字段：{}", searchFields.keySet());
 		for (AttachLuceneQuery attachLuceneQuery : luceneQueries) {
 			query.add(attachLuceneQuery.getQuery(),
 					attachLuceneQuery.getOccur());
 		}
-		if(log.isDebugEnabled()) {
-			log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), query);
-		}
+		log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), query);
 		return query;
 	}
 
