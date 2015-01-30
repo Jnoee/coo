@@ -61,7 +61,8 @@ public class FullTextCriteria {
 	 *            Hibernate全文搜索Session
 	 * @param clazz
 	 *            实体class
-	 * @param 待搜索的字段
+	 * @param searchFields
+	 *            待搜索的字段
 	 */
 	public FullTextCriteria(FullTextSession session, Class<?> clazz,
 			Map<String, Analyze> searchFields) {
