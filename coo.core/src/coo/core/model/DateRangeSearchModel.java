@@ -30,10 +30,8 @@ public class DateRangeSearchModel extends SearchModel {
 		if (startDate == null && endDate == null) {
 			return null;
 		}
-		if (startDate != null && endDate != null) {
-			if (startDate.after(endDate)) {
-				throw new BusinessException("查询起始日期不能大于截止日期。");
-			}
+		if (startDate != null && endDate != null && startDate.after(endDate)) {
+			throw new BusinessException("查询起始日期不能大于截止日期。");
 		}
 		String startDateStr = null;
 		if (startDate != null) {
@@ -45,9 +43,8 @@ public class DateRangeSearchModel extends SearchModel {
 			endDateStr = DateUtils.format(endDateTime.toDate(),
 					DateUtils.MILLISECOND_N);
 		}
-		TermRangeQuery showTimeQuery = TermRangeQuery.newStringRange(
-				searchField, startDateStr, endDateStr, true, false);
-		return showTimeQuery;
+		return TermRangeQuery.newStringRange(searchField, startDateStr,
+				endDateStr, true, false);
 	}
 
 	public Date getStartDate() {

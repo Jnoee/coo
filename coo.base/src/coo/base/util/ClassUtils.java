@@ -101,7 +101,7 @@ public class ClassUtils {
 						.getContextClassLoader().getResources(packagePath);
 				while (packageUrls.hasMoreElements()) {
 					URL packageUrl = packageUrls.nextElement();
-					if (packageUrl.getProtocol().equals("jar")) {
+					if ("jar".equals(packageUrl.getProtocol())) {
 						classNames.addAll(getClassNamesFromJar(packageUrl,
 								packageName));
 					} else {

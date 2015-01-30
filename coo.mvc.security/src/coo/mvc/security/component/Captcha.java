@@ -74,14 +74,14 @@ public class Captcha implements Serializable {
 	 */
 	private String generateCode() {
 		char[] chars = captchaImageConfig.getChars().toCharArray();
-		StringBuffer challengeString = new StringBuffer();
+		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < captchaImageConfig.getLength(); i++) {
 			double randomValue = Math.random();
 			int randomIndex = (int) Math
 					.round(randomValue * (chars.length - 1));
 			char characterToShow = chars[randomIndex];
-			challengeString.append(characterToShow);
+			builder.append(characterToShow);
 		}
-		return challengeString.toString();
+		return builder.toString();
 	}
 }

@@ -27,8 +27,8 @@ public class CaptchaImageGenerator {
 	 * @return 返回生成的图片。
 	 */
 	public BufferedImage generateImage(String code) {
-		BufferedImage bufferedImage = new BufferedImage(captchaImageConfig
-				.getWidth(), captchaImageConfig.getHeight(),
+		BufferedImage bufferedImage = new BufferedImage(
+				captchaImageConfig.getWidth(), captchaImageConfig.getHeight(),
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics = bufferedImage.createGraphics();
 		setBackgroudColor(graphics);
@@ -82,28 +82,28 @@ public class CaptchaImageGenerator {
 	private void setCode(Graphics2D graphics, String code) {
 		graphics.setFont(captchaImageConfig.getFont());
 		FontMetrics fontMetrics = graphics.getFontMetrics();
-		int charDim = Math.max(fontMetrics.getMaxAdvance(), fontMetrics
-				.getHeight());
+		int charDim = Math.max(fontMetrics.getMaxAdvance(),
+				fontMetrics.getHeight());
 		float spaceForLetters = -captchaImageConfig.getMargin() * 2
 				+ captchaImageConfig.getWidth();
 		float spacePerChar = spaceForLetters
 				/ (captchaImageConfig.getLength() - 1.0f);
-
 		char[] allChars = code.toCharArray();
 		for (int i = 0; i < allChars.length; i++) {
 			char charToPrint = allChars[i];
 			int charWidth = fontMetrics.charWidth(charToPrint);
 			BufferedImage charImage = new BufferedImage(charDim, charDim,
 					BufferedImage.TYPE_INT_ARGB);
-			Graphics2D charGraphics = generateCharGraphics(charImage,
-					charToPrint, charDim);
+			Graphics2D charGraphics = generateCharGraphics(charImage, charDim);
 			int charX = (int) (0.5 * charDim - 0.5 * charWidth);
-			charGraphics.drawString("" + charToPrint, charX,
-					((charDim - fontMetrics.getAscent()) / 2 + fontMetrics
-							.getAscent()));
+			charGraphics.drawString(
+					"" + charToPrint,
+					charX,
+					(charDim - fontMetrics.getAscent()) / 2
+							+ fontMetrics.getAscent());
 			float x = captchaImageConfig.getMargin() + spacePerChar * (i)
 					- charDim / 2.0f;
-			int y = ((captchaImageConfig.getHeight() - charDim) / 2);
+			int y = (captchaImageConfig.getHeight() - charDim) / 2;
 			graphics.drawImage(charImage, (int) x, y, charDim, charDim, null,
 					null);
 			charGraphics.dispose();
@@ -115,15 +115,12 @@ public class CaptchaImageGenerator {
 	 * 
 	 * @param charImage
 	 *            字符图片
-	 * @param charToPrint
-	 *            字符
 	 * @param charDim
 	 *            字符尺寸
 	 * @return 返回字符图像。
 	 */
-	private Graphics2D generateCharGraphics(BufferedImage charImage,
-			char charToPrint, int charDim) {
-		int halfCharDim = (charDim / 2);
+	private Graphics2D generateCharGraphics(BufferedImage charImage, int charDim) {
+		int halfCharDim = charDim / 2;
 		Graphics2D charGraphics = charImage.createGraphics();
 		charGraphics.translate(halfCharDim, halfCharDim);
 		double angle = (Math.random() - 0.5) * captchaImageConfig.getRotation();

@@ -64,7 +64,7 @@ public class MessageSource extends ReloadableResourceBundleMessageSource {
 	 *            信息变量
 	 */
 	public void thrown(Throwable ex, String code, Object... vars) {
-		throw new BusinessException(get(code, vars));
+		throw new BusinessException(get(code, vars), ex);
 	}
 
 	@Override

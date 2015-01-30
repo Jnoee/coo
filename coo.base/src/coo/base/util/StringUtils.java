@@ -203,12 +203,12 @@ public abstract class StringUtils {
 		Assert.notNull(strs);
 		Assert.notNull(separator);
 
-		StringBuffer buf = new StringBuffer(256);
+		StringBuilder builder = new StringBuilder();
 		for (String str : strs) {
-			buf.append(str + separator);
+			builder.append(str + separator);
 		}
 
-		String result = buf.toString();
+		String result = builder.toString();
 		if (!separator.isEmpty()) {
 			result = substringBeforeLast(result, separator);
 		}

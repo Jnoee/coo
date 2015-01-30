@@ -57,36 +57,13 @@ public class Page<T> implements Serializable {
 	public Page(Integer recordCount, Integer pageNo, Integer pageSize) {
 		count = recordCount;
 		size = pageSize;
-
-		if (count % size > 0) {
-			pageCount = count / size + 1;
-		} else {
-			pageCount = count / size;
-		}
-
-		if (pageCount < pageNo) {
-			number = pageCount;
-		} else {
-			number = pageNo;
-		}
-
-		if (number <= 1) {
-			first = true;
-			previous = number;
-		} else {
-			first = false;
-			previous = number - 1;
-		}
-
-		if (number >= pageCount) {
-			last = true;
-			next = number;
-		} else {
-			last = false;
-			next = number + 1;
-		}
+		pageCount = count % size > 0 ? count / size + 1 : count / size;
+		number = pageCount < pageNo ? pageCount : pageNo;
+		first = number <= 1 ? true : false;
+		previous = number <= 1 ? number : number - 1;
+		last = number >= pageCount ? true : false;
+		next = number >= pageCount ? number : number + 1;
 		contents = new ArrayList<T>();
-
 		indexs = new ArrayList<Integer>();
 		for (int i = 1; i <= pageCount; i++) {
 			indexs.add(i);
