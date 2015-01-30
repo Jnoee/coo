@@ -1,10 +1,7 @@
 package coo.core.hibernate.search;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +24,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.query.DatabaseRetrievalMethod;
 import org.hibernate.search.query.ObjectLookupMethod;
 import org.slf4j.Logger;
@@ -35,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import coo.base.util.Assert;
 import coo.base.util.BeanUtils;
+import coo.base.util.CollectionUtils;
 import coo.base.util.StringUtils;
 
 /**
@@ -64,11 +61,15 @@ public class FullTextCriteria {
 	 *            Hibernate全文搜索Session
 	 * @param clazz
 	 *            实体class
+	 * @param 待搜索的字段
 	 */
-	public FullTextCriteria(FullTextSession session, Class<?> clazz) {
+	public FullTextCriteria(FullTextSession session, Class<?> clazz,
+			Map<String, Analyze> searchFields) {
 		this.session = session;
 		this.clazz = clazz;
-		initSearchFields();
+		if (CollectionUtils.isNotEmpty(searchFields)) {
+			this.searchFields.putAll(searchFields);
+		}
 	}
 
 	/**
@@ -180,19 +181,6 @@ public class FullTextCriteria {
 		if (query != null && occur != null) {
 			luceneQueries.add(new AttachLuceneQuery(query, occur));
 		}
-	}
-
-	/**
-	 * 设置Lucene的Query过滤条件。
-	 * 
-	 * @param query
-	 *            Lucene的Query过滤条件
-	 * @param occur
-	 *            与或关系
-	 */
-	@Deprecated
-	public void setLuceneQuery(Query query, Occur occur) {
-		addLuceneQuery(query, occur);
 	}
 
 	/**
@@ -343,67 +331,6 @@ public class FullTextCriteria {
 		}
 		log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), query);
 		return query;
-	}
-
-	/**
-	 * 获取绑定实体类以及一级关联类的全文索引名称集合。
-	 */
-	private void initSearchFields() {
-		// 获取实体本身声明的索引字段
-		searchFields.putAll(getIndexedFields(clazz));
-		// 获取实体标注为关联索引对象中声明的索引字段名
-		List<Field> embeddedEntityFields = BeanUtils.findField(clazz,
-				IndexedEmbedded.class);
-		for (Field embeddedEntityField : embeddedEntityFields) {
-			searchFields.putAll(getEmbeddedIndexedFields(embeddedEntityField));
-		}
-	}
-
-	/**
-	 * 获取指定类中声明为索引字段的属性名称列表。
-	 * 
-	 * @param clazz
-	 *            类
-	 * @return 返回指定类中声明为索引字段的属性名称列表。
-	 */
-	private Map<String, Analyze> getIndexedFields(Class<?> clazz) {
-		Map<String, Analyze> indexedFields = new LinkedHashMap<String, Analyze>();
-		for (Field field : BeanUtils.findField(clazz,
-				org.hibernate.search.annotations.Field.class)) {
-			String fieldName = field.getName();
-			Analyze analyze = field.getAnnotation(
-					org.hibernate.search.annotations.Field.class).analyze();
-			indexedFields.put(fieldName, analyze);
-		}
-		return indexedFields;
-	}
-
-	/**
-	 * 获取关联属性对象类中声明为索引字段的属性名称列表。
-	 * 
-	 * @param embeddedEntityField
-	 *            关联属性
-	 * @return 返回关联属性对象类中声明为索引字段的属性名称列表。
-	 */
-	private Map<String, Analyze> getEmbeddedIndexedFields(
-			Field embeddedEntityField) {
-		Class<?> embeddedClass = embeddedEntityField.getType();
-		if (Collection.class.isAssignableFrom(embeddedClass)) {
-			Type fc = embeddedEntityField.getGenericType();
-			if (fc instanceof ParameterizedType) {
-				ParameterizedType pt = (ParameterizedType) fc;
-				embeddedClass = (Class<?>) pt.getActualTypeArguments()[0];
-			}
-		}
-
-		String prefix = embeddedEntityField.getName() + ".";
-		Map<String, Analyze> embeddedIndexedFields = new LinkedHashMap<String, Analyze>();
-		Map<String, Analyze> indexedFields = getIndexedFields(embeddedClass);
-		for (String fieldName : indexedFields.keySet()) {
-			embeddedIndexedFields.put(prefix + fieldName,
-					indexedFields.get(fieldName));
-		}
-		return embeddedIndexedFields;
 	}
 
 	public Boolean getLookupCache() {
