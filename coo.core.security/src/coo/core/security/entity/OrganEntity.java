@@ -13,6 +13,8 @@ import javax.persistence.OrderBy;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.bridge.builtin.IntegerBridge;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.core.security.annotations.LogBean;
@@ -42,7 +44,7 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	@LogField(text = "名称")
 	private String name;
 	/** 排序 */
-	@Field(analyze = Analyze.NO)
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IntegerBridge.class))
 	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 下级机构 */

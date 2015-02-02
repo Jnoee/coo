@@ -37,7 +37,7 @@ public class ClassUtils {
 			String... packageNames) {
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		for (Class<?> targetClass : findClasses(packageNames)) {
-			if (targetClass != parentClass
+			if (!targetClass.equals(parentClass)
 					&& parentClass.isAssignableFrom(targetClass)
 					&& !Modifier.isAbstract(targetClass.getModifiers())) {
 				classes.add(targetClass);
@@ -78,7 +78,7 @@ public class ClassUtils {
 		for (String className : findClassNames(packageNames)) {
 			try {
 				classes.add(Class.forName(className));
-			} catch (Throwable e) {
+			} catch (Exception e) {
 				log.warn("加载[" + className + "]类时发生异常。", e);
 			}
 		}
@@ -101,7 +101,7 @@ public class ClassUtils {
 						.getContextClassLoader().getResources(packagePath);
 				while (packageUrls.hasMoreElements()) {
 					URL packageUrl = packageUrls.nextElement();
-					if (packageUrl.getProtocol().equals("jar")) {
+					if ("jar".equals(packageUrl.getProtocol())) {
 						classNames.addAll(getClassNamesFromJar(packageUrl,
 								packageName));
 					} else {

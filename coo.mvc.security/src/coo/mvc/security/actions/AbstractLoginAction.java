@@ -56,12 +56,10 @@ public abstract class AbstractLoginAction {
 	@RequestMapping("login-auth")
 	public String auth(Model model, HttpServletRequest request,
 			LoginModel loginModel, BindingResult errors) {
-		if (authCounter.isOver()) {
-			if (!captcha.validate(loginModel.getCode())) {
-				errors.reject("security.code.wrong");
-				model.addAttribute(authCounter);
-				return "login";
-			}
+		if (authCounter.isOver() && !captcha.validate(loginModel.getCode())) {
+			errors.reject("security.code.wrong");
+			model.addAttribute(authCounter);
+			return "login";
 		}
 		try {
 			securityService.signIn(loginModel.getUsername(),

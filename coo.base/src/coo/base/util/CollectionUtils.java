@@ -2,14 +2,10 @@ package coo.base.util;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * 集合工具类。
@@ -23,7 +19,7 @@ public abstract class CollectionUtils {
 	 * @return 返回指定的集合是否为空。
 	 */
 	public static Boolean isEmpty(Collection<?> collection) {
-		return (collection == null || collection.isEmpty());
+		return collection == null || collection.isEmpty();
 	}
 
 	/**
@@ -45,7 +41,7 @@ public abstract class CollectionUtils {
 	 * @return 返回指定的数组是否为空。
 	 */
 	public static Boolean isEmpty(Object[] array) {
-		return (array == null || array.length == 0);
+		return array == null || array.length == 0;
 	}
 
 	/**
@@ -67,7 +63,7 @@ public abstract class CollectionUtils {
 	 * @return 返回指定的Map是否为空。
 	 */
 	public static Boolean isEmpty(Map<?, ?> map) {
-		return (map == null || map.isEmpty());
+		return map == null || map.isEmpty();
 	}
 
 	/**
@@ -91,7 +87,7 @@ public abstract class CollectionUtils {
 	 *            列表
 	 */
 	public static <T> void removeDuplicate(List<T> list) {
-		HashSet<T> set = new HashSet<T>(list);
+		Set<T> set = new HashSet<T>(list);
 		list.clear();
 		list.addAll(set);
 	}
@@ -131,74 +127,5 @@ public abstract class CollectionUtils {
 				target.add(o);
 			}
 		}
-	}
-
-	/**
-	 * 根据键对Map进行排序。
-	 * 
-	 * @param <K>
-	 *            键类型
-	 * @param <V>
-	 *            值类型
-	 * @param map
-	 *            Map
-	 * @param asc
-	 *            是否升序
-	 * @return 返回排序后的Map。
-	 */
-	public static <K, V> Map<K, V> sortMapByKey(Map<K, V> map, final Boolean asc) {
-		List<Entry<K, V>> entries = new LinkedList<Entry<K, V>>(map.entrySet());
-		Collections.sort(entries, new Comparator<Entry<K, V>>() {
-			@SuppressWarnings("unchecked")
-			public int compare(Entry<K, V> o1, Entry<K, V> o2) {
-				if (asc) {
-					return ((Comparable<K>) o1.getKey()).compareTo(o2.getKey());
-				} else {
-					return -((Comparable<K>) o1.getKey()).compareTo(o2.getKey());
-				}
-			}
-		});
-
-		Map<K, V> result = new LinkedHashMap<K, V>();
-		for (Entry<K, V> entry : entries) {
-			result.put(entry.getKey(), entry.getValue());
-		}
-		return result;
-	}
-
-	/**
-	 * 根据值对Map进行排序。
-	 * 
-	 * @param <K>
-	 *            键类型
-	 * @param <V>
-	 *            值类型
-	 * @param map
-	 *            Map
-	 * @param asc
-	 *            是否升序
-	 * @return 返回排序后的Map。
-	 */
-	public static <K, V> Map<K, V> sortMapByValue(Map<K, V> map,
-			final Boolean asc) {
-		List<Entry<K, V>> entries = new LinkedList<Entry<K, V>>(map.entrySet());
-		Collections.sort(entries, new Comparator<Entry<K, V>>() {
-			@SuppressWarnings("unchecked")
-			public int compare(Entry<K, V> o1, Entry<K, V> o2) {
-				if (asc) {
-					return ((Comparable<V>) o1.getValue()).compareTo(o2
-							.getValue());
-				} else {
-					return -((Comparable<V>) o1.getValue()).compareTo(o2
-							.getValue());
-				}
-			}
-		});
-
-		Map<K, V> result = new LinkedHashMap<K, V>();
-		for (Entry<K, V> entry : entries) {
-			result.put(entry.getKey(), entry.getValue());
-		}
-		return result;
 	}
 }

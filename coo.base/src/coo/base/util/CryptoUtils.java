@@ -34,15 +34,15 @@ public class CryptoUtils {
 	 */
 	public static String genRandomCode(String src, Integer length) {
 		char[] chars = src.toCharArray();
-		StringBuffer challengeString = new StringBuffer();
+		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			double randomValue = Math.random();
 			int randomIndex = (int) Math
 					.round(randomValue * (chars.length - 1));
 			char characterToShow = chars[randomIndex];
-			challengeString.append(characterToShow);
+			builder.append(characterToShow);
 		}
-		return challengeString.toString();
+		return builder.toString();
 	}
 
 	/**

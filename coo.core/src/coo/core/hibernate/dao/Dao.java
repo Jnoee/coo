@@ -2,8 +2,13 @@ package coo.core.hibernate.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -25,6 +30,8 @@ import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.transform.ResultTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +53,7 @@ public class Dao<T> {
 	@Resource
 	private SessionFactory sessionFactory;
 	private Class<T> clazz;
+	private Map<String, Analyze> searchFields = new LinkedHashMap<String, Analyze>();
 
 	/**
 	 * 构造方法。
@@ -55,6 +63,7 @@ public class Dao<T> {
 	 */
 	public Dao(Class<T> clazz) {
 		this.clazz = clazz;
+		initSearchFields();
 	}
 
 	/**
@@ -518,7 +527,7 @@ public class Dao<T> {
 	 * @return 返回全文搜索查询条件。
 	 */
 	public FullTextCriteria createFullTextCriteria() {
-		return new FullTextCriteria(getFullTextSession(), clazz);
+		return new FullTextCriteria(getFullTextSession(), clazz, searchFields);
 	}
 
 	/**
@@ -659,9 +668,8 @@ public class Dao<T> {
 		fromHql = "from " + StringUtils.substringAfter(fromHql, "from");
 		fromHql = StringUtils.substringBefore(fromHql, "order by");
 		String countHql = "select count(*) " + fromHql;
-		int count = Integer.parseInt(createQuery(countHql, values)
-				.uniqueResult().toString());
-		return count;
+		return Integer.valueOf(createQuery(countHql, values).uniqueResult()
+				.toString());
 	}
 
 	/**
@@ -730,5 +738,66 @@ public class Dao<T> {
 	private String getIdName() {
 		ClassMetadata meta = sessionFactory.getClassMetadata(clazz);
 		return meta.getIdentifierPropertyName();
+	}
+
+	/**
+	 * 获取绑定实体类以及一级关联类的全文索引名称集合。
+	 */
+	private void initSearchFields() {
+		// 获取实体本身声明的索引字段
+		searchFields.putAll(getIndexedFields(clazz));
+		// 获取实体标注为关联索引对象中声明的索引字段名
+		List<Field> embeddedEntityFields = BeanUtils.findField(clazz,
+				IndexedEmbedded.class);
+		for (Field embeddedEntityField : embeddedEntityFields) {
+			searchFields.putAll(getEmbeddedIndexedFields(embeddedEntityField));
+		}
+	}
+
+	/**
+	 * 获取指定类中声明为索引字段的属性名称列表。
+	 * 
+	 * @param clazz
+	 *            类
+	 * @return 返回指定类中声明为索引字段的属性名称列表。
+	 */
+	private Map<String, Analyze> getIndexedFields(Class<?> clazz) {
+		Map<String, Analyze> indexedFields = new LinkedHashMap<String, Analyze>();
+		for (Field field : BeanUtils.findField(clazz,
+				org.hibernate.search.annotations.Field.class)) {
+			String fieldName = field.getName();
+			Analyze analyze = field.getAnnotation(
+					org.hibernate.search.annotations.Field.class).analyze();
+			indexedFields.put(fieldName, analyze);
+		}
+		return indexedFields;
+	}
+
+	/**
+	 * 获取关联属性对象类中声明为索引字段的属性名称列表。
+	 * 
+	 * @param embeddedEntityField
+	 *            关联属性
+	 * @return 返回关联属性对象类中声明为索引字段的属性名称列表。
+	 */
+	private Map<String, Analyze> getEmbeddedIndexedFields(
+			Field embeddedEntityField) {
+		Class<?> embeddedClass = embeddedEntityField.getType();
+		if (Collection.class.isAssignableFrom(embeddedClass)) {
+			Type fc = embeddedEntityField.getGenericType();
+			if (fc instanceof ParameterizedType) {
+				ParameterizedType pt = (ParameterizedType) fc;
+				embeddedClass = (Class<?>) pt.getActualTypeArguments()[0];
+			}
+		}
+
+		String prefix = embeddedEntityField.getName() + ".";
+		Map<String, Analyze> embeddedIndexedFields = new LinkedHashMap<String, Analyze>();
+		Map<String, Analyze> indexedFields = getIndexedFields(embeddedClass);
+		for (String fieldName : indexedFields.keySet()) {
+			embeddedIndexedFields.put(prefix + fieldName,
+					indexedFields.get(fieldName));
+		}
+		return embeddedIndexedFields;
 	}
 }
