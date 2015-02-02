@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.bridge.builtin.IntegerBridge;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.core.security.annotations.LogField;
@@ -50,7 +52,7 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	@LogField(text = "启用状态")
 	private Boolean enabled = true;
 	/** 排序 */
-	@Field(analyze = Analyze.NO)
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IntegerBridge.class))
 	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 用户设置 */
