@@ -104,6 +104,9 @@ public abstract class CollectionUtils {
 	 * @return 如果数组中包含指定元素返回true，否则返回false。
 	 */
 	public static <T> Boolean contains(T[] elements, T elementToFind) {
+		if (isEmpty(elements)) {
+			return false;
+		}
 		List<T> elementsList = Arrays.asList(elements);
 		return elementsList.contains(elementToFind);
 	}
