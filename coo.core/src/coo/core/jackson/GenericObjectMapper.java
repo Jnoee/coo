@@ -2,9 +2,9 @@ package coo.core.jackson;
 
 import java.text.SimpleDateFormat;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
@@ -19,7 +19,8 @@ public class GenericObjectMapper extends ObjectMapper {
 	 * 构造方法。
 	 */
 	public GenericObjectMapper() {
-		configure(SerializationFeature.INDENT_OUTPUT, true);
+		// 值为null的属性不输出
+		setSerializationInclusion(Include.NON_NULL);
 		configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		setDateFormat(new SimpleDateFormat(DateUtils.SECOND));
 		Hibernate4Module hibernateModule = new Hibernate4Module();

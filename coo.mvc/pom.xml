@@ -9,6 +9,7 @@
 	<artifactId>coo.mvc</artifactId>
 	<properties>
 		<spring.version>4.1.4.RELEASE</spring.version>
+		<echarts.version>2.1.8.3</echarts.version>
 		<servlet.version>2.5</servlet.version>
 	</properties>
 	<dependencies>
@@ -26,6 +27,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.abel533</groupId>
+			<artifactId>ECharts</artifactId>
+			<version>${echarts.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

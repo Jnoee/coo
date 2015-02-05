@@ -91,6 +91,8 @@
 		location="classpath:/coo/mvc/static/dwz/dwz/" />
 	<mvc:resources mapping="/fix/**"
 		location="classpath:/coo/mvc/static/dwz/fix/" />
+	<mvc:resources mapping="/ecs/**"
+		location="classpath:/coo/mvc/static/echarts/" />
 
 	<mvc:annotation-driven conversion-service="conversionService" />
 

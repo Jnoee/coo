@@ -21,6 +21,7 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
 		addAutoImport("s", "mvc.ftl");
 		addAutoImport("std", "std.ftl");
 		addAutoImport("dwz", "dwz.ftl");
+		addAutoImport("ecs", "ecs.ftl");
 		addStaticClass(StringUtils.class);
 		addStaticClass(DateUtils.class);
 		addStaticClass(DwzTargetType.class);
