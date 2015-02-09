@@ -8,6 +8,8 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.MassIndexer;
 import org.hibernate.search.Search;
 import org.hibernate.search.annotations.Indexed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,7 @@ import coo.core.hibernate.EntityClassBeanFactoryPostProcessor;
  */
 @Component
 public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private List<Class<?>> indexedEntityClasses = new ArrayList<Class<?>>();
 
 	@Override
@@ -40,7 +43,9 @@ public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
 	 */
 	public void startAndWait(Class<?>... entityClasses) {
 		try {
+			log.info("开始重建索引...");
 			createIndexer(entityClasses).startAndWait();
+			log.info("完成重建索引。");
 		} catch (Exception e) {
 			throw new UncheckedException("重建全文索引时发生异常。", e);
 		}
