@@ -94,8 +94,7 @@
 	<!-- 设置定时器的annotation生效 -->
 	<task:annotation-driven />
 	<!-- 定义默认异步任务组件 -->
-	<task:executor id="taskExecutor" pool-size="${task.executor.pool.size:300}"
-		queue-capacity="${task.executor.queue.size:3000}" />
+	<task:executor id="taskExecutor" pool-size="${task.executor.pool.size:20}" />
 	<!-- 加载coo.core下的组件 -->
 	<context:component-scan base-package="coo.core" />
 </beans>
