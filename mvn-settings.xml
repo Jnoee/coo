@@ -3,4 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 	<localRepository>D:\Work\Repository</localRepository>
+	<servers>
+		<server>
+			<id>github</id>
+			<username>username</username>
+			<password>password</password>
+		</server>
+		<server>
+			<id>oss</id>
+			<username>username</username>
+			<password>password</password>
+		</server>
+	</servers>
 </settings>
