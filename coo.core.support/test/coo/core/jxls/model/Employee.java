@@ -1,4 +1,4 @@
-package coo.core.report.model;
+package coo.core.jxls.model;
 
 import java.util.Date;
 

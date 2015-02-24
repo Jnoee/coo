@@ -1,8 +1,11 @@
-package coo.core.report.jxls;
+package coo.core.jxls;
 
 import java.io.FileOutputStream;
 
 import org.junit.Test;
+
+import coo.core.jxls.Excel;
+import coo.core.jxls.ExcelData;
 
 public class SheetsSample extends AbstractSample {
 	@Test

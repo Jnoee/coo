@@ -1,11 +1,11 @@
-package coo.core.report.jxls;
+package coo.core.jxls;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import coo.base.util.DateUtils;
-import coo.core.report.model.Department;
-import coo.core.report.model.Employee;
+import coo.core.jxls.model.Department;
+import coo.core.jxls.model.Employee;
 
 public abstract class AbstractSample {
 	protected String outputDir = "test/META-INF/coo/report";

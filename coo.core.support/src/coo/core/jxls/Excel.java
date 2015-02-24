@@ -1,4 +1,4 @@
-package coo.core.report.jxls;
+package coo.core.jxls;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

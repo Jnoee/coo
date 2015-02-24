@@ -1,10 +1,12 @@
-package coo.core.report.jxls;
+package coo.core.jxls;
 
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+
+import coo.core.jxls.Excel;
 
 public class GroupingSample extends AbstractSample {
 	@Test
