@@ -184,6 +184,7 @@
 		<module>coo.mvc.security</module>
 	</modules>
 	<scm>
+		<url>https://github.com/jnoee/coo</url>
 		<connection>scm:git:https://github.com/jnoee/coo.git</connection>
 		<developerConnection>scm:git:https://github.com/jnoee/coo.git</developerConnection>
 		<tag>coo-2.1.3</tag>
