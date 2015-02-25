@@ -31,7 +31,7 @@ public class IEnumListUserType extends AbstractUserType {
 		try {
 			String value = getValue(rs, names[0], session);
 			if (value != null) {
-				Field field = getField(rs, names[0], owner);
+				Field field = getField(owner, names[0]);
 				Class<? extends IEnum> enumClass = (Class<? extends IEnum>) BeanUtils
 						.getGenericFieldType(field);
 				List<IEnum> enums = new ArrayList<IEnum>();
