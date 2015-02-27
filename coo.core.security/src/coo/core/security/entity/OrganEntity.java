@@ -48,11 +48,11 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	@LogField(text = "排序")
 	private Integer ordinal;
 	/** 下级机构 */
-	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@OrderBy("ordinal,name")
 	private List<O> childs = new ArrayList<O>();
 	/** 关联职务 */
-	@OneToMany(mappedBy = "organ", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "organ", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<A> actors = new ArrayList<A>();
 
 	public O getParent() {

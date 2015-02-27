@@ -510,7 +510,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			messageSource.thrown("actor.change.not.allow");
 		}
 		currentUser.getSettings().setDefaultActor(actor);
-		currentUser = userDao.merge(currentUser);
 		loginRealm.clearCache();
 	}
 

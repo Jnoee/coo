@@ -39,7 +39,7 @@ public abstract class RoleEntity<U extends UserEntity<U, A, ?>, A extends ActorE
 	@LogField(text = "权限")
 	private BitCode permissions;
 	/** 关联职务 */
-	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<A> actors = new ArrayList<A>();
 
 	public String getName() {

@@ -60,7 +60,7 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	@PrimaryKeyJoinColumn
 	private S settings;
 	/** 用户职务 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@OrderBy("createDate")
 	private List<A> actors = new ArrayList<A>();
 
