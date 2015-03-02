@@ -5,6 +5,9 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.Column;
 
@@ -23,6 +26,7 @@ import coo.base.util.StringUtils;
  * 用户自定义类型抽象基类。
  */
 public abstract class AbstractUserType implements UserType {
+	private static Map<Class,List<Field>> ownerFields = new ConcurrentHashMap<>();
 	/**
 	 * 根据字段标签名获取源对象中对应字段的属性对象。
 	 * 
@@ -38,17 +42,21 @@ public abstract class AbstractUserType implements UserType {
 		try {
 			String columnName = rs.getMetaData().getColumnName(
 					rs.findColumn(columnLabel));
+			List<Field> fields = ownerFields.get(owner.getClass());
+			if(fields == null) {
+				fields = BeanUtils.getAllDeclaredField(owner.getClass());
+				ownerFields.put(owner.getClass(),fields);
+			}
 			// 如果使用了@Column注解，优先用@Column注解设定的名称进行匹配
-			for (Field field : BeanUtils.findField(owner.getClass(),
-					Column.class)) {
+			for (Field field : fields) {
 				Column column = field.getAnnotation(Column.class);
-				if (StringUtils.isNotBlank(column.name())
+				if (column!=null && StringUtils.isNotBlank(column.name())
 						&& column.name().equalsIgnoreCase(columnName)) {
 					return field;
 				}
 			}
 			// 如果从@Column注解没有找到则从全部属性中进行匹配
-			for (Field field : BeanUtils.getAllDeclaredField(owner.getClass())) {
+			for (Field field : fields) {
 				if (field.isAnnotationPresent(Type.class)
 						&& field.getName().equalsIgnoreCase(columnName)) {
 					return field;
