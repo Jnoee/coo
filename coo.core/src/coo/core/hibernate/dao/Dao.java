@@ -6,6 +6,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -540,6 +541,18 @@ public class Dao<T> {
 	@SuppressWarnings("unchecked")
 	public List<T> searchBy(FullTextCriteria criteria) {
 		return criteria.generateQuery().list();
+	}
+
+	/**
+	 * 根据全文搜索查询条件进行全文搜索。
+	 * 
+	 * @param criteria
+	 *            全文搜索查询条件
+	 * @return 返回符合查询条件的业务实体迭代器，迭代器中的对象全部是懒加载对象。
+	 */
+	@SuppressWarnings("unchecked")
+	public Iterator<T> searchByLazy(FullTextCriteria criteria) {
+		return criteria.generateQuery().iterate();
 	}
 
 	/**
