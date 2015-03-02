@@ -50,7 +50,7 @@ public abstract class AbstractUserType implements UserType {
 			// 如果使用了@Column注解，优先用@Column注解设定的名称进行匹配
 			for (Field field : fields) {
 				Column column = field.getAnnotation(Column.class);
-				if (column!=null && StringUtils.isNotBlank(column.name())
+				if (column != null && StringUtils.isNotBlank(column.name())
 						&& column.name().equalsIgnoreCase(columnName)) {
 					return field;
 				}
