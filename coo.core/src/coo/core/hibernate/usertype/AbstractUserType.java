@@ -26,7 +26,8 @@ import coo.base.util.StringUtils;
  * 用户自定义类型抽象基类。
  */
 public abstract class AbstractUserType implements UserType {
-	private static Map<Class,List<Field>> ownerFields = new ConcurrentHashMap<>();
+	private static Map<Class<?>, List<Field>> ownerFields = new ConcurrentHashMap<>();
+
 	/**
 	 * 根据字段标签名获取源对象中对应字段的属性对象。
 	 * 
@@ -43,9 +44,9 @@ public abstract class AbstractUserType implements UserType {
 			String columnName = rs.getMetaData().getColumnName(
 					rs.findColumn(columnLabel));
 			List<Field> fields = ownerFields.get(owner.getClass());
-			if(fields == null) {
+			if (fields == null) {
 				fields = BeanUtils.getAllDeclaredField(owner.getClass());
-				ownerFields.put(owner.getClass(),fields);
+				ownerFields.put(owner.getClass(), fields);
 			}
 			// 如果使用了@Column注解，优先用@Column注解设定的名称进行匹配
 			for (Field field : fields) {
