@@ -64,7 +64,9 @@
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer">
-			<bean class="coo.mvc.handler.GenericWebBindingInitializer" />
+			<bean class="coo.mvc.handler.GenericWebBindingInitializer">
+				<property name="conversionService" ref="conversionService" />
+			</bean>
 		</property>
 	</bean>
 
