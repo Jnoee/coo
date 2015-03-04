@@ -532,9 +532,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据全文搜索查询条件进行全文搜索，查询返回的数据量较小时使用该方法，当数据量较大时应使用
-	 * {@link #searchByLazy(FullTextCriteria)}方法。
-	 * 因为当数据量较大时，该方法生成的SQL语句长度可能超过数据库的限制而导致异常。
+	 * 根据全文搜索查询条件进行全文搜索。该方法直接返回业务实体列表，当数据量较大时该方法生成的SQL语句长度可能超过数据库的限制而导致异常。
 	 * 
 	 * @param criteria
 	 *            全文搜索查询条件
@@ -546,15 +544,44 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 根据全文搜索查询条件进行全文搜索，查询返回的数据量较大时使用该方法，该方法不会生成超长的SQL语句。
+	 * 根据全文搜索查询条件进行全文搜索。该方法返回懒加载的实体列表，不会生成超长的SQL语句，遍历时才一条一条获取。
 	 * 
 	 * @param criteria
 	 *            全文搜索查询条件
-	 * @return 返回符合查询条件的业务实体迭代器，迭代器中的对象全部是懒加载对象。
+	 * @return 返回符合查询条件的业务实体懒加载对象列表。
 	 */
 	@SuppressWarnings("unchecked")
 	public Iterator<T> searchByLazy(FullTextCriteria criteria) {
 		return criteria.generateQuery().iterate();
+	}
+
+	/**
+	 * 根据全文搜索查询条件进行全文搜索。
+	 * 
+	 * @param criteria
+	 *            全文搜索查询条件
+	 * @param maxResults
+	 *            最大返回结果数
+	 * @return 返回符合查询条件的业务实体列表。
+	 */
+	@SuppressWarnings("unchecked")
+	public List<T> searchBy(FullTextCriteria criteria, Integer maxResults) {
+		return criteria.generateQuery().setMaxResults(maxResults).list();
+	}
+
+	/**
+	 * 根据全文搜索查询条件进行全文搜索。
+	 * 
+	 * @param criteria
+	 *            全文搜索查询条件
+	 * @param maxResults
+	 *            最大返回结果数
+	 * @return 返回符合查询条件的业务实体懒加载对象列表。
+	 */
+	@SuppressWarnings("unchecked")
+	public Iterator<T> searchByLazy(FullTextCriteria criteria,
+			Integer maxResults) {
+		return criteria.generateQuery().setMaxResults(maxResults).iterate();
 	}
 
 	/**
