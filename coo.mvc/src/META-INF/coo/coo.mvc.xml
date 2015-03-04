@@ -59,6 +59,14 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- 数据绑定配置 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="coo.mvc.handler.GenericWebBindingInitializer" />
+		</property>
+	</bean>
 
 	<!-- 国际化配置 -->
 	<bean id="localeResolver"
