@@ -60,16 +60,6 @@
 		</property>
 	</bean>
 	
-	<!-- 数据绑定配置 -->
-	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="webBindingInitializer">
-			<bean class="coo.mvc.handler.GenericWebBindingInitializer">
-				<property name="conversionService" ref="conversionService" />
-			</bean>
-		</property>
-	</bean>
-
 	<!-- 国际化配置 -->
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
@@ -88,6 +78,17 @@
 
 	<!-- 转换器配置 -->
 	<bean id="conversionService" class="coo.mvc.config.ConversionServiceFactoryBean" />
+	
+	<!-- 数据绑定配置 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="coo.mvc.handler.GenericWebBindingInitializer">
+				<property name="conversionService" ref="conversionService" />
+				<property name="validator" ref="validator" />
+			</bean>
+		</property>
+	</bean>
 
 	<mvc:view-controller path="/" view-name="forward:/index" />
 	<mvc:view-controller path="/500" view-name="/500" />
@@ -104,7 +105,7 @@
 	<mvc:resources mapping="/ecs/**"
 		location="classpath:/coo/mvc/static/echarts/" />
 
-	<mvc:annotation-driven conversion-service="conversionService" />
+	<mvc:annotation-driven />
 
 	<context:component-scan base-package="coo.mvc" />
 </beans>
