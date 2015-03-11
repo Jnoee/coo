@@ -20,7 +20,6 @@
 		<druid.version>1.0.11</druid.version>
 		<h2.version>1.4.184</h2.version>
 		<aspectj.version>1.8.4</aspectj.version>
-		<quartz.version>2.2.1</quartz.version>
 		<jackson.version>2.3.0</jackson.version>
 	</properties>
 	<dependencies>
@@ -115,17 +114,6 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>${quartz.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>c3p0</artifactId>
-					<groupId>c3p0</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
