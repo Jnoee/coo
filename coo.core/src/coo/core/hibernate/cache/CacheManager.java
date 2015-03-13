@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CacheManager {
-
 	@Resource
 	private SessionFactory sessionFactory;
 
@@ -25,6 +24,7 @@ public class CacheManager {
 	 * 
 	 * @return 缓存名称列表。
 	 */
+	@SuppressWarnings("unchecked")
 	public List<String> getAllCacheEntity() {
 		List<String> result = new ArrayList<>();
 		for (Map.Entry<String, ClassMetadata> entry : sessionFactory
@@ -49,5 +49,4 @@ public class CacheManager {
 			cache.evictEntityRegion(region);
 		}
 	}
-
 }
