@@ -12,10 +12,10 @@ import org.hibernate.metadata.ClassMetadata;
 import org.springframework.stereotype.Component;
 
 /**
- * 缓存维护。
+ * 缓存管理组件。
  */
 @Component
-public class CacheManager {
+public class HiCacheManager {
 	@Resource
 	private SessionFactory sessionFactory;
 
@@ -26,15 +26,15 @@ public class CacheManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<String> getAllCacheEntity() {
-		List<String> result = new ArrayList<>();
+		List<String> cacheNames = new ArrayList<>();
 		for (Map.Entry<String, ClassMetadata> entry : sessionFactory
 				.getAllClassMetadata().entrySet()) {
 			if (entry.getValue().getMappedClass()
 					.isAnnotationPresent(Cache.class)) {
-				result.add(entry.getKey());
+				cacheNames.add(entry.getKey());
 			}
 		}
-		return result;
+		return cacheNames;
 	}
 
 	/**
