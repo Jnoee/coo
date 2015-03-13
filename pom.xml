@@ -190,6 +190,17 @@
 		<tag>HEAD</tag>
 	</scm>
 	<distributionManagement>
+		<repository>
+			<id>mopon-nexus</id>
+			<url>http://172.16.35.13:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>mopon-nexus</id>
+			<url>http://172.16.35.13:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<!-- 
+	<distributionManagement>
 		<snapshotRepository>
 			<id>oss</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
@@ -199,4 +210,5 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
+	 -->
 </project>
