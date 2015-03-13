@@ -1,3 +1,14 @@
+v2.1.17
+01. 修改EnityClassBeanFactoryPostProcessor。
+02. 修改实体缓存管理组件。
+
+v2.1.16
+01. 增加实体缓存管理组件。
+
+v2.1.15
+01. 移除quartz依赖，修改定时任务配置。
+02. 修改Spring默认BindData数组自增长256长度限制。
+
 v2.1.14
 01. 删除ichartsjs支持代码，已用echarts替换。
 02. jxls包名修改。
