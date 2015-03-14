@@ -1,6 +1,7 @@
 v2.1.17
 01. 修改EnityClassBeanFactoryPostProcessor。
 02. 修改实体缓存管理组件。
+03. 修改实体全文索引管理组件。
 
 v2.1.16
 01. 增加实体缓存管理组件。

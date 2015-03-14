@@ -17,10 +17,10 @@ import coo.base.exception.UncheckedException;
 import coo.core.hibernate.EntityClassBeanFactoryPostProcessor;
 
 /**
- * 全文索引组件。
+ * 实体全文索引管理组件。
  */
 @Component
-public class FullTextIndexer extends EntityClassBeanFactoryPostProcessor {
+public class EntityIndexManager extends EntityClassBeanFactoryPostProcessor {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private List<Class<?>> indexedEntityClasses = new ArrayList<Class<?>>();
 
