@@ -243,7 +243,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			String userId = (String) SecurityUtils.getSubject().getPrincipal();
 			return userDao.get(userId);
 		} catch (Exception e) {
-			throw new UnauthenticatedException();
+			throw new UnauthenticatedException("获取当前登录用户时发生异常。", e);
 		}
 	}
 
