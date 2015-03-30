@@ -139,12 +139,12 @@
 	<div class="formBar">
 	    <ul>
 	        <#nested>
-				<#if showSubmitBtn>
-	        <@submitBtn text="${submitBtnText}" />
-	    </#if>
-				<#if showCancelBtn>
-	        <@cancelBtn text="${cancelBtnText}" />
-	    </#if>
+			<#if showSubmitBtn>
+        		<@submitBtn text="${submitBtnText}" />
+    		</#if>
+			<#if showCancelBtn>
+        		<@cancelBtn text="${cancelBtnText}" />
+    		</#if>
 	    </ul>
 	</div>
 </#macro>
