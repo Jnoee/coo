@@ -248,6 +248,21 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	}
 
 	/**
+	 * 获取默认操作人。
+	 * 
+	 * @return 当存在当前登录用户时返回当前登录用户，否则返回超级管理员用户。
+	 */
+	@Transactional(readOnly = true)
+	public U getDefaultOperator() {
+		try {
+			String userId = (String) SecurityUtils.getSubject().getPrincipal();
+			return userDao.get(userId);
+		} catch (Exception e) {
+			return getAdminUser();
+		}
+	}
+
+	/**
 	 * 获取当前登录用户默认职务所属机构。
 	 * 
 	 * @return 返回当前登录用户默认职务所属机构。

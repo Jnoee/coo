@@ -10,7 +10,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.apache.shiro.util.ThreadContext;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
@@ -54,29 +53,17 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	 * 自动填充创建人、创建时间、修改人、修改时间。
 	 */
 	public void autoFillIn() {
-		if (StringUtils.isEmpty(getId())) {
-			creator = getOperator();
-			createDate = new Date();
-			modifier = getOperator();
-			modifyDate = new Date();
-		} else {
-			modifier = getOperator();
-			modifyDate = new Date();
-		}
-	}
-
-	/**
-	 * 从当前上下文中获取操作人。
-	 * 
-	 * @return 如果存在当前登录用户返回当前登录用户，否则返回系统管理员用户。
-	 */
-	private U getOperator() {
 		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
-		if (ThreadContext.getSubject() == null) {
-			return securityService.getAdminUser();
+		U operator = securityService.getDefaultOperator();
+		if (StringUtils.isEmpty(getId())) {
+			setCreator(operator);
+			setCreateDate(new Date());
+			setModifier(operator);
+			setModifyDate(new Date());
 		} else {
-			return securityService.getCurrentUser();
+			setModifier(operator);
+			setModifyDate(new Date());
 		}
 	}
 
