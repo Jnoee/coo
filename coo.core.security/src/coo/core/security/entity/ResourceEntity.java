@@ -56,14 +56,15 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
 		U operator = securityService.getDefaultOperator();
+		Date now = new Date();
 		if (StringUtils.isEmpty(getId())) {
 			setCreator(operator);
-			setCreateDate(new Date());
+			setCreateDate(now);
 			setModifier(operator);
-			setModifyDate(new Date());
+			setModifyDate(now);
 		} else {
 			setModifier(operator);
-			setModifyDate(new Date());
+			setModifyDate(now);
 		}
 	}
 
