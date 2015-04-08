@@ -321,9 +321,12 @@ public class FullTextCriteria {
 		if (StringUtils.isEmpty(keyword)) {
 			query.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
 		} else {
-			query.add(
-					generateMultiFieldQuery(QueryParser.escape(keyword),
-							searchFields), Occur.MUST);
+			// 支持空格分隔多个关键词，之间是“与”的关系
+			for (String key : keyword.trim().split(" ")) {
+				query.add(
+						generateMultiFieldQuery(QueryParser.escape(key),
+								searchFields), Occur.MUST);
+			}
 		}
 		log.debug("全文搜索包含字段：{}", searchFields.keySet());
 		for (AttachLuceneQuery attachLuceneQuery : luceneQueries) {
