@@ -119,7 +119,7 @@ public class Dao<T> {
 	 * 持久化业务实体。
 	 * 
 	 * @param entity
-	 *            待持久化业务实体
+	 *            业务实体
 	 */
 	public void persist(T entity) {
 		getSession().persist(entity);
@@ -129,7 +129,7 @@ public class Dao<T> {
 	 * 保存或更新业务实体。
 	 * 
 	 * @param entity
-	 *            待保存业务实体
+	 *            业务实体
 	 */
 	public void save(T entity) {
 		getSession().save(entity);
@@ -139,7 +139,7 @@ public class Dao<T> {
 	 * 更新业务实体。
 	 * 
 	 * @param entity
-	 *            待更新业务实体
+	 *            业务实体
 	 */
 	public void update(T entity) {
 		getSession().update(entity);
@@ -149,7 +149,7 @@ public class Dao<T> {
 	 * 合并业务实体。
 	 * 
 	 * @param entity
-	 *            待更新业务实体
+	 *            业务实体
 	 * @return 返回更新后的业务实体（持久状态的）。
 	 */
 	@SuppressWarnings("unchecked")
@@ -161,17 +161,38 @@ public class Dao<T> {
 	 * 保存业务实体。（复用已有的ID键值时使用）
 	 * 
 	 * @param entity
-	 *            待保存的业务实体
+	 *            业务实体
 	 */
 	public void replicate(T entity) {
 		getSession().replicate(entity, ReplicationMode.EXCEPTION);
 	}
 
 	/**
+	 * 清理业务实体。
+	 * 
+	 * @param entity
+	 *            业务实体
+	 */
+	public void evict(T entity) {
+		getSession().evict(entity);
+	}
+
+	/**
+	 * 强制更新业务实体。
+	 * 
+	 * @param entity
+	 *            业务实体
+	 */
+	public void forceUpdate(T entity) {
+		evict(entity);
+		update(entity);
+	}
+
+	/**
 	 * 删除业务实体。
 	 * 
 	 * @param entity
-	 *            待删除业务实体
+	 *            业务实体
 	 */
 	public void remove(T entity) {
 		getSession().delete(entity);
@@ -181,7 +202,7 @@ public class Dao<T> {
 	 * 根据ID删除业务实体。
 	 * 
 	 * @param id
-	 *            待删除业务实体ID
+	 *            业务实体ID
 	 */
 	public void remove(Serializable id) {
 		remove(get(id));
@@ -191,7 +212,7 @@ public class Dao<T> {
 	 * 根据ID批量删除业务实体。
 	 * 
 	 * @param ids
-	 *            待删除业务实体ID数组
+	 *            业务实体ID数组
 	 */
 	public void remove(Serializable[] ids) {
 		for (Serializable id : ids) {
@@ -203,7 +224,7 @@ public class Dao<T> {
 	 * 删除多个业务实体。
 	 * 
 	 * @param entitys
-	 *            待删除的业务实体列表
+	 *            业务实体列表
 	 */
 	public void remove(List<T> entitys) {
 		for (T entity : entitys) {
