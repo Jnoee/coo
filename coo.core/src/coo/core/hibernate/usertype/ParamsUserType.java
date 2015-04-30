@@ -3,7 +3,6 @@ package coo.core.hibernate.usertype;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 import org.hibernate.engine.spi.SessionImplementor;
 
@@ -39,10 +38,5 @@ public class ParamsUserType extends AbstractUserType {
 	@Override
 	public Class<?> returnedClass() {
 		return Params.class;
-	}
-
-	@Override
-	public int[] sqlTypes() {
-		return new int[] { Types.VARCHAR };
 	}
 }

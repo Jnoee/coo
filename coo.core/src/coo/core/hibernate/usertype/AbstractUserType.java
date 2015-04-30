@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +27,8 @@ import coo.base.util.StringUtils;
  * 用户自定义类型抽象基类。
  */
 public abstract class AbstractUserType implements UserType {
-	private static Map<Class<?>, List<Field>> ownerFields = new ConcurrentHashMap<>();
+	protected static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
+	protected static Map<Class<?>, List<Field>> ownerFields = new ConcurrentHashMap<>();
 
 	/**
 	 * 根据字段标签名获取源对象中对应字段的属性对象。
@@ -144,5 +146,10 @@ public abstract class AbstractUserType implements UserType {
 	@Override
 	public Object replace(Object original, Object target, Object owner) {
 		return original;
+	}
+
+	@Override
+	public int[] sqlTypes() {
+		return SQL_TYPES;
 	}
 }

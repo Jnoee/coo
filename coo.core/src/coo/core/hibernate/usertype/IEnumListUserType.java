@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +20,7 @@ import coo.core.util.IEnumUtils;
 /**
  * 用于Hibernate的自定义类型，映射实现了IEnum接口的枚举列表类型。
  */
-public class IEnumListUserType extends AbstractUserType {
-	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
-
+public class IEnumListUserType extends AbstractListUserType {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object nullSafeGet(ResultSet rs, String[] names,
@@ -66,15 +63,5 @@ public class IEnumListUserType extends AbstractUserType {
 		} catch (Exception e) {
 			throw new HibernateException("转换IEnum枚举类型列表时发生异常。", e);
 		}
-	}
-
-	@Override
-	public int[] sqlTypes() {
-		return SQL_TYPES;
-	}
-
-	@Override
-	public Class<?> returnedClass() {
-		return List.class;
 	}
 }

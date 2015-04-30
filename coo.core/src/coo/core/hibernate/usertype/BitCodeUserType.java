@@ -3,7 +3,6 @@ package coo.core.hibernate.usertype;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 import org.hibernate.engine.spi.SessionImplementor;
 
@@ -13,8 +12,6 @@ import coo.base.model.BitCode;
  * BitCode自定义类型。
  */
 public class BitCodeUserType extends AbstractUserType {
-	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
-
 	@Override
 	public Object nullSafeGet(ResultSet rs, String[] names,
 			SessionImplementor session, Object owner) throws SQLException {
@@ -39,10 +36,5 @@ public class BitCodeUserType extends AbstractUserType {
 	@Override
 	public Class<?> returnedClass() {
 		return BitCode.class;
-	}
-
-	@Override
-	public int[] sqlTypes() {
-		return SQL_TYPES;
 	}
 }

@@ -5,7 +5,6 @@ import java.lang.reflect.ParameterizedType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +18,7 @@ import coo.core.model.UuidEntity;
 /**
  * 用于Hibernate的自定义类型，映射实现了UuidEntity列表的枚举类型。
  */
-public class UuidEntityListUserType extends AbstractUserType {
-	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
-
+public class UuidEntityListUserType extends AbstractListUserType {
 	@Override
 	@SuppressWarnings("unchecked")
 	public Object nullSafeGet(ResultSet rs, String[] names,
@@ -72,15 +69,5 @@ public class UuidEntityListUserType extends AbstractUserType {
 		} catch (Exception e) {
 			throw new HibernateException("转换UuidEntity列表类型时发生异常。", e);
 		}
-	}
-
-	@Override
-	public Class<?> returnedClass() {
-		return List.class;
-	}
-
-	@Override
-	public int[] sqlTypes() {
-		return SQL_TYPES;
 	}
 }

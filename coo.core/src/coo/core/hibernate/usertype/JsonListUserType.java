@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +20,7 @@ import coo.core.jackson.GenericObjectMapper;
 /**
  * Json格式自定义列表类型。
  */
-public class JsonListUserType extends AbstractUserType {
-	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
+public class JsonListUserType extends AbstractListUserType {
 	private ObjectMapper mapper = new GenericObjectMapper();
 
 	@Override
@@ -58,15 +56,5 @@ public class JsonListUserType extends AbstractUserType {
 		} catch (Exception e) {
 			throw new SQLException("转换目标对象为Json时发生异常。", e);
 		}
-	}
-
-	@Override
-	public int[] sqlTypes() {
-		return SQL_TYPES;
-	}
-
-	@Override
-	public Class<?> returnedClass() {
-		return List.class;
 	}
 }

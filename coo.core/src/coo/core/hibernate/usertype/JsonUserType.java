@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 import org.hibernate.engine.spi.SessionImplementor;
 
@@ -17,7 +16,6 @@ import coo.core.jackson.GenericObjectMapper;
  * Json格式自定义类型。
  */
 public class JsonUserType extends AbstractUserType {
-	private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
 	private ObjectMapper mapper = new GenericObjectMapper();
 
 	@Override
@@ -50,11 +48,6 @@ public class JsonUserType extends AbstractUserType {
 		} catch (Exception e) {
 			throw new SQLException("转换目标对象为Json时发生异常。", e);
 		}
-	}
-
-	@Override
-	public int[] sqlTypes() {
-		return SQL_TYPES;
 	}
 
 	@Override
