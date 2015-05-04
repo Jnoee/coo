@@ -267,10 +267,10 @@
  * required: 是否必填
  * showCheckAllBtn: 是否显示全选按钮
  -->
-<#macro checkboxs path items itemValue itemLabel required=true showCheckAllBtn=true>
+<#macro checkboxs path items itemValue itemLabel box required=true showCheckAllBtn=true>
     <@s.bind path />
     <#if items?size gt 0 && showCheckAllBtn>
-    <label class="dd-span"><input type="checkbox" class="checkboxCtrl" group="${s.name}"/>全选</label><br/>
+    <label class="dd-span"><input type="checkbox" class="checkboxCtrl" group="${s.name}"<#if box??> box="${box}"</#if> />全选</label><br/>
     </#if>
     <#if required>
         <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path class="required" />

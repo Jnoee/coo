@@ -4,6 +4,10 @@
 		checkboxCtrl : function(parent) {
 			return this.each(function() {
 				var $parent = $(parent || document);
+				var $box = $(this).attr("box");
+				if($box) {
+					$parent = $(this).closest($box);
+				}
 				var $checkAllBtn = $(this);
 				var checkboxName = $(this).attr("group").escape();
 				var $checkboxs = $parent.find(":checkbox[name=" + checkboxName + "]");
