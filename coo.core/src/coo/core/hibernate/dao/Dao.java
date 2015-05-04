@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.lucene.search.SortField;
+import org.hibernate.Cache;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
@@ -74,6 +75,31 @@ public class Dao<T> {
 	 */
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * 获取Hibernate的Cache。
+	 * 
+	 * @return 返回Hibernate的Cache。
+	 */
+	public Cache getCache() {
+		return getSession().getSessionFactory().getCache();
+	}
+
+	/**
+	 * 获取业务实体的缓存名称。
+	 * 
+	 * @return 返回业务实体的缓存名称。
+	 */
+	public String getCacheName() {
+		if (clazz.isAnnotationPresent(org.hibernate.annotations.Cache.class)) {
+			org.hibernate.annotations.Cache cache = clazz
+					.getAnnotation(org.hibernate.annotations.Cache.class);
+			if (StringUtils.isNotBlank(cache.region())) {
+				return cache.region();
+			}
+		}
+		return clazz.getName();
 	}
 
 	/**
@@ -175,6 +201,45 @@ public class Dao<T> {
 	 */
 	public void evict(T entity) {
 		getSession().evict(entity);
+	}
+
+	/**
+	 * 清理业务实体缓存。
+	 */
+	public void evictCache() {
+		getCache().evictEntityRegion(clazz);
+	}
+
+	/**
+	 * 清理指定ID的业务实体缓存。
+	 * 
+	 * @param id
+	 *            业务实体ID
+	 */
+	public void evictCache(Serializable id) {
+		getCache().evictEntity(clazz, id);
+	}
+
+	/**
+	 * 清理集合属性缓存。
+	 * 
+	 * @param propertyName
+	 *            集合属性名称
+	 */
+	public void evictCollectionCache(String propertyName) {
+		getCache().evictCollectionRegion(getCacheName() + "." + propertyName);
+	}
+
+	/**
+	 * 清理指定ID的业务实体集合属性缓存。
+	 * 
+	 * @param id
+	 *            业务实体ID
+	 * @param propertyName
+	 *            集合属性名称
+	 */
+	public void evictCollectionCache(Serializable id, String propertyName) {
+		getCache().evictCollection(getCacheName() + "." + propertyName, id);
 	}
 
 	/**
