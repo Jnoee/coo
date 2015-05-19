@@ -11,6 +11,10 @@ $(function(){
 				}
 			}
 		});
+		$.validator.prototype.showLabel = function(e, i) {
+            var s = this.errorsFor(e);
+            s.length ? (s.removeClass(this.settings.validClass).addClass(this.settings.errorClass), s.html(i).attr("title",i)) : (s = $("<" + this.settings.errorElement + ">").attr("for", this.idOrName(e)).addClass(this.settings.errorClass).html(i || "").attr("title",i || ""), this.settings.wrapper && (s = s.hide().show().wrap("<" + this.settings.wrapper + "/>").parent()), this.labelContainer.append(s).length || (this.settings.errorPlacement ? this.settings.errorPlacement(s, $(e)) : s.insertAfter(e))), !i && this.settings.success && (s.text("").attr("title",""), "string" == typeof this.settings.success ? s.addClass(this.settings.success) : this.settings.success(s, e)), this.toShow = this.toShow.add(s)
+		}
 	}
 });
 
