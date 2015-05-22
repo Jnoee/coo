@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import coo.base.exception.BusinessException;
+import coo.base.util.StringUtils;
 import coo.core.security.model.LoginModel;
 import coo.core.security.service.AbstractSecurityService;
 import coo.mvc.security.component.AuthCounter;
@@ -63,7 +64,7 @@ public abstract class AbstractLoginAction {
 		}
 		try {
 			securityService.signIn(loginModel.getUsername(),
-					loginModel.getPassword(), request.getRemoteAddr());
+					loginModel.getPassword(), getRemoteIp(request));
 			authCounter.clean();
 			return "redirect:/index";
 		} catch (BusinessException e) {
@@ -97,5 +98,25 @@ public abstract class AbstractLoginAction {
 	public String logout() {
 		securityService.signOut();
 		return "redirect:/login";
+	}
+
+	/**
+	 * 获取IP地址。
+	 * 
+	 * @param request
+	 *            请求对象
+	 * @return 返回IP地址。
+	 */
+	private String getRemoteIp(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (StringUtils.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
+			ip = ip.split(",")[0];
+		} else {
+			ip = request.getHeader("x-real-ip");
+			if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getRemoteAddr();
+			}
+		}
+		return ip;
 	}
 }
