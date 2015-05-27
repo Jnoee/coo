@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>coo.core.support</artifactId>
 	<properties>
-		<jxls.version>1.0.5</jxls.version>
+		<jxls.version>1.0.6</jxls.version>
 		<mail.version>1.4.7</mail.version>
 	</properties>
 	<dependencies>

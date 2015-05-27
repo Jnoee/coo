@@ -18,7 +18,7 @@ public class JacksonTest {
 	public void testMixin() throws Exception {
 		Page<String> page = new Page<String>(100, 1, 10);
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.addMixInAnnotations(Page.class, Mixin.class);
+		mapper.addMixIn(Page.class, Mixin.class);
 		log.debug(mapper.writeValueAsString(page));
 	}
 
