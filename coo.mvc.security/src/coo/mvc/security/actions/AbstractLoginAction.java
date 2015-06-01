@@ -60,6 +60,7 @@ public abstract class AbstractLoginAction {
 		if (authCounter.isOver() && !captcha.validate(loginModel.getCode())) {
 			errors.reject("security.code.wrong");
 			model.addAttribute(authCounter);
+			captcha.generateImage();
 			return "login";
 		}
 		try {
@@ -71,6 +72,7 @@ public abstract class AbstractLoginAction {
 			errors.reject("none", e.getMessage());
 			authCounter.add();
 			model.addAttribute(authCounter);
+			captcha.generateImage();
 			return "login";
 		}
 	}
@@ -85,8 +87,12 @@ public abstract class AbstractLoginAction {
 	 *             图片输出失败时抛出异常。
 	 */
 	@RequestMapping("captcha-code-image")
-	public void captchaCode(OutputStream out) throws Exception {
-		ImageIO.write(captcha.generateImage(), "JPEG", out);
+	public void captchaCode(HttpServletRequest request, OutputStream out)
+			throws Exception {
+		if (StringUtils.isNotBlank(request.getParameter("timestamp"))) {
+			captcha.generateImage();
+		}
+		ImageIO.write(captcha.getImage(), "JPEG", out);
 	}
 
 	/**

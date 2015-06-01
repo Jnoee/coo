@@ -28,16 +28,25 @@ public class Captcha implements Serializable {
 	private CaptchaImageConfig captchaImageConfig;
 	/** 正确的验证码 */
 	private String correctCode;
+	/** 验证码图片 */
+	private BufferedImage image;
 
 	/**
-	 * 生成验证码图片。
+	 * 获取验证码图片。
 	 * 
 	 * @return 返回验证码图片。
 	 */
-	public BufferedImage generateImage() {
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	/**
+	 * 生成验证码图片。
+	 */
+	public void generateImage() {
 		correctCode = generateCode();
+		image = captchaImageGenerator.generateImage(correctCode);
 		log.debug("生成验证码[{}]。", correctCode);
-		return captchaImageGenerator.generateImage(correctCode);
 	}
 
 	/**
