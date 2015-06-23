@@ -26,5 +26,6 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
 		addStaticClass(DateUtils.class);
 		addStaticClass(DwzTargetType.class);
 		addStaticClass(StatusColor.class);
+		addEnumPackage("coo.core.enums");
 	}
 }

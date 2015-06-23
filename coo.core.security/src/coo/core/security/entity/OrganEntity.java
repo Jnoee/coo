@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -17,6 +18,7 @@ import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.bridge.builtin.IntegerBridge;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import coo.core.enums.EnabledStatus;
 import coo.core.security.annotations.LogBean;
 import coo.core.security.annotations.LogField;
 
@@ -43,6 +45,11 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "名称")
 	private String name;
+	/** 启用状态 */
+	@NotNull
+	@Field(analyze = Analyze.NO)
+	@LogField(text = "启用状态")
+	private EnabledStatus enabled = EnabledStatus.ENABLED;
 	/** 排序 */
 	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IntegerBridge.class))
 	@LogField(text = "排序")
@@ -69,6 +76,14 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public EnabledStatus getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(EnabledStatus enabled) {
+		this.enabled = enabled;
 	}
 
 	public Integer getOrdinal() {

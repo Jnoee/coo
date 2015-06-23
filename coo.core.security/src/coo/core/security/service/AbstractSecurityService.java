@@ -176,6 +176,30 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	}
 
 	/**
+	 * 启用机构。
+	 * 
+	 * @param organ
+	 *            机构
+	 */
+	@Transactional
+	@SimpleLog(code = "organ.enable.log", vars = "organ.name")
+	public void enableOrgan(O organ) {
+		organ.setEnabled(EnabledStatus.ENABLED);
+	}
+
+	/**
+	 * 禁用机构。
+	 * 
+	 * @param organ
+	 *            机构
+	 */
+	@Transactional
+	@SimpleLog(code = "organ.disable.log", vars = "organ.name")
+	public void disableOrgan(O organ) {
+		organ.setEnabled(EnabledStatus.DISABLED);
+	}
+
+	/**
 	 * 获取指定ID的角色。
 	 * 
 	 * @param roleId
@@ -510,6 +534,19 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			messageSource.thrown("default.actor.not.allow.delete");
 		}
 		actorDao.remove(actor);
+	}
+
+	/**
+	 * 设置指定的职务为默认职务。
+	 * 
+	 * @param actor
+	 *            职务
+	 */
+	@Transactional
+	@SimpleLog(code = "actor.set.default.log", vars = { "actor.user.name",
+			"actor.name" })
+	public void setDefaultActor(A actor) {
+		actor.getUser().getSettings().setDefaultActor(actor);
 	}
 
 	/**

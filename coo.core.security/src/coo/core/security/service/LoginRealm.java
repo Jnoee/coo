@@ -85,7 +85,8 @@ public class LoginRealm extends AuthorizingRealm {
 		if (user == null) {
 			throw new UnknownAccountException();
 		}
-		if (user.getEnabled() == EnabledStatus.DISABLED) {
+		if (user.getEnabled() == EnabledStatus.DISABLED
+				|| user.getSettings().getDefaultActor().getOrgan().getEnabled() == EnabledStatus.DISABLED) {
 			throw new DisabledAccountException();
 		}
 

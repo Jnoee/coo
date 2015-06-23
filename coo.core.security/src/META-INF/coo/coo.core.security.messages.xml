@@ -18,6 +18,8 @@
 	<entry key="organ.add.log">新增机构[{0}]。</entry>
 	<entry key="organ.edit.log">编辑机构[{0}]。</entry>
 	<entry key="organ.delete.log">删除机构[{0}]。</entry>
+	<entry key="organ.enable.log">启用机构[{0}]。</entry>
+	<entry key="organ.disable.log">停用机构[{0}]。</entry>
 	<entry key="role.add.log">新增角色[{0}]。</entry>
 	<entry key="role.edit.log">编辑角色[{0}]。</entry>
 	<entry key="user.add.log">新增用户[{0}]。</entry>
@@ -30,4 +32,5 @@
 	<entry key="actor.add.log">新增职务[{0}-{1}]。</entry>
 	<entry key="actor.edit.log">编辑职务[{0}-{1}]。</entry>
 	<entry key="actor.delete.log">删除职务[{0}-{1}]。</entry>
+	<entry key="actor.set.default.log">设置默认职务[{0}-{1}]。</entry>
 </properties>
