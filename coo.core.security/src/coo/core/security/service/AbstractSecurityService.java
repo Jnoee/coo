@@ -30,6 +30,7 @@ import coo.base.model.BitCode;
 import coo.base.model.Page;
 import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
+import coo.core.enums.EnabledStatus;
 import coo.core.hibernate.dao.Dao;
 import coo.core.hibernate.search.FullTextCriteria;
 import coo.core.message.MessageSource;
@@ -403,7 +404,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@SimpleLog(code = "user.enable.log", vars = "user.name")
 	public void enableUser(U user) {
-		user.setEnabled(true);
+		user.setEnabled(EnabledStatus.ENABLED);
 	}
 
 	/**
@@ -415,7 +416,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@SimpleLog(code = "user.disable.log", vars = "user.name")
 	public void disableUser(U user) {
-		user.setEnabled(false);
+		user.setEnabled(EnabledStatus.DISABLED);
 	}
 
 	/**

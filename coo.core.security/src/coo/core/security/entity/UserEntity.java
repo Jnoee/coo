@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.bridge.builtin.IntegerBridge;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import coo.core.enums.EnabledStatus;
 import coo.core.security.annotations.LogField;
 
 /**
@@ -50,7 +51,7 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	@NotNull
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "启用状态")
-	private Boolean enabled = true;
+	private EnabledStatus enabled = EnabledStatus.ENABLED;
 	/** 排序 */
 	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IntegerBridge.class))
 	@LogField(text = "排序")
@@ -88,11 +89,11 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 		this.password = password;
 	}
 
-	public Boolean getEnabled() {
+	public EnabledStatus getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(Boolean disabled) {
+	public void setEnabled(EnabledStatus disabled) {
 		this.enabled = disabled;
 	}
 

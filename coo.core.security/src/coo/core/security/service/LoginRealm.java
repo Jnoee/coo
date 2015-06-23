@@ -19,6 +19,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import coo.base.model.BitCode;
+import coo.core.enums.EnabledStatus;
 import coo.core.hibernate.dao.Dao;
 import coo.core.security.entity.UserEntity;
 import coo.core.security.permission.PermissionConfig;
@@ -84,7 +85,7 @@ public class LoginRealm extends AuthorizingRealm {
 		if (user == null) {
 			throw new UnknownAccountException();
 		}
-		if (!user.getEnabled()) {
+		if (user.getEnabled() == EnabledStatus.DISABLED) {
 			throw new DisabledAccountException();
 		}
 
