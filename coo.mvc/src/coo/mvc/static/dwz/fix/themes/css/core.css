@@ -15,11 +15,34 @@ a:hover {
 
 /*------------------------------ 覆盖dwz样式定义 ------------------------------*/
 #header {
-	height: 85px;
+	height: 80px;
+}
+
+#header .logo {
+	background-image: none;
+	text-indent: 20px;
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 42px;
+}
+
+a.logo, a.logo:hover {
+	color: white;
+	text-decoration: none;
+}
+
+#navMenu {
+	height: 30px;
+	padding: 0px;
+}
+
+#navMenu li a, #navMenu li span {
+	line-height: 30px;
+	font-size: 14px;
 }
 
 #leftside,#container,#splitBar,#splitBarProxy {
-	top: 90px;
+	top: 85px;
 }
 
 .page .searchBar .subBar li input {
