@@ -27,18 +27,8 @@
 		</property>
 	</bean>
 
-	<!-- 视图配置 -->
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="ignoreAcceptHeader" value="true" />
-		<property name="favorParameter" value="false" />
-		<property name="defaultContentType" value="text/html" />
-		<property name="mediaTypes">
-			<map>
-				<entry key="json" value="application/json" />
-				<entry key="xml" value="application/xml" />
-			</map>
-		</property>
+	<!-- 适配视图配置 -->
+	<bean id="viewResolver" class="coo.mvc.handler.GenericViewResolver">
 		<property name="viewResolvers">
 			<list>
 				<bean
@@ -48,18 +38,17 @@
 						value="text/html;charset=${freemarker.view.encoding:UTF-8}" />
 					<property name="exposeRequestAttributes" value="true" />
 					<property name="exposeSessionAttributes" value="true" />
-					<property name="exposeSpringMacroHelpers" value="true" />
 				</bean>
 			</list>
 		</property>
-		<property name="defaultViews">
-			<list>
-				<bean class="coo.mvc.handler.GenericXStreamView" />
-				<bean class="coo.mvc.handler.GenericJacksonView" />
-			</list>
-		</property>
 	</bean>
-	
+
+	<!-- 文件上传视图 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+
 	<!-- 国际化配置 -->
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
@@ -78,7 +67,7 @@
 
 	<!-- 转换器配置 -->
 	<bean id="conversionService" class="coo.mvc.config.ConversionServiceFactoryBean" />
-	
+
 	<!-- 数据绑定配置 -->
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
