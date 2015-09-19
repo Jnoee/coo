@@ -189,18 +189,6 @@
 		<developerConnection>scm:git:https://github.com/jnoee/coo.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-	<!-- 
-	<distributionManagement>
-		<repository>
-			<id>mopon-nexus</id>
-			<url>http://172.16.35.13:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>mopon-nexus</id>
-			<url>http://172.16.35.13:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-	 -->
 	<distributionManagement>
 		<snapshotRepository>
 			<id>oss</id>

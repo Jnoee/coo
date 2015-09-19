@@ -31,7 +31,6 @@
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="ignoreAcceptHeader" value="true" />
-		<property name="favorParameter" value="false" />
 		<property name="defaultContentType" value="text/html" />
 		<property name="mediaTypes">
 			<map>
@@ -48,7 +47,6 @@
 						value="text/html;charset=${freemarker.view.encoding:UTF-8}" />
 					<property name="exposeRequestAttributes" value="true" />
 					<property name="exposeSessionAttributes" value="true" />
-					<property name="exposeSpringMacroHelpers" value="true" />
 				</bean>
 			</list>
 		</property>
