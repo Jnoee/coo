@@ -29,7 +29,7 @@ import coo.core.security.permission.PermissionConfig;
  */
 public class LoginRealm extends AuthorizingRealm {
 	@Resource
-	private Dao<? extends UserEntity<?, ?, ?>> userDao;
+	private Dao<? extends UserEntity<?, ?>> userDao;
 	@Resource
 	private PermissionConfig permissionConfig;
 	private String hashAlgorithmName = Sha256Hash.ALGORITHM_NAME;
@@ -81,12 +81,12 @@ public class LoginRealm extends AuthorizingRealm {
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 		String username = upToken.getUsername();
 
-		UserEntity<?, ?, ?> user = userDao.findUnique("username", username);
+		UserEntity<?, ?> user = userDao.findUnique("username", username);
 		if (user == null) {
 			throw new UnknownAccountException();
 		}
 		if (user.getEnabled() == EnabledStatus.DISABLED
-				|| user.getSettings().getDefaultActor().getOrgan().getEnabled() == EnabledStatus.DISABLED) {
+				|| user.getDefaultActor().getOrgan().getEnabled() == EnabledStatus.DISABLED) {
 			throw new DisabledAccountException();
 		}
 
@@ -100,9 +100,9 @@ public class LoginRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		String userId = (String) getAvailablePrincipal(principals);
-		UserEntity<?, ?, ?> user = userDao.get(userId);
+		UserEntity<?, ?> user = userDao.get(userId);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		BitCode permissionCode = user.getSettings().getDefaultActor().getRole()
+		BitCode permissionCode = user.getDefaultActor().getRole()
 				.getPermissions();
 		info.addRoles(permissionConfig.getPermissionCodes(permissionCode));
 		return info;

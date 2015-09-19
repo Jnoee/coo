@@ -22,7 +22,7 @@ import coo.mvc.security.component.Captcha;
  */
 public abstract class AbstractLoginAction {
 	@Resource
-	protected AbstractSecurityService<?, ?, ?, ?, ?> securityService;
+	protected AbstractSecurityService<?, ?, ?, ?> securityService;
 	@Resource
 	protected Captcha captcha;
 	@Resource

@@ -33,7 +33,7 @@ import coo.core.security.annotations.LogField;
  *            职务类型
  */
 @MappedSuperclass
-public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends UserEntity<U, A, ?>, A extends ActorEntity<O, U, ?>>
+public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends UserEntity<U, A>, A extends ActorEntity<O, U, ?>>
 		extends ResourceEntity<U> {
 	/** 上级机构 */
 	@ManyToOne(fetch = FetchType.LAZY)

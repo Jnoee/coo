@@ -33,6 +33,7 @@
 	<script src="${ctx}/fix/js/fix.database.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.panel.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.combox.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
     <#nested>
 </#macro>

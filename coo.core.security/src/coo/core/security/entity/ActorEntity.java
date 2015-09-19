@@ -23,7 +23,7 @@ import coo.core.security.annotations.LogField;
  *            角色类型
  */
 @MappedSuperclass
-public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends UserEntity<U, ?, ?>, R extends RoleEntity<U, ?>>
+public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends UserEntity<U, ?>, R extends RoleEntity<U, ?>>
 		extends ResourceEntity<U> {
 	/** 关联机构 */
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -45,6 +45,24 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "名称")
 	private String name;
+
+	/**
+	 * 获取职务的完整名称。（机构名-职务名）
+	 * 
+	 * @return 返回职务的完整名称。
+	 */
+	public String getFullName() {
+		return organ.getName() + "-" + name;
+	}
+
+	/**
+	 * 是否为关联用户的默认职务。
+	 * 
+	 * @return 返回是否为关联用户的默认职务。
+	 */
+	public Boolean isDefaultActor() {
+		return user.getDefaultActor().getId().equals(id);
+	}
 
 	public O getOrgan() {
 		return organ;
@@ -76,23 +94,5 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * 获取职务的完整名称。（机构名-职务名）
-	 * 
-	 * @return 返回职务的完整名称。
-	 */
-	public String getFullName() {
-		return organ.getName() + "-" + name;
-	}
-
-	/**
-	 * 是否为关联用户的默认职务。
-	 * 
-	 * @return 返回是否为关联用户的默认职务。
-	 */
-	public Boolean isDefaultActor() {
-		return user.getSettings().getDefaultActor().getId().equals(id);
 	}
 }

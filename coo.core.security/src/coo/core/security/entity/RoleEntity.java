@@ -26,7 +26,7 @@ import coo.core.security.annotations.LogField;
  *            职务类型
  */
 @MappedSuperclass
-public abstract class RoleEntity<U extends UserEntity<U, A, ?>, A extends ActorEntity<?, ?, ?>>
+public abstract class RoleEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>>
 		extends ResourceEntity<U> {
 	/** 名称 */
 	@NotEmpty

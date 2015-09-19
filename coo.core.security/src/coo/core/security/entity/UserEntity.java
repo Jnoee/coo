@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -32,7 +32,7 @@ import coo.core.security.annotations.LogField;
  *            用户设置类型
  */
 @MappedSuperclass
-public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorEntity<?, ?, ?>, S extends UserSettingsEntity<A>>
+public abstract class UserEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>>
 		extends ResourceEntity<U> {
 	/** 姓名 */
 	@NotEmpty
@@ -56,10 +56,10 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IntegerBridge.class))
 	@LogField(text = "排序")
 	private Integer ordinal;
-	/** 用户设置 */
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@PrimaryKeyJoinColumn
-	private S settings;
+	/** 默认职务 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "defaultActorId")
+	private A defaultActor;
 	/** 用户职务 */
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@OrderBy("createDate")
@@ -105,12 +105,12 @@ public abstract class UserEntity<U extends UserEntity<U, A, S>, A extends ActorE
 		this.ordinal = ordinal;
 	}
 
-	public S getSettings() {
-		return settings;
+	public A getDefaultActor() {
+		return defaultActor;
 	}
 
-	public void setSettings(S settings) {
-		this.settings = settings;
+	public void setDefaultActor(A defaultActor) {
+		this.defaultActor = defaultActor;
 	}
 
 	public List<A> getActors() {

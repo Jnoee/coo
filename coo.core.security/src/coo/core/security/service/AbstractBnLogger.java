@@ -25,7 +25,7 @@ import coo.core.security.entity.UserEntity;
  */
 public abstract class AbstractBnLogger<T extends BnLogEntity> {
 	@Resource
-	private AbstractSecurityService<?, ? extends UserEntity<?, ?, ?>, ?, ?, ?> securityService;
+	private AbstractSecurityService<?, ? extends UserEntity<?, ?>, ?, ?> securityService;
 	@Resource
 	private Dao<T> bnLogDao;
 

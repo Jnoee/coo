@@ -16,6 +16,7 @@ public class GenericViewResolver extends ContentNegotiatingViewResolver {
 		ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
 		contentNegotiationManager.setDefaultContentType(MediaType.TEXT_HTML);
 		contentNegotiationManager.setIgnoreAcceptHeader(true);
+		contentNegotiationManager.addMediaType("", MediaType.TEXT_HTML);
 		contentNegotiationManager.addMediaType("json",
 				MediaType.APPLICATION_JSON);
 		contentNegotiationManager

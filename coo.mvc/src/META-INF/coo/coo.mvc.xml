@@ -28,7 +28,17 @@
 	</bean>
 
 	<!-- 适配视图配置 -->
-	<bean id="viewResolver" class="coo.mvc.handler.GenericViewResolver">
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="favorParameter" value="false" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
 		<property name="viewResolvers">
 			<list>
 				<bean
@@ -38,7 +48,14 @@
 						value="text/html;charset=${freemarker.view.encoding:UTF-8}" />
 					<property name="exposeRequestAttributes" value="true" />
 					<property name="exposeSessionAttributes" value="true" />
+					<property name="exposeSpringMacroHelpers" value="true" />
 				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="coo.mvc.handler.GenericXStreamView" />
+				<bean class="coo.mvc.handler.GenericJacksonView" />
 			</list>
 		</property>
 	</bean>

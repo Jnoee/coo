@@ -45,7 +45,6 @@ import coo.core.security.entity.BnLogEntity;
 import coo.core.security.entity.OrganEntity;
 import coo.core.security.entity.RoleEntity;
 import coo.core.security.entity.UserEntity;
-import coo.core.security.entity.UserSettingsEntity;
 import coo.core.security.permission.AdminPermission;
 import coo.core.security.permission.PermissionConfig;
 
@@ -63,7 +62,7 @@ import coo.core.security.permission.PermissionConfig;
  * @param <S>
  *            用户设置类型
  */
-public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U extends UserEntity<U, A, S>, R extends RoleEntity<U, A>, A extends ActorEntity<O, U, R>, S extends UserSettingsEntity<A>> {
+public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U extends UserEntity<U, A>, R extends RoleEntity<U, A>, A extends ActorEntity<O, U, R>> {
 	@Resource
 	protected Dao<O> organDao;
 	@Resource
@@ -72,8 +71,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	protected Dao<R> roleDao;
 	@Resource
 	protected Dao<A> actorDao;
-	@Resource
-	protected Dao<S> userSettingsDao;
 	@Resource
 	protected LoginRealm loginRealm;
 	@Resource
@@ -294,7 +291,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional(readOnly = true)
 	public O getCurrentOrgan() {
-		return getCurrentUser().getSettings().getDefaultActor().getOrgan();
+		return getCurrentUser().getDefaultActor().getOrgan();
 	}
 
 	/**
@@ -363,15 +360,10 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		}
 		userDao.save(user);
 
-		S settings = user.getSettings();
-
-		A defaultActor = settings.getDefaultActor();
+		A defaultActor = user.getDefaultActor();
 		defaultActor.setUser(user);
 		defaultActor.autoFillIn();
 		actorDao.save(defaultActor);
-
-		settings.setId(user.getId());
-		userSettingsDao.save(settings);
 	}
 
 	/**
@@ -388,23 +380,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			messageSource.thrown("username.exist", user.getUsername());
 		}
 		U origUser = getUser(user.getId());
-		BeanUtils.copyFields(user, origUser, "enabled,settings");
-		// 如果关联的用户设置不为空，则同时更新用户设置。
-		if (user.getSettings() != null) {
-			BeanUtils.copyFields(user.getSettings(), origUser.getSettings());
-		}
-	}
-
-	/**
-	 * 更新用户设置。
-	 * 
-	 * @param userSettings
-	 *            用户设置
-	 */
-	@Transactional
-	public void updateUserSettings(S userSettings) {
-		S origUserSettings = userSettingsDao.get(userSettings.getId());
-		BeanUtils.copyFields(userSettings, origUserSettings);
+		BeanUtils.copyFields(user, origUser, "enabled");
 	}
 
 	/**
@@ -546,7 +522,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@SimpleLog(code = "actor.set.default.log", vars = { "actor.user.name",
 			"actor.name" })
 	public void setDefaultActor(A actor) {
-		actor.getUser().getSettings().setDefaultActor(actor);
+		actor.getUser().setDefaultActor(actor);
 	}
 
 	/**
@@ -562,7 +538,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		if (!currentUser.getActors().contains(actor)) {
 			messageSource.thrown("actor.change.not.allow");
 		}
-		currentUser.getSettings().setDefaultActor(actor);
+		currentUser.setDefaultActor(actor);
 		loginRealm.clearCache();
 	}
 

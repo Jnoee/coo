@@ -30,7 +30,7 @@ import coo.core.util.SpringUtils;
  */
 @MappedSuperclass
 @JsonIgnoreProperties({ "creator", "createDate", "modifier", "modifyDate" })
-public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
+public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends
 		UuidEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "creatorId")
@@ -53,7 +53,7 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?, ?>> extends
 	 * 自动填充创建人、创建时间、修改人、修改时间。
 	 */
 	public void autoFillIn() {
-		AbstractSecurityService<?, U, ?, ?, ?> securityService = SpringUtils
+		AbstractSecurityService<?, U, ?, ?> securityService = SpringUtils
 				.getBean("securityService");
 		U operator = securityService.getDefaultOperator();
 		Date now = new Date();
