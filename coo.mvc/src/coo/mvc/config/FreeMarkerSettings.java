@@ -18,7 +18,6 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
 		addTemplatePath("classpath:/coo/mvc/macros/");
 		addTemplatePath("classpath:/coo/mvc/templates/");
 		addAutoImport("s", "mvc.ftl");
-		addAutoImport("std", "std.ftl");
 		addAutoImport("dwz", "dwz.ftl");
 		addAutoImport("ecs", "ecs.ftl");
 		addStaticClass(StringUtils.class);

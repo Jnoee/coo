@@ -1,38 +1,3 @@
-/** 扩展String方法 */
-$(function(){
-	$.extend(String.prototype, {
-		escape: function() { // 处理jquery选择表达式中的特殊字符
-			return this.replace(/[#;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, "\\$&");
-		},
-		cleanParams: function() { // 清除参数
-			var index = this.indexOf("?");
-			if(index == -1) {
-				return this;
-			}
-			return this.substring(0, index);
-		},
-		getParams: function() { // 获取参数
-			var index = this.indexOf("?");
-			if(index == -1) {
-				return {};
-			}
-			var params = this.substring(index + 1);
-			return $.parseJSON('{"' + decodeURI(params.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
-		}
-	});
-});
-
-/** 将序列化数组转换成json对象 */
-var serializeArrayToJson = function(serializeArray) {
-	var json = {};
-	if(!$.isEmptyObject(serializeArray)) {
-		jQuery.each(serializeArray, function(i, item){
-			json[item.name] = item.value;
-		});
-	}
-	return json;
-}
-
 /** 扩展jQuery，实现页面元素可直接获取上级标识为page的div容器 */
 $.fn.extend({
     getPageDiv: function(){

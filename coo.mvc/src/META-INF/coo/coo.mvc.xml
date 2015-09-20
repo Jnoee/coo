@@ -100,8 +100,7 @@
 	<mvc:view-controller path="/403" view-name="/403" />
 
 	<mvc:default-servlet-handler />
-	<mvc:resources mapping="/std/**"
-		location="classpath:/coo/mvc/static/dwz/std/" />
+	<mvc:resources mapping="/base/**" location="classpath:/coo/mvc/static/base/" />
 	<mvc:resources mapping="/dwz/**"
 		location="classpath:/coo/mvc/static/dwz/dwz/" />
 	<mvc:resources mapping="/fix/**"

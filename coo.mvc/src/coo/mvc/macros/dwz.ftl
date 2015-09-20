@@ -2,7 +2,7 @@
  * 头部引用。
  -->
 <#macro head>
-    <@std.head />
+    <link href="${ctx}/base/icons/icons.css" rel="stylesheet" type="text/css" />
 	<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
@@ -13,6 +13,12 @@
 	<!--[if lte IE 9]>
 	<script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
 	<![endif]-->
+	<link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css"/>
+	
+	<script src="${ctx}/base/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="${ctx}/base/js/base.core.js" type="text/javascript"></script>
+    <script src="${ctx}/base/js/base.utils.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/jquery.validate.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
@@ -21,8 +27,6 @@
 	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-	<link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css"/>
 	<script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.validator.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.ui.js" type="text/javascript"></script>
@@ -35,6 +39,7 @@
 	<script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.combox.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.extend.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
@@ -141,40 +146,33 @@
 	    <ul>
 	        <#nested>
 			<#if showSubmitBtn>
-        		<@submitBtn text="${submitBtnText}" />
+        		<@button text="${submitBtnText}" type="submit" />
     		</#if>
 			<#if showCancelBtn>
-        		<@cancelBtn text="${cancelBtnText}" />
+        		<@button text="${cancelBtnText}" class="close" />
     		</#if>
 	    </ul>
 	</div>
 </#macro>
 
 <#--
- * 保存按钮。
+ * 按钮组件。
  *
  * text：按钮文本
+ * type: 按钮类型
+ * active：是否激活
+ * attributes：按钮的其它属性
  -->
-<#macro submitBtn text="保存">
+<#macro button text type="button" active=false attributes...>
+	<#if active>
+        <#local buttonClass="buttonActive" />
+    <#else>
+    	<#local buttonClass="button" />
+    </#if>
 	<li>
-	    <div class="buttonActive">
+	    <div class="${buttonClass}">
 	        <div class="buttonContent">
-	            <button type="submit">${text}</button>
-	        </div>
-	    </div>
-	</li>
-</#macro>
-
-<#--
- * 取消按钮。
- *
- * text：按钮文本
- -->
-<#macro cancelBtn text="取消">
-	<li>
-	    <div class="button">
-	        <div class="buttonContent">
-	            <button type="button" class="close">${text}</button>
+	            <button type="${type}" ${s.getAttributes(attributes)}>${text}</button>
 	        </div>
 	    </div>
 	</li>
