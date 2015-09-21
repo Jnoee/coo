@@ -15,6 +15,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import coo.base.util.StringUtils;
+import coo.core.message.MessageSource;
+import coo.core.util.SpringUtils;
 import coo.mvc.constants.ApiCode;
 import coo.mvc.exception.ApiException;
 import coo.mvc.model.ApiReply;
@@ -25,6 +27,32 @@ import coo.mvc.model.ApiReply;
 public class ApiUtils {
 	private static final Logger log = LoggerFactory.getLogger(ApiUtils.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
+
+	/**
+	 * 抛出API异常。
+	 * 
+	 * @param code
+	 *            异常编码
+	 * @param vars
+	 *            异常信息变量
+	 */
+	public static void thrown(String code, Object... vars) {
+		throw newExcepiton(code, vars);
+	}
+
+	/**
+	 * 生成API异常。
+	 * 
+	 * @param code
+	 *            异常编码
+	 * @param vars
+	 *            异常信息变量
+	 * @return 返回生成的API异常。
+	 */
+	public static ApiException newExcepiton(String code, Object... vars) {
+		MessageSource messageSource = SpringUtils.getBean("messageSource");
+		return new ApiException(code, messageSource.get(code, vars));
+	}
 
 	/**
 	 * 生成失败的响应对象。
