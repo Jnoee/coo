@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.SortableField;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -39,6 +40,7 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
+	@SortableField
 	protected Date createDate;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "modifierId")
@@ -47,6 +49,7 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
+	@SortableField
 	protected Date modifyDate;
 
 	/**

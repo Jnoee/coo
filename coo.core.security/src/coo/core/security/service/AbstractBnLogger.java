@@ -88,7 +88,7 @@ public abstract class AbstractBnLogger<T extends BnLogEntity> {
 	@Transactional(readOnly = true)
 	public Page<T> searchLog(SearchModel searchModel) {
 		FullTextCriteria criteria = bnLogDao.createFullTextCriteria();
-		criteria.addSortDesc("createDate", SortField.Type.LONG);
+		criteria.addSortDesc("createDate", SortField.Type.STRING);
 		criteria.setKeyword(searchModel.getKeyword());
 		return bnLogDao.searchPage(criteria, searchModel.getPageNo(),
 				searchModel.getPageSize());

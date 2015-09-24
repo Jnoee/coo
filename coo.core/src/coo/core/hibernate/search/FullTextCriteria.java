@@ -139,13 +139,13 @@ public class FullTextCriteria {
 	 */
 	public void addFilterField(String fieldName, Object... fieldValues) {
 		if (fieldValues.length > 1) {
-			BooleanQuery multiFieldQuery = new BooleanQuery();
+			BooleanQuery.Builder builder = new BooleanQuery.Builder();
 			for (Object fieldValue : fieldValues) {
 				TermQuery query = new TermQuery(new Term(fieldName,
 						fieldValue.toString()));
-				multiFieldQuery.add(query, Occur.SHOULD);
+				builder.add(query, Occur.SHOULD);
 			}
-			addLuceneQuery(multiFieldQuery, Occur.MUST);
+			addLuceneQuery(builder.build(), Occur.MUST);
 		} else {
 			TermQuery query = new TermQuery(new Term(fieldName,
 					fieldValues[0].toString()));
@@ -270,26 +270,25 @@ public class FullTextCriteria {
 	public Query generateMultiFieldQuery(String query,
 			Map<String, Analyze> fields) {
 		Assert.notEmpty(fields, "必须指定查询的字段。");
-		BooleanQuery multiFieldWildcardQuery = new BooleanQuery();
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
 		for (Entry<String, Analyze> field : fields.entrySet()) {
 			if (field.getValue() == Analyze.NO) {
 				Term term = new Term(field.getKey(), "*" + query + "*");
 				WildcardQuery fuzzyQuery = new WildcardQuery(term);
-				multiFieldWildcardQuery.add(fuzzyQuery, Occur.SHOULD);
+				builder.add(fuzzyQuery, Occur.SHOULD);
 			} else {
 				QueryParser parser = new QueryParser(field.getKey(), session
 						.getSearchFactory().getAnalyzer(clazz));
 				parser.setPhraseSlop(0);
 				parser.setAutoGeneratePhraseQueries(true);
 				try {
-					multiFieldWildcardQuery.add(parser.parse(query),
-							Occur.SHOULD);
+					builder.add(parser.parse(query), Occur.SHOULD);
 				} catch (ParseException e) {
 					throw new HibernateException("生成多字段查询时发生异常", e);
 				}
 			}
 		}
-		return multiFieldWildcardQuery;
+		return builder.build();
 	}
 
 	/**
@@ -316,25 +315,25 @@ public class FullTextCriteria {
 	 * @return 返回Lucene查询对象。
 	 */
 	private Query generateLuceneQuery() {
-		BooleanQuery query = new BooleanQuery();
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
 		// 如果关键字为空，则匹配任意记录
 		if (StringUtils.isEmpty(keyword)) {
-			query.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
+			builder.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
 		} else {
 			// 支持空格分隔多个关键词，之间是“与”的关系
 			for (String key : keyword.trim().split(" ")) {
-				query.add(
+				builder.add(
 						generateMultiFieldQuery(QueryParser.escape(key),
 								searchFields), Occur.MUST);
 			}
 		}
 		log.debug("全文搜索包含字段：{}", searchFields.keySet());
 		for (AttachLuceneQuery attachLuceneQuery : luceneQueries) {
-			query.add(attachLuceneQuery.getQuery(),
+			builder.add(attachLuceneQuery.getQuery(),
 					attachLuceneQuery.getOccur());
 		}
-		log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), query);
-		return query;
+		log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), builder);
+		return builder.build();
 	}
 
 	public Boolean getLookupCache() {

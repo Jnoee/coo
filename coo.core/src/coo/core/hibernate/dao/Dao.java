@@ -118,9 +118,8 @@ public class Dao<T> {
 	 *            实体ID
 	 * @return 返回指定的ID加载业务实体，如果对象不存在抛出异常。
 	 */
-	@SuppressWarnings("unchecked")
 	public T load(Serializable id) {
-		return (T) getSession().load(clazz, id);
+		return getSession().load(clazz, id);
 	}
 
 	/**
@@ -132,13 +131,13 @@ public class Dao<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(Serializable id) {
-		Object entity = getSession().get(clazz, id);
+		T entity = getSession().get(clazz, id);
 		// 如果获取的是一个代理对象，则从代理对象中获取实际的实体对象返回。
 		if (entity instanceof HibernateProxy) {
-			entity = ((HibernateProxy) entity).getHibernateLazyInitializer()
-					.getImplementation();
+			entity = (T) ((HibernateProxy) entity)
+					.getHibernateLazyInitializer().getImplementation();
 		}
-		return (T) entity;
+		return entity;
 	}
 
 	/**

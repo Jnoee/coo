@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.lucene.index.IndexWriterConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -12,18 +11,12 @@ import org.springframework.context.ApplicationContextAware;
  * SessionFactory工厂类。
  */
 public class LocalSessionFactoryBean extends
-		org.springframework.orm.hibernate4.LocalSessionFactoryBean implements
+		org.springframework.orm.hibernate5.LocalSessionFactoryBean implements
 		ApplicationContextAware {
 	private List<AbstractLocalSessionSettings> settings = new ArrayList<AbstractLocalSessionSettings>();
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
-		// 设置lucene的IndexWriter默认的等待写入锁超时时间，该设置用于集群并发写的情况。
-		Integer writeLockTimeout = Integer.valueOf(getHibernateProperties()
-				.getProperty("hibernate.search.default.writeLockTimeout",
-						String.valueOf(IndexWriterConfig.WRITE_LOCK_TIMEOUT)));
-		IndexWriterConfig.setDefaultWriteLockTimeout(writeLockTimeout);
-
 		Map<String, AbstractLocalSessionSettings> localSessionSettingsMap = applicationContext
 				.getBeansOfType(AbstractLocalSessionSettings.class);
 		settings.addAll(localSessionSettingsMap.values());

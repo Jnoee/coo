@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.SortableField;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,6 +39,7 @@ public abstract class BnLogEntity extends UuidEntity {
 	/** 创建时间 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
+	@SortableField
 	private Date createDate;
 	/** 实体ID */
 	@Field(analyze = Analyze.NO)

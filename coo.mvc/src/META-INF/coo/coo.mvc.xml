@@ -30,13 +30,18 @@
 	<!-- 适配视图配置 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="ignoreAcceptHeader" value="true" />
-		<property name="defaultContentType" value="text/html" />
-		<property name="mediaTypes">
-			<map>
-				<entry key="json" value="application/json" />
-				<entry key="xml" value="application/xml" />
-			</map>
+		<property name="contentNegotiationManager">
+			<bean
+				class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+				<property name="ignoreAcceptHeader" value="true" />
+				<property name="defaultContentType" value="text/html" />
+				<property name="mediaTypes">
+					<props>
+						<prop key="json">application/json</prop>
+						<prop key="xml">application/xml</prop>
+					</props>
+				</property>
+			</bean>
 		</property>
 		<property name="viewResolvers">
 			<list>
@@ -55,6 +60,18 @@
 				<bean class="coo.mvc.handler.GenericXStreamView" />
 				<bean class="coo.mvc.handler.GenericJacksonView" />
 			</list>
+		</property>
+	</bean>
+
+	<bean id="contentNegotiationManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="mediaTypes">
+			<props>
+				<prop key="json">application/json</prop>
+				<prop key="xml">application/xml</prop>
+			</props>
 		</property>
 	</bean>
 

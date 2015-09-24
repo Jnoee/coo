@@ -91,6 +91,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 * @param ip
 	 *            IP地址
 	 */
+	@Transactional
 	@SimpleLog(code = "user.logon.log", vars = "ip")
 	public void signIn(String username, String password, String ip) {
 		try {
@@ -106,6 +107,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		} catch (IncorrectCredentialsException ie) {
 			messageSource.thrown(ie, "password.wrong");
 		} catch (AuthenticationException ae) {
+			ae.printStackTrace();
 			messageSource.thrown(ae, "login.failed");
 		}
 	}
@@ -305,13 +307,15 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	public Page<U> searchUser(SearchModel searchModel) {
 		FullTextCriteria criteria = userDao.createFullTextCriteria();
 		criteria.setKeyword(searchModel.getKeyword());
-		criteria.addSortDesc("createDate", SortField.Type.LONG);
+		criteria.addSortAsc("ordinal", SortField.Type.INT);
+		criteria.addSortDesc("createDate", SortField.Type.STRING);
 
 		// 将系统管理员从搜索的用户结果中排除
-		BooleanQuery bq = new BooleanQuery();
-		bq.add(new TermQuery(new Term("id", AdminIds.USER_ID)), Occur.MUST_NOT);
-		bq.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
-		criteria.addLuceneQuery(bq, Occur.MUST);
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+		builder.add(new TermQuery(new Term("id", AdminIds.USER_ID)),
+				Occur.MUST_NOT);
+		builder.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
+		criteria.addLuceneQuery(builder.build(), Occur.MUST);
 
 		return userDao.searchPage(criteria, searchModel.getPageNo(),
 				searchModel.getPageSize());
