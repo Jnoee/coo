@@ -21,7 +21,6 @@ coo由以下子模块项目组成：
 * coo.core.security：安全模块。整合[shiro][]作为权限控制模块。
 * coo.mvc：整合封装[spring mvc][]/[freemarker][]/[dwz][]/[bootstrap][]/[echarts][]作为表现层基础模块。
 * coo.mvc.security：基于[spring mvc][]的权限控制模块。
-* coo.db：数据库设计。
 
 #依赖关系
 ![依赖关系](依赖关系.png)
