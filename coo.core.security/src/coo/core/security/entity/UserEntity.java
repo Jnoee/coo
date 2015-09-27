@@ -10,15 +10,14 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
-import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.search.bridge.builtin.IntegerBridge;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.core.enums.EnabledStatus;
+import coo.core.hibernate.search.IEnumValueBridge;
 import coo.core.security.annotations.LogField;
 
 /**
@@ -32,30 +31,26 @@ import coo.core.security.annotations.LogField;
  *            用户设置类型
  */
 @MappedSuperclass
-public abstract class UserEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>>
-		extends ResourceEntity<U> {
+public abstract class UserEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>> extends ResourceEntity<U> {
 	/** 姓名 */
-	@NotEmpty
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "姓名")
 	private String name;
 	/** 用户名 */
-	@NotEmpty
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "用户名")
 	private String username;
 	/** 密码 */
-	@NotEmpty
 	private String password;
 	/** 启用状态 */
-	@NotNull
-	@Field(analyze = Analyze.NO)
+	@Type(type = "IEnum")
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IEnumValueBridge.class) )
 	@LogField(text = "启用状态")
 	private EnabledStatus enabled = EnabledStatus.ENABLED;
 	/** 排序 */
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IntegerBridge.class))
+	@Field(analyze = Analyze.NO)
 	@LogField(text = "排序")
-	private Integer ordinal;
+	private Integer ordinal = 999;
 	/** 默认职务 */
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "defaultActorId")

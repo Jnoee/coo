@@ -7,12 +7,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.base.model.BitCode;
 import coo.core.security.annotations.LogField;
@@ -26,15 +24,12 @@ import coo.core.security.annotations.LogField;
  *            职务类型
  */
 @MappedSuperclass
-public abstract class RoleEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>>
-		extends ResourceEntity<U> {
+public abstract class RoleEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>> extends ResourceEntity<U> {
 	/** 名称 */
-	@NotEmpty
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "名称")
 	private String name;
 	/** 权限 */
-	@NotNull
 	@Type(type = "BitCode")
 	@LogField(text = "权限")
 	private BitCode permissions;

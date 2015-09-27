@@ -7,7 +7,6 @@ import javax.persistence.MappedSuperclass;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.core.security.annotations.LogBean;
 import coo.core.security.annotations.LogField;
@@ -41,7 +40,6 @@ public abstract class ActorEntity<O extends OrganEntity<O, U, ?>, U extends User
 	@LogBean(@LogField(text = "关联角色", property = "name"))
 	private R role;
 	/** 名称 */
-	@NotEmpty
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "名称")
 	private String name;

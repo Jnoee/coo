@@ -8,7 +8,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -31,24 +30,19 @@ import coo.core.util.SpringUtils;
  */
 @MappedSuperclass
 @JsonIgnoreProperties({ "creator", "createDate", "modifier", "modifyDate" })
-public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends
-		UuidEntity {
+public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends UuidEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "creatorId")
-	@NotNull
 	protected U creator;
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class) )
 	@SortableField
 	protected Date createDate;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "modifierId")
-	@NotNull
 	protected U modifier;
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class) )
 	@SortableField
 	protected Date modifyDate;
 
@@ -56,8 +50,7 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends
 	 * 自动填充创建人、创建时间、修改人、修改时间。
 	 */
 	public void autoFillIn() {
-		AbstractSecurityService<?, U, ?, ?> securityService = SpringUtils
-				.getBean("securityService");
+		AbstractSecurityService<?, U, ?, ?> securityService = SpringUtils.getBean("securityService");
 		U operator = securityService.getDefaultOperator();
 		Date now = new Date();
 		if (StringUtils.isEmpty(getId())) {

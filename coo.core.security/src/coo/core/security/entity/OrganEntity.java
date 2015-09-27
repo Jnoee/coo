@@ -10,15 +10,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.search.bridge.builtin.IntegerBridge;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import coo.core.enums.EnabledStatus;
+import coo.core.hibernate.search.IEnumValueBridge;
 import coo.core.security.annotations.LogBean;
 import coo.core.security.annotations.LogField;
 
@@ -41,22 +42,22 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	@LogBean(@LogField(text = "上级机构", property = "name"))
 	private O parent;
 	/** 名称 */
-	@NotEmpty
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "名称")
 	private String name;
 	/** 启用状态 */
-	@NotNull
-	@Field(analyze = Analyze.NO)
+	@Type(type = "IEnum")
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IEnumValueBridge.class) )
 	@LogField(text = "启用状态")
 	private EnabledStatus enabled = EnabledStatus.ENABLED;
 	/** 排序 */
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IntegerBridge.class))
+	@Field(analyze = Analyze.NO)
 	@LogField(text = "排序")
-	private Integer ordinal;
+	private Integer ordinal = 999;
 	/** 下级机构 */
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@OrderBy("ordinal,name")
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	private List<O> childs = new ArrayList<O>();
 	/** 关联职务 */
 	@OneToMany(mappedBy = "organ", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)

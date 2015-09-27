@@ -38,7 +38,7 @@ public abstract class BnLogEntity extends UuidEntity {
 	private String creator;
 	/** 创建时间 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class) )
 	@SortableField
 	private Date createDate;
 	/** 实体ID */
@@ -116,8 +116,7 @@ public abstract class BnLogEntity extends UuidEntity {
 	 * @return 如果记录了业务数据返回true，否则返回false。
 	 */
 	public Boolean hasData() {
-		return StringUtils.isNotEmpty(origData)
-				|| StringUtils.isNotEmpty(newData);
+		return StringUtils.isNotEmpty(origData) || StringUtils.isNotEmpty(newData);
 	}
 
 	/**
@@ -143,8 +142,7 @@ public abstract class BnLogEntity extends UuidEntity {
 		if (origData != null) {
 			try {
 				ObjectMapper mapper = new ObjectMapper();
-				Map<String, String> dataMap = mapper.readValue(origData,
-						LinkedHashMap.class);
+				Map<String, String> dataMap = mapper.readValue(origData, LinkedHashMap.class);
 				if (datas.isEmpty()) {
 					for (Entry<String, String> entry : dataMap.entrySet()) {
 						LogData data = new LogData();
@@ -174,8 +172,7 @@ public abstract class BnLogEntity extends UuidEntity {
 		if (newData != null) {
 			try {
 				ObjectMapper mapper = new ObjectMapper();
-				Map<String, String> dataMap = mapper.readValue(newData,
-						LinkedHashMap.class);
+				Map<String, String> dataMap = mapper.readValue(newData, LinkedHashMap.class);
 				if (datas.isEmpty()) {
 					for (Entry<String, String> entry : dataMap.entrySet()) {
 						LogData data = new LogData();
@@ -222,8 +219,7 @@ public abstract class BnLogEntity extends UuidEntity {
 	 */
 	private Map<String, String> getAllLogFieldDatas(Object data) {
 		Map<String, String> datas = new LinkedHashMap<String, String>();
-		List<java.lang.reflect.Field> fields = BeanUtils.findField(
-				data.getClass(), LogField.class);
+		List<java.lang.reflect.Field> fields = BeanUtils.findField(data.getClass(), LogField.class);
 		for (java.lang.reflect.Field field : fields) {
 			LogField logField = field.getAnnotation(LogField.class);
 			Object fieldValue = BeanUtils.getField(data, field);
@@ -241,8 +237,7 @@ public abstract class BnLogEntity extends UuidEntity {
 	 */
 	private Map<String, String> getAllLogBeanDatas(Object data) {
 		Map<String, String> datas = new LinkedHashMap<String, String>();
-		List<java.lang.reflect.Field> fields = BeanUtils.findField(
-				data.getClass(), LogBean.class);
+		List<java.lang.reflect.Field> fields = BeanUtils.findField(data.getClass(), LogBean.class);
 		for (java.lang.reflect.Field field : fields) {
 			LogBean logBean = field.getAnnotation(LogBean.class);
 			Object fieldValue = BeanUtils.getField(data, field);
@@ -260,8 +255,7 @@ public abstract class BnLogEntity extends UuidEntity {
 	 *            日志字段注解
 	 * @return 返回日志字段的日志数据。
 	 */
-	private Map<String, String> getLogFieldData(Object fieldValue,
-			LogField logField) {
+	private Map<String, String> getLogFieldData(Object fieldValue, LogField logField) {
 		Map<String, String> datas = new LinkedHashMap<String, String>();
 		String value = "";
 		if (fieldValue != null) {
@@ -287,8 +281,7 @@ public abstract class BnLogEntity extends UuidEntity {
 		Map<String, String> datas = new LinkedHashMap<String, String>();
 		if (bean != null) {
 			for (LogField logField : logBean.value()) {
-				Object fieldValue = BeanUtils.getField(bean,
-						logField.property());
+				Object fieldValue = BeanUtils.getField(bean, logField.property());
 				datas.putAll(getLogFieldData(fieldValue, logField));
 			}
 		} else {
