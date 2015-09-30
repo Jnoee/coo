@@ -95,7 +95,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@SimpleLog(code = "user.logon.log", vars = "ip")
 	public void signIn(String username, String password, String ip) {
 		try {
-			AuthenticationToken token = new UsernamePasswordToken(username, password);
+			AuthenticationToken token = new UsernamePasswordToken(username,
+					password);
 			Subject subject = SecurityUtils.getSubject();
 			subject.login(token);
 			loginRealm.clearCache();
@@ -312,11 +313,13 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 
 		// 将系统管理员从搜索的用户结果中排除
 		BooleanQuery.Builder builder = new BooleanQuery.Builder();
-		builder.add(new TermQuery(new Term("id", AdminIds.USER_ID)), Occur.MUST_NOT);
+		builder.add(new TermQuery(new Term("id", AdminIds.USER_ID)),
+				Occur.MUST_NOT);
 		builder.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
 		criteria.addLuceneQuery(builder.build(), Occur.MUST);
 
-		return userDao.searchPage(criteria, searchModel.getPageNo(), searchModel.getPageSize());
+		return userDao.searchPage(criteria, searchModel.getPageNo(),
+				searchModel.getPageSize());
 	}
 
 	/**
@@ -357,7 +360,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 			messageSource.thrown("username.exist", user.getUsername());
 		}
 		if (StringUtils.isEmpty(user.getPassword())) {
-			user.setPassword(loginRealm.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
+			user.setPassword(loginRealm
+					.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
 		}
 		userDao.save(user);
 
@@ -431,10 +435,12 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional
 	@SimpleLog(code = "user.reset.password.log", vars = "user.name")
 	public void resetPassword(String managePassword, U user) {
-		if (!loginRealm.checkPassword(managePassword, getCurrentUser().getPassword())) {
+		if (!loginRealm.checkPassword(managePassword, getCurrentUser()
+				.getPassword())) {
 			messageSource.thrown("admin.password.wrong");
 		}
-		user.setPassword(loginRealm.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
+		user.setPassword(loginRealm
+				.encryptPassword(AdminPermission.DEFAULT_PASSWORD));
 	}
 
 	/**
@@ -488,8 +494,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional
 	@AutoFillIn
-	@DetailLog(target = "actor", code = "actor.edit.log", vars = { "actor.user.name",
-			"actor.name" }, type = LogType.ALL)
+	@DetailLog(target = "actor", code = "actor.edit.log", vars = {
+			"actor.user.name", "actor.name" }, type = LogType.ALL)
 	public void updateActor(A actor) {
 		A origActor = getActor(actor.getId());
 		BeanUtils.copyFields(actor, origActor);
@@ -502,7 +508,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            职务
 	 */
 	@Transactional
-	@SimpleLog(code = "actor.delete.log", vars = { "actor.user.name", "actor.name" })
+	@SimpleLog(code = "actor.delete.log", vars = { "actor.user.name",
+			"actor.name" })
 	public void deleteActor(A actor) {
 		if (actor.isDefaultActor()) {
 			messageSource.thrown("default.actor.not.allow.delete");
@@ -517,7 +524,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 *            职务
 	 */
 	@Transactional
-	@SimpleLog(code = "actor.set.default.log", vars = { "actor.user.name", "actor.name" })
+	@SimpleLog(code = "actor.set.default.log", vars = { "actor.user.name",
+			"actor.name" })
 	public void setDefaultActor(A actor) {
 		actor.getUser().setDefaultActor(actor);
 	}
@@ -548,7 +556,8 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional(readOnly = true)
 	public List<U> findUserByPermission(String permissionCode) {
-		return findUserByPermissions(new String[] { permissionCode }, new String[] {});
+		return findUserByPermissions(new String[] { permissionCode },
+				new String[] {});
 	}
 
 	/**
@@ -574,15 +583,20 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	 */
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
-	public List<U> findUserByPermissions(String[] includePermissionCodes, String[] excludePermissionCodes) {
-		List<Integer> trueBits = permissionConfig.getPermissionIds(includePermissionCodes);
-		List<Integer> falseBits = permissionConfig.getPermissionIds(excludePermissionCodes);
-		BitCode permissionCode = new BitCode().getQueryBitCode(trueBits.toArray(new Integer[] {}),
+	public List<U> findUserByPermissions(String[] includePermissionCodes,
+			String[] excludePermissionCodes) {
+		List<Integer> trueBits = permissionConfig
+				.getPermissionIds(includePermissionCodes);
+		List<Integer> falseBits = permissionConfig
+				.getPermissionIds(excludePermissionCodes);
+		BitCode permissionCode = new BitCode().getQueryBitCode(
+				trueBits.toArray(new Integer[] {}),
 				falseBits.toArray(new Integer[] {}));
 		Criteria criteria = userDao.createCriteria();
 		criteria.createAlias("actors", "actors");
 		criteria.createAlias("actors.role", "role");
-		criteria.add(Restrictions.like("role.permissions", permissionCode.toString()));
+		criteria.add(Restrictions.like("role.permissions",
+				permissionCode.toString()));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return criteria.list();
 	}

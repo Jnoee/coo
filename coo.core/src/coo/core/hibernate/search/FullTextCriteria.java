@@ -332,8 +332,9 @@ public class FullTextCriteria {
 			builder.add(attachLuceneQuery.getQuery(),
 					attachLuceneQuery.getOccur());
 		}
-		log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), builder);
-		return builder.build();
+		BooleanQuery query = builder.build();
+		log.debug("全文搜索[{}]查询语句：{}", clazz.getSimpleName(), query);
+		return query;
 	}
 
 	public Boolean getLookupCache() {
