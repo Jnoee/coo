@@ -17,6 +17,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import coo.core.enums.EnabledStatus;
 import coo.core.hibernate.search.IEnumValueBridge;
@@ -39,6 +40,7 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	/** 上级机构 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentId")
+	@IndexedEmbedded(includePaths = { "id", "name" })
 	@LogBean(@LogField(text = "上级机构", property = "name"))
 	private O parent;
 	/** 名称 */
@@ -47,7 +49,7 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	private String name;
 	/** 启用状态 */
 	@Type(type = "IEnum")
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IEnumValueBridge.class) )
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IEnumValueBridge.class))
 	@LogField(text = "启用状态")
 	private EnabledStatus enabled = EnabledStatus.ENABLED;
 	/** 排序 */
