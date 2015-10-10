@@ -8,9 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.UUID;
 
-import coo.base.constants.Measure;
 import coo.base.constants.Chars;
+import coo.base.constants.Measure;
 import coo.base.exception.UncheckedException;
 
 /**
@@ -30,6 +31,17 @@ public class FileUtils {
 		return getFileName(fileName) + "-"
 				+ DateUtils.format(new Date(), DateUtils.MILLISECOND_N)
 				+ getFileType(fileName);
+	}
+
+	/**
+	 * 生成UUID文件名。
+	 * 
+	 * @param fileName
+	 *            原文件名
+	 * @return 返回UUID文件名。
+	 */
+	public static String getUuidFileName(String fileName) {
+		return UUID.randomUUID() + getFileType(fileName);
 	}
 
 	/**
@@ -72,8 +84,7 @@ public class FileUtils {
 		} else if (lastSlashIndex > lastBackSlashIndex) {
 			return StringUtils.substringAfterLast(filePath, Chars.SLASH);
 		} else {
-			return StringUtils.substringAfterLast(filePath,
-					Chars.BACKSLASH);
+			return StringUtils.substringAfterLast(filePath, Chars.BACKSLASH);
 		}
 	}
 
@@ -95,8 +106,7 @@ public class FileUtils {
 		} else if (lastSlashIndex > lastBackSlashIndex) {
 			return StringUtils.substringBeforeLast(filePath, Chars.SLASH);
 		} else {
-			return StringUtils.substringBeforeLast(filePath,
-					Chars.BACKSLASH);
+			return StringUtils.substringBeforeLast(filePath, Chars.BACKSLASH);
 		}
 	}
 
