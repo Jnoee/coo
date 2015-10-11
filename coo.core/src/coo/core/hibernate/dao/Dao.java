@@ -2,10 +2,7 @@ package coo.core.hibernate.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -909,22 +906,14 @@ public class Dao<T> {
 	 */
 	private Map<String, Analyze> getEmbeddedIndexedFields(
 			Field embeddedEntityField) {
-		Class<?> embeddedClass = embeddedEntityField.getType();
-		if (Collection.class.isAssignableFrom(embeddedClass)) {
-			Type fc = embeddedEntityField.getGenericType();
-			if (fc instanceof ParameterizedType) {
-				ParameterizedType pt = (ParameterizedType) fc;
-				embeddedClass = (Class<?>) pt.getActualTypeArguments()[0];
-			}
+		Map<String, Analyze> embeddedIndexedFields = new LinkedHashMap<String, Analyze>();
+		String prefix = embeddedEntityField.getName() + ".";
+		IndexedEmbedded indexedEmbedded = embeddedEntityField
+				.getAnnotation(IndexedEmbedded.class);
+		for (String fieldName : indexedEmbedded.includePaths()) {
+			embeddedIndexedFields.put(prefix + fieldName, Analyze.NO);
 		}
 
-		String prefix = embeddedEntityField.getName() + ".";
-		Map<String, Analyze> embeddedIndexedFields = new LinkedHashMap<String, Analyze>();
-		Map<String, Analyze> indexedFields = getIndexedFields(embeddedClass);
-		for (String fieldName : indexedFields.keySet()) {
-			embeddedIndexedFields.put(prefix + fieldName,
-					indexedFields.get(fieldName));
-		}
 		return embeddedIndexedFields;
 	}
 }

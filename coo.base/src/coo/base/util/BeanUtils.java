@@ -271,6 +271,25 @@ public abstract class BeanUtils {
 	}
 
 	/**
+	 * 获取Field的类型。
+	 * 
+	 * @param field
+	 *            Field
+	 * @return 返回Field的类型。
+	 */
+	public static Class<?> getFieldType(Field field) {
+		Class<?> fieldType = field.getType();
+		if (Collection.class.isAssignableFrom(fieldType)) {
+			Type fc = field.getGenericType();
+			if (fc instanceof ParameterizedType) {
+				ParameterizedType pt = (ParameterizedType) fc;
+				fieldType = (Class<?>) pt.getActualTypeArguments()[0];
+			}
+		}
+		return fieldType;
+	}
+
+	/**
 	 * 获取泛型Field的泛型类型。
 	 * 
 	 * @param field
