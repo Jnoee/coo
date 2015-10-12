@@ -1,4 +1,4 @@
-package coo.mvc.constants;
+package coo.mvc.dwz;
 
 /**
  * DWZ结果状态常量。

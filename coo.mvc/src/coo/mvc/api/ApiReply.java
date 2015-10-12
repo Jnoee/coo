@@ -1,8 +1,6 @@
-package coo.mvc.model;
+package coo.mvc.api;
 
 import com.thoughtworks.xstream.annotations.XStreamAliasType;
-
-import coo.mvc.constants.ApiCode;
 
 /**
  * API响应对象基类。

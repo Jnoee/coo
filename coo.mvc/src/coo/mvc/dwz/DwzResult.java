@@ -1,7 +1,5 @@
-package coo.mvc.model;
+package coo.mvc.dwz;
 
-import coo.mvc.constants.DwzCallbackType;
-import coo.mvc.constants.DwzStatusCode;
 
 /**
  * DWZ的Ajax响应内容Model。

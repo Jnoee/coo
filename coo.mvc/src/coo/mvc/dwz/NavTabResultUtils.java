@@ -1,8 +1,6 @@
-package coo.mvc.util;
+package coo.mvc.dwz;
 
 import org.springframework.web.servlet.ModelAndView;
-
-import coo.mvc.model.DwzResult;
 
 /**
  * NavTab页面响应对象辅助类。

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
-import coo.mvc.constants.DwzTargetType;
+import coo.mvc.dwz.DwzTargetType;
 
 /**
  * FreeMarker配置组件。

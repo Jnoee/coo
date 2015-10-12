@@ -1,8 +1,6 @@
-package coo.mvc.util;
+package coo.mvc.dwz;
 
 import org.springframework.web.servlet.ModelAndView;
-
-import coo.mvc.model.DwzResult;
 
 /**
  * dwz响应对象辅助基类。

@@ -1,15 +1,10 @@
-package coo.mvc.actions;
+package coo.mvc.api;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import coo.mvc.constants.ApiCode;
-import coo.mvc.exception.ApiException;
-import coo.mvc.model.ApiReply;
-import coo.mvc.util.ApiUtils;
 
 /**
  * API Action基类。

@@ -1,4 +1,4 @@
-package coo.mvc.constants;
+package coo.mvc.dwz;
 
 /**
  * DWZ响应回调类型常量。

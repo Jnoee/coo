@@ -1,4 +1,4 @@
-package coo.mvc.handler;
+package coo.mvc.dwz;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import coo.base.exception.BusinessException;
-import coo.mvc.model.DwzResult;
+import coo.mvc.handler.GenericExceptionResolver;
 
 /**
  * DWZ异常处理。

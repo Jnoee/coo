@@ -1,4 +1,4 @@
-package coo.mvc.constants;
+package coo.mvc.dwz;
 
 /**
  * DWZ目标页面类型常量。

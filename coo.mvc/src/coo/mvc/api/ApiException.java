@@ -1,4 +1,4 @@
-package coo.mvc.exception;
+package coo.mvc.api;
 
 /**
  * API异常。

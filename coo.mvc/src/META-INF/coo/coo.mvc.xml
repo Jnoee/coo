@@ -63,18 +63,6 @@
 		</property>
 	</bean>
 
-	<bean id="contentNegotiationManager"
-		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-		<property name="ignoreAcceptHeader" value="true" />
-		<property name="defaultContentType" value="text/html" />
-		<property name="mediaTypes">
-			<props>
-				<prop key="json">application/json</prop>
-				<prop key="xml">application/xml</prop>
-			</props>
-		</property>
-	</bean>
-
 	<!-- 文件上传视图 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -88,7 +76,7 @@
 	</bean>
 
 	<!-- 异常处理配置 -->
-	<bean id="exceptionResolver" class="coo.mvc.handler.DwzExceptionResolver" />
+	<bean id="exceptionResolver" class="coo.mvc.dwz.DwzExceptionResolver" />
 
 	<!-- 验证配置 -->
 	<bean id="validator"

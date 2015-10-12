@@ -1,4 +1,4 @@
-package coo.mvc.interceptor;
+package coo.mvc.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import coo.mvc.model.ApiReply;
-import coo.mvc.util.ApiUtils;
 
 /**
  * API接口拦截器。

@@ -1,4 +1,4 @@
-package coo.mvc.constants;
+package coo.mvc.api;
 
 /**
  * API返回结果编码常量。

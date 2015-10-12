@@ -10,8 +10,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import coo.base.util.CollectionUtils;
-import coo.mvc.handler.DwzExceptionResolver;
-import coo.mvc.model.DwzResult;
+import coo.mvc.dwz.DwzExceptionResolver;
+import coo.mvc.dwz.DwzResult;
 
 /**
  * 基于安全模块的DWZ异常处理。

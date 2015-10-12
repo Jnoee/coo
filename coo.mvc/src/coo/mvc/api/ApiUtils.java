@@ -1,4 +1,4 @@
-package coo.mvc.util;
+package coo.mvc.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import coo.base.util.StringUtils;
 import coo.core.message.MessageSource;
 import coo.core.util.SpringUtils;
-import coo.mvc.constants.ApiCode;
-import coo.mvc.exception.ApiException;
-import coo.mvc.model.ApiReply;
 
 /**
  * API工具类。
