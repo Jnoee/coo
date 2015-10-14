@@ -10,9 +10,9 @@
 <#macro message code args>
     <@compress>
     <#if args?? && args?size != 0>
-    ${springMacroRequestContext.getMessage(code, args)}
+    	${springMacroRequestContext.getMessage(code, args)}
     <#else>
-    ${springMacroRequestContext.getMessage(code)}
+    	${springMacroRequestContext.getMessage(code)}
     </#if>
     </@compress>
 </#macro>

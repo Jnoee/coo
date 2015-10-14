@@ -40,6 +40,7 @@
 	<script src="${ctx}/fix/js/fix.combox.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.extend.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/js/fix.uploadify.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 

@@ -815,7 +815,6 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					errorString = 'Security Error';
 					break;
 				case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
-					alert('The upload limit has been reached (' + errorMsg + ').');
 					errorString = 'Exceeds Upload Limit';
 					break;
 				case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:
