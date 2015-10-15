@@ -15,6 +15,7 @@
 	<![endif]-->
 	<link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/fix/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
 	
 	<script src="${ctx}/base/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="${ctx}/base/js/base.core.js" type="text/javascript"></script>
@@ -277,6 +278,62 @@
     <#else>
         <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path />
     </#if>
+</#macro>
+
+<#--
+ * 图片组件。
+ * 
+ * path: 图片绑定的属性路径
+ * width: 图片宽度
+ * height: 图片高度
+ * size: 图片大小限制
+ * readonly: 是否只读
+ -->
+<#macro img path width height size=1024 readonly=false fileObjName="attFile" buttonText="上传图片" buttonWidth=70 buttonHeight=18>
+	<@s.bind path />
+    <#local random = .now?datetime?string("yyyyMMddHHmmssSSS")>
+    <#local inputId = "imgInput_" + random>
+    <#local queueId = "imgQueue_" + random>
+    <#local fileId = "imgFile_" + random>
+    <#if !readonly>
+    	<input id="${inputId}" type="file" uploaderOption="{
+			swf: 'uploadify.swf',
+			uploader: 'assist/att-file-upload.json',
+			fileObjName: '${fileObjName}',
+			buttonText: '${buttonText}',
+			width: ${buttonWidth},
+			height: ${buttonHeight},
+			imgWidth: ${width},
+			imgHeight: ${height},
+			multi: false,
+			removeCompleted: false,
+			uploadLimit: 1,
+			queueSizeLimit: 1,
+			fileSizeLimit: '${size}KB',
+			fileTypeDesc: '*.jpg;*.jpeg;*.gif;*.png;',
+			fileTypeExts: '*.jpg;*.jpeg;*.gif;*.png;',
+			inputName: '${s.name}',
+			queueID: '${queueId}',
+			onInit: imgInput_onInit,
+			onSelectError: uploadify_onSelectError,
+			onUploadSuccess: imgInput_onUploadSuccess
+		}" />
+    </#if>
+    <div id="${queueId}" class="fileQueue">
+	    <#if s.status.value??>
+	        <div id="${fileId}" class="uploadify-queue-item" style="width:${width}px;">
+	            <#if !readonly>
+	                <div class="cancel">
+	                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
+	                </div>
+	            </#if>
+	            <div class="uploadify-queue-image">
+	            	<img src="${s.status.actualValue.path}" width="${width}" height="${height}" />
+	            	<input type="hidden" name="${s.name}.id" id="${s.name}.id" value="${s.status.actualValue.id}" />
+	            </div>
+	        </div>
+	    </#if>
+	</div>
 </#macro>
 
 <#--

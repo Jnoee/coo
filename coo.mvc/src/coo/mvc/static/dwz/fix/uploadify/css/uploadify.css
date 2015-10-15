@@ -1,0 +1,15 @@
+.uploadify-queue-item {
+	float: left;
+	border: 2px dashed #0087F7;
+	border-radius: 5px;
+	background: white;
+	padding: 3px;
+	font: 11px "Microsoft YaHei", sans-serif;
+}
+
+.uploadify-button {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font: bold 12px "Microsoft YaHei", sans-serif;
+}
