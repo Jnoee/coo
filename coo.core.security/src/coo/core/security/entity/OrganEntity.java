@@ -37,6 +37,7 @@ import coo.core.security.annotations.LogField;
 @MappedSuperclass
 public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends UserEntity<U, A>, A extends ActorEntity<O, U, ?>>
 		extends ResourceEntity<U> {
+	private static final long serialVersionUID = -6322476250996786432L;
 	/** 上级机构 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentId")

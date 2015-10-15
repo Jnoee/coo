@@ -12,7 +12,7 @@ import coo.core.model.IEnum;
 import coo.core.util.IEnumUtils;
 
 /**
- * 用于Hibernate的自定义类型，映射实现了IEnum接口的枚举类型。
+ * IEnum枚举自定义类型。
  */
 public class IEnumUserType extends AbstractUserType {
 	@SuppressWarnings("unchecked")

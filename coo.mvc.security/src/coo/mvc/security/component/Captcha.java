@@ -19,8 +19,8 @@ import coo.core.captcha.CaptchaImageGenerator;
  */
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-@SuppressWarnings("serial")
 public class Captcha implements Serializable {
+	private static final long serialVersionUID = -2712035875690565914L;
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
 	private CaptchaImageGenerator captchaImageGenerator;

@@ -24,7 +24,9 @@ import coo.core.security.annotations.LogField;
  *            职务类型
  */
 @MappedSuperclass
-public abstract class RoleEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>> extends ResourceEntity<U> {
+public abstract class RoleEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>>
+		extends ResourceEntity<U> {
+	private static final long serialVersionUID = 2197446702959473706L;
 	/** 名称 */
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "名称")

@@ -3,8 +3,8 @@ package coo.mvc.api;
 /**
  * API异常。
  */
-@SuppressWarnings("serial")
 public class ApiException extends RuntimeException {
+	private static final long serialVersionUID = 3703190701308868615L;
 	private String code;
 	private String msg;
 

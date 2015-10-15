@@ -16,7 +16,7 @@ import coo.base.util.StringUtils;
 import coo.core.model.UuidEntity;
 
 /**
- * 用于Hibernate的自定义类型，映射实现了UuidEntity列表的枚举类型。
+ * UuidEntity列表自定义类型。
  */
 public class UuidEntityListUserType extends AbstractListUserType {
 	@Override

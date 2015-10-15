@@ -3,8 +3,9 @@ package coo.base.exception;
 /**
  * 业务异常。
  */
-@SuppressWarnings("serial")
 public class BusinessException extends RuntimeException {
+	private static final long serialVersionUID = 5342133798884871742L;
+
 	/**
 	 * 构造方法。
 	 * 

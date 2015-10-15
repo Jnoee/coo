@@ -31,7 +31,9 @@ import coo.core.security.annotations.LogField;
  *            用户设置类型
  */
 @MappedSuperclass
-public abstract class UserEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>> extends ResourceEntity<U> {
+public abstract class UserEntity<U extends UserEntity<U, A>, A extends ActorEntity<?, ?, ?>>
+		extends ResourceEntity<U> {
+	private static final long serialVersionUID = 285209873729434603L;
 	/** 姓名 */
 	@Field(analyze = Analyze.NO)
 	@LogField(text = "姓名")
@@ -44,7 +46,7 @@ public abstract class UserEntity<U extends UserEntity<U, A>, A extends ActorEnti
 	private String password;
 	/** 启用状态 */
 	@Type(type = "IEnum")
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IEnumValueBridge.class) )
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = IEnumValueBridge.class))
 	@LogField(text = "启用状态")
 	private EnabledStatus enabled = EnabledStatus.ENABLED;
 	/** 排序 */

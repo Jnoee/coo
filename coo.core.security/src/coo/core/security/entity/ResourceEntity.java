@@ -30,19 +30,21 @@ import coo.core.util.SpringUtils;
  */
 @MappedSuperclass
 @JsonIgnoreProperties({ "creator", "createDate", "modifier", "modifyDate" })
-public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends UuidEntity {
+public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends
+		UuidEntity {
+	private static final long serialVersionUID = -3609060293286581097L;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "creatorId")
 	protected U creator;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class) )
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
 	@SortableField
 	protected Date createDate;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "modifierId")
 	protected U modifier;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class) )
+	@Field(analyze = Analyze.NO, bridge = @FieldBridge(impl = DateBridge.class))
 	@SortableField
 	protected Date modifyDate;
 
@@ -50,7 +52,8 @@ public abstract class ResourceEntity<U extends UserEntity<U, ?>> extends UuidEnt
 	 * 自动填充创建人、创建时间、修改人、修改时间。
 	 */
 	public void autoFillIn() {
-		AbstractSecurityService<?, U, ?, ?> securityService = SpringUtils.getBean("securityService");
+		AbstractSecurityService<?, U, ?, ?> securityService = SpringUtils
+				.getBean("securityService");
 		U operator = securityService.getDefaultOperator();
 		Date now = new Date();
 		if (StringUtils.isEmpty(getId())) {

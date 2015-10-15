@@ -3,8 +3,9 @@ package coo.base.exception;
 /**
  * 无需捕获处理的异常。
  */
-@SuppressWarnings("serial")
 public class UncheckedException extends RuntimeException {
+	private static final long serialVersionUID = -8958718055404910646L;
+
 	/**
 	 * 构造方法。
 	 * 
