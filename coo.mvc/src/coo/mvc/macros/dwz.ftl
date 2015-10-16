@@ -289,12 +289,13 @@
  * size: 图片大小限制
  * readonly: 是否只读
  -->
-<#macro img path width height size=1024 readonly=false fileObjName="attFile" buttonText="上传图片" buttonWidth=70 buttonHeight=18>
+<#macro img path width height limit=0 size=1024 readonly=false fileObjName="attFile" buttonText="上传图片" buttonWidth=70 buttonHeight=18>
 	<@s.bind path />
     <#local random = .now?datetime?string("yyyyMMddHHmmssSSS")>
     <#local inputId = "imgInput_" + random>
     <#local queueId = "imgQueue_" + random>
     <#local fileId = "imgFile_" + random>
+    <#local multi = s.status.actualValue?is_enumerable>
     <#if !readonly>
     	<input id="${inputId}" type="file" uploaderOption="{
 			swf: '${ctx}/dwz/uploadify/scripts/uploadify.swf',
@@ -305,23 +306,38 @@
 			height: ${buttonHeight},
 			imgWidth: ${width},
 			imgHeight: ${height},
-			multi: false,
+			multi: ${multi},
 			removeCompleted: false,
-			uploadLimit: 1,
-			queueSizeLimit: 1,
+			uploadLimit: <#if multi>${limit}<#else>1</#if>,
+			queueSizeLimit: <#if multi>${limit}<#else>1</#if>,
 			fileSizeLimit: '${size}KB',
 			fileTypeDesc: '*.jpg;*.jpeg;*.gif;*.png;',
 			fileTypeExts: '*.jpg;*.jpeg;*.gif;*.png;',
 			inputName: '${s.name}',
 			queueID: '${queueId}',
-			onInit: imgInput_onInit,
 			onSelectError: uploadify_onSelectError,
-			onUploadSuccess: imgInput_onUploadSuccess
+			onInit: img_onInit,
+			onUploadStart: img_onUploadStart,
+			onUploadSuccess: img_onUploadSuccess
 		}" />
     </#if>
     <div id="${queueId}" class="fileQueue">
 	    <#if s.status.value??>
-	    	<#if !s.status.actualValue?is_enumerable>
+	    	<#if multi>
+		    	<#list s.status.actualValue as image>
+			    	<div id="${fileId}_${image_index}" class="uploadify-queue-item" style="width:${width}px;">
+			            <#if !readonly>
+			                <div class="cancel">
+			                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
+			                </div>
+			            </#if>
+			            <div class="uploadify-queue-image">
+			            	<img src="${image.path}" width="${width}" height="${height}" />
+			            	<#if !readonly><input type="hidden" name="${s.name}[${image_index}]" value="${image.id}"></#if>
+			            </div>
+			        </div>
+		        </#list>
+		    <#else>
 		        <div id="${fileId}" class="uploadify-queue-item" style="width:${width}px;">
 		            <#if !readonly>
 		                <div class="cancel">
@@ -330,23 +346,9 @@
 		            </#if>
 		            <div class="uploadify-queue-image">
 		            	<img src="${s.status.actualValue.path}" width="${width}" height="${height}" />
-		            	<@s.hidden path />
+		            	<#if !readonly><@s.hidden path /></#if>
 		            </div>
 		        </div>
-		    <#else>
-		    	<#list s.status.actualValue as image>
-		    	<div id="${fileId}_${image_index}" class="uploadify-queue-item" style="width:${width}px;">
-		            <#if !readonly>
-		                <div class="cancel">
-		                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
-		                </div>
-		            </#if>
-		            <div class="uploadify-queue-image">
-		            	<img src="${image.path}" width="${width}" height="${height}" />
-		            	<@s.hidden path />
-		            </div>
-		        </div>
-		        </#list>
 	        </#if>
 	    </#if>
 	</div>

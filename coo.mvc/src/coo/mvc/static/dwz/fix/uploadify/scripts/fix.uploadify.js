@@ -28,7 +28,7 @@ var uploadify_onSelectError = function(file, errorCode, errorMsg) {
 	}
 }
 
-var imgInput_onInit = function(instance) {
+var img_onInit = function(instance) {
 	var settings = instance.settings;
 	settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item" style="width:' + settings.imgWidth + 'px">\
 		<div class="cancel">\
@@ -42,21 +42,39 @@ var imgInput_onInit = function(instance) {
 	</div>';
 }
 
-var imgInput_onUploadSuccess = function(file, data, response) {
+var img_onUploadStart = function(file) {
+	var settings = this.settings;
+	var queueDiv = $("#" + settings.queueID);
+	if(settings.multi) {
+     	if(settings.uploadLimit != 0 && queueDiv.children().size() > settings.uploadLimit) {
+     		this.queueData.files[file.id].uploaded = true;
+			this.cancelUpload(file.id, false);
+			alert("上传文件数量不能超过[" + settings.uploadLimit + "]个。");
+		}
+	} else {
+		queueDiv.children("[id!=" + file.id + "]").remove();
+	}
+}
+
+var img_onUploadSuccess = function(file, data, response) {
 	var settings = this.settings;
 	
 	var fileDiv = $("#" + file.id);
-	var json = DWZ.jsonEval(data);
-	fileDiv.find(".uploadify-queue-image").append("<img src=" + json.path + " width=" + settings.imgWidth + " height=" + settings.imgHeight + " />");
-	fileDiv.find(".uploadify-queue-image").append("<input type=hidden name=" + settings.inputName + " value=" + json.id + " />");
+	var attFile = DWZ.jsonEval(data);
+	fileDiv.find(".uploadify-queue-image").append("<img src=" + attFile.path + " width=" + settings.imgWidth + " height=" + settings.imgHeight + " />");
+	fileDiv.find(".uploadify-queue-image").append("<input type=hidden name=" + settings.inputName + " value=" + attFile.id + " />");
 	fileDiv.find(".cancel > span").remove();
 	fileDiv.find(".uploadify-progress").remove();
 	
 	var queueDiv = $("#" + settings.queueID);
-	queueDiv.children("[id!=" + file.id + "]").remove();
-	
-	var stats = this.getStats();
-    stats.successful_uploads = 0;
-    this.setStats(stats);
-    this.queueData.files = [];
+	if(settings.multi) {
+		queueDiv.find("input:hidden").each(function(index) {
+			this.name = settings.inputName + "[" + index + "]";
+		});
+	} else {
+		var stats = this.getStats();
+		stats.successful_uploads = 0;
+		this.setStats(stats);
+		this.queueData.files = [];
+	}
 }
