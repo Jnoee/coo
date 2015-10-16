@@ -41,7 +41,7 @@
 	<script src="${ctx}/fix/js/fix.combox.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.extend.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.uploadify.js" type="text/javascript"></script>
+	<script src="${ctx}/fix/uploadify/scripts/fix.uploadify.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
@@ -297,7 +297,7 @@
     <#local fileId = "imgFile_" + random>
     <#if !readonly>
     	<input id="${inputId}" type="file" uploaderOption="{
-			swf: 'uploadify.swf',
+			swf: '${ctx}/dwz/uploadify/scripts/uploadify.swf',
 			uploader: 'assist/att-file-upload.json',
 			fileObjName: '${fileObjName}',
 			buttonText: '${buttonText}',
@@ -321,17 +321,33 @@
     </#if>
     <div id="${queueId}" class="fileQueue">
 	    <#if s.status.value??>
-	        <div id="${fileId}" class="uploadify-queue-item" style="width:${width}px;">
-	            <#if !readonly>
-	                <div class="cancel">
-	                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
-	                </div>
-	            </#if>
-	            <div class="uploadify-queue-image">
-	            	<img src="${s.status.actualValue.path}" width="${width}" height="${height}" />
-	            	<input type="hidden" name="${s.name}.id" id="${s.name}.id" value="${s.status.actualValue.id}" />
-	            </div>
-	        </div>
+	    	<#if !s.status.actualValue?is_enumerable>
+		        <div id="${fileId}" class="uploadify-queue-item" style="width:${width}px;">
+		            <#if !readonly>
+		                <div class="cancel">
+		                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
+		                </div>
+		            </#if>
+		            <div class="uploadify-queue-image">
+		            	<img src="${s.status.actualValue.path}" width="${width}" height="${height}" />
+		            	<@s.hidden path />
+		            </div>
+		        </div>
+		    <#else>
+		    	<#list s.status.actualValue as image>
+		    	<div id="${fileId}_${image_index}" class="uploadify-queue-item" style="width:${width}px;">
+		            <#if !readonly>
+		                <div class="cancel">
+		                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
+		                </div>
+		            </#if>
+		            <div class="uploadify-queue-image">
+		            	<img src="${image.path}" width="${width}" height="${height}" />
+		            	<@s.hidden path />
+		            </div>
+		        </div>
+		        </#list>
+	        </#if>
 	    </#if>
 	</div>
 </#macro>

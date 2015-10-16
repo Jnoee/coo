@@ -8,7 +8,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<properties>
-		<spring.version>4.2.1.RELEASE</spring.version>
+		<spring.version>4.2.2.RELEASE</spring.version>
 		<hibernate.version>5.0.1.Final</hibernate.version>
 		<hibernate.search.version>5.5.0.Final</hibernate.search.version>
 		<hibernate.validator.version>5.2.1.Final</hibernate.validator.version>
