@@ -48,7 +48,7 @@ var imgInput_onUploadSuccess = function(file, data, response) {
 	var fileDiv = $("#" + file.id);
 	var json = DWZ.jsonEval(data);
 	fileDiv.find(".uploadify-queue-image").append("<img src=" + json.path + " width=" + settings.imgWidth + " height=" + settings.imgHeight + " />");
-	fileDiv.find(".uploadify-queue-image").append("<input type=hidden name=" + settings.inputName + ".id id=" + settings.inputName +".id value=" + json.id + " />");
+	fileDiv.find(".uploadify-queue-image").append("<input type=hidden name=" + settings.inputName + " value=" + json.id + " />");
 	fileDiv.find(".cancel > span").remove();
 	fileDiv.find(".uploadify-progress").remove();
 	
