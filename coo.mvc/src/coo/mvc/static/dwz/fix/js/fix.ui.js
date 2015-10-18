@@ -1,17 +1,17 @@
 /** 覆盖DWZ的initUI函数 */
-function initUI(_box){
+function initUI(_box) {
 	var $p = $(_box || document);
 
 	$("div.panel", $p).jPanel();
 
-	//tables
+	// tables
 	$("table.table", $p).jTable();
-	
+
 	// css tables
 	$('table.list', $p).cssTable();
 
-	//auto bind tabs
-	$("div.tabs", $p).each(function(){
+	// auto bind tabs
+	$("div.tabs", $p).each(function() {
 		var $this = $(this);
 		var options = {};
 		options.currentIndex = $this.attr("currentIndex") || 0;
@@ -20,42 +20,56 @@ function initUI(_box){
 	});
 
 	$("ul.tree", $p).jTree();
-	$('div.accordion', $p).each(function(){
+	$('div.accordion', $p).each(function() {
 		var $this = $(this);
-		$this.accordion({fillSpace:$this.attr("fillSpace"),alwaysOpen:true,active:0});
+		$this.accordion({
+			fillSpace: $this.attr("fillSpace"),
+			alwaysOpen: true,
+			active: 0
+		});
 	});
 
 	$(":button.checkboxCtrl, :checkbox.checkboxCtrl", $p).checkboxCtrl($p);
-	
-	if ($.fn.combox) $("select.combox",$p).combox();
-	
-	if ($.fn.xheditor) {
-		$("textarea.editor", $p).each(function(){
+
+	if($.fn.combox)
+		$("select.combox", $p).combox();
+
+	if($.fn.xheditor) {
+		$("textarea.editor", $p).each(function() {
 			var $this = $(this);
-			var op = {html5Upload:false, skin: 'vista',tools: $this.attr("tools") || 'full'};
+			var op = {
+				html5Upload: false,
+				skin: 'vista',
+				tools: $this.attr("tools") || 'full'
+			};
 			var upAttrs = [
-				["upLinkUrl","upLinkExt","zip,rar,txt"],
-				["upImgUrl","upImgExt","jpg,jpeg,gif,png"],
-				["upFlashUrl","upFlashExt","swf"],
-				["upMediaUrl","upMediaExt","avi"]
+					[
+							"upLinkUrl", "upLinkExt", "zip,rar,txt"
+					], [
+							"upImgUrl", "upImgExt", "jpg,jpeg,gif,png"
+					], [
+							"upFlashUrl", "upFlashExt", "swf"
+					], [
+							"upMediaUrl", "upMediaExt", "avi"
+					]
 			];
-			
-			$(upAttrs).each(function(i){
+
+			$(upAttrs).each(function(i) {
 				var urlAttr = upAttrs[i][0];
 				var extAttr = upAttrs[i][1];
-				
-				if ($this.attr(urlAttr)) {
+
+				if($this.attr(urlAttr)) {
 					op[urlAttr] = $this.attr(urlAttr);
 					op[extAttr] = $this.attr(extAttr) || upAttrs[i][2];
 				}
 			});
-			
+
 			$this.xheditor(op);
 		});
 	}
-	
-	if ($.fn.uploadify) {
-		$(":file[uploaderOption]", $p).each(function(){
+
+	if($.fn.uploadify) {
+		$(":file[uploaderOption]", $p).each(function() {
 			var $this = $(this);
 			var options = {
 				fileObjName: $this.attr("name") || "file",
@@ -63,16 +77,16 @@ function initUI(_box){
 				multi: true,
 				onUploadError: uploadifyError
 			};
-			
+
 			var uploaderOption = DWZ.jsonEval($this.attr("uploaderOption"));
 			$.extend(options, uploaderOption);
 
-			DWZ.debug("uploaderOption: "+DWZ.obj2str(uploaderOption));
-			
+			DWZ.debug("uploaderOption: " + DWZ.obj2str(uploaderOption));
+
 			$this.uploadify(options);
 		});
 	}
-	
+
 	// init styles
 	$("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");
 
@@ -81,35 +95,37 @@ function initUI(_box){
 
 	$("input[type=text]", $p).not("div.tabs input[type=text]", $p).filter("[alt]").inputAlert();
 
-	//Grid ToolBar
+	// Grid ToolBar
 	$("div.panelBar li, div.panelBar", $p).hoverClass("hover");
 
-	//Button
+	// Button
 	$("div.button", $p).hoverClass("buttonHover");
 	$("div.buttonActive", $p).hoverClass("buttonActiveHover");
-	
-	//tabsPageHeader
+
+	// tabsPageHeader
 	$("div.tabsHeader li, div.tabsPageHeader li, div.accordionHeader, div.accordion", $p).hoverClass("hover");
 
-	//validate form
-	$("form.required-validate", $p).each(function(){
+	// validate form
+	$("form.required-validate", $p).each(function() {
 		var $form = $(this);
 		$form.validate({
 			onsubmit: false,
 			focusInvalid: false,
 			focusCleanup: true,
 			errorElement: "span",
-			ignore:".ignore",
+			ignore: ".ignore",
 			invalidHandler: function(form, validator) {
 				var errors = validator.numberOfInvalids();
-				if (errors) {
-					var message = DWZ.msg("validateFormError",[errors]);
+				if(errors) {
+					var message = DWZ.msg("validateFormError", [
+						errors
+					]);
 					alertMsg.error(message);
-				} 
+				}
 			}
 		});
-		
-		$form.find('input[customvalid]').each(function(){
+
+		$form.find('input[customvalid]').each(function() {
 			var $input = $(this);
 			$input.rules("add", {
 				customvalid: $input.attr("customvalid")
@@ -117,51 +133,55 @@ function initUI(_box){
 		});
 	});
 
-	if ($.fn.datepicker){
-        $('input.date', $p).each(initDatePicker);
-        $('input.date', $p).bind("focus", initDatePicker);
-    }
+	if($.fn.datepicker) {
+		$('input.date', $p).each(initDatePicker);
+		$('input.date', $p).bind("focus", initDatePicker);
+	}
 
-    function initDatePicker() {
-        var $this = $(this);
-        var opts = {};
-        if ($this.attr("dateFmt")) opts.pattern = $this.attr("dateFmt");
-        if ($this.attr("minRelation"))opts.minRelation = $($this.attr("minRelation"), $this.closest("form")).val();
-        if ($this.attr("minDate")) {
-            if ($this.attr("minDate").startsWith("#")) {
-                var minValue = $($this.attr("minDate"), $this.closest("form")).val();
-                if (minValue) {
-                    opts.minDate = minValue;
-                }
-            } else {
-                opts.minDate = $this.attr("minDate");
-            }
-        }
-        opts.showToDay = true;
-        if (opts.minDate && opts.minDate > new Date().formatDate(opts.pattern)) {
-            opts.showToDay = false;
-        }
-        if ($this.attr("maxDate")) {
-            if ($this.attr("maxDate").startsWith("#")) {
-                var maxValue = $($this.attr("maxDate"), $this.closest("form")).val();
-                if (maxValue) {
-                    opts.maxDate = maxValue;
-                }
-            } else {
-                opts.maxDate = $this.attr("maxDate");
-            }
-        }
-        if (opts.maxDate && opts.maxDate < new Date().formatDate(opts.pattern)) {
-            opts.showToDay = false;
-        }
-        if ($this.attr("mmStep")) opts.mmStep = $this.attr("mmStep");
-        if ($this.attr("ssStep")) opts.ssStep = $this.attr("ssStep");
-        $this.datepicker(opts);
-    }
+	function initDatePicker() {
+		var $this = $(this);
+		var opts = {};
+		if($this.attr("dateFmt"))
+			opts.pattern = $this.attr("dateFmt");
+		if($this.attr("minRelation"))
+			opts.minRelation = $($this.attr("minRelation"), $this.closest("form")).val();
+		if($this.attr("minDate")) {
+			if($this.attr("minDate").startsWith("#")) {
+				var minValue = $($this.attr("minDate"), $this.closest("form")).val();
+				if(minValue) {
+					opts.minDate = minValue;
+				}
+			} else {
+				opts.minDate = $this.attr("minDate");
+			}
+		}
+		opts.showToDay = true;
+		if(opts.minDate && opts.minDate > new Date().formatDate(opts.pattern)) {
+			opts.showToDay = false;
+		}
+		if($this.attr("maxDate")) {
+			if($this.attr("maxDate").startsWith("#")) {
+				var maxValue = $($this.attr("maxDate"), $this.closest("form")).val();
+				if(maxValue) {
+					opts.maxDate = maxValue;
+				}
+			} else {
+				opts.maxDate = $this.attr("maxDate");
+			}
+		}
+		if(opts.maxDate && opts.maxDate < new Date().formatDate(opts.pattern)) {
+			opts.showToDay = false;
+		}
+		if($this.attr("mmStep"))
+			opts.mmStep = $this.attr("mmStep");
+		if($this.attr("ssStep"))
+			opts.ssStep = $this.attr("ssStep");
+		$this.datepicker(opts);
+	}
 
 	// navTab
-	$("a[target=navTab]", $p).each(function(){
-		$(this).click(function(event){
+	$("a[target=navTab]", $p).each(function() {
+		$(this).click(function(event) {
 			var $this = $(this);
 			var title = $this.attr("title") || $this.text();
 			var tabid = $this.attr("rel") || "_blank";
@@ -169,27 +189,33 @@ function initUI(_box){
 			var external = eval($this.attr("external") || "false");
 			var url = unescape($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
 			DWZ.debug(url);
-			if (!url.isFinishedTm()) {
+			if(!url.isFinishedTm()) {
 				alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
 				return false;
 			}
-			navTab.openTab(tabid, url,{title:title, fresh:fresh, external:external});
+			navTab.openTab(tabid, url, {
+				title: title,
+				fresh: fresh,
+				external: external
+			});
 
 			event.preventDefault();
 		});
 	});
-	
-	//dialogs
-	$("a[target=dialog]", $p).each(function(){
-		$(this).click(function(event){
+
+	// dialogs
+	$("a[target=dialog]", $p).each(function() {
+		$(this).click(function(event) {
 			var $this = $(this);
 			var title = $this.attr("title") || $this.text();
 			var rel = $this.attr("rel") || "_blank";
 			var options = {};
 			var w = $this.attr("width");
 			var h = $this.attr("height");
-			if (w) options.width = w;
-			if (h) options.height = h;
+			if(w)
+				options.width = w;
+			if(h)
+				options.height = h;
 			options.max = eval($this.attr("max") || "false");
 			options.mask = eval($this.attr("mask") || "false");
 			options.maxable = eval($this.attr("maxable") || "true");
@@ -202,24 +228,24 @@ function initUI(_box){
 
 			var url = unescape($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
 			DWZ.debug(url);
-			if (!url.isFinishedTm()) {
+			if(!url.isFinishedTm()) {
 				alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
 				return false;
 			}
 			$.pdialog.open(url, rel, title, options);
-			
+
 			return false;
 		});
 	});
-	
+
 	// 修改ajax链接从当前页面获取rel标识的div，避免ID冲突问题。
-	$("a[target=ajax]", $p).each(function(){
-		$(this).click(function(event){
+	$("a[target=ajax]", $p).each(function() {
+		$(this).click(function(event) {
 			var $this = $(this);
 			var rel = $this.attr("rel");
-			if (rel) {
-				var $rel = $("#"+rel, $this.getPageDiv());
-				$rel.loadUrl($this.attr("href"), {}, function(){
+			if(rel) {
+				var $rel = $("#" + rel, $this.getPageDiv());
+				$rel.loadUrl($this.attr("href"), {}, function() {
 					$rel.find("[layoutH]").layoutH();
 				});
 			}
@@ -227,31 +253,42 @@ function initUI(_box){
 			event.preventDefault();
 		});
 	});
-	
-	$("div.pagination", $p).each(function(){
+
+	$("div.pagination", $p).each(function() {
 		var $this = $(this);
 		$this.pagination({
-			targetType:$this.attr("targetType"),
-			rel:$this.attr("rel"),
-			totalCount:$this.attr("totalCount"),
-			numPerPage:$this.attr("numPerPage"),
-			pageNumShown:$this.attr("pageNumShown"),
-			currentPage:$this.attr("currentPage")
+			targetType: $this.attr("targetType"),
+			rel: $this.attr("rel"),
+			totalCount: $this.attr("totalCount"),
+			numPerPage: $this.attr("numPerPage"),
+			pageNumShown: $this.attr("pageNumShown"),
+			currentPage: $this.attr("currentPage")
 		});
 	});
 
-	if ($.fn.sortDrag) $("div.sortDrag", $p).sortDrag();
+	if($.fn.sortDrag)
+		$("div.sortDrag", $p).sortDrag();
 
 	// dwz.ajax.js
-	if ($.fn.ajaxTodo) $("a[target=ajaxTodo]", $p).ajaxTodo();
-	if ($.fn.dwzExport) $("a[target=dwzExport]", $p).dwzExport();
+	if($.fn.ajaxTodo)
+		$("a[target=ajaxTodo]", $p).ajaxTodo();
+	if($.fn.dwzExport)
+		$("a[target=dwzExport]", $p).dwzExport();
 
-	if ($.fn.lookup) $("a[lookupGroup]", $p).lookup();
-	if ($.fn.multLookup) $("[multLookup]:button", $p).multLookup();
-	if ($.fn.suggest) $("input[suggestFields]", $p).suggest();
-	if ($.fn.itemDetail) $("table.itemDetail", $p).itemDetail();
-	if ($.fn.selectedTodo) $("a[target=selectedTodo]", $p).selectedTodo();
-	if ($.fn.pagerForm) $("form[rel=pagerForm]", $p).pagerForm({parentBox:$p});
+	if($.fn.lookup)
+		$("a[lookupGroup]", $p).lookup();
+	if($.fn.multLookup)
+		$("[multLookup]:button", $p).multLookup();
+	if($.fn.suggest)
+		$("input[suggestFields]", $p).suggest();
+	if($.fn.itemDetail)
+		$("table.itemDetail", $p).itemDetail();
+	if($.fn.selectedTodo)
+		$("a[target=selectedTodo]", $p).selectedTodo();
+	if($.fn.pagerForm)
+		$("form[rel=pagerForm]", $p).pagerForm({
+			parentBox: $p
+		});
 
 	// 这里放其他第三方jQuery插件...
 }

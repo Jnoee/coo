@@ -1,19 +1,46 @@
 /** 自定义jqeury validator错误信息显示方法 */
-$(function(){
-	if ($.validator) {
+$(function() {
+	if($.validator) {
 		$.validator.setDefaults({
 			errorPlacement: function(error, element) {
 				if(element.hasClass("hideError")) {
-					element.attr("title",error.text());
+					element.attr("title", error.text());
 				} else {
 					element.parents("dd:first").append(error);
 					error.attr("title", error.text());
 				}
 			}
 		});
-		$.validator.prototype.showLabel = function(e, i) {
-            var s = this.errorsFor(e);
-            s.length ? (s.removeClass(this.settings.validClass).addClass(this.settings.errorClass), s.html(i).attr("title",i)) : (s = $("<" + this.settings.errorElement + ">").attr("for", this.idOrName(e)).addClass(this.settings.errorClass).html(i || "").attr("title",i || ""), this.settings.wrapper && (s = s.hide().show().wrap("<" + this.settings.wrapper + "/>").parent()), this.labelContainer.append(s).length || (this.settings.errorPlacement ? this.settings.errorPlacement(s, $(e)) : s.insertAfter(e))), !i && this.settings.success && (s.text("").attr("title",""), "string" == typeof this.settings.success ? s.addClass(this.settings.success) : this.settings.success(s, e)), this.toShow = this.toShow.add(s)
+		$.validator.prototype.showLabel = function(element, message) {
+			var label = this.errorsFor(element);
+			if(label.length) {
+				label.removeClass(this.settings.validClass).addClass(this.settings.errorClass);
+				label.html(message).attr("title", message);
+			} else {
+				label = $("<" + this.settings.errorElement + ">");
+				label.attr("for", this.idOrName(element));
+				label.addClass(this.settings.errorClass);
+				label.html(message || "").attr("title", message || "");
+				if(this.settings.wrapper) {
+					label = label.hide().show().wrap("<" + this.settings.wrapper + "/>").parent();
+				}
+				if(!this.labelContainer.append(label).length) {
+					if(this.settings.errorPlacement) {
+						this.settings.errorPlacement(label, $(element));
+					} else {
+						label.insertAfter(element);
+					}
+				}
+			}
+			if(!message && this.settings.success) {
+				label.text("").attr("title", "");
+				if(typeof this.settings.success === "string") {
+					label.addClass(this.settings.success);
+				} else {
+					this.settings.success(label, element);
+				}
+			}
+			this.toShow = this.toShow.add(label);
 		}
 	}
 });
@@ -23,7 +50,7 @@ var gtDate = function(element, gtToDate) {
 	var endDate = $(element);
 	var startDate = $(gtToDate, $(element).closest("form"));
 	var pattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
-	
+
 	if(endDate.val() && startDate.val()) {
 		return endDate.val().parseDate("yyyy-MM-dd") > startDate.val().parseDate(pattern);
 	}
@@ -36,7 +63,7 @@ var geDate = function(element, geToDate) {
 	var endDate = $(element);
 	var startDate = $(geToDate, $(element).closest("form"));
 	var pattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
-	
+
 	if(endDate.val() && startDate.val()) {
 		return endDate.val().parseDate("yyyy-MM-dd") >= startDate.val().parseDate(pattern);
 	}
