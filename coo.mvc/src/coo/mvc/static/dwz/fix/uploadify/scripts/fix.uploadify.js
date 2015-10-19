@@ -1,6 +1,5 @@
 /** 修正uploadify取消文件占用上传文件数量的bug */
 var uploadify_cancel = function(inputId, fileId) {
-	$("#" + inputId).uploadify("cancel", fileId);
 	var swfuploadify = $("#" + inputId).data("uploadify");
 	var stats = swfuploadify.getStats();
 	if(stats.successful_uploads > 0) {
@@ -8,6 +7,10 @@ var uploadify_cancel = function(inputId, fileId) {
 	}
     swfuploadify.setStats(stats);
     delete swfuploadify.queueData.files[fileId];
+    
+    swfuploadify.cancelUpload(fileId, false);
+	var queueDiv = $("#" + swfuploadify.settings.queueID);
+	queueDiv.children("#" + fileId).remove();
 }
 
 var uploadify_onSelectError = function(file, errorCode, errorMsg) {
@@ -47,8 +50,8 @@ var img_onUploadStart = function(file) {
 	var queueDiv = $("#" + settings.queueID);
 	if(settings.multi) {
      	if(settings.uploadLimit != 0 && queueDiv.children().size() > settings.uploadLimit) {
-     		this.queueData.files[file.id].uploaded = true;
 			this.cancelUpload(file.id, false);
+			queueDiv.children("[id=" + file.id + "]").remove();
 			alert("上传文件数量不能超过[" + settings.uploadLimit + "]个。");
 		}
 	} else {

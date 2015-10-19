@@ -25,7 +25,7 @@
 	<script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 	<script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
@@ -295,7 +295,7 @@
     <#local inputId = "imgInput_" + random>
     <#local queueId = "imgQueue_" + random>
     <#local fileId = "imgFile_" + random>
-    <#local multi = s.status.actualValue?is_enumerable>
+    <#local multi = s.status.actualValue?? && s.status.actualValue?is_enumerable >
     <#if !readonly>
     	<input id="${inputId}" type="file" uploaderOption="{
 			swf: '${ctx}/dwz/uploadify/scripts/uploadify.swf',
@@ -306,7 +306,7 @@
 			height: ${buttonHeight},
 			imgWidth: ${width},
 			imgHeight: ${height},
-			multi: ${multi},
+			multi: ${multi?c},
 			removeCompleted: false,
 			uploadLimit: <#if multi>${limit}<#else>1</#if>,
 			queueSizeLimit: <#if multi>${limit}<#else>1</#if>,
@@ -328,7 +328,7 @@
 			    	<div id="${fileId}_${image_index}" class="uploadify-queue-item" style="width:${width}px;">
 			            <#if !readonly>
 			                <div class="cancel">
-			                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
+			                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}_${image_index}');">X</a>
 			                </div>
 			            </#if>
 			            <div class="uploadify-queue-image">
