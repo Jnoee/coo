@@ -41,7 +41,7 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	/** 上级机构 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parentId")
-	@IndexedEmbedded(includePaths = { "id", "name" })
+	@IndexedEmbedded(includeEmbeddedObjectId = true, includePaths = "name")
 	@LogBean(@LogField(text = "上级机构", property = "name"))
 	private O parent;
 	/** 名称 */

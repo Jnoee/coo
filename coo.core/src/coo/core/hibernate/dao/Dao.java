@@ -889,10 +889,13 @@ public class Dao<T> {
 		Map<String, Analyze> indexedFields = new LinkedHashMap<String, Analyze>();
 		for (Field field : BeanUtils.findField(clazz,
 				org.hibernate.search.annotations.Field.class)) {
-			String fieldName = field.getName();
-			Analyze analyze = field.getAnnotation(
-					org.hibernate.search.annotations.Field.class).analyze();
-			indexedFields.put(fieldName, analyze);
+			Class<?> fieldType = BeanUtils.getFieldType(field);
+			if (fieldType == String.class) {
+				String fieldName = field.getName();
+				Analyze analyze = field.getAnnotation(
+						org.hibernate.search.annotations.Field.class).analyze();
+				indexedFields.put(fieldName, analyze);
+			}
 		}
 		return indexedFields;
 	}
@@ -910,8 +913,16 @@ public class Dao<T> {
 		String prefix = embeddedEntityField.getName() + ".";
 		IndexedEmbedded indexedEmbedded = embeddedEntityField
 				.getAnnotation(IndexedEmbedded.class);
+		Class<?> embeddedEntityClass = BeanUtils
+				.getFieldType(embeddedEntityField);
 		for (String fieldName : indexedEmbedded.includePaths()) {
-			embeddedIndexedFields.put(prefix + fieldName, Analyze.NO);
+			Field field = BeanUtils.findField(embeddedEntityClass, fieldName);
+			Class<?> fieldType = BeanUtils.getFieldType(field);
+			if (fieldType == String.class) {
+				Analyze analyze = field.getAnnotation(
+						org.hibernate.search.annotations.Field.class).analyze();
+				embeddedIndexedFields.put(prefix + fieldName, analyze);
+			}
 		}
 
 		return embeddedIndexedFields;
