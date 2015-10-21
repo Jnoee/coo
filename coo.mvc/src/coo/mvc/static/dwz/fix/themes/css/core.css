@@ -41,7 +41,7 @@ a.logo, a.logo:hover {
 	font-size: 14px;
 }
 
-#leftside,#container,#splitBar,#splitBarProxy {
+#leftside, #container, #splitBar, #splitBarProxy {
 	top: 85px;
 }
 
@@ -85,7 +85,7 @@ table.list td {
 	line-height: 23px;
 }
 
-.pageFormContent dl.nowrap dd,.nowrap dd {
+.pageFormContent dl.nowrap dd, .nowrap dd {
 	width: 540px;
 }
 
@@ -107,6 +107,18 @@ span.error {
 	position: static;
 }
 
+.tree li {
+	cursor: auto;
+}
+
+.tree a {
+	display: inline;
+}
+
+.tree a:hover{
+	text-decoration: underline;
+}
+
 /*------------------------------ 新增自定义样式 ------------------------------*/
 /* 单列表单样式，应用到div.pageFormContent元素上 */
 .s-cols dl {
@@ -126,7 +138,7 @@ span.error {
 	float: left;
 }
 /** 处理checkbox、radio样式 */
-.dd-span input[type=checkbox],input[type=radio] {
+.dd-span input[type=checkbox], input[type=radio] {
 	margin: 0px;
 	vertical-align: -3px;
 }
@@ -213,8 +225,8 @@ label.dd-span {
 }
 
 #calendar .todayBut {
-    background-color: #CFEBEE;
-    border: 1px solid #38B1B9;
-    color: #08575B;
-    width: 40px;
+	background-color: #CFEBEE;
+	border: 1px solid #38B1B9;
+	color: #08575B;
+	width: 40px;
 }
