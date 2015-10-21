@@ -111,12 +111,17 @@ span.error {
 	cursor: auto;
 }
 
-.tree a {
+.tree a,.tree span {
 	display: inline;
 }
 
-.tree a:hover{
+.tree a:hover {
 	text-decoration: underline;
+}
+
+.tree a.right {
+	float: right;
+	margin-right: 3px;
 }
 
 /*------------------------------ 新增自定义样式 ------------------------------*/
