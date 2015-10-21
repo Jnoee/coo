@@ -23,6 +23,7 @@ import coo.core.enums.EnabledStatus;
 import coo.core.hibernate.search.IEnumValueBridge;
 import coo.core.security.annotations.LogBean;
 import coo.core.security.annotations.LogField;
+import coo.core.security.constants.AdminIds;
 
 /**
  * 机构实体基类。
@@ -65,6 +66,69 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	/** 关联职务 */
 	@OneToMany(mappedBy = "organ", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<A> actors = new ArrayList<A>();
+
+	/**
+	 * 获取机构完整名称(带上级机构名称)。
+	 * 
+	 * @return 返回机构完整名称。
+	 */
+	public String getFullName() {
+		if (parent != null) {
+			return parent.getName() + "-" + name;
+		} else {
+			return name;
+		}
+	}
+
+	/**
+	 * 获取用于下拉列表显示的机构名称。
+	 * 
+	 * @return 返回机构名称。
+	 */
+	public String getSelectText() {
+		String text = name;
+		for (int i = 0; i < getOrganLevel(); i++) {
+			text = " > " + text;
+		}
+		return text;
+	}
+
+	/**
+	 * 判断是否根机构。
+	 * 
+	 * @return 返回是否根机构。
+	 */
+	public Boolean isRoot() {
+		return AdminIds.ORGAN_ID.equals(getId());
+	}
+
+	/**
+	 * 获取机构所在层次，根机构层次为0。
+	 * 
+	 * @return 返回机构所在层次。
+	 */
+	public Integer getOrganLevel() {
+		if (isRoot()) {
+			return 0;
+		} else {
+			return parent.getOrganLevel() + 1;
+		}
+	}
+
+	/**
+	 * 获取本机构树下的所有机构，包括本机构。
+	 * 
+	 * @return 返回本机构树下的所有机构，包括本机构。
+	 */
+	@SuppressWarnings("unchecked")
+	public List<O> getOrganTree() {
+		List<O> organTree = new ArrayList<O>();
+		organTree.add((O) this);
+		for (O child : childs) {
+			organTree.addAll(child.getOrganTree());
+		}
+		return organTree;
+	}
 
 	public O getParent() {
 		return parent;
@@ -112,59 +176,5 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 
 	public void setActors(List<A> actors) {
 		this.actors = actors;
-	}
-
-	/**
-	 * 获取机构完整名称(带上级机构名称)。
-	 * 
-	 * @return 返回机构完整名称。
-	 */
-	public String getFullName() {
-		if (parent != null) {
-			return parent.getName() + "-" + name;
-		} else {
-			return name;
-		}
-	}
-
-	/**
-	 * 获取用于下拉列表显示的机构名称。
-	 * 
-	 * @return 返回机构名称。
-	 */
-	public String getSelectText() {
-		String text = name;
-		for (int i = 0; i < getOrganLevel(); i++) {
-			text = " > " + text;
-		}
-		return text;
-	}
-
-	/**
-	 * 获取机构所在层次，根机构层次为0。
-	 * 
-	 * @return 返回机构所在层次。
-	 */
-	public Integer getOrganLevel() {
-		if (parent != null) {
-			return parent.getOrganLevel() + 1;
-		} else {
-			return 0;
-		}
-	}
-
-	/**
-	 * 获取本机构树下的所有机构，包括本机构。
-	 * 
-	 * @return 返回本机构树下的所有机构，包括本机构。
-	 */
-	@SuppressWarnings("unchecked")
-	public List<O> getOrganTree() {
-		List<O> organTree = new ArrayList<O>();
-		organTree.add((O) this);
-		for (O child : childs) {
-			organTree.addAll(child.getOrganTree());
-		}
-		return organTree;
 	}
 }
