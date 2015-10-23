@@ -106,10 +106,7 @@
 
 	<mvc:default-servlet-handler />
 	<mvc:resources mapping="/base/**" location="classpath:/coo/mvc/static/base/" />
-	<mvc:resources mapping="/dwz/**"
-		location="classpath:/coo/mvc/static/dwz/dwz/" />
-	<mvc:resources mapping="/fix/**"
-		location="classpath:/coo/mvc/static/dwz/fix/" />
+	<mvc:resources mapping="/dwz/**" location="classpath:/coo/mvc/static/dwz/" />
 	<mvc:resources mapping="/ecs/**"
 		location="classpath:/coo/mvc/static/echarts/" />
 

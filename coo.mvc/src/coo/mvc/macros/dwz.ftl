@@ -9,7 +9,7 @@
 	<link href="${ctx}/dwz/themes/css/core.fix.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 	<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/dwz/uploadify/css/uploadify.fix.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/dwz/uploadify/css/uploadify.extends.css" rel="stylesheet" type="text/css"/>
 	<!--[if IE]>
 	<link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css"/>
 	<![endif]-->
