@@ -4,44 +4,29 @@
 <#macro head>
     <link href="${ctx}/base/icons/icons.css" rel="stylesheet" type="text/css" />
 	<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/dwz/themes/default/style.fix.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/dwz/themes/css/core.fix.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 	<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/dwz/uploadify/css/uploadify.fix.css" rel="stylesheet" type="text/css"/>
 	<!--[if IE]>
 	<link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css"/>
 	<![endif]-->
 	<!--[if lte IE 9]>
 	<script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
 	<![endif]-->
-	<link href="${ctx}/fix/themes/default/style.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/fix/themes/css/core.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/fix/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
 	
 	<script src="${ctx}/base/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="${ctx}/base/js/base.core.js" type="text/javascript"></script>
-    <script src="${ctx}/base/js/base.utils.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/jquery.validate.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.extends.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.core.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.validator.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.ui.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.theme.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.switchEnv.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.navTab.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.ajax.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.database.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.panel.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.checkbox.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.combox.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.datepicker.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/js/fix.extend.js" type="text/javascript"></script>
-	<script src="${ctx}/fix/uploadify/scripts/fix.uploadify.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/js/dwz.fix.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
