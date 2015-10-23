@@ -92,7 +92,7 @@ $.fn.extend({
 		 */
 		function initSuffix($tbody) {
 			$tbody.find('>tr').each(function(i) {
-				$(':input, a.btnLook, a.btnAttach', this).each(function() {
+				$(':input, a.btnLook, a.btnAttach, span', this).each(function() {
 					var $this = $(this), name = $this.attr('name'), val = $this.val();
 					if(name)
 						$this.attr('name', name.replaceSuffix(i));
@@ -118,6 +118,11 @@ $.fn.extend({
 
 					if(val && val.indexOf("#index#") >= 0)
 						$this.val(val.replace('#index#', i + 1));
+					
+					// 如果是span标签，替换文本中的变量。
+					if($this.is("span")) {
+						$this.text($this.text().replace('#index#', i + 1));
+					}
 				});
 			});
 		}
@@ -146,7 +151,7 @@ $.fn.extend({
 					break;
 				// 增加span文本支持
 				case 'span':
-					html = '<span class="' + field.fieldClass + '">' + field.defaultVal + '</span>';
+					html = '<span style="width:' + field.width + '" class="' + field.fieldClass + '">' + field.defaultVal + '</span>';
 					break;
 				case 'del':
 					html = '<a href="javascript:void(0)" class="btnDel ' + field.fieldClass + '" style="float:none;">删除</a>';
