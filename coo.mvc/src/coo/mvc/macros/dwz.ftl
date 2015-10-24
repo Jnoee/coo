@@ -249,6 +249,7 @@
  * items：多选组选项集合对象
  * itemValue：多选组值的属性名
  * itemLabel：多选组文本的属性名
+ * box: 分组容器标签名，控制全选按钮影响的范围
  * required: 是否必填
  * showCheckAllBtn: 是否显示全选按钮
  -->
