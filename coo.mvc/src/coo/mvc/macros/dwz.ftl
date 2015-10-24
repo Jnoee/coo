@@ -2,9 +2,8 @@
  * 头部引用。
  -->
 <#macro head>
-    <link href="${ctx}/base/icons/icons.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/dwz/icons/icons.css" rel="stylesheet" type="text/css" />
 	<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/dwz/themes/default/style.fix.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/core.fix.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
