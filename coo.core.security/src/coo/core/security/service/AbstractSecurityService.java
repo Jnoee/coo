@@ -160,7 +160,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@DetailLog(target = "organ", code = "organ.edit.log", vars = "organ.name", type = LogType.ALL)
 	public void updateOrgan(O organ) {
 		O origOrgan = getOrgan(organ.getId());
-		BeanUtils.copyFields(organ, origOrgan, "ordinal", null);
+		BeanUtils.copyFields(organ, origOrgan, "ordinal", "enabled");
 		organDao.evictCollectionCache("childs");
 	}
 
