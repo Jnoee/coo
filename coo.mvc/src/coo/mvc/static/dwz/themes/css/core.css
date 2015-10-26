@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+* {
+	line-height: 100%;
+	font-size: 12px;
+	font-family: "Microsoft YaHei", sans-serif;
+}
+
 /* Core Code */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
 	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
@@ -8,9 +14,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
 	caption, tbody, tfoot, thead, tr, th, td {
 	padding: 0;
 	margin: 0;
-	font-size: 12px;
-	line-height: 100%;
-	font-family: "Microsoft YaHei", sans-serif;
 }
 
 /* Remember to define focus styles! */
@@ -863,26 +866,22 @@ a:hover {
 	cursor: auto;
 }
 
-.tree div, .tree a, .tree span {
-	display: inherit;
+.tree div {
+	display: block;
+	overflow: hidden;
+	word-break: break-all;
 	height: 22px;
 	line-height: 22px;
 }
 
 .tree a, .tree span {
-	display: inline;
+	height: inherit;
+	line-height: inherit;
 }
 
 .tree a.right {
 	float: right;
-	margin-right: 3px;
-}
-
-.tree div {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	margin-right: 5px;
 }
 
 .tree div div {
@@ -890,7 +889,7 @@ a:hover {
 	display: block;
 	overflow: hidden;
 	width: 22px;
-	height: 22px;
+	height: inherit;
 	border: none;
 	background-position: 0 -100px;
 }
@@ -998,18 +997,7 @@ a:hover {
 	overflow: hidden;
 	padding: 0 25px 0 5px;
 	height: 25px;
-	line-height: 24px;
-}
-
-.accordion .accordionHeader h2 span {
-	float: left;
-	display: block;
-	overflow: hidden;
-	text-indent: -1000px;
-	width: 20px;
-	height: 25px;
-	margin-top: 5px;
-	background-image: none;
+	line-height: 25px;
 }
 
 .accordion .accordionContent {
@@ -1102,36 +1090,12 @@ a:hover {
 	display: block;
 	overflow: hidden;
 	height: 23px;
-	padding: 0 0 0 20px;
 	line-height: 23px;
 	cursor: pointer;
 }
 
-.panelBar .toolBar a.add span {
-	background-position: 0 -696px;
-}
-
-.panelBar .toolBar a.delete span {
-	background-position: 0 -746px;
-}
-
-.panelBar .toolBar a.edit span {
-	background-position: 0 -796px;
-}
-
-.panelBar .toolBar a.icon span {
-	background-position: 0 -846px;
-}
-
-.panelBar .toolBar a span {
-	background-image: none;
-	height: 19px;
-	line-height: 15px;
-	margin: 4px 0 4px 0;
-}
-
-.panelBar .toolBar li.hover a span {
-	height: 19px;
+.panelBar .toolBar a span,.panelBar .toolBar li.hover a span {
+	height: 15px;
 	line-height: 15px;
 	margin: 4px 0 4px 0;
 }
@@ -1741,14 +1705,12 @@ select {
 }
 
 span.error {
+	float: left;
 	display: block;
 	overflow: hidden;
-	width: 1px;
+	text-indent: -1000px;
+	width: 16px;
 	height: 21px;
-	line-height: 21px;
-	padding-left: 20px;
-	text-indent: -100px;
-	top: 5px;
 }
 
 label.alt {
@@ -1756,10 +1718,6 @@ label.alt {
 	overflow: hidden;
 	position: absolute;
 	line-height: 20px
-}
-
-.nowrap span.error {
-	position: static;
 }
 
 /* Button */
@@ -1787,7 +1745,7 @@ label.alt {
 }
 
 .button .buttonContent {
-	padding: 0 5px 0 0;
+	padding: 0 5px 0 0px;
 	background-position: 100% -50px;
 }
 
@@ -1812,7 +1770,7 @@ label.alt {
 }
 
 .buttonHover .buttonContent {
-	padding: 0 5px 0 0;
+	padding: 0 5px 0 0px;
 	background-position: 100% -150px;
 }
 
@@ -1821,7 +1779,7 @@ label.alt {
 }
 
 .buttonActive .buttonContent {
-	padding: 0 5px 0 0;
+	padding: 0 5px 0 0px;
 	background-position: 100% -250px;
 }
 
@@ -1845,7 +1803,7 @@ label.alt {
 }
 
 .buttonActiveHover .buttonContent {
-	padding: 0 5px 0 0;
+	padding: 0 5px 0 0px;
 	background-position: 100% -350px;
 }
 
@@ -1861,18 +1819,15 @@ label.alt {
 }
 
 .buttonDisabled .buttonContent {
-	padding: 0 5px 0 0;
+	padding: 0 5px 0 0px;
 	background-position: 100% -450px;
 }
 
 .button button, .buttonHover button, .buttonActive button,
 	.buttonDisabled button {
-	width: auto;
-	height: 25px;
+	line-height: 23px;
 	margin: 0;
-	padding: 0 0 5px 0;
 	border: 0;
-	font-size: 12px;
 	font-weight: bold;
 	background: none;
 	cursor: pointer;
@@ -2245,7 +2200,7 @@ body {
 	float: left;
 	width: 80px;
 	padding: 0 5px;
-	line-height: 23px;
+	line-height: 25px;
 }
 
 .searchBar .searchContent td {
@@ -2265,9 +2220,14 @@ body {
 .searchBar .subBar li {
 	float: left;
 	margin-left: 5px;
+	line-height: 23px;
 }
 
 .searchBar .subBar li input {
+	margin-top: 2px;
+}
+
+.searchBar .subBar li .combox {
 	margin-top: 2px;
 }
 
@@ -2311,7 +2271,7 @@ body {
 .pageFormContent p {
 	float: left;
 	display: block;
-	width: 380px;
+	width: 320px;
 	height: 21px;
 	margin: 0;
 	padding: 5px 0;
@@ -2331,16 +2291,23 @@ body {
 
 .pageFormContent label {
 	float: left;
-	width: 120px;
+	width: 100px;
 	padding: 0 5px;
 	line-height: 21px;
 }
 
-.pageFormContent label.radioButton {
+.pageFormContent label.unit, .pageFormContent span.unit,
+	.pageFormContent a.unit {
 	float: left;
 	width: auto;
-	padding: 0 10px 0 0;
+	padding-left: 3px;
 	line-height: 21px;
+}
+
+.pageFormContent label.unit input[type=checkbox], .pageFormContent label.unit input[type=radio]
+	{
+	margin: 0px;
+	vertical-align: -3px;
 }
 
 .pageFormContent .textInput {
@@ -2348,23 +2315,6 @@ body {
 }
 
 .pageFormContent select {
-	float: left;
-}
-
-.pageFormContent .inputInfo {
-	padding: 0 5px;
-	line-height: 21px;
-}
-
-.pageFormContent span.unit, .pageFormContent a.unit {
-	padding: 0 5px;
-	line-height: 21px;
-}
-
-.pageFormContent span.info {
-	color: #7F7F7F;
-	display: block;
-	line-height: 21px;
 	float: left;
 }
 
@@ -2388,7 +2338,6 @@ body {
 .pageFormContent dd {
 	display: block;
 	float: left;
-	width: 200px;
 	line-height: 23px;
 }
 
@@ -2396,10 +2345,6 @@ body {
 	width: 100%;
 	height: auto;
 	clear: both;
-}
-
-.pageFormContent dl.nowrap dd, .nowrap dd {
-	width: 540px;
 }
 
 fieldset {
@@ -2541,7 +2486,6 @@ fieldset legend label {
 
 /* contentTitle */
 h2.contentTitle {
-	margin-bottom: 10px;
 	padding: 0 10px;
 	line-height: 30px;
 	font-size: 14px;
@@ -2942,4 +2886,106 @@ a.btnAttach {
 
 #printBox {
 	display: none
+}
+
+/*------------------------------ 新增自定义样式 ------------------------------*/
+/* 单列表单样式，应用到div.pageFormContent元素上 */
+.s-cols dl {
+	width: 450px;
+}
+
+.s-cols dd {
+	width: 340px;
+}
+
+.s-cols dl.nowrap dd {
+	width: 340px;
+}
+
+/* 文本框宽度 */
+.ss-input {
+	width: 35px;
+}
+
+.s-input {
+	width: 60px;
+}
+
+.m-input {
+	width: 310px;
+}
+
+.l-input {
+	width: 451px;
+}
+
+/* 双线分割线 */
+.d-line {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	text-indent: -1000px;
+	width: auto;
+	height: 2px;
+	margin: 5px 0px 5px 0px;
+	border-style: double;
+	border-width: 0 0 3px 0;
+}
+
+/* 颜色样式 */
+.green {
+	color: green;
+}
+
+.gray {
+	color: gray;
+}
+
+.orange {
+	color: orange;
+}
+
+.red {
+	color: red;
+}
+
+/* 文本位置 */
+.c-text {
+	text-align: center !important;
+}
+
+.l-text {
+	text-align: left !important;
+}
+
+.r-text {
+	text-align: right !important;
+}
+
+/* 主页面左右结构样式 */
+.tree-l-box {
+	float: left;
+	display: block;
+	overflow: hidden;
+	width: 25%;
+	border-right: solid 1px #CCC;
+}
+
+.tree-r-box {
+	float: left;
+	display: block;
+	overflow: hidden;
+	width: 74.8%;
+}
+
+.tree-msg {
+	text-align: center;
+	padding: 10px;
+}
+
+#calendar .todayBut {
+	background-color: #CFEBEE;
+	border: 1px solid #38B1B9;
+	color: #08575B;
+	width: 40px;
 }

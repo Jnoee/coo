@@ -222,8 +222,7 @@ a {
 }
 
 /* Accordion */
-.accordion .accordionHeader, .accordion .accordionHeader h2, .accordion .accordionHeader h2 span
-	{
+.accordion .accordionHeader, .accordion .accordionHeader h2 {
 	color: #183152;
 	background: url(./images/accordion/accordion.png);
 }

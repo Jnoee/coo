@@ -2,18 +2,15 @@
  * 头部引用。
  -->
 <#macro head>
-    <link href="${ctx}/dwz/icons/icons.css" rel="stylesheet" type="text/css" />
 	<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/core.fix.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 	<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/uploadify/css/uploadify.extends.css" rel="stylesheet" type="text/css"/>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
 	<!--[if IE]>
 	<link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css"/>
-	<![endif]-->
-	<!--[if lte IE 9]>
-	<script src="${ctx}/dwz/js/speedup.js" type="text/javascript"></script>
 	<![endif]-->
 	
 	<script src="${ctx}/base/js/jquery-1.7.2.min.js" type="text/javascript"></script>
@@ -25,7 +22,7 @@
 	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.extends.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/js/dwz.fix.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/js/dwz.config.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
@@ -191,50 +188,14 @@
     <@compress single_line=true>
     <a href="<@s.url href />" target="${target}"
         <#if target == "dialog">
-       rel="${rel}"
-       mask="${mask?c}"
-       minable="${minable?c}"
-       maxable="${maxable?c}"
-       resizable="${resizable?c}"
-       drawable="${drawable?c}"
-            <#if width == "SSS">
-                <#local width="300" />
-            </#if>
-            <#if width == "SS">
-                <#local width="400" />
-            </#if>
-            <#if width == "S">
-                <#local width="500" />
-            </#if>
-            <#if width == "M">
-                <#local width="700" />
-            </#if>
-            <#if width == "L">
-                <#local width="900" />
-            </#if>
-            <#if width == "XL">
-                <#local width="1100" />
-            </#if>
-       width="${width}"
-            <#if height == "SSS">
-                <#local height="250" />
-            </#if>
-            <#if height == "SS">
-                <#local height="300" />
-            </#if>
-            <#if height == "S">
-                <#local height="400" />
-            </#if>
-            <#if height == "M">
-                <#local height="500" />
-            </#if>
-            <#if height == "L">
-                <#local height="600" />
-            </#if>
-            <#if height == "XL">
-                <#local height="700" />
-            </#if>
-       height="${height}"
+	       rel="${rel}"
+	       mask="${mask?c}"
+	       minable="${minable?c}"
+	       maxable="${maxable?c}"
+	       resizable="${resizable?c}"
+	       drawable="${drawable?c}"
+	       width="${width}"
+	       height="${height}"
         <#else>
             <#if rel> rel="${rel}"</#if>
         </#if>
