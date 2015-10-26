@@ -4,7 +4,6 @@
 <#macro head>
 	<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/dwz/themes/css/core.fix.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 	<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
 	<link href="${ctx}/dwz/uploadify/css/uploadify.extends.css" rel="stylesheet" type="text/css"/>
@@ -217,12 +216,12 @@
 <#macro checkboxs path items itemValue itemLabel box required=true showCheckAllBtn=true>
     <@s.bind path />
     <#if items?size gt 0 && showCheckAllBtn>
-    <label class="dd-span"><input type="checkbox" class="checkboxCtrl" group="${s.name}"<#if box??> box="${box}"</#if> />全选</label><br/>
+    <label class="unit"><input type="checkbox" class="checkboxCtrl" group="${s.name}"<#if box??> box="${box}"</#if> />全选</label><br style="clear:both" />
     </#if>
     <#if required>
-        <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path class="required" />
+        <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='unit'>" suffix="</label>" id=path class="required" />
     <#else>
-        <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='dd-span'>" suffix="</label>" id=path />
+        <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='unit'>" suffix="</label>" id=path />
     </#if>
 </#macro>
 
