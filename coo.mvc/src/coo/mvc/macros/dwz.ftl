@@ -2,26 +2,26 @@
  * 头部引用。
  -->
 <#macro head>
-	<link href="${ctx}/dwz/themes/default/style.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/dwz/themes/css/core.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
-	<link href="${ctx}/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css"/>
-	<link href="${ctx}/dwz/uploadify/css/uploadify.extends.css" rel="stylesheet" type="text/css"/>
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/themes/base/style.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/themes/base/core.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/themes/base/print.css" rel="stylesheet" media="print"/>
+	<link href="${ctx}/dwz/external/awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/external/uploadify/css/uploadify.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/uploadify.extends.css" rel="stylesheet" />
 	<!--[if IE]>
-	<link href="${ctx}/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css"/>
+	<link href="${ctx}/dwz/themes/base/ieHack.css" rel="stylesheet" />
 	<![endif]-->
 	
-	<script src="${ctx}/base/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/js/jquery.cookie.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/js/jquery.validate.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/uploadify/scripts/jquery.uploadify.extends.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/js/dwz.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/js/dwz.config.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/jquery.cookie.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/jquery.bgiframe.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/jquery.uploadify.extends.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/dwz.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/dwz.config.js" type="text/javascript"></script>
     <#nested>
 </#macro>
 
