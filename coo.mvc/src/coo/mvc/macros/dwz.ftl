@@ -243,7 +243,7 @@
     <#local multi = s.status.actualValue?? && s.status.actualValue?is_enumerable >
     <#if !readonly>
     	<input id="${inputId}" type="file" uploaderOption="{
-			swf: '${ctx}/dwz/uploadify/scripts/uploadify.swf',
+			swf: '${ctx}/dwz/external/uploadify/scripts/uploadify.swf',
 			uploader: 'assist/att-file-upload.json',
 			fileObjName: '${fileObjName}',
 			buttonText: '${buttonText}',
