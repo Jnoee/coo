@@ -49,7 +49,7 @@ public class DialogResultUtils extends AbstractDwzResultUtils {
 
 	/**
 	 * 提示操作成功。<br/>
-	 * dialog：不关闭当前dialog && 当前navTab跳转到新页面，页面使用dialogAjaxDone。
+	 * dialog：当前dialog跳转到新页面，页面使用dialogForwardDone。
 	 * 
 	 * @param message
 	 *            操作成功信息
