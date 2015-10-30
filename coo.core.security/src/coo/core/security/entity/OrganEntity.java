@@ -116,18 +116,57 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	}
 
 	/**
+	 * 获取本机构树状路线上的所有机构，包括本机构。
+	 * 
+	 * @return 返回本机构树状路线上的所有机构，包括本机构。
+	 */
+	public List<O> getFullTree() {
+		List<O> organTree = getParents();
+		organTree.addAll(getChildTree());
+		return organTree;
+	}
+
+	/**
 	 * 获取本机构树下的所有机构，包括本机构。
 	 * 
 	 * @return 返回本机构树下的所有机构，包括本机构。
 	 */
 	@SuppressWarnings("unchecked")
-	public List<O> getOrganTree() {
+	public List<O> getChildTree() {
 		List<O> organTree = new ArrayList<O>();
 		organTree.add((O) this);
-		for (O child : childs) {
-			organTree.addAll(child.getOrganTree());
+		for (O child : getChilds()) {
+			organTree.addAll(child.getChildTree());
 		}
 		return organTree;
+	}
+
+	/**
+	 * 获取本机构的所有上级机构，包括本机构。
+	 * 
+	 * @return 返回本机构的所有上级机构，包括本机构。
+	 */
+	@SuppressWarnings("unchecked")
+	public List<O> getParentTree() {
+		List<O> organTree = new ArrayList<O>();
+		organTree.add((O) this);
+		if (getParent() != null) {
+			organTree.addAll(getParents());
+		}
+		return organTree;
+	}
+
+	/**
+	 * 获取本机构的所有上级机构。
+	 * 
+	 * @return 返回本机构的所有上级机构。
+	 */
+	public List<O> getParents() {
+		List<O> parents = new ArrayList<>();
+		if (getParent() != null) {
+			parents.addAll(getParent().getParents());
+		}
+		return parents;
 	}
 
 	public O getParent() {
