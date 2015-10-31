@@ -20,7 +20,7 @@
 	<script src="${ctx}/dwz/external/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/jquery.uploadify.extends.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/dwz.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/dwz.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/dwz.config.js" type="text/javascript"></script>
     <#nested>
 </#macro>
@@ -88,29 +88,11 @@
  * 表单组件。
  *
  * action：表单提交的相对路径
- * method：表单提交的方式
- * onsubmit：表单提交时的回调函数
- * targetType：回调方式，支持navTab、dialog、dialogReload、dialogClose四种
  * class：表单的样式
  * attributes：表单的其它属性
  -->
-<#macro form action onsubmit method="post" targetType="dialog" class="pageForm required-validate" attributes...>
-    <#if !onsubmit??>
-        <#if targetType == "navTab">
-            <#local onsubmit="return validateCallback(this, navTabAjaxDone);" />
-        </#if>
-        <#if targetType == "dialog">
-            <#local onsubmit="return validateCallback(this, dialogAjaxDone);" />
-        </#if>
-        <#if targetType == "dialogReload">
-            <#local onsubmit="return validateCallback(this, dialogReloadDone);" />
-        </#if>
-        <#if targetType == "dialogClose">
-            <#local onsubmit="return validateCallback(this, dialogCloseDone);" />
-        </#if>
-    </#if>
-	<form action="<@s.url "${action}" />" method="${method}" class="${class}"
-	      onsubmit="${onsubmit}" ${s.getAttributes(attributes)}>
+<#macro form action class="validateForm" attributes...>
+	<form action="<@s.url "${action}" />" class="${class}" ${s.getAttributes(attributes)}>
 	    <#nested>
 	</form>
 </#macro>
@@ -165,13 +147,11 @@
  *
  * href：链接的相对路径
  * rel：navTab和dialog链接用到的rel属性
- * width：dialog链接用来指定打开窗口的宽度，可以指定为SS、S、M、L、XL或具体的宽度
- * height：dialog链接用来指定打开窗口的高度，可以指定为SS、S、M、L、XL或具体的宽度
  * target：链接类型，对应dwz使用的链接类型，如navTab、dialog、ajaxTodo、selectedTodo等
  * mask：dialog链接用来指定打开窗口是否为模态窗口
  * attributes：链接的其它属性
  -->
-<#macro a href rel width="M" height="M" target="navTab" mask=true minable=false maxable=false resizable=false drawable=true attributes...>
+<#macro a href rel target="navTab" attributes...>
     <#if !rel?? && (target == "navTab" || target == "dialog")>
         <#local relStartIndex = href?last_index_of("/") />
         <#local relEndIndex = href?last_index_of("?") />
@@ -185,20 +165,9 @@
         </#if>
     </#if>
     <@compress single_line=true>
-    <a href="<@s.url href />" target="${target}"
-        <#if target == "dialog">
-	       rel="${rel}"
-	       mask="${mask?c}"
-	       minable="${minable?c}"
-	       maxable="${maxable?c}"
-	       resizable="${resizable?c}"
-	       drawable="${drawable?c}"
-	       width="${width}"
-	       height="${height}"
-        <#else>
-            <#if rel> rel="${rel}"</#if>
-        </#if>
-    ${s.getAttributes(attributes)}><#nested></a>
+    <a href="<@s.url href />" target="${target}" <#if rel> rel="${rel}"</#if> ${s.getAttributes(attributes)}>
+    	<#nested>
+    </a>
     </@compress>
 </#macro>
 
@@ -304,48 +273,35 @@
  *
  * action：表单提交的相对路径
  * onsubmit：表单提交时的回调函数
- * targetType：分页表单类型，支持navTab、dialog、div类型。
  * rel：局部刷新的div的id
  * alt：全文检索输入框上的提示信息
  * searchModel：搜索条件对象
  * showKeyword：是否显示全文搜索文本框
  * buttonText：检索按钮的文本
- * method：表单提交的方式
  -->
-<#macro pageForm action onsubmit targetType="navTab" rel="" alt="" searchModel=searchModel showKeyword=true buttonText="检索" method="post">
-    <#if !onsubmit??>
-        <#if targetType == "navTab">
-            <#local onsubmit="return navTabSearch(this, '${rel}');" />
-        </#if>
-        <#if targetType == "dialog">
-            <#local onsubmit="return dialogSearch(this);" />
-        </#if>
-        <#if targetType == "div">
-            <#local onsubmit="return divSearch(this, '${rel}');" />
-        </#if>
-    </#if>
-    <@s.form id="pagerForm" method=method action=action onsubmit=onsubmit>
-    <input type="hidden" name="pageNo" value="${searchModel.pageNo}"/>
-    <input type="hidden" name="pageSize" value="${searchModel.pageSize}"/>
-    <input type="hidden" name="orderBy" value="${searchModel.orderBy}"/>
-    <input type="hidden" name="sort" value="${searchModel.sort}"/>
-    <div class="searchBar">
-        <div class="subBar">
-            <ul>
-                <#nested>
-                <#if showKeyword>
-                    <li><input type="text" name="keyword" value="${searchModel.keyword}" title="${alt}"/></li>
-                </#if>
-                <li>
-                    <div class="buttonActive">
-                        <div class="buttonContent">
-                            <button type="submit">${buttonText}</button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
+<#macro pageForm action onsubmit rel="" alt="" searchModel=searchModel showKeyword=true buttonText="检索">
+    <@s.form action=action class="pagerForm" onsubmit=onsubmit>
+	    <input type="hidden" name="pageNo" value="${searchModel.pageNo}"/>
+	    <input type="hidden" name="pageSize" value="${searchModel.pageSize}"/>
+	    <input type="hidden" name="orderBy" value="${searchModel.orderBy}"/>
+	    <input type="hidden" name="sort" value="${searchModel.sort}"/>
+	    <div class="searchBar">
+	        <div class="subBar">
+	            <ul>
+	                <#nested>
+	                <#if showKeyword>
+	                    <li><input type="text" name="keyword" value="${searchModel.keyword}" title="${alt}"/></li>
+	                </#if>
+	                <li>
+	                    <div class="buttonActive">
+	                        <div class="buttonContent">
+	                            <button type="submit">${buttonText}</button>
+	                        </div>
+	                    </div>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
     </@s.form>
 </#macro>
 
@@ -353,28 +309,17 @@
  * 分页导航条。
  *
  * pageModel：分页对象
- * onchange：每页条数选择框的onchange事件。不设置时根据targetType类型自动设置适合的事件函数，设置时将覆盖默认设置。
- * targetType：导航类型（navTab/dialog）
  -->
-<#macro pageNav pageModel onchange targetType="navTab" rel="">
-    <#if !onchange??>
-        <#if targetType == "navTab">
-            <#local onchange="navTabPageBreak({numPerPage:this.value}, '${rel}');" />
-        </#if>
-        <#if targetType == "dialog">
-            <#local onchange="dialogPageBreak({numPerPage:this.value}, '${rel}');" />
-        </#if>
-    </#if>
-<div class="pages">
-    <span>显示</span>
-    <#local options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
-    <select name="pageSize" class="combox" onchange="${onchange}">
-        <@s.options items=options values=pageModel.size />
-    </select>
-    <span>条，共${pageModel.count}条</span>
-</div>
-<div class="pagination" targetType="${targetType}" rel="${rel}" totalCount="${pageModel.count}"
-     numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
+<#macro pageNav pageModel>
+	<div class="pages">
+	    <span>显示</span>
+	    <#local options = {"20":20, "30":30, "50":50, "80":80, "100":100}>
+	    <select class="combox">
+	        <@s.options items=options values=pageModel.size />
+	    </select>
+	    <span>条，共${pageModel.count}条</span>
+	</div>
+	<div class="pagination" totalCount="${pageModel.count}" numPerPage="${pageModel.size}" pageNumShown="10" currentPage="${pageModel.number}"></div>
 </#macro>
 
 <#--

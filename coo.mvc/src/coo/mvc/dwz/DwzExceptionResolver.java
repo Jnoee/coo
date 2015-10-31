@@ -20,8 +20,7 @@ public class DwzExceptionResolver extends GenericExceptionResolver {
 				exception);
 		if (isAjaxRequest(request)) {
 			response.setStatus(HttpStatus.OK.value());
-			mav.setViewName("dwz-result");
-			mav.addObject("ajaxResult", DwzResult.fail());
+			mav = new DwzResultBuild().fail().build();
 			processCustomExceptions(mav, exception);
 		}
 		return mav;
@@ -50,7 +49,7 @@ public class DwzExceptionResolver extends GenericExceptionResolver {
 	 */
 	protected void processCustomExceptions(ModelAndView mav, Exception exception) {
 		if (exception instanceof BusinessException) {
-			mav.addObject("ajaxResult", DwzResult.error(exception.getMessage()));
+			mav = new DwzResultBuild().error(exception.getMessage()).build();
 		}
 	}
 }
