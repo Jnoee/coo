@@ -205,7 +205,7 @@
  -->
 <#macro img path width height limit=0 size=1024 readonly=false fileObjName="attFile" buttonText="上传图片" buttonWidth=70 buttonHeight=18>
 	<@s.bind path />
-    <#local random = .now?datetime?string("yyyyMMddHHmmssSSS")>
+    <#local random = s.name + "_" + .now?datetime?string("yyyyMMddHHmmssSSS")>
     <#local inputId = "imgInput_" + random>
     <#local queueId = "imgQueue_" + random>
     <#local fileId = "imgFile_" + random>
