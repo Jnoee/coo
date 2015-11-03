@@ -39,7 +39,7 @@
 	    </div>
 	    <div id="sidebar">
 	        <div class="toggleCollapse">
-	            <h2>主菜单</h2>
+	            <h2 class="fa-desktop">主菜单</h2>
 	            <div>收缩</div>
 	        </div>
 	        <div class="accordion" fillSpace="sideBar">
@@ -62,7 +62,7 @@
 	            <div class="tabsPageHeaderContent">
 	                <ul class="navTab-tab">
 	                    <li tabid="main" class="main">
-	                        <a href="javascript:;"><span><span class="home_icon">我的主页</span></span></a>
+	                        <a href="javascript:;"><span class="fa-home">我的主页</span></a>
 	                    </li>
 	                </ul>
 	            </div>
