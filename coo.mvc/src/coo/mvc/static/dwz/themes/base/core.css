@@ -1043,7 +1043,6 @@ a:hover {
 
 .panelBar {
 	display: block;
-	overflow: hidden;
 	height: 25px;
 	border-style: solid;
 	border-width: 1px 0;
