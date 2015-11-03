@@ -5783,7 +5783,7 @@ $.fn.extend({
 			 */
 			function initSuffix($tbody) {
 				$tbody.find('>tr').each(function(i) {
-					$(':input, a.btn, span', this).each(function() {
+					$(':input, a.btn, span:not([class*="error"])', this).each(function() {
 						var $this = $(this), name = $this.attr('name'), val = $this.val();
 
 						if(name)
@@ -5803,7 +5803,11 @@ $.fn.extend({
 							$this.val(val.replace('#index#', i + 1));
 
 						if($this.is("span")) {
-							$this.text($this.text().replace(/[0-9]+/, i + 1).replace('#index#', i + 1));
+							if($this.attr("type") == "index") {
+								$this.text($this.text().replace(/^[0-9]+$/, i + 1).replace('#index#', i + 1));
+							} else {
+								$this.text($this.text().replace('#index#', i + 1));
+							}
 						}
 					});
 				});
@@ -5868,6 +5872,9 @@ $.fn.extend({
 					case 'span':
 						html = '<span class="' + field.fieldClass + '">' + field.defaultVal + '</span>';
 						break;
+					case 'index':
+						html = '<span type="index">#index#</span>';
+						break;
 					default:
 						html = '<input type="' + field.type + '" name="' + field.name + '" value="' + field.defaultVal + '" size="' + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>';
 						break;
@@ -5875,8 +5882,9 @@ $.fn.extend({
 				if(field.hiddenName) {
 					html += '<input type="hidden" name="' + field.hiddenName + '" value="' + field.hiddenVal + '" />';
 				}
-				return '<td align="' + field.align +'">' + html + '</td>';
+				return '<td align="' + field.align + '">' + html + '</td>';
 			}
+
 			function trHtml(fields) {
 				var html = '';
 				$(fields).each(function() {
