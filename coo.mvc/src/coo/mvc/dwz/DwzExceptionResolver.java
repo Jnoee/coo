@@ -21,7 +21,7 @@ public class DwzExceptionResolver extends GenericExceptionResolver {
 		if (isAjaxRequest(request)) {
 			response.setStatus(HttpStatus.OK.value());
 			mav = new DwzResultBuild().fail().build();
-			processCustomExceptions(mav, exception);
+			mav = processCustomExceptions(mav, exception);
 		}
 		return mav;
 	}
@@ -47,9 +47,11 @@ public class DwzExceptionResolver extends GenericExceptionResolver {
 	 * @param exception
 	 *            异常
 	 */
-	protected void processCustomExceptions(ModelAndView mav, Exception exception) {
+	protected ModelAndView processCustomExceptions(ModelAndView mav,
+			Exception exception) {
 		if (exception instanceof BusinessException) {
 			mav = new DwzResultBuild().error(exception.getMessage()).build();
 		}
+		return mav;
 	}
 }
