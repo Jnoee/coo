@@ -1,11 +1,30 @@
 package coo.base.util;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * 数字操作工具类。
  */
 public class NumberUtils {
+	/**
+	 * 对一个整数按指定长度补零。
+	 * 
+	 * @param num
+	 *            整数
+	 * @param length
+	 *            长度
+	 * @return 返回补零后的字符串。
+	 */
+	public static String fillZero(Integer num, Integer length) {
+		char[] chs = new char[length];
+		for (int i = 0; i < length; i++) {
+			chs[i] = '0';
+		}
+		DecimalFormat df = new DecimalFormat(new String(chs));
+		return df.format(num);
+	}
+
 	/**
 	 * 四舍五入保留两位小数。
 	 * 
