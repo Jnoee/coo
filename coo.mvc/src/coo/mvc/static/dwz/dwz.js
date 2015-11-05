@@ -2144,334 +2144,347 @@ var DWZ = {
 	});
 })(jQuery);
 function initEnv() {
-	$("body").append(DWZ.frag["dwzFrag"]);
+  $("body").append(DWZ.frag["dwzFrag"]);
 
-	if($.browser.msie && /6.0/.test(navigator.userAgent)) {
-		try {
-			document.execCommand("BackgroundImageCache", false, true);
-		} catch(e) {
-		}
-	}
-	// 清理浏览器内存,只对IE起效
-	if($.browser.msie) {
-		window.setInterval("CollectGarbage();", 10000);
-	}
+  if ($.browser.msie && /6.0/.test(navigator.userAgent)) {
+    try {
+      document.execCommand("BackgroundImageCache", false, true);
+    } catch (e) {
+    }
+  }
+  // 清理浏览器内存,只对IE起效
+  if ($.browser.msie) {
+    window.setInterval("CollectGarbage();", 10000);
+  }
 
-	$(window).resize(function() {
-		initLayout();
-		$(this).trigger(DWZ.eventType.resizeGrid);
-	});
+  $(window).resize(function () {
+    initLayout();
+    $(this).trigger(DWZ.eventType.resizeGrid);
+  });
 
-	var ajaxbg = $("#background,#progressBar");
-	ajaxbg.hide();
-	$(document).ajaxStart(function() {
-		ajaxbg.show();
-	}).ajaxStop(function() {
-		ajaxbg.hide();
-	});
+  var ajaxbg = $("#background,#progressBar");
+  ajaxbg.hide();
+  $(document).ajaxStart(function () {
+    ajaxbg.show();
+  }).ajaxStop(function () {
+    ajaxbg.hide();
+  });
 
-	$("#leftside").jBar({
-		minW: 150,
-		maxW: 700
-	});
+  $("#leftside").jBar({
+    minW: 150,
+    maxW: 700
+  });
 
-	if($.taskBar)
-		$.taskBar.init();
-	navTab.init();
-	if($.fn.switchEnv)
-		$("#switchEnvBox").switchEnv();
-	if($.fn.navMenu)
-		$("#navMenu").navMenu();
+  if ($.taskBar)
+    $.taskBar.init();
+  navTab.init();
+  if ($.fn.switchEnv)
+    $("#switchEnvBox").switchEnv();
+  if ($.fn.navMenu)
+    $("#navMenu").navMenu();
 
-	setTimeout(function() {
-		initLayout();
-		initUI();
+  setTimeout(function () {
+    initLayout();
+    initUI();
 
-		var jTabsPH = $("div.tabsPageHeader");
-		jTabsPH.find(".tabsLeft").hoverClass("tabsLeftHover");
-		jTabsPH.find(".tabsRight").hoverClass("tabsRightHover");
-		jTabsPH.find(".tabsMore").hoverClass("tabsMoreHover");
-	}, 10);
+    var jTabsPH = $("div.tabsPageHeader");
+    jTabsPH.find(".tabsLeft").hoverClass("tabsLeftHover");
+    jTabsPH.find(".tabsRight").hoverClass("tabsRightHover");
+    jTabsPH.find(".tabsMore").hoverClass("tabsMoreHover");
+  }, 10);
 }
 
 function initLayout() {
-	var iContentW = $(window).width() - (DWZ.ui.sbar ? $("#sidebar").width() + 10 : 34) - 5;
-	var iContentH = $(window).height() - $("#header").height() - 34;
+  var iContentW = $(window).width() - (DWZ.ui.sbar ? $("#sidebar").width() + 10 : 34) - 5;
+  var iContentH = $(window).height() - $("#header").height() - 34;
 
-	$("#container").width(iContentW);
-	$("#container .tabsPageContent").height(iContentH - 34).find("[layoutH]").layoutH();
-	$("#sidebar, #sidebar_s .collapse, #splitBar, #splitBarProxy").height(iContentH - 5);
-	$("#taskbar").css({
-		top: iContentH + $("#header").height() + 5,
-		width: $(window).width()
-	});
+  $("#container").width(iContentW);
+  $("#container .tabsPageContent").height(iContentH - 34).find("[layoutH]").layoutH();
+  $("#sidebar, #sidebar_s .collapse, #splitBar, #splitBarProxy").height(iContentH - 5);
+  $("#taskbar").css({
+    top: iContentH + $("#header").height() + 5,
+    width: $(window).width()
+  });
 }
 
 function initUI(_box) {
-	var $p = $(_box || document);
+  var $p = $(_box || document);
 
-	$("div.panel", $p).jPanel();
-	$("table.table", $p).jTable();
-	$('table.list', $p).cssTable();
-	$("div.tabs", $p).each(function() {
-		var $this = $(this);
-		var options = {};
-		options.currentIndex = $this.attr("currentIndex") || 0;
-		options.eventType = $this.attr("eventType") || "click";
-		$this.tabs(options);
-	});
-	$("ul.tree", $p).jTree();
-	$('div.accordion', $p).each(function() {
-		var $this = $(this);
-		$this.accordion({
-			fillSpace: $this.attr("fillSpace"),
-			alwaysOpen: true,
-			active: 0
-		});
-	});
-	$(":button.checkboxCtrl, :checkbox.checkboxCtrl", $p).checkboxCtrl($p);
-	$("select.combox", $p).combox();
-	$("textarea.editor", $p).each(function() {
-		var $this = $(this);
-		var op = {
-			html5Upload: false,
-			skin: 'vista',
-			tools: $this.attr("tools") || 'full'
-		};
-		var upAttrs = [
-				[
-						"upLinkUrl", "upLinkExt", "zip,rar,txt"
-				], [
-						"upImgUrl", "upImgExt", "jpg,jpeg,gif,png"
-				], [
-						"upFlashUrl", "upFlashExt", "swf"
-				], [
-						"upMediaUrl", "upMediaExt", "avi"
-				]
-		];
+  $("div.panel", $p).jPanel();
+  $("table.table", $p).jTable();
+  $('table.list', $p).cssTable();
+  $("div.tabs", $p).each(function () {
+    var $this = $(this);
+    var options = {};
+    options.currentIndex = $this.attr("currentIndex") || 0;
+    options.eventType = $this.attr("eventType") || "click";
+    $this.tabs(options);
+  });
+  $("ul.tree", $p).jTree();
+  $('div.accordion', $p).each(function () {
+    var $this = $(this);
+    $this.accordion({
+      fillSpace: $this.attr("fillSpace"),
+      alwaysOpen: true,
+      active: 0
+    });
+  });
+  $(":button.checkboxCtrl, :checkbox.checkboxCtrl", $p).checkboxCtrl($p);
+  $("select.combox", $p).combox();
+  $("textarea.editor", $p).each(function () {
+    var $this = $(this);
+    var op = {
+      html5Upload: false,
+      skin: 'vista',
+      tools: $this.attr("tools") || 'full'
+    };
+    var upAttrs = [
+      [
+        "upLinkUrl", "upLinkExt", "zip,rar,txt"
+      ], [
+        "upImgUrl", "upImgExt", "jpg,jpeg,gif,png"
+      ], [
+        "upFlashUrl", "upFlashExt", "swf"
+      ], [
+        "upMediaUrl", "upMediaExt", "avi"
+      ]
+    ];
 
-		$(upAttrs).each(function(i) {
-			var urlAttr = upAttrs[i][0];
-			var extAttr = upAttrs[i][1];
+    $(upAttrs).each(function (i) {
+      var urlAttr = upAttrs[i][0];
+      var extAttr = upAttrs[i][1];
 
-			if($this.attr(urlAttr)) {
-				op[urlAttr] = $this.attr(urlAttr);
-				op[extAttr] = $this.attr(extAttr) || upAttrs[i][2];
-			}
-		});
+      if ($this.attr(urlAttr)) {
+        op[urlAttr] = $this.attr(urlAttr);
+        op[extAttr] = $this.attr(extAttr) || upAttrs[i][2];
+      }
+    });
 
-		$this.xheditor(op);
-	});
+    $this.xheditor(op);
+  });
 
-	$(":file[uploaderOption]", $p).each(function() {
-		var $this = $(this);
-		var options = {
-			fileObjName: $this.attr("name") || "file",
-			auto: true,
-			multi: true,
-			onUploadError: uploadifyError
-		};
+  $(":file[uploaderOption]", $p).each(function () {
+    var $this = $(this);
+    var options = {
+      fileObjName: $this.attr("name") || "file",
+      auto: true,
+      multi: true,
+      onUploadError: uploadifyError
+    };
 
-		var uploaderOption = DWZ.jsonEval($this.attr("uploaderOption"));
-		$.extend(options, uploaderOption);
+    var uploaderOption = DWZ.jsonEval($this.attr("uploaderOption"));
+    $.extend(options, uploaderOption);
 
-		DWZ.debug("uploaderOption: " + DWZ.obj2str(uploaderOption));
+    DWZ.debug("uploaderOption: " + DWZ.obj2str(uploaderOption));
 
-		$this.uploadify(options);
-	});
+    $this.uploadify(options);
+  });
 
-	$("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");
-	$("input[readonly], textarea[readonly]", $p).addClass("readonly");
-	$("input[disabled=true], textarea[disabled=true]", $p).addClass("disabled");
-	$("input[type=text]", $p).not("div.tabs input[type=text]", $p).filter("[alt]").inputAlert();
-	$("div.panelBar li, div.panelBar", $p).hoverClass("hover");
-	$("div.button", $p).hoverClass("buttonHover");
-	$("div.buttonActive", $p).hoverClass("buttonActiveHover");
-	$("div.tabsHeader li, div.tabsPageHeader li, div.accordionHeader, div.accordion", $p).hoverClass("hover");
+  $("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");
+  $("input[readonly], textarea[readonly]", $p).addClass("readonly");
+  $("input[disabled=true], textarea[disabled=true]", $p).addClass("disabled");
+  $("input[type=text]", $p).not("div.tabs input[type=text]", $p).filter("[alt]").inputAlert();
+  $("div.panelBar li, div.panelBar", $p).hoverClass("hover");
+  $("div.button", $p).hoverClass("buttonHover");
+  $("div.buttonActive", $p).hoverClass("buttonActiveHover");
+  $("div.tabsHeader li, div.tabsPageHeader li, div.accordionHeader, div.accordion", $p).hoverClass("hover");
 
-	$("form.validateForm", $p).each(function() {
-		var $form = $(this);
-		$form.validate({
-			onsubmit: false,
-			focusInvalid: false,
-			focusCleanup: true,
-			errorElement: "span",
-			ignore: ".ignore",
-			invalidHandler: function(form, validator) {
-				var errors = validator.numberOfInvalids();
-				if(errors) {
-					var message = DWZ.msg("validateFormError", [
-						errors
-					]);
-					alertMsg.error(message);
-				}
-			}
-		});
+  $("form.validateForm", $p).each(function () {
+    var $form = $(this);
+    $form.validate({
+      onsubmit: false,
+      focusInvalid: false,
+      focusCleanup: true,
+      errorElement: "span",
+      ignore: ".ignore",
+      invalidHandler: function (form, validator) {
+        var errors = validator.numberOfInvalids();
+        if (errors) {
+          var message = DWZ.msg("validateFormError", [
+            errors
+          ]);
+          alertMsg.error(message);
+        }
+      }
+    });
 
-		$form.find('input[customvalid]').each(function() {
-			var $input = $(this);
-			$input.rules("add", {
-				customvalid: $input.attr("customvalid")
-			})
-		});
+    $form.find('input[customvalid]').each(function () {
+      var $input = $(this);
+      $input.rules("add", {
+        customvalid: $input.attr("customvalid")
+      })
+    });
 
-		if(!$form.attr("onsubmit")) {
-			$form.attr("onsubmit", "return validateCallback(this, allAjaxDone)");
-		}
-		$form.attr("method", "post");
-	});
+    if (!$form.attr("onsubmit")) {
+      $form.attr("onsubmit", "return validateCallback(this, allAjaxDone)");
+    }
+    $form.attr("method", "post");
+  });
 
-	$("form.pagerForm", $p).each(function() {
-		var $form = $(this);
-		
-		if(!$form.attr("onsubmit")) {
-			$form.attr("onsubmit", "return ajaxSearch(this)");
-		}
-		$form.attr("method", "post");
-	});
+  $("form.pagerForm", $p).each(function () {
+    var $form = $(this);
 
-	if($.fn.datepicker) {
-		$('input.date', $p).each(function() {
-			var $this = $(this);
-			var opts = {};
-			if($this.attr("dateFmt"))
-				opts.pattern = $this.attr("dateFmt");
-			if($this.attr("minDate"))
-				opts.minDate = $this.attr("minDate");
-			if($this.attr("maxDate"))
-				opts.maxDate = $this.attr("maxDate");
-			if($this.attr("mmStep"))
-				opts.mmStep = $this.attr("mmStep");
-			if($this.attr("ssStep"))
-				opts.ssStep = $this.attr("ssStep");
-			$this.datepicker(opts);
-		});
-	}
+    if (!$form.attr("onsubmit")) {
+      $form.attr("onsubmit", "return ajaxSearch(this)");
+    }
+    $form.attr("method", "post");
+  });
 
-	$("a[target=navTab]", $p).each(function() {
-		$(this).click(function(event) {
-			var $this = $(this);
-			var title = $this.attr("title") || $this.text();
-			var tabid = $this.attr("rel") || "_blank";
-			var fresh = eval($this.attr("fresh") || "true");
-			var external = eval($this.attr("external") || "false");
-			var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
-			DWZ.debug(url);
-			if(!url.isFinishedTm()) {
-				alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-				return false;
-			}
-			navTab.openTab(tabid, url, {
-				title: title,
-				fresh: fresh,
-				external: external
-			});
+  if ($.fn.datepicker) {
+    $('input.date', $p).each(function () {
+      var $this = $(this);
+      var opts = {};
+      if ($this.attr("dateFmt"))
+        opts.pattern = $this.attr("dateFmt");
+      if ($this.attr("minDate"))
+        opts.minDate = $this.attr("minDate");
+      if ($this.attr("maxDate"))
+        opts.maxDate = $this.attr("maxDate");
+      if ($this.attr("mmStep"))
+        opts.mmStep = $this.attr("mmStep");
+      if ($this.attr("ssStep"))
+        opts.ssStep = $this.attr("ssStep");
+      $this.datepicker(opts);
+    });
+  }
 
-			event.preventDefault();
-		});
-	});
+  $("a[target=navTab]", $p).each(function () {
+    $(this).click(function (event) {
+      var $this = $(this);
+      var title = $this.attr("title") || $this.text();
+      var tabid = $this.attr("rel") || "_blank";
+      var fresh = eval($this.attr("fresh") || "true");
+      var external = eval($this.attr("external") || "false");
+      var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
+      DWZ.debug(url);
+      if (!url.isFinishedTm()) {
+        alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+        return false;
+      }
+      navTab.openTab(tabid, url, {
+        title: title,
+        fresh: fresh,
+        external: external
+      });
 
-	$("a[target=dialog]", $p).each(function() {
-		$(this).click(function(event) {
-			var $this = $(this);
-			var title = $this.attr("title") || $this.text();
-			var rel = $this.attr("rel") || "_blank";
-			var options = {};
-			var w = $this.attr("width") || "M";
-			var h = $this.attr("height") || "M";
-			options.width = DWZ.dialogWidth[w] || w;
-			options.height = DWZ.dialogHeight[h] || h;
-			options.max = eval($this.attr("max") || "false");
-			options.mask = eval($this.attr("mask") || "true");
-			options.maxable = eval($this.attr("maxable") || "false");
-			options.minable = eval($this.attr("minable") || "false");
-			options.fresh = eval($this.attr("fresh") || "true");
-			options.resizable = eval($this.attr("resizable") || "false");
-			options.drawable = eval($this.attr("drawable") || "true");
-			options.close = eval($this.attr("close") || "");
-			options.param = $this.attr("param") || "";
+      event.preventDefault();
+    });
+  });
 
-			var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
-			DWZ.debug(url);
-			if(!url.isFinishedTm()) {
-				alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-				return false;
-			}
-			$.pdialog.open(url, rel, title, options);
+  $("a[target=dialog]", $p).each(function () {
+    $(this).click(function (event) {
+      var $this = $(this);
+      var title = $this.attr("title") || $this.text();
+      var rel = $this.attr("rel") || "_blank";
+      var options = {};
+      var w = $this.attr("width") || "M";
+      var h = $this.attr("height") || "M";
+      options.width = DWZ.dialogWidth[w] || w;
+      options.height = DWZ.dialogHeight[h] || h;
+      options.max = eval($this.attr("max") || "false");
+      options.mask = eval($this.attr("mask") || "true");
+      options.maxable = eval($this.attr("maxable") || "false");
+      options.minable = eval($this.attr("minable") || "false");
+      options.fresh = eval($this.attr("fresh") || "true");
+      options.resizable = eval($this.attr("resizable") || "false");
+      options.drawable = eval($this.attr("drawable") || "true");
+      options.close = eval($this.attr("close") || "");
+      options.param = $this.attr("param") || "";
 
-			return false;
-		});
-	});
+      var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
+      DWZ.debug(url);
+      if (!url.isFinishedTm()) {
+        alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+        return false;
+      }
+      $.pdialog.open(url, rel, title, options);
 
-	$("a[target=ajax]", $p).each(function() {
-		$(this).click(function(event) {
-			var $this = $(this);
-			var rel = $this.attr("rel");
-			if(rel) {
-				var $rel = $("#" + rel, $this.unitBox());
-				$rel.loadUrl($this.attr("href"), {}, function() {
-					$rel.find("[layoutH]").layoutH();
-				});
-			}
+      return false;
+    });
+  });
 
-			event.preventDefault();
-		});
-	});
+  $("a[target=ajax]", $p).each(function () {
+    $(this).click(function (event) {
+      var $this = $(this);
+      var rel = $this.attr("rel");
+      if (rel) {
+        var $rel = $("#" + rel, $this.unitBox());
+        $rel.loadUrl($this.attr("href"), {}, function () {
+          $rel.find("[layoutH]").layoutH();
+        });
+      }
 
-	$("div.pagination", $p).each(function() {
-		var $this = $(this);
-		$this.pagination({
-			totalCount: $this.attr("totalCount"),
-			numPerPage: $this.attr("numPerPage"),
-			pageNumShown: $this.attr("pageNumShown"),
-			currentPage: $this.attr("currentPage")
-		});
-	});
-	
-	$("div.pages select", $p).each(function() {
-		$(this).change(function() {
-			var form = $(this).getPagerForm().get(0);
-			form[DWZ.pageInfo.numPerPage].value = this.value;
-			ajaxSearch(form);
-		});
-	});
+      event.preventDefault();
+    });
+  });
 
-	$("div.sortDrag", $p).sortDrag();
+  $("div.pagination", $p).each(function () {
+    var $this = $(this);
+    $this.pagination({
+      totalCount: $this.attr("totalCount"),
+      numPerPage: $this.attr("numPerPage"),
+      pageNumShown: $this.attr("pageNumShown"),
+      currentPage: $this.attr("currentPage")
+    });
+  });
 
-	$("a[target=ajaxTodo]", $p).ajaxTodo();
-	$("a[target=dwzExport]", $p).dwzExport();
+  $("div.pages select", $p).each(function () {
+    $(this).change(function () {
+      var form = $(this).getPagerForm().get(0);
+      form[DWZ.pageInfo.numPerPage].value = this.value;
+      ajaxSearch(form);
+    });
+  });
 
-	$("a[lookupGroup]", $p).lookup();
-	$("[multLookup]:button", $p).multLookup();
-	$("input[suggestFields]", $p).suggest();
-	$("table.masterSlave", $p).masterSlave();
-	$("a[target=selectedTodo]", $p).selectedTodo();
+  $("div.sortDrag", $p).sortDrag();
 
-	// 处理awesome字体图标
-	$("[class*=fa-]:not(i)").each(function() {
-		var i = $("<i></i>");
-		i.css("line-height", "inherit");
-		i.addClass("fa");
-		var classes = $(this).attr("class").split(" ");
-		for( var x in classes) {
-			if(classes[x].startsWith("fa-")) {
-				i.addClass(classes[x]);
-				$(this).removeClass(classes[x]);
-			}
-		}
-		if(!$(this).is(":empty")) {
-			$(this).prepend("&nbsp;");
-		}
-		$(this).prepend(i);
-	});
+  $("a[target=ajaxTodo]", $p).ajaxTodo();
+  $("a[target=dwzExport]", $p).dwzExport();
 
-	if($.fn.viewSource) {
-		$("a.viewsource", $p).viewSource();
-	}
+  $("a[lookupGroup]", $p).lookup();
+  $("[multLookup]:button", $p).multLookup();
+  $("input[suggestFields]", $p).suggest();
+  $("table.masterSlave", $p).masterSlave();
+  $("a[target=selectedTodo]", $p).selectedTodo();
 
-	$.each(DWZ.regPlugins, function(index, fn) {
-		fn($p);
-	});
+  // 处理awesome字体图标
+  $("[class*=fa-]:not(i)").each(function () {
+    var i = $("<i></i>");
+    i.css("line-height", "inherit");
+    i.addClass("fa");
+    var classes = $(this).attr("class").split(" ");
+    for (var x in classes) {
+      if (classes[x].startsWith("fa-")) {
+        i.addClass(classes[x]);
+        $(this).removeClass(classes[x]);
+      }
+    }
+    if (!$(this).is(":empty")) {
+      $(this).prepend("&nbsp;");
+    }
+    $(this).prepend(i);
+  });
+
+  // 处理图片轮播组件
+  $("div.slider").each(function () {
+    var $this = $(this);
+    var op = {
+      width: $this.attr("width") || "100%",
+      height: $this.attr("height") || "100%",
+      responsive: true,
+      nexttext: '<i class="fa fa-arrow-right"></i>',
+      prevtext: '<i class="fa fa-arrow-left"></i>'
+    };
+    $this.bjqs(op);
+  });
+
+  if ($.fn.viewSource) {
+    $("a.viewsource", $p).viewSource();
+  }
+
+  $.each(DWZ.regPlugins, function (index, fn) {
+    fn($p);
+  });
 }
 /**
  * Theme Plugins
@@ -4916,11 +4929,11 @@ function _iframeResponse(iframe, callback) {
 function allAjaxDone(json) {
   DWZ.ajaxDone(json);
   if (json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
-    _closeNavTab(json);
-    _closeDialog(json);
-    _reloadNavTab(json);
-    _reloadDialog(json);
     _reloadDiv(json);
+    _reloadDialog(json);
+    _reloadNavTab(json);
+    _closeDialog(json);
+    _closeNavTab(json);
   }
 }
 

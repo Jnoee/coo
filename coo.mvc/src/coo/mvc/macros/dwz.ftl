@@ -7,6 +7,7 @@
 	<link href="${ctx}/dwz/themes/base/print.css" rel="stylesheet" media="print"/>
 	<link href="${ctx}/dwz/external/awesome/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/external/uploadify/css/uploadify.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/external/slider/bjqs.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/uploadify.extends.css" rel="stylesheet" />
 	<!--[if IE]>
 	<link href="${ctx}/dwz/themes/base/ieHack.css" rel="stylesheet" />
@@ -19,6 +20,7 @@
 	<script src="${ctx}/dwz/external/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/slider/bjqs-1.3.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/jquery.uploadify.extends.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/dwz.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/dwz.config.js" type="text/javascript"></script>
