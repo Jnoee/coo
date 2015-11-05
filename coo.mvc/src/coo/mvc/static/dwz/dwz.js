@@ -769,13 +769,13 @@ var DWZ = {
 		externalFrag: '<iframe src="{url}" style="width:100%;height:{height};" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>'
 	}, // page fragment
 	_msg: {
-		statusCode_503: '服务器当前负载过大或者正在维护!',
-		validateFormError: '提交数据不完整，{0}个字段有错误，请改正后再提交!',
-		sessionTimout: '会话超时，请重新登录!',
-		alertSelectMsg: '请选择信息!',
-		forwardConfirmMsg: '继续下一步!',
+		statusCode_503: '服务器当前负载过大或者正在维护。',
+		validateFormError: '提交数据不完整，{0}个字段有错误，请改正后再提交。',
+		sessionTimout: '会话超时，请重新登录。',
+		alertSelectMsg: '请选择要操作的记录。',
+		forwardConfirmMsg: '继续下一步。',
 		dwzTitle: 'DWZ富客户端框架',
-		mainTabTitle: '我的主页'
+		mainTabTitle: '我的首页'
 	}, // alert message
 	_set: {
 		loginUrl: "", // session timeout
@@ -2832,487 +2832,479 @@ var alertMsg = {
 })(jQuery);
 /**
  * @author ZhangHuihua@msn.com
- * 
+ *
  */
 var navTab = {
-	componentBox: null, // tab component. contain tabBox, prevBut, nextBut, panelBox
-	_tabBox: null,
-	_prevBut: null,
-	_nextBut: null,
-	_panelBox: null,
-	_moreBut: null,
-	_moreBox: null,
-	_currentIndex: 0,
+  componentBox: null, // tab component. contain tabBox, prevBut, nextBut, panelBox
+  _tabBox: null,
+  _prevBut: null,
+  _nextBut: null,
+  _panelBox: null,
+  _moreBut: null,
+  _moreBox: null,
+  _currentIndex: 0,
 
-	_op: {
-		id: "navTab",
-		stTabBox: ".navTab-tab",
-		stPanelBox: ".navTab-panel",
-		mainTabId: "main",
-		close$: "a.close",
-		prevClass: "tabsLeft",
-		nextClass: "tabsRight",
-		stMore: ".tabsMore",
-		stMoreLi: "ul.tabsMoreList"
-	},
+  _op: {
+    id: "navTab",
+    stTabBox: ".navTab-tab",
+    stPanelBox: ".navTab-panel",
+    mainTabId: "main",
+    close$: "a.close",
+    prevClass: "tabsLeft",
+    nextClass: "tabsRight",
+    stMore: ".tabsMore",
+    stMoreLi: "ul.tabsMoreList"
+  },
 
-	init: function(options) {
-		if($.History)
-			$.History.init("#container");
-		var $this = this;
-		$.extend(this._op, options);
+  init: function (options) {
+    if ($.History)
+      $.History.init("#container");
+    var $this = this;
+    $.extend(this._op, options);
 
-		this.componentBox = $("#" + this._op.id);
-		this._tabBox = this.componentBox.find(this._op.stTabBox);
-		this._panelBox = this.componentBox.find(this._op.stPanelBox);
-		this._prevBut = this.componentBox.find("." + this._op.prevClass);
-		this._nextBut = this.componentBox.find("." + this._op.nextClass);
-		this._moreBut = this.componentBox.find(this._op.stMore);
-		this._moreBox = this.componentBox.find(this._op.stMoreLi);
+    this.componentBox = $("#" + this._op.id);
+    this._tabBox = this.componentBox.find(this._op.stTabBox);
+    this._panelBox = this.componentBox.find(this._op.stPanelBox);
+    this._prevBut = this.componentBox.find("." + this._op.prevClass);
+    this._nextBut = this.componentBox.find("." + this._op.nextClass);
+    this._moreBut = this.componentBox.find(this._op.stMore);
+    this._moreBox = this.componentBox.find(this._op.stMoreLi);
 
-		this._prevBut.click(function(event) {
-			$this._scrollPrev()
-		});
-		this._nextBut.click(function(event) {
-			$this._scrollNext()
-		});
-		this._moreBut.click(function() {
-			$this._moreBox.show();
-			return false;
-		});
-		$(document).click(function() {
-			$this._moreBox.hide()
-		});
+    this._prevBut.click(function () {
+      $this._scrollPrev()
+    });
+    this._nextBut.click(function () {
+      $this._scrollNext()
+    });
+    this._moreBut.click(function () {
+      $this._moreBox.show();
+      return false;
+    });
+    $(document).click(function () {
+      $this._moreBox.hide()
+    });
 
-		this._contextmenu(this._tabBox);
-		this._contextmenu(this._getTabs());
+    this._contextmenu(this._tabBox);
+    this._contextmenu(this._getTabs());
 
-		this._init();
-		this._ctrlScrollBut();
-	},
-	_init: function() {
-		var $this = this;
-		this._getTabs().each(function(iTabIndex) {
-			$(this).unbind("click").click(function(event) {
-				$this._switchTab(iTabIndex);
-			});
-			$(this).find(navTab._op.close$).unbind("click").click(function() {
-				$this._closeTab(iTabIndex);
-			});
-		});
-		this._getMoreLi().each(function(iTabIndex) {
-			$(this).find(">a").unbind("click").click(function(event) {
-				$this._switchTab(iTabIndex);
-			});
-		});
+    this._init();
+    this._ctrlScrollBut();
+  },
+  _init: function () {
+    var $this = this;
+    this._getTabs().each(function (iTabIndex) {
+      $(this).unbind("click").click(function () {
+        $this._switchTab(iTabIndex);
+      });
+      $(this).find(navTab._op.close$).unbind("click").click(function () {
+        $this._closeTab(iTabIndex);
+      });
+    });
+    this._getMoreLi().each(function (iTabIndex) {
+      $(this).find(">a").unbind("click").click(function () {
+        $this._switchTab(iTabIndex);
+      });
+    });
 
-		this._switchTab(this._currentIndex);
-	},
-	_contextmenu: function($obj) { // navTab右键菜单
-		var $this = this;
-		$obj.contextMenu('navTabCM', {
-			bindings: {
-				reload: function(t, m) {
-					$this._reload(t, true);
-				},
-				closeCurrent: function(t, m) {
-					var tabId = t.attr("tabid");
-					if(tabId)
-						$this.closeTab(tabId);
-					else
-						$this.closeCurrentTab();
-				},
-				closeOther: function(t, m) {
-					var index = $this._indexTabId(t.attr("tabid"));
-					$this._closeOtherTab(index > 0 ? index : $this._currentIndex);
-				},
-				closeAll: function(t, m) {
-					$this.closeAllTab();
-				}
-			},
-			ctrSub: function(t, m) {
-				var mReload = m.find("[rel='reload']");
-				var mCur = m.find("[rel='closeCurrent']");
-				var mOther = m.find("[rel='closeOther']");
-				var mAll = m.find("[rel='closeAll']");
-				var $tabLi = $this._getTabs();
-				if($tabLi.size() < 2) {
-					mCur.addClass("disabled");
-					mOther.addClass("disabled");
-					mAll.addClass("disabled");
-				}
-				if($this._currentIndex == 0 || t.attr("tabid") == $this._op.mainTabId) {
-					mCur.addClass("disabled");
-					mReload.addClass("disabled");
-				} else if($tabLi.size() == 2) {
-					mOther.addClass("disabled");
-				}
+    this._switchTab(this._currentIndex);
+  },
+  _contextmenu: function ($obj) { // navTab右键菜单
+    var $this = this;
+    $obj.contextMenu('navTabCM', {
+      bindings: {
+        reload: function (t) {
+          $this._reload(t, true);
+        },
+        closeCurrent: function (t) {
+          var tabId = t.attr("tabid");
+          if (tabId)
+            $this.closeTab(tabId);
+          else
+            $this.closeCurrentTab();
+        },
+        closeOther: function (t) {
+          var index = $this._indexTabId(t.attr("tabid"));
+          $this._closeOtherTab(index > 0 ? index : $this._currentIndex);
+        },
+        closeAll: function () {
+          $this.closeAllTab();
+        }
+      },
+      ctrSub: function (t, m) {
+        var mReload = m.find("[rel='reload']");
+        var mCur = m.find("[rel='closeCurrent']");
+        var mOther = m.find("[rel='closeOther']");
+        var mAll = m.find("[rel='closeAll']");
+        var $tabLi = $this._getTabs();
+        if ($tabLi.size() < 2) {
+          mCur.addClass("disabled");
+          mOther.addClass("disabled");
+          mAll.addClass("disabled");
+        }
+        if ($this._currentIndex == 0 || t.attr("tabid") == $this._op.mainTabId) {
+          mCur.addClass("disabled");
+          mReload.addClass("disabled");
+        } else if ($tabLi.size() == 2) {
+          mOther.addClass("disabled");
+        }
 
-			}
-		});
-	},
+      }
+    });
+  },
 
-	_getTabs: function() {
-		return this._tabBox.find("> li");
-	},
-	_getPanels: function() {
-		return this._panelBox.find("> div");
-	},
-	_getMoreLi: function() {
-		return this._moreBox.find("> li");
-	},
-	_getTab: function(tabid) {
-		var index = this._indexTabId(tabid);
-		if(index >= 0)
-			return this._getTabs().eq(index);
-	},
-	getPanel: function(tabid) {
-		var index = this._indexTabId(tabid);
-		if(index >= 0)
-			return this._getPanels().eq(index);
-	},
-	_getTabsW: function(iStart, iEnd) {
-		return this._tabsW(this._getTabs().slice(iStart, iEnd));
-	},
-	_tabsW: function($tabs) {
-		var iW = 0;
-		$tabs.each(function() {
-			iW += $(this).outerWidth(true);
-		});
-		return iW;
-	},
-	_indexTabId: function(tabid) {
-		if(!tabid)
-			return -1;
-		var iOpenIndex = -1;
-		this._getTabs().each(function(index) {
-			if($(this).attr("tabid") == tabid) {
-				iOpenIndex = index;
-				return;
-			}
-		});
-		return iOpenIndex;
-	},
-	_getLeft: function() {
-		return this._tabBox.position().left;
-	},
-	_getScrollBarW: function() {
-		return this.componentBox.width() - 55;
-	},
+  _getTabs: function () {
+    return this._tabBox.find("> li");
+  },
+  _getPanels: function () {
+    return this._panelBox.find("> div");
+  },
+  _getMoreLi: function () {
+    return this._moreBox.find("> li");
+  },
+  _getTab: function (tabid) {
+    var index = this._indexTabId(tabid);
+    if (index >= 0)
+      return this._getTabs().eq(index);
+  },
+  getPanel: function (tabid) {
+    var index = this._indexTabId(tabid);
+    if (index >= 0)
+      return this._getPanels().eq(index);
+  },
+  _getTabsW: function (iStart, iEnd) {
+    return this._tabsW(this._getTabs().slice(iStart, iEnd));
+  },
+  _tabsW: function ($tabs) {
+    var iW = 0;
+    $tabs.each(function () {
+      iW += $(this).outerWidth(true);
+    });
+    return iW;
+  },
+  _indexTabId: function (tabid) {
+    if (!tabid)
+      return -1;
+    var iOpenIndex = -1;
+    this._getTabs().each(function (index) {
+      if ($(this).attr("tabid") == tabid) {
+        iOpenIndex = index;
+        return;
+      }
+    });
+    return iOpenIndex;
+  },
+  _getLeft: function () {
+    return this._tabBox.position().left;
+  },
+  _getScrollBarW: function () {
+    return this.componentBox.width() - 55;
+  },
 
-	_visibleStart: function() {
-		var iLeft = this._getLeft(), iW = 0;
-		var $tabs = this._getTabs();
-		for(var i = 0; i < $tabs.size(); i++) {
-			if(iW + iLeft >= 0)
-				return i;
-			iW += $tabs.eq(i).outerWidth(true);
-		}
-		return 0;
-	},
-	_visibleEnd: function() {
-		var iLeft = this._getLeft(), iW = 0;
-		var $tabs = this._getTabs();
-		for(var i = 0; i < $tabs.size(); i++) {
-			iW += $tabs.eq(i).outerWidth(true);
-			if(iW + iLeft > this._getScrollBarW())
-				return i;
-		}
-		return $tabs.size();
-	},
-	_scrollPrev: function() {
-		var iStart = this._visibleStart();
-		if(iStart > 0) {
-			this._scrollTab(-this._getTabsW(0, iStart - 1));
-		}
-	},
-	_scrollNext: function() {
-		var iEnd = this._visibleEnd();
-		if(iEnd < this._getTabs().size()) {
-			this._scrollTab(-this._getTabsW(0, iEnd + 1) + this._getScrollBarW());
-		}
-	},
-	_scrollTab: function(iLeft, isNext) {
-		var $this = this;
-		this._tabBox.animate({
-			left: iLeft + 'px'
-		}, 200, function() {
-			$this._ctrlScrollBut();
-		});
-	},
-	_scrollCurrent: function() { // auto scroll current tab
-		var iW = this._tabsW(this._getTabs());
-		if(iW <= this._getScrollBarW()) {
-			this._scrollTab(0);
-		} else if(this._getLeft() < this._getScrollBarW() - iW) {
-			this._scrollTab(this._getScrollBarW() - iW);
-		} else if(this._currentIndex < this._visibleStart()) {
-			this._scrollTab(-this._getTabsW(0, this._currentIndex));
-		} else if(this._currentIndex >= this._visibleEnd()) {
-			this._scrollTab(this._getScrollBarW() - this._getTabs().eq(this._currentIndex).outerWidth(true) - this._getTabsW(0, this._currentIndex));
-		}
-	},
-	_ctrlScrollBut: function() {
-		var iW = this._tabsW(this._getTabs());
-		if(this._getScrollBarW() > iW) {
-			this._prevBut.hide();
-			this._nextBut.hide();
-			this._tabBox.parent().removeClass("tabsPageHeaderMargin");
-		} else {
-			this._prevBut.show().removeClass("tabsLeftDisabled");
-			this._nextBut.show().removeClass("tabsRightDisabled");
-			this._tabBox.parent().addClass("tabsPageHeaderMargin");
-			if(this._getLeft() >= 0) {
-				this._prevBut.addClass("tabsLeftDisabled");
-			} else if(this._getLeft() <= this._getScrollBarW() - iW) {
-				this._nextBut.addClass("tabsRightDisabled");
-			}
-		}
-	},
+  _visibleStart: function () {
+    var iLeft = this._getLeft(), iW = 0;
+    var $tabs = this._getTabs();
+    for (var i = 0; i < $tabs.size(); i++) {
+      if (iW + iLeft >= 0)
+        return i;
+      iW += $tabs.eq(i).outerWidth(true);
+    }
+    return 0;
+  },
+  _visibleEnd: function () {
+    var iLeft = this._getLeft(), iW = 0;
+    var $tabs = this._getTabs();
+    for (var i = 0; i < $tabs.size(); i++) {
+      iW += $tabs.eq(i).outerWidth(true);
+      if (iW + iLeft > this._getScrollBarW())
+        return i;
+    }
+    return $tabs.size();
+  },
+  _scrollPrev: function () {
+    var iStart = this._visibleStart();
+    if (iStart > 0) {
+      this._scrollTab(-this._getTabsW(0, iStart - 1));
+    }
+  },
+  _scrollNext: function () {
+    var iEnd = this._visibleEnd();
+    if (iEnd < this._getTabs().size()) {
+      this._scrollTab(-this._getTabsW(0, iEnd + 1) + this._getScrollBarW());
+    }
+  },
+  _scrollTab: function (iLeft) {
+    var $this = this;
+    this._tabBox.animate({
+      left: iLeft + 'px'
+    }, 200, function () {
+      $this._ctrlScrollBut();
+    });
+  },
+  _scrollCurrent: function () { // auto scroll current tab
+    var iW = this._tabsW(this._getTabs());
+    if (iW <= this._getScrollBarW()) {
+      this._scrollTab(0);
+    } else if (this._getLeft() < this._getScrollBarW() - iW) {
+      this._scrollTab(this._getScrollBarW() - iW);
+    } else if (this._currentIndex < this._visibleStart()) {
+      this._scrollTab(-this._getTabsW(0, this._currentIndex));
+    } else if (this._currentIndex >= this._visibleEnd()) {
+      this._scrollTab(this._getScrollBarW() - this._getTabs().eq(this._currentIndex).outerWidth(true) - this._getTabsW(0, this._currentIndex));
+    }
+  },
+  _ctrlScrollBut: function () {
+    var iW = this._tabsW(this._getTabs());
+    if (this._getScrollBarW() > iW) {
+      this._prevBut.hide();
+      this._nextBut.hide();
+      this._tabBox.parent().removeClass("tabsPageHeaderMargin");
+    } else {
+      this._prevBut.show().removeClass("tabsLeftDisabled");
+      this._nextBut.show().removeClass("tabsRightDisabled");
+      this._tabBox.parent().addClass("tabsPageHeaderMargin");
+      if (this._getLeft() >= 0) {
+        this._prevBut.addClass("tabsLeftDisabled");
+      } else if (this._getLeft() <= this._getScrollBarW() - iW) {
+        this._nextBut.addClass("tabsRightDisabled");
+      }
+    }
+  },
 
-	_switchTab: function(iTabIndex) {
-		var $tab = this._getTabs().removeClass("selected").eq(iTabIndex).addClass("selected");
+  _switchTab: function (iTabIndex) {
+    var $tab = this._getTabs().removeClass("selected").eq(iTabIndex).addClass("selected");
 
-		if(DWZ.ui.hideMode == 'offsets') {
-			this._getPanels().css({
-				position: 'absolute',
-				top: '-100000px',
-				left: '-100000px'
-			}).eq(iTabIndex).css({
-				position: '',
-				top: '',
-				left: ''
-			});
-		} else {
-			this._getPanels().hide().eq(iTabIndex).show();
-		}
+    if (DWZ.ui.hideMode == 'offsets') {
+      this._getPanels().css({
+        position: 'absolute',
+        top: '-100000px',
+        left: '-100000px'
+      }).eq(iTabIndex).css({
+        position: '',
+        top: '',
+        left: ''
+      });
+    } else {
+      this._getPanels().hide().eq(iTabIndex).show();
+    }
 
-		this._getMoreLi().removeClass("selected").eq(iTabIndex).addClass("selected");
-		this._currentIndex = iTabIndex;
+    this._getMoreLi().removeClass("selected").eq(iTabIndex).addClass("selected");
+    this._currentIndex = iTabIndex;
 
-		this._scrollCurrent();
-		this._reload($tab);
-	},
+    this._scrollCurrent();
+    this._reload($tab);
+  },
 
-	_closeTab: function(index, openTabid) {
+  _closeTab: function (index, openTabid) {
 
-		this._getTabs().eq(index).remove();
-		this._getPanels().eq(index).trigger(DWZ.eventType.pageClear).remove();
-		this._getMoreLi().eq(index).remove();
-		if(this._currentIndex >= index)
-			this._currentIndex--;
+    this._getTabs().eq(index).remove();
+    this._getPanels().eq(index).trigger(DWZ.eventType.pageClear).remove();
+    this._getMoreLi().eq(index).remove();
+    if (this._currentIndex >= index)
+      this._currentIndex--;
 
-		if(openTabid) {
-			var openIndex = this._indexTabId(openTabid);
-			if(openIndex > 0)
-				this._currentIndex = openIndex;
-		}
+    if (openTabid) {
+      var openIndex = this._indexTabId(openTabid);
+      if (openIndex > 0)
+        this._currentIndex = openIndex;
+    }
 
-		this._init();
-		this._scrollCurrent();
-		this._reload(this._getTabs().eq(this._currentIndex));
-	},
-	closeTab: function(tabid) {
-		var index = this._indexTabId(tabid);
-		if(index > 0) {
-			this._closeTab(index);
-		}
-	},
-	closeCurrentTab: function(openTabid) { // openTabid 可以为空，默认关闭当前tab后，打开最后一个tab
-		if(this._currentIndex > 0) {
-			this._closeTab(this._currentIndex, openTabid);
-		}
-	},
-	closeAllTab: function() {
-		this._getTabs().filter(":gt(0)").remove();
-		this._getPanels().filter(":gt(0)").trigger(DWZ.eventType.pageClear).remove();
-		this._getMoreLi().filter(":gt(0)").remove();
-		this._currentIndex = 0;
-		this._init();
-		this._scrollCurrent();
-	},
-	_closeOtherTab: function(index) {
-		index = index || this._currentIndex;
-		if(index > 0) {
-			var str$ = ":eq(" + index + ")";
-			this._getTabs().not(str$).filter(":gt(0)").remove();
-			this._getPanels().not(str$).filter(":gt(0)").trigger(DWZ.eventType.pageClear).remove();
-			this._getMoreLi().not(str$).filter(":gt(0)").remove();
-			this._currentIndex = 1;
-			this._init();
-			this._scrollCurrent();
-		} else {
-			this.closeAllTab();
-		}
-	},
+    this._init();
+    this._scrollCurrent();
+    this._reload(this._getTabs().eq(this._currentIndex));
+  },
+  closeTab: function (tabid) {
+    var index = this._indexTabId(tabid);
+    if (index > 0) {
+      this._closeTab(index);
+    }
+  },
+  closeCurrentTab: function (openTabid) { // openTabid 可以为空，默认关闭当前tab后，打开最后一个tab
+    if (this._currentIndex > 0) {
+      this._closeTab(this._currentIndex, openTabid);
+    }
+  },
+  closeAllTab: function () {
+    this._getTabs().filter(":gt(0)").remove();
+    this._getPanels().filter(":gt(0)").trigger(DWZ.eventType.pageClear).remove();
+    this._getMoreLi().filter(":gt(0)").remove();
+    this._currentIndex = 0;
+    this._init();
+    this._scrollCurrent();
+  },
+  _closeOtherTab: function (index) {
+    index = index || this._currentIndex;
+    if (index > 0) {
+      var str$ = ":eq(" + index + ")";
+      this._getTabs().not(str$).filter(":gt(0)").remove();
+      this._getPanels().not(str$).filter(":gt(0)").trigger(DWZ.eventType.pageClear).remove();
+      this._getMoreLi().not(str$).filter(":gt(0)").remove();
+      this._currentIndex = 1;
+      this._init();
+      this._scrollCurrent();
+    } else {
+      this.closeAllTab();
+    }
+  },
 
-	_loadUrlCallback: function($panel) {
-		$panel.find("[layoutH]").layoutH();
-		$panel.find(":button.close").click(function() {
-			navTab.closeCurrentTab();
-		});
-	},
-	_reload: function($tab, flag) {
-		flag = flag || $tab.data("reloadFlag");
-		var url = $tab.attr("url");
-		if(flag && url) {
-			$tab.data("reloadFlag", null);
-			var $panel = this.getPanel($tab.attr("tabid"));
+  _loadUrlCallback: function ($panel) {
+    $panel.find("[layoutH]").layoutH();
+    $panel.find(":button.close").click(function () {
+      navTab.closeCurrentTab();
+    });
+  },
+  _reload: function ($tab, options) {
+    var op = $.extend({
+      url: "",
+      data: {},
+      callback: null,
+      flag: null
+    }, options);
 
-			if($tab.hasClass("external")) {
-				navTab.openExternal(url, $panel);
-			} else {
-				var $pagerForm = $panel.getPagerForm();
-				var args = $pagerForm ? $pagerForm.serializeArray() : {};
-				$panel.loadUrl(url, args, function() {
-					navTab._loadUrlCallback($panel);
-				});
-			}
-		}
-	},
-	reloadFlag: function(tabid) {
-		var $tab = this._getTab(tabid);
-		if($tab) {
-			if(this._indexTabId(tabid) == this._currentIndex)
-				this._reload($tab, true);
-			else
-				$tab.data("reloadFlag", 1);
-		}
-	},
-	reload: function(url, options) {
-		var op = $.extend({
-			data: {},
-			navTabId: "",
-			callback: null
-		}, options);
-		var $tab = op.navTabId ? this._getTab(op.navTabId) : this._getTabs().eq(this._currentIndex);
-		var $panel = op.navTabId ? this.getPanel(op.navTabId) : this._getPanels().eq(this._currentIndex);
+    var $panel = this.getPanel($tab.attr("tabid"));
+    op.flag = op.flag || $tab.data("flag");
+    op.url = op.url || $tab.attr("url");
+    op.data = $.isEmptyObject(op.data) ? $tab.data("data") : op.data;
+    op.callback = op.callback || $tab.data("callback");
+    if (op.flag && op.url && $panel) {
+      $tab.data("flag", null);
+      $tab.data("callback", null);
+      $tab.attr("url", op.url);
+      $tab.data("data", op.data);
 
-		if($panel) {
-			url = url || $tab.attr("url");
-			if(url) {
-				if($tab.hasClass("external")) {
-					navTab.openExternal(url, $panel);
-				} else {
-					var $pagerForm = $panel.getPagerForm();
-					if($pagerForm) {
-						$.extend(op.data, $pagerForm.serializeJson());
-					}
-					$.extend(op.data, url.getParams());
+      if ($tab.hasClass("external")) {
+        navTab.openExternal(op.url, $panel);
+      } else {
+        var $pagerForm = $panel.getPagerForm();
+        if ($pagerForm) {
+          $.extend(op.data, $pagerForm.serializeJson());
+        }
+        $.extend(op.data, op.url.getParams());
 
-					$panel.ajaxUrl({
-						type: "POST",
-						url: url.cleanParams(),
-						data: op.data,
-						callback: function(response) {
-							navTab._loadUrlCallback($panel);
-							if($.isFunction(op.callback))
-								op.callback(response);
-						}
-					});
-				}
-			}
-		}
-	},
-	getCurrentPanel: function() {
-		return this._getPanels().eq(this._currentIndex);
-	},
-	checkTimeout: function() {
-		var json = DWZ.jsonEval(this.getCurrentPanel().html());
-		if(json && json[DWZ.keys.statusCode] == DWZ.statusCode.timeout)
-			this.closeCurrentTab();
-	},
-	openExternal: function(url, $panel) {
-		var ih = navTab._panelBox.height();
-		$panel.html(DWZ.frag["externalFrag"].replaceAll("{url}", url).replaceAll("{height}", ih + "px"));
-	},
-	/**
-	 * 
-	 * @param {Object}
-	 *            tabid
-	 * @param {Object}
-	 *            url
-	 * @param {Object}
-	 *            params: title, data, fresh
-	 */
-	openTab: function(tabid, url, options) { // if found tabid replace tab, else create a new tab.
-		var op = $.extend({
-			title: "New Tab",
-			type: "GET",
-			data: {},
-			fresh: true,
-			external: false
-		}, options);
+        $panel.ajaxUrl({
+          type: "POST",
+          url: op.url.cleanParams(),
+          data: op.data,
+          callback: function (response) {
+            navTab._loadUrlCallback($panel);
+            if ($.isFunction(op.callback))
+              op.callback(response);
+          }
+        });
+      }
+    }
+  },
+  reload: function (options) {
+    var op = $.extend({
+      id: "",
+      url: "",
+      data: {},
+      callback: null
+    }, options);
+    var $tab;
+    if(op.id) {
+      $tab = this._getTab(op.id);
+      $tab.data("flag", 1);
+      $tab.data("callback", op.callback);
+      op.url = op.url || $tab.attr("url");
+      $tab.attr("url", op.url);
+      op.data = $.isEmptyObject(op.data) ? $tab.data("data") : op.data;
+      $tab.data("data", op.data);
+    } else {
+      $tab = this._getTabs().eq(this._currentIndex);
+      $tab.data("flag", 1);
+      this._reload($tab, op);
+    }
+  },
+  getCurrentPanel: function () {
+    return this._getPanels().eq(this._currentIndex);
+  },
+  checkTimeout: function () {
+    var json = DWZ.jsonEval(this.getCurrentPanel().html());
+    if (json && json[DWZ.keys.statusCode] == DWZ.statusCode.timeout)
+      this.closeCurrentTab();
+  },
+  openExternal: function (url, $panel) {
+    var ih = navTab._panelBox.height();
+    $panel.html(DWZ.frag["externalFrag"].replaceAll("{url}", url).replaceAll("{height}", ih + "px"));
+  },
+  openTab: function (tabid, url, options) { // if found tabid replace tab, else create a new tab.
+    var op = $.extend({
+      title: "New Tab",
+      type: "GET",
+      data: {},
+      fresh: true,
+      external: false
+    }, options);
 
-		var iOpenIndex = this._indexTabId(tabid);
+    var iOpenIndex = this._indexTabId(tabid);
 
-		if(iOpenIndex >= 0) {
-			var $tab = this._getTabs().eq(iOpenIndex);
-			var span$ = $tab.attr("tabid") == this._op.mainTabId ? "> span > span" : "> span";
-			$tab.find(">a").attr("title", op.title).find(span$).html(op.title);
-			var $panel = this._getPanels().eq(iOpenIndex);
-			if(op.fresh || $tab.attr("url") != url) {
-				$tab.attr("url", url);
-				if(op.external || url.isExternalUrl()) {
-					$tab.addClass("external");
-					navTab.openExternal(url, $panel);
-				} else {
-					$tab.removeClass("external");
-					$panel.ajaxUrl({
-						type: op.type,
-						url: url,
-						data: op.data,
-						callback: function() {
-							navTab._loadUrlCallback($panel);
-						}
-					});
-				}
-			}
-			this._currentIndex = iOpenIndex;
-		} else {
-			var tabFrag = '<li tabid="#tabid#"><a href="javascript:" title="#title#" class="#tabid#"><span>#title#</span></a><a href="javascript:;" class="close">close</a></li>';
-			this._tabBox.append(tabFrag.replaceAll("#tabid#", tabid).replaceAll("#title#", op.title));
-			this._panelBox.append('<div class="page unitBox"></div>');
-			this._moreBox.append('<li><a href="javascript:" title="#title#">#title#</a></li>'.replaceAll("#title#", op.title));
+    if (iOpenIndex >= 0) {
+      var $tab = this._getTabs().eq(iOpenIndex);
+      var span$ = $tab.attr("tabid") == this._op.mainTabId ? "> span > span" : "> span";
+      $tab.find(">a").attr("title", op.title).find(span$).html(op.title);
+      var $panel = this._getPanels().eq(iOpenIndex);
+      if (op.fresh || $tab.attr("url") != url) {
+        $tab.attr("url", url);
+        if (op.external || url.isExternalUrl()) {
+          $tab.addClass("external");
+          navTab.openExternal(url, $panel);
+        } else {
+          $tab.removeClass("external");
+          $panel.ajaxUrl({
+            type: op.type,
+            url: url,
+            data: op.data,
+            callback: function () {
+              navTab._loadUrlCallback($panel);
+            }
+          });
+        }
+      }
+      this._currentIndex = iOpenIndex;
+    } else {
+      var tabFrag = '<li tabid="#tabid#"><a href="javascript:" title="#title#" class="#tabid#"><span>#title#</span></a><a href="javascript:;" class="close">close</a></li>';
+      this._tabBox.append(tabFrag.replaceAll("#tabid#", tabid).replaceAll("#title#", op.title));
+      this._panelBox.append('<div class="page unitBox"></div>');
+      this._moreBox.append('<li><a href="javascript:" title="#title#">#title#</a></li>'.replaceAll("#title#", op.title));
 
-			var $tabs = this._getTabs();
-			var $tab = $tabs.filter(":last");
-			var $panel = this._getPanels().filter(":last");
+      var $tabs = this._getTabs();
+      var $tab = $tabs.filter(":last");
+      var $panel = this._getPanels().filter(":last");
 
-			if(op.external || url.isExternalUrl()) {
-				$tab.addClass("external");
-				navTab.openExternal(url, $panel);
-			} else {
-				$tab.removeClass("external");
-				$panel.ajaxUrl({
-					type: op.type,
-					url: url,
-					data: op.data,
-					callback: function() {
-						navTab._loadUrlCallback($panel);
-					}
-				});
-			}
+      if (op.external || url.isExternalUrl()) {
+        $tab.addClass("external");
+        navTab.openExternal(url, $panel);
+      } else {
+        $tab.removeClass("external");
+        $panel.ajaxUrl({
+          type: op.type,
+          url: url,
+          data: op.data,
+          callback: function () {
+            navTab._loadUrlCallback($panel);
+          }
+        });
+      }
 
-			if($.History) {
-				setTimeout(function() {
-					$.History.addHistory(tabid, function(tabid) {
-						var i = navTab._indexTabId(tabid);
-						if(i >= 0)
-							navTab._switchTab(i);
-					}, tabid);
-				}, 10);
-			}
+      if ($.History) {
+        setTimeout(function () {
+          $.History.addHistory(tabid, function (tabid) {
+            var i = navTab._indexTabId(tabid);
+            if (i >= 0)
+              navTab._switchTab(i);
+          }, tabid);
+        }, 10);
+      }
 
-			this._currentIndex = $tabs.size() - 1;
-			this._contextmenu($tabs.filter(":last").hoverClass("hover"));
-		}
+      this._currentIndex = $tabs.size() - 1;
+      this._contextmenu($tabs.filter(":last").hoverClass("hover"));
+    }
 
-		this._init();
-		this._scrollCurrent();
+    this._init();
+    this._scrollCurrent();
 
-		this._getTabs().eq(this._currentIndex).attr("url", url);
-	}
+    this._getTabs().eq(this._currentIndex).attr("url", url);
+  }
 };/**
  * @author ZhangHuihua@msn.com
  * 
@@ -4828,438 +4820,372 @@ var navTab = {
 	}
 })(jQuery);/**
  * @author ZhangHuihua@msn.com
- * 
+ *
  */
 
-/**
- * 普通ajax表单提交
- * 
- * @param {Object}
- *            form
- * @param {Object}
- *            callback
- * @param {String}
- *            confirmMsg 提示确认信息
- */
 function validateCallback(form, callback, confirmMsg) {
-	var $form = $(form);
+  var $form = $(form);
 
-	if(!$form.valid()) {
-		return false;
-	}
+  if (!$form.valid()) {
+    return false;
+  }
 
-	var _submitFn = function() {
-		$.ajax({
-			type: form.method || 'POST',
-			url: $form.attr("action"),
-			data: $form.serializeArray(),
-			dataType: "json",
-			cache: false,
-			success: callback || DWZ.ajaxDone,
-			error: DWZ.ajaxError
-		});
-	}
+  var _submitFn = function () {
+    $.ajax({
+      type: form.method || 'POST',
+      url: $form.attr("action"),
+      data: $form.serializeArray(),
+      dataType: "json",
+      cache: false,
+      success: callback || DWZ.ajaxDone,
+      error: DWZ.ajaxError
+    });
+  };
 
-	if(confirmMsg) {
-		alertMsg.confirm(confirmMsg, {
-			okCall: _submitFn
-		});
-	} else {
-		_submitFn();
-	}
+  if (confirmMsg) {
+    alertMsg.confirm(confirmMsg, {
+      okCall: _submitFn
+    });
+  } else {
+    _submitFn();
+  }
 
-	return false;
+  return false;
 }
 
-/**
- * 带文件上传的ajax表单提交
- * 
- * @param {Object}
- *            form
- * @param {Object}
- *            callback
- */
 function iframeCallback(form, callback) {
-	var $form = $(form), $iframe = $("#callbackframe");
-	if(!$form.valid()) {
-		return false;
-	}
+  var $form = $(form), $iframe = $("#callbackframe");
+  if (!$form.valid()) return false;
 
-	if($iframe.size() == 0) {
-		$iframe = $("<iframe id='callbackframe' name='callbackframe' src='about:blank' style='display:none'></iframe>").appendTo("body");
-	}
-	if(!form.ajax) {
-		$form.append('<input type="hidden" name="ajax" value="1" />');
-	}
-	form.target = "callbackframe";
+  if ($iframe.size() == 0) {
+    $iframe = $("<iframe id='callbackframe' name='callbackframe' src='about:blank' style='display:none'></iframe>").appendTo("body");
+  }
+  if (!form.ajax) {
+    $form.append('<input type="hidden" name="ajax" value="1" />');
+  }
+  form.target = "callbackframe";
 
-	_iframeResponse($iframe[0], callback || DWZ.ajaxDone);
+  _iframeResponse($iframe[0], callback || DWZ.ajaxDone);
 }
 
 function _iframeResponse(iframe, callback) {
-	var $iframe = $(iframe), $document = $(document);
+  var $iframe = $(iframe), $document = $(document);
 
-	$document.trigger("ajaxStart");
+  $document.trigger("ajaxStart");
 
-	$iframe.bind("load", function(event) {
-		$iframe.unbind("load");
-		$document.trigger("ajaxStop");
+  $iframe.bind("load", function () {
+    $iframe.unbind("load");
+    $document.trigger("ajaxStop");
 
-		if(iframe.src == "javascript:'%3Chtml%3E%3C/html%3E';" || // For Safari
-		iframe.src == "javascript:'<html></html>';") { // For FF, IE
-			return;
-		}
+    if (iframe.src == "javascript:'%3Chtml%3E%3C/html%3E';" || // For Safari
+        iframe.src == "javascript:'<html></html>';") { // For FF, IE
+      return;
+    }
 
-		var doc = iframe.contentDocument || iframe.document;
+    var doc = iframe.contentDocument || iframe.document;
 
-		// fixing Opera 9.26,10.00
-		if(doc.readyState && doc.readyState != 'complete')
-			return;
-		// fixing Opera 9.64
-		if(doc.body && doc.body.innerHTML == "false")
-			return;
+    // fixing Opera 9.26,10.00
+    if (doc.readyState && doc.readyState != 'complete')
+      return;
+    // fixing Opera 9.64
+    if (doc.body && doc.body.innerHTML == "false")
+      return;
 
-		var response;
+    var response;
 
-		if(doc.XMLDocument) {
-			// response is a xml document Internet Explorer property
-			response = doc.XMLDocument;
-		} else if(doc.body) {
-			try {
-				response = $iframe.contents().find("body").text();
-				response = jQuery.parseJSON(response);
-			} catch(e) { // response is html document or plain text
-				response = doc.body.innerHTML;
-			}
-		} else {
-			// response is a xml document
-			response = doc;
-		}
+    if (doc.XMLDocument) {
+      // response is a xml document Internet Explorer property
+      response = doc.XMLDocument;
+    } else if (doc.body) {
+      try {
+        response = $iframe.contents().find("body").text();
+        response = jQuery.parseJSON(response);
+      } catch (e) { // response is html document or plain text
+        response = doc.body.innerHTML;
+      }
+    } else {
+      // response is a xml document
+      response = doc;
+    }
 
-		callback(response);
-	});
+    callback(response);
+  });
 }
 
 /** 统一回调处理函数 */
 function allAjaxDone(json) {
-	DWZ.ajaxDone(json);
-	if(json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
-		_closeNavTab(json);
-		_closeDialog(json);
-		_reloadNavTab(json);
-		_reloadDialog(json);
-		_reloadDiv(json);
-	}
+  DWZ.ajaxDone(json);
+  if (json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
+    _closeNavTab(json);
+    _closeDialog(json);
+    _reloadNavTab(json);
+    _reloadDialog(json);
+    _reloadDiv(json);
+  }
 }
 
 /** 统一分页查询函数 */
 function ajaxSearch(form) {
-	var $form = $(form);
-	var rel = $form.attr("rel");
-	if(rel) {
-		_reloadDiv({
-			"reloadDiv": [
-				rel
-			]
-		});
-	} else {
-		if($form.unitBox().hasClass("dialogContent")) {
-			_reloadDialog({
-				"reloadDialog": [
-					""
-				]
-			});
-		} else {
-			_reloadNavTab({
-				"reloadNavTab": [
-					""
-				]
-			});
-		}
-	}
-	return false;
+  var $form = $(form);
+  var rel = $form.attr("rel");
+  if (rel) {
+    _reloadDiv({
+      "reloadDiv": [
+        rel
+      ]
+    });
+  } else {
+    if ($form.unitBox().hasClass("dialogContent")) {
+      _reloadDialog({
+        "reloadDialog": [
+          ""
+        ]
+      });
+    } else {
+      _reloadNavTab({
+        "reloadNavTab": [
+          ""
+        ]
+      });
+    }
+  }
+  return false;
 }
 
 function _closeNavTab(json) {
-	var navTabs = _parseToResults(json.closeNavTab);
-	for(var i = 0; i < navTabs.length; i++) {
-		if(navTabs[i].id === "") {
-			navTab.closeCurrentTab();
-		} else {
-			navTab.closeTab(navTabs[i]);
-		}
-	}
+  var navTabs = _parseToResults(json.closeNavTab);
+  for (var i = 0; i < navTabs.length; i++) {
+    if (navTabs[i].id === "") {
+      navTab.closeCurrentTab();
+    } else {
+      navTab.closeTab(navTabs[i]);
+    }
+  }
 }
 
 function _reloadNavTab(json) {
-	var navTabs = _parseToResults(json.reloadNavTab);
-	for(var i = 0; i < navTabs.length; i++) {
-		var reloadOptions = {
-			navTabId: navTabs[i].id,
-			data: navTabs[i].data || {},
-			callback: navTabs[i].callback
-		};
-		navTab.reload(navTabs[i].url, reloadOptions);
-	}
+  var navTabs = _parseToResults(json.reloadNavTab);
+  for (var i = 0; i < navTabs.length; i++) {
+    navTab.reload(navTabs[i]);
+  }
 }
 
 function _closeDialog(json) {
-	var dialogs = _parseToResults(json.closeDialog);
-	for(var i = 0; i < dialogs.length; i++) {
-		if(dialogs[i].id === "") {
-			$.pdialog.closeCurrent();
-		} else {
-			$.pdialog.close(dialogs[i]);
-		}
-	}
+  var dialogs = _parseToResults(json.closeDialog);
+  for (var i = 0; i < dialogs.length; i++) {
+    if (dialogs[i].id === "") {
+      $.pdialog.closeCurrent();
+    } else {
+      $.pdialog.close(dialogs[i]);
+    }
+  }
 }
 
 function _reloadDialog(json) {
-	var dialogs = _parseToResults(json.reloadDialog);
-	for(var i = 0; i < dialogs.length; i++) {
-		var reloadOptions = {
-			dialogId: dialogs[i].id,
-			data: dialogs[i].data || {},
-			callback: dialogs[i].callback
-		};
-		$.pdialog.reload(dialogs[i].url || $.pdialog._current.data("url"), reloadOptions);
-	}
+  var dialogs = _parseToResults(json.reloadDialog);
+  for (var i = 0; i < dialogs.length; i++) {
+    var op = {
+      dialogId: dialogs[i].id,
+      data: dialogs[i].data || {},
+      callback: dialogs[i].callback
+    };
+    $.pdialog.reload(dialogs[i].url || $.pdialog._current.data("url"), op);
+  }
 }
 
 function _reloadDiv(json) {
-	var divs = _parseToResults(json.reloadDiv);
-	for(var i = 0; i < divs.length; i++) {
-		var reloadOptions = {
-			data: divs[i].data || {},
-			callback: divs[i].callback
-		};
-		var $box = _getDivInCurrent("#" + divs[i].id);
-		var $pagerForm = $box.getPagerForm();
-		if($pagerForm) {
-			$.extend(reloadOptions.data, $pagerForm.serializeToJson());
-		}
-		var url = divs[i].url || $pagerForm.attr("action");
-		$.extend(reloadOptions.data, url.getParams());
+  var divs = _parseToResults(json.reloadDiv);
+  for (var i = 0; i < divs.length; i++) {
+    var op = {
+      data: divs[i].data || {},
+      callback: divs[i].callback
+    };
+    var $box = _getDivInCurrent("#" + divs[i].id);
+    var $pagerForm = $box.getPagerForm();
+    if ($pagerForm) {
+      $.extend(op.data, $pagerForm.serializeToJson());
+    }
+    var url = divs[i].url || $pagerForm.attr("action");
+    $.extend(op.data, url.getParams());
 
-		$box.ajaxUrl({
-			type: "POST",
-			url: url,
-			data: reloadOptions.data,
-			callback: function(response) {
-				$box.find("[layoutH]").layoutH();
-				if($.isFunction(reloadOptions.callback)) {
-					reloadOptions.callback(response);
-				}
-			}
-		});
-	}
+    $box.ajaxUrl({
+      type: "POST",
+      url: url,
+      data: op.data,
+      callback: function (response) {
+        $box.find("[layoutH]").layoutH();
+        if ($.isFunction(op.callback)) {
+          op.callback(response);
+        }
+      }
+    });
+  }
 }
 
 function _getDivInCurrent(divId) {
-	// 如果当前有打开dialog，先从当前dialog中查找
-	if($.pdialog.getCurrent()) {
-		var div = $("#" + divId, $.pdialog.getCurrent());
-		if(div.length > 0) {
-			return div;
-		}
-	}
-	// 如果当前dialog中未找到，则从当前navTab中查找
-	var div = $("#" + divId, navTab.getCurrentPanel());
-	if(div.length > 0) {
-		return div;
-	}
-	throw new Error("当前页面未找到[id=" + divId + "的元素。");
+  // 如果当前有打开dialog，先从当前dialog中查找
+  var div;
+  if ($.pdialog.getCurrent()) {
+    div = $("#" + divId, $.pdialog.getCurrent());
+    if (div.length > 0) return div;
+  }
+  // 如果当前dialog中未找到，则从当前navTab中查找
+  div = $("#" + divId, navTab.getCurrentPanel());
+  if (div.length > 0) return div;
+  throw new Error("当前页面未找到[id=" + divId + "的元素。");
 }
 
 function _parseToResults(arrays) {
-	var results = [];
-	if(arrays) {
-		for(var i = 0; i < arrays.length; i++) {
-			var attrs = arrays[i].split(",");
-			var result = {
-				id: attrs[0],
-				url: attrs[1] || "",
-				data: attrs[2] ? attrs[2].toJson() : "",
-				callback: attrs[3] || ""
-			}
-			results.push(result);
-		}
-	}
-	return results;
+  var results = [];
+  if (arrays) {
+    for (var i = 0; i < arrays.length; i++) {
+      var attrs = arrays[i].split(",");
+      var result = {
+        id: attrs[0],
+        url: attrs[1] || "",
+        data: attrs[2] ? attrs[2].toJson() : "",
+        callback: attrs[3] || ""
+      };
+      results.push(result);
+    }
+  }
+  return results;
 }
 
 function ajaxTodo(url, callback) {
-	var $callback = callback || allAjaxDone;
-	if(!$.isFunction($callback))
-		$callback = eval('(' + callback + ')');
-	$.ajax({
-		type: 'POST',
-		url: url,
-		dataType: "json",
-		cache: false,
-		success: $callback,
-		error: DWZ.ajaxError
-	});
+  var $callback = callback || allAjaxDone;
+  if (!$.isFunction($callback))
+    $callback = eval('(' + callback + ')');
+  $.ajax({
+    type: 'POST',
+    url: url,
+    dataType: "json",
+    cache: false,
+    success: $callback,
+    error: DWZ.ajaxError
+  });
 }
 
-/**
- * http://www.uploadify.com/documentation/uploadify/onqueuecomplete/
- */
-function uploadifyQueueComplete(queueData) {
-
-	var msg = "The total number of files uploaded: " + queueData.uploadsSuccessful + "<br/>" + "The total number of errors while uploading: " + queueData.uploadsErrored + "<br/>" + "The total number of bytes uploaded: " + queueData.queueBytesUploaded + "<br/>"
-			+ "The average speed of all uploaded files: " + queueData.averageSpeed;
-
-	if(queueData.uploadsErrored) {
-		alertMsg.error(msg);
-	} else {
-		alertMsg.correct(msg);
-	}
-}
-/**
- * http://www.uploadify.com/documentation/uploadify/onuploadsuccess/
- */
-function uploadifySuccess(file, data, response) {
-	alert(data)
-}
-
-/**
- * http://www.uploadify.com/documentation/uploadify/onuploaderror/
- */
 function uploadifyError(file, errorCode, errorMsg) {
-	alertMsg.error(errorCode + ": " + errorMsg);
-}
-
-/**
- * http://www.uploadify.com/documentation/
- * 
- * @param {Object}
- *            event
- * @param {Object}
- *            queueID
- * @param {Object}
- *            fileObj
- * @param {Object}
- *            errorObj
- */
-function uploadifyError(event, queueId, fileObj, errorObj) {
-	alert("event:" + event + "\nqueueId:" + queueId + "\nfileObj.name:" + fileObj.name + "\nerrorObj.type:" + errorObj.type + "\nerrorObj.info:" + errorObj.info);
+  alertMsg.error(errorCode + ": " + errorMsg);
 }
 
 $.fn.extend({
-	ajaxTodo: function() {
-		return this.each(function() {
-			var $this = $(this);
-			$this.click(function(event) {
-				if($this.hasClass('disabled')) {
-					return false;
-				}
+  ajaxTodo: function () {
+    return this.each(function () {
+      var $this = $(this);
+      $this.click(function (event) {
+        if ($this.hasClass('disabled')) {
+          return false;
+        }
 
-				var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
-				DWZ.debug(url);
-				if(!url.isFinishedTm()) {
-					alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-					return false;
-				}
-				var title = $this.attr("title");
-				if(title) {
-					alertMsg.confirm(title, {
-						okCall: function() {
-							ajaxTodo(url, $this.attr("callback"));
-						}
-					});
-				} else {
-					ajaxTodo(url, $this.attr("callback"));
-				}
-				event.preventDefault();
-			});
-		});
-	},
-	selectedTodo: function() {
-		function _getIds($box, selectedIds) {
-			var ids = "";
-			$box.find("input:checked").filter("[name='" + selectedIds + "']").each(function(i) {
-				var val = $(this).val();
-				ids += i == 0 ? val : "," + val;
-			});
-			return ids;
-		}
-		return this.each(function() {
-			var $this = $(this);
-			var selectedIds = $this.attr("rel") || "ids";
-			var postType = $this.attr("postType") || "map";
+        var url = decodeURI($this.attr("href")).replaceTmById($(event.target).unitBox());
+        DWZ.debug(url);
+        if (!url.isFinishedTm()) {
+          alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+          return false;
+        }
+        var title = $this.attr("title");
+        if (title) {
+          alertMsg.confirm(title, {
+            okCall: function () {
+              ajaxTodo(url, $this.attr("callback"));
+            }
+          });
+        } else {
+          ajaxTodo(url, $this.attr("callback"));
+        }
+        event.preventDefault();
+      });
+    });
+  },
+  selectedTodo: function () {
+    function _getIds($box, selectedIds) {
+      var ids = "";
+      $box.find("input:checked").filter("[name='" + selectedIds + "']").each(function (i) {
+        var val = $(this).val();
+        ids += i == 0 ? val : "," + val;
+      });
+      return ids;
+    }
 
-			$this.click(function() {
-				var ids = _getIds($this.unitBox(), selectedIds);
-				if(!ids) {
-					alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
-					return false;
-				}
+    return this.each(function () {
+      var $this = $(this);
+      var selectedIds = $this.attr("rel") || "ids";
+      var postType = $this.attr("postType") || "map";
 
-				var _callback = $this.attr("callback") || allAjaxDone;
-				if(!$.isFunction(_callback))
-					_callback = eval('(' + _callback + ')');
+      $this.click(function () {
+        var ids = _getIds($this.unitBox(), selectedIds);
+        if (!ids) {
+          alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
+          return false;
+        }
 
-				function _doPost() {
-					$.ajax({
-						type: 'POST',
-						url: $this.attr('href'),
-						dataType: 'json',
-						cache: false,
-						data: function() {
-							if(postType == 'map') {
-								return $.map(ids.split(','), function(val, i) {
-									return {
-										name: selectedIds,
-										value: val
-									};
-								})
-							} else {
-								var _data = {};
-								_data[selectedIds] = ids;
-								return _data;
-							}
-						}(),
-						success: _callback,
-						error: DWZ.ajaxError
-					});
-				}
-				var title = $this.attr("title");
-				if(title) {
-					alertMsg.confirm(title, {
-						okCall: _doPost
-					});
-				} else {
-					_doPost();
-				}
-				return false;
-			});
-		});
-	},
-	dwzExport: function() {
-		function _doExport($this) {
-			var $pagerform = $this.getPagerForm();
-			var url = $this.attr("href");
-			window.location = url + (url.indexOf('?') == -1 ? "?" : "&") + $pagerform.serialize();
-		}
+        var _callback = $this.attr("callback") || allAjaxDone;
+        if (!$.isFunction(_callback))
+          _callback = eval('(' + _callback + ')');
 
-		return this.each(function() {
-			var $this = $(this);
-			$this.click(function(event) {
-				var title = $this.attr("title");
-				if(title) {
-					alertMsg.confirm(title, {
-						okCall: function() {
-							_doExport($this);
-						}
-					});
-				} else {
-					_doExport($this);
-				}
-				event.preventDefault();
-			});
-		});
-	}
+        function _doPost() {
+          $.ajax({
+            type: 'POST',
+            url: $this.attr('href'),
+            dataType: 'json',
+            cache: false,
+            data: function () {
+              if (postType == 'map') {
+                return $.map(ids.split(','), function (val) {
+                  return {
+                    name: selectedIds,
+                    value: val
+                  };
+                })
+              } else {
+                var _data = {};
+                _data[selectedIds] = ids;
+                return _data;
+              }
+            }(),
+            success: _callback,
+            error: DWZ.ajaxError
+          });
+        }
+
+        var title = $this.attr("title");
+        if (title) {
+          alertMsg.confirm(title, {
+            okCall: _doPost
+          });
+        } else {
+          _doPost();
+        }
+        return false;
+      });
+    });
+  },
+  dwzExport: function () {
+    function _doExport($this) {
+      var $pagerform = $this.getPagerForm();
+      var url = $this.attr("href");
+      window.location = url + (url.indexOf('?') == -1 ? "?" : "&") + $pagerform.serialize();
+    }
+
+    return this.each(function () {
+      var $this = $(this);
+      $this.click(function (event) {
+        var title = $this.attr("title");
+        if (title) {
+          alertMsg.confirm(title, {
+            okCall: function () {
+              _doExport($this);
+            }
+          });
+        } else {
+          _doExport($this);
+        }
+        event.preventDefault();
+      });
+    });
+  }
 });
 /**
  * 
