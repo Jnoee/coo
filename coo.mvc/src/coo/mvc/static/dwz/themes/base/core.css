@@ -2192,14 +2192,15 @@ body {
 .searchBar .subBar li {
 	float: left;
 	margin-left: 5px;
-	line-height: 23px;
+	line-height: 25px;
 }
 
-.searchBar .subBar li input {
-	margin-top: 2px;
+.searchBar .subBar li label {
+	width: auto;
 }
 
-.searchBar .subBar li .combox {
+.searchBar .subBar li input, .searchBar .subBar li .combox{
+	float: left;
 	margin-top: 2px;
 }
 

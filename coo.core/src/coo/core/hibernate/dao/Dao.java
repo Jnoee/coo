@@ -918,7 +918,8 @@ public class Dao<T> {
 		for (String fieldName : indexedEmbedded.includePaths()) {
 			Field field = BeanUtils.findField(embeddedEntityClass, fieldName);
 			Class<?> fieldType = BeanUtils.getFieldType(field);
-			if (fieldType == String.class) {
+			if (fieldType == String.class && !fieldName.equals("id")
+					&& !fieldName.endsWith(".id")) {
 				Analyze analyze = field.getAnnotation(
 						org.hibernate.search.annotations.Field.class).analyze();
 				embeddedIndexedFields.put(prefix + fieldName, analyze);
