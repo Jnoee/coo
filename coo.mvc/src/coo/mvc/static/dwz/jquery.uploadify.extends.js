@@ -5,10 +5,10 @@ var uploadify_cancel = function(inputId, fileId) {
 	if(stats.successful_uploads > 0) {
 		stats.successful_uploads -= 1;
 	}
-    swfuploadify.setStats(stats);
-    delete swfuploadify.queueData.files[fileId];
-    
-    swfuploadify.cancelUpload(fileId, false);
+	swfuploadify.setStats(stats);
+	delete swfuploadify.queueData.files[fileId];
+
+	swfuploadify.cancelUpload(fileId, false);
 	var queueDiv = $("#" + swfuploadify.settings.queueID);
 	queueDiv.children("#" + fileId).remove();
 }
@@ -33,14 +33,16 @@ var uploadify_onSelectError = function(file, errorCode, errorMsg) {
 
 var img_onInit = function(instance) {
 	var settings = instance.settings;
-	settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item" style="width:' + settings.imgWidth + 'px">\
-		<div class="cancel">\
-			<span>${fileName} (${fileSize})</span><span class="data"></span>\
-			<a href="javascript:uploadify_cancel(\'${instanceID}\', \'${fileID}\')">X</a>\
-		</div>\
+	settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item" style="width:'
+			+ settings.imgWidth
+			+ 'px">\
 		<div class="uploadify-queue-image"></div>\
 		<div class="uploadify-progress">\
 			<div class="uploadify-progress-bar"><!--Progress Bar--></div>\
+		</div>\
+		<div class="uploadify-queue-bar">\
+			<div><span>${fileName} (${fileSize})</span><span class="data"></span></div>\
+			<div><a href="javascript:uploadify_cancel(\'${instanceID}\', \'${fileID}\')" title="删除"><i class="fa fa-trash"></i></a></div>\
 		</div>\
 	</div>';
 }
@@ -49,7 +51,7 @@ var img_onUploadStart = function(file) {
 	var settings = this.settings;
 	var queueDiv = $("#" + settings.queueID);
 	if(settings.multi) {
-     	if(settings.uploadLimit != 0 && queueDiv.children().size() > settings.uploadLimit) {
+		if(settings.uploadLimit != 0 && queueDiv.children().size() > settings.uploadLimit) {
 			this.cancelUpload(file.id, false);
 			queueDiv.children("[id=" + file.id + "]").remove();
 			alert("上传文件数量不能超过[" + settings.uploadLimit + "]个。");
@@ -61,15 +63,15 @@ var img_onUploadStart = function(file) {
 
 var img_onUploadSuccess = function(file, data, response) {
 	var settings = this.settings;
-	
+	var queueDiv = $("#" + settings.queueID);
+
 	var fileDiv = $("#" + file.id);
 	var attFile = DWZ.jsonEval(data);
 	fileDiv.find(".uploadify-queue-image").append("<img src=" + attFile.path + " width=" + settings.imgWidth + " height=" + settings.imgHeight + " />");
 	fileDiv.find(".uploadify-queue-image").append("<input type=hidden name=" + settings.inputName + " value=" + attFile.id + " />");
-	fileDiv.find(".cancel > span").remove();
 	fileDiv.find(".uploadify-progress").remove();
+	fileDiv.find(".uploadify-queue-bar > div:first").remove();
 	
-	var queueDiv = $("#" + settings.queueID);
 	if(settings.multi) {
 		queueDiv.find("input:hidden").each(function(index) {
 			this.name = settings.inputName + "[" + index + "]";

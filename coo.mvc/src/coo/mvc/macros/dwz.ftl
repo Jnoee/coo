@@ -242,28 +242,28 @@
 	    	<#if multi>
 		    	<#list s.status.actualValue as image>
 			    	<div id="${fileId}_${image_index}" class="uploadify-queue-item" style="width:${width}px;">
-			            <#if !readonly>
-			                <div class="cancel">
-			                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}_${image_index}');">X</a>
-			                </div>
-			            </#if>
 			            <div class="uploadify-queue-image">
 			            	<img src="${image.path}" width="${width}" height="${height}" />
 			            	<#if !readonly><input type="hidden" name="${s.name}[${image_index}]" value="${image.id}"></#if>
 			            </div>
+			            <#if !readonly>
+			            	<div class="uploadify-queue-bar">
+								<div><a href="javascript:uploadify_cancel('${inputId}','${fileId}_${image_index}');" title="删除"><i class="fa fa-trash"></i></a></div>
+							</div>
+			            </#if>
 			        </div>
 		        </#list>
 		    <#else>
 		        <div id="${fileId}" class="uploadify-queue-item" style="width:${width}px;">
-		            <#if !readonly>
-		                <div class="cancel">
-		                	<a href="javascript:uploadify_cancel('${inputId}','${fileId}');">X</a>
-		                </div>
-		            </#if>
 		            <div class="uploadify-queue-image">
 		            	<img src="${s.status.actualValue.path}" width="${width}" height="${height}" />
 		            	<#if !readonly><@s.hidden path /></#if>
 		            </div>
+		            <#if !readonly>
+		            	<div class="uploadify-queue-bar">
+							<div><a href="javascript:uploadify_cancel('${inputId}','${fileId}');" title="删除"><i class="fa fa-trash"></i></a></div>
+						</div>
+		            </#if>
 		        </div>
 	        </#if>
 	    </#if>

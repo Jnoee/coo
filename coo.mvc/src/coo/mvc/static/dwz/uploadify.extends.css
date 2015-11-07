@@ -1,10 +1,19 @@
 .uploadify-queue-item {
 	float: left;
-	border: 2px dashed #0087F7;
+	border: 1px solid #336699;
 	border-radius: 5px;
 	background: white;
-	padding: 3px;
-	font: 11px "Microsoft YaHei", sans-serif;
+	padding: 2px;
+	font: 12px "Microsoft YaHei", sans-serif;
+}
+
+.uploadify-queue-bar div {
+	line-height: 20px;
+	text-align: center;
+}
+
+.uploadify-queue-bar a {
+	font-size: 16px;
 }
 
 .uploadify-button {
