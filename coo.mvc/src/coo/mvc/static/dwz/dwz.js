@@ -1304,6 +1304,15 @@ var DWZ = {
 			},
 			postcode: {
 				postcode: true
+			},
+			time: {
+				time: true
+			},
+			price: {
+				price: true
+			},
+			params: {
+				params: true
 			}
 		});
 		$.validator.setDefaults({
