@@ -1143,11 +1143,7 @@ var DWZ = {
 			return json;
 		}
 	});
-})(jQuery);/**
- * @requires jquery.validate.js
- * @author ZhangHuihua@msn.com
- */
-(function($) {
+})(jQuery);(function($) {
 	if($.validator) {
 		var match = function(value, pattern, attrs) {
 			if(value) {
@@ -1160,7 +1156,7 @@ var DWZ = {
 				}
 			}
 			return true;
-		}
+		};
 
 		var getTarget = function(element, param) {
 			var form = $(element).closest("form");
@@ -5671,7 +5667,6 @@ $.fn.extend({
           if ($btnDel.is("[href^=javascript:]")) {
             $btnDel.parents("tr:first").remove();
             initSuffix($tbody);
-            return false;
           }
 
           function delDbData() {
@@ -5695,8 +5690,6 @@ $.fn.extend({
           } else {
             delDbData();
           }
-
-          return false;
         });
 
         var addButTxt = $table.attr('addButton') || "新增条目";
@@ -5717,7 +5710,6 @@ $.fn.extend({
             $tr.appendTo($tbody).initUI().find("a.red").click(function () {
               $(this).parents("tr:first").remove();
               initSuffix($tbody);
-              return false;
             });
           }
           initSuffix($tbody);
