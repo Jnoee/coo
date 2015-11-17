@@ -23,6 +23,10 @@ import coo.base.exception.UncheckedException;
  * 加解密工具类。
  */
 public class CryptoUtils {
+	public final static String NUMBER = "0123456789";
+	public final static String CHAR = "abcdefghijklmnopqrstuvwxyz";
+	public final static String ALL = "0123456789abcdefghijklmnopqrstuvwxyz";
+
 	/**
 	 * 生成随机字符串。
 	 * 
