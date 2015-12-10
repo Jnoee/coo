@@ -5004,7 +5004,7 @@ function _reloadDialog(json) {
       data: dialogs[i].data || {},
       callback: dialogs[i].callback
     };
-    $.pdialog.reload(dialogs[i].url || $.pdialog._current.data("url"), op);
+    $.pdialog.reload(dialogs[i].url || $("body").data(dialogs[i].id).data("url"), op);
   }
 }
 
