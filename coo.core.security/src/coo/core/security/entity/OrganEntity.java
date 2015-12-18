@@ -164,8 +164,8 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 	public List<O> getParents() {
 		List<O> parents = new ArrayList<>();
 		if (getParent() != null) {
-			parents.add(getParent());
 			parents.addAll(getParent().getParents());
+			parents.add(getParent());
 		}
 		return parents;
 	}
