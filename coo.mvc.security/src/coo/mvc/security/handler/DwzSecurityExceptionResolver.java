@@ -42,9 +42,8 @@ public class DwzSecurityExceptionResolver extends DwzExceptionResolver {
 	}
 
 	@Override
-	protected ModelAndView processCustomExceptions(ModelAndView mav,
-			Exception exception) {
-		mav = super.processCustomExceptions(mav, exception);
+	protected ModelAndView processCustomExceptions(Exception exception) {
+		ModelAndView mav = super.processCustomExceptions(exception);
 		if (exception instanceof UnauthenticatedException) {
 			mav = new DwzResultBuild().timeout().build();
 		}
