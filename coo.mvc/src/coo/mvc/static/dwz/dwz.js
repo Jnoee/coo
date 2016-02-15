@@ -4932,9 +4932,11 @@ function allAjaxDone(json) {
   DWZ.ajaxDone(json);
   if (json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
     _reloadDiv(json);
-    _reloadDialog(json);
-    _reloadNavTab(json);
+    
     _closeDialog(json);
+    _reloadDialog(json);
+    
+    _reloadNavTab(json);
     _closeNavTab(json);
   }
 }
@@ -5004,7 +5006,7 @@ function _reloadDialog(json) {
       data: dialogs[i].data || {},
       callback: dialogs[i].callback
     };
-    $.pdialog.reload(dialogs[i].url || $("body").data(dialogs[i].id).data("url"), op);
+    $.pdialog.reload(dialogs[i].url || $.pdialog._current.data("url"), op);
   }
 }
 
