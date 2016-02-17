@@ -72,11 +72,7 @@ var img_onUploadSuccess = function(file, data, response) {
 	fileDiv.find(".uploadify-progress").remove();
 	fileDiv.find(".uploadify-queue-bar > div:first").remove();
 	
-	if(settings.multi) {
-		queueDiv.find("input:hidden").each(function(index) {
-			this.name = settings.inputName + "[" + index + "]";
-		});
-	} else {
+	if(!settings.multi) {
 		var stats = this.getStats();
 		stats.successful_uploads = 0;
 		this.setStats(stats);

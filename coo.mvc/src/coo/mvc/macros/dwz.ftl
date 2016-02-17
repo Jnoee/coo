@@ -244,7 +244,7 @@
 			    	<div id="${fileId}_${image_index}" class="uploadify-queue-item" style="width:${width}px;">
 			            <div class="uploadify-queue-image">
 			            	<img src="${image.path}" width="${width}" height="${height}" />
-			            	<#if !readonly><input type="hidden" name="${s.name}[${image_index}]" value="${image.id}"></#if>
+			            	<#if !readonly><input type="hidden" name="${s.name}" value="${image.id}"></#if>
 			            </div>
 			            <#if !readonly>
 			            	<div class="uploadify-queue-bar">
