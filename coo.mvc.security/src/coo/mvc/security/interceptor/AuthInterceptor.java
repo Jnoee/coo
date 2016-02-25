@@ -29,10 +29,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			if (authorizeAnnotation != null) {
 				Subject subject = SecurityUtils.getSubject();
 				if (!subject.isAuthenticated()) {
-					throw new UnauthenticatedException();
+					throw new UnauthenticatedException("未登录或回话已过期。");
 				}
 				if (!isAccessable(subject, authorizeAnnotation.value())) {
-					throw new UnauthorizedException();
+					throw new UnauthorizedException("没有相应的操作权限。");
 				}
 			}
 		}

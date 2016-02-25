@@ -134,23 +134,49 @@ public class FullTextCriteria {
 	 * 
 	 * @param fieldName
 	 *            字段名
+	 * @param fieldValue
+	 *            字段值
+	 */
+	public void addFilterField(String fieldName, Object fieldValue) {
+		TermQuery query = new TermQuery(new Term(fieldName,
+				fieldValue.toString()));
+		addLuceneQuery(query, Occur.MUST);
+	}
+
+	/**
+	 * 增加简单的字段过滤条件（多个字段值）。
+	 * 
+	 * @param fieldName
+	 *            字段名
 	 * @param fieldValues
 	 *            字段值
 	 */
-	public void addFilterField(String fieldName, Object... fieldValues) {
-		if (fieldValues.length > 1) {
-			BooleanQuery.Builder builder = new BooleanQuery.Builder();
-			for (Object fieldValue : fieldValues) {
-				TermQuery query = new TermQuery(new Term(fieldName,
-						fieldValue.toString()));
-				builder.add(query, Occur.SHOULD);
-			}
-			addLuceneQuery(builder.build(), Occur.MUST);
-		} else {
+	public void addFilterField(String fieldName, List<?> fieldValues) {
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+		for (Object fieldValue : fieldValues) {
 			TermQuery query = new TermQuery(new Term(fieldName,
-					fieldValues[0].toString()));
-			addLuceneQuery(query, Occur.MUST);
+					fieldValue.toString()));
+			builder.add(query, Occur.SHOULD);
 		}
+		addLuceneQuery(builder.build(), Occur.MUST);
+	}
+
+	/**
+	 * 增加简单的字段过滤条件（多个字段值）。
+	 * 
+	 * @param fieldName
+	 *            字段名
+	 * @param fieldValues
+	 *            字段值
+	 */
+	public void addFilterField(String fieldName, Object[] fieldValues) {
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+		for (Object fieldValue : fieldValues) {
+			TermQuery query = new TermQuery(new Term(fieldName,
+					fieldValue.toString()));
+			builder.add(query, Occur.SHOULD);
+		}
+		addLuceneQuery(builder.build(), Occur.MUST);
 	}
 
 	/**
