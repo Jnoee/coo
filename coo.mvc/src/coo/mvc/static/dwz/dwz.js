@@ -1318,7 +1318,11 @@ var DWZ = {
 				if(element.hasClass("hideError")) {
 					element.attr("title", error.text());
 				} else {
-					element.parent().append(error);
+					if(element.is("input:checkbox") && element.parent().is("label.unit")) {
+						element.parent().parent().append(error);
+					} else {
+						element.parent().append(error);
+					}
 					error.attr("title", error.text());
 				}
 				error.empty();
