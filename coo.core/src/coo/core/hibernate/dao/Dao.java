@@ -40,6 +40,7 @@ import coo.base.model.Page;
 import coo.base.util.BeanUtils;
 import coo.base.util.StringUtils;
 import coo.core.hibernate.search.FullTextCriteria;
+import coo.core.model.SearchModel;
 
 /**
  * 泛型DAO。
@@ -721,6 +722,21 @@ public class Dao<T> {
 		FullTextCriteria criteria = createFullTextCriteria();
 		criteria.addFilterField(name, value);
 		return searchUnique(criteria);
+	}
+
+	/**
+	 * 根据全文搜索查询条件进行分页全文搜索。
+	 * 
+	 * @param criteria
+	 *            全文搜索查询条件
+	 * @param searchModel
+	 *            搜索模型
+	 * @return 返回搜索得到的分页对象。
+	 */
+	public Page<T> searchPage(FullTextCriteria criteria, SearchModel searchModel) {
+		criteria.setKeyword(searchModel.getKeyword());
+		return searchPage(criteria, searchModel.getPageNo(),
+				searchModel.getPageSize());
 	}
 
 	/**
