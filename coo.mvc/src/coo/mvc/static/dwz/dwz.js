@@ -770,7 +770,7 @@ var DWZ = {
 	}, // page fragment
 	_msg: {
 		statusCode_503: '服务器当前负载过大或者正在维护。',
-		validateFormError: '提交数据不完整，{0}个字段有错误，请改正后再提交。',
+		validateFormError: '{0}项内容填写有误，请检查更正。',
 		sessionTimout: '会话超时，请重新登录。',
 		alertSelectMsg: '请选择要操作的记录。',
 		forwardConfirmMsg: '继续下一步。',
