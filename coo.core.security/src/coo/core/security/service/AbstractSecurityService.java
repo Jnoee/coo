@@ -308,7 +308,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 	@Transactional(readOnly = true)
 	public Page<U> searchUser(SearchModel searchModel) {
 		FullTextCriteria criteria = userDao.createFullTextCriteria();
-		criteria.setKeyword(searchModel.getKeyword());
 		criteria.addSortDesc("createDate", SortField.Type.STRING);
 
 		// 将系统管理员从搜索的用户结果中排除
@@ -318,8 +317,7 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
 		builder.add(new WildcardQuery(new Term("id", "*")), Occur.MUST);
 		criteria.addLuceneQuery(builder.build(), Occur.MUST);
 
-		return userDao.searchPage(criteria, searchModel.getPageNo(),
-				searchModel.getPageSize());
+		return userDao.searchPage(criteria, searchModel);
 	}
 
 	/**

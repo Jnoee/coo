@@ -89,8 +89,7 @@ public abstract class AbstractBnLogger<T extends BnLogEntity> {
 	public Page<T> searchLog(SearchModel searchModel) {
 		FullTextCriteria criteria = bnLogDao.createFullTextCriteria();
 		criteria.addSortDesc("createDate", SortField.Type.STRING);
-		criteria.setKeyword(searchModel.getKeyword());
-		return bnLogDao.searchPage(criteria, searchModel.getPageNo(), searchModel.getPageSize());
+		return bnLogDao.searchPage(criteria, searchModel);
 	}
 
 	/**
@@ -126,7 +125,8 @@ public abstract class AbstractBnLogger<T extends BnLogEntity> {
 	 * @return 返回当前登录用户的用户名。
 	 */
 	private String getCurrentUsername() {
-		if (ThreadContext.getSecurityManager() == null || !SecurityUtils.getSubject().isAuthenticated()) {
+		if (ThreadContext.getSecurityManager() == null
+				|| !SecurityUtils.getSubject().isAuthenticated()) {
 			return securityService.getAdminUser().getUsername();
 		} else {
 			return securityService.getCurrentUser().getUsername();
