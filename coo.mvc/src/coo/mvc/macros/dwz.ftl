@@ -282,7 +282,7 @@
  * buttonText：检索按钮的文本
  -->
 <#macro pageForm action onsubmit rel="" alt="" searchModel=searchModel showKeyword=true buttonText="检索">
-    <@s.form action=action class="pagerForm" onsubmit=onsubmit>
+    <@s.form action=action class="pagerForm" onsubmit=onsubmit rel=rel>
 	    <input type="hidden" name="pageNo" value="${searchModel.pageNo}"/>
 	    <input type="hidden" name="pageSize" value="${searchModel.pageSize}"/>
 	    <input type="hidden" name="orderBy" value="${searchModel.orderBy}"/>
