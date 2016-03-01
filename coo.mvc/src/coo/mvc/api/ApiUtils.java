@@ -85,7 +85,8 @@ public class ApiUtils {
 		for (ObjectError error : errors) {
 			errorMsgs.add(error.getDefaultMessage());
 		}
-		return new ApiReply("998", StringUtils.join(errorMsgs, "|"));
+		return new ApiReply(ApiCode.PARAMS_ERROR, StringUtils.join(errorMsgs,
+				"|"));
 	}
 
 	/**
