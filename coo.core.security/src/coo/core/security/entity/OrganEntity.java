@@ -136,7 +136,9 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
 		List<O> organTree = new ArrayList<O>();
 		organTree.add((O) this);
 		for (O child : getChilds()) {
-			organTree.addAll(child.getChildTree());
+			if (child.getEnabled() == EnabledStatus.ENABLED) {
+				organTree.addAll(child.getChildTree());
+			}
 		}
 		return organTree;
 	}
