@@ -110,10 +110,10 @@
 <#macro formBar showSubmitBtn=true submitBtnText="保存" showCancelBtn=true cancelBtnText="取消">
 	<div class="formBar">
 	    <ul>
-	        <#nested>
 			<#if showSubmitBtn>
         		<@button text="${submitBtnText}" type="submit" />
     		</#if>
+	        <#nested>
 			<#if showCancelBtn>
         		<@button text="${cancelBtnText}" class="close" />
     		</#if>
@@ -167,10 +167,33 @@
         </#if>
     </#if>
     <@compress single_line=true>
-    <a href="<@s.url href />" target="${target}" <#if rel> rel="${rel}"</#if> ${s.getAttributes(attributes)}>
-    	<#nested>
-    </a>
+	    <a href="<@s.url href />" target="${target}" <#if rel> rel="${rel}"</#if> ${s.getAttributes(attributes)}>
+	    	<#nested>
+	    </a>
     </@compress>
+</#macro>
+
+<#--
+ * 单选组。
+ *
+ * path：单选组绑定的属性路径
+ * items：单选组选项集合对象
+ * itemValue：单选组值的属性名
+ * itemLabel：单选组文本的属性名
+ -->
+<#macro radios path items itemValue itemLabel>
+	<@s.radios path=path items=items itemValue=itemValue itemLabel=itemLabel prefix="<label class='unit'>" suffix="</label>" />
+</#macro>
+
+<#--
+ * 单选按钮。
+ *
+ * path：单选组绑定的属性路径
+ * trueText：绑定的属性为true时显示的文本
+ * falseText：绑定的属性为false时显示的文本
+ -->
+<#macro radio path trueText="是" falseText="否">
+	<@s.radio path=path prefix="<label class='unit'>" suffix="</label>" trueText=trueText falseText=falseText />
 </#macro>
 
 <#--
@@ -187,13 +210,27 @@
 <#macro checkboxs path items itemValue itemLabel box required=true showCheckAllBtn=true>
     <@s.bind path />
     <#if items?size gt 0 && showCheckAllBtn>
-    <label class="unit"><input type="checkbox" class="checkboxCtrl" group="${s.name}"<#if box??> box="${box}"</#if> />全选</label><br style="clear:both" />
+    	<label class="unit"><input type="checkbox" class="checkboxCtrl" group="${s.name}"<#if box??> box="${box}"</#if> />全选</label><br style="clear:both" />
     </#if>
     <#if required>
         <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='unit'>" suffix="</label>" id=path class="required" />
     <#else>
         <@s.checkboxs path=path items=items itemLabel=itemLabel itemValue=itemValue prefix="<label class='unit'>" suffix="</label>" id=path />
     </#if>
+</#macro>
+
+<#--
+ * 价格组件。
+ *
+ * path：文本框绑定的属性路径
+ * attributes：文本框的其它属性
+ -->
+<#macro price path required=true attributes...>
+    <@s.bind path />
+    <@s.replaceAttributes attributes />
+    <@compress>
+    	<input type="text" id="${s.id}" name="${s.name}" value="${s.status.actualValue?string('0.00')}" class="price <#if required>required</#if>" ${s.getAttributes(attributes)} />
+    </@compress>
 </#macro>
 
 <#--

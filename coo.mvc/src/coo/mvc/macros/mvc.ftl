@@ -208,7 +208,8 @@
  * items：单选组选项集合对象
  * itemValue：单选组值的属性名
  * itemLabel：单选组文本的属性名
- * separator：单选组项之间的分割符
+ * prefix：单选项前置内容
+ * suffix：单选项后置内容
  * attributes：单选组的其它属性
  -->
 <#macro radios path items itemValue itemLabel prefix suffix attributes...>
@@ -231,6 +232,8 @@
  * 单选按钮。
  *
  * path：单选组绑定的属性路径
+ * prefix：单选项前置内容
+ * suffix：单选项后置内容
  * trueText：绑定的属性为true时显示的文本
  * falseText：绑定的属性为false时显示的文本
  * attributes：单选按钮的其它属性
@@ -254,7 +257,8 @@
  * items：多选组选项集合对象
  * itemValue：多选组值的属性名
  * itemLabel：多选组文本的属性名
- * separator：多选组项之间的分割符
+ * prefix：多选项前置内容
+ * suffix：多选项后置内容
  * attributes：多选组的其它属性
  -->
 <#macro checkboxs path items itemValue itemLabel prefix suffix attributes...>
