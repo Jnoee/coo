@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import org.apache.lucene.search.SortField;
 import org.hibernate.Cache;
 import org.hibernate.Criteria;
+import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
@@ -117,7 +118,20 @@ public class Dao<T> {
 	 * @return 返回指定的ID加载业务实体，如果对象不存在抛出异常。
 	 */
 	public T load(Serializable id) {
-		return getSession().load(clazz, id);
+		return load(id, LockMode.NONE);
+	}
+
+	/**
+	 * 根据指定的ID加载业务实体。
+	 * 
+	 * @param id
+	 *            实体ID
+	 * @param lockMode
+	 *            锁定模式
+	 * @return 返回指定的ID加载业务实体，如果对象不存在抛出异常。
+	 */
+	public T load(Serializable id, LockMode lockMode) {
+		return getSession().load(clazz, id, lockMode);
 	}
 
 	/**
@@ -127,9 +141,22 @@ public class Dao<T> {
 	 *            实体ID
 	 * @return 返回指定ID的业务实体，如果没有找到则返回null。
 	 */
-	@SuppressWarnings("unchecked")
 	public T get(Serializable id) {
-		T entity = getSession().get(clazz, id);
+		return get(id, LockMode.NONE);
+	}
+
+	/**
+	 * 根据指定的ID获取业务实体。
+	 * 
+	 * @param id
+	 *            实体ID
+	 * @param lockMode
+	 *            锁定模式
+	 * @return 返回指定ID的业务实体，如果没有找到则返回null。
+	 */
+	@SuppressWarnings("unchecked")
+	public T get(Serializable id, LockMode lockMode) {
+		T entity = getSession().get(clazz, id, lockMode);
 		// 如果获取的是一个代理对象，则从代理对象中获取实际的实体对象返回。
 		if (entity instanceof HibernateProxy) {
 			entity = (T) ((HibernateProxy) entity)
