@@ -45,6 +45,20 @@ public class FileUtils {
 	}
 
 	/**
+	 * 转换文件路径。（${user.home}替换成系统目录，斜杠替换成反斜杠。）
+	 * 
+	 * @param filePath
+	 *            文件路径
+	 * @return 返回转换后的文件路径。
+	 */
+	public static String transformFilePath(String filePath) {
+		String path = filePath.replaceAll("$\\{user.home\\}",
+				System.getProperty("user.home"));
+		path = path.replaceAll("\\\\", "/");
+		return path;
+	}
+
+	/**
 	 * 从带有类型后缀的文件名中获取不带类型后缀的文件名。
 	 * 
 	 * @param fileName
