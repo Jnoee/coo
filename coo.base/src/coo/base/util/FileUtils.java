@@ -121,7 +121,7 @@ public class FileUtils {
 		try {
 			File fileDir = new File(getFullFileDir(filePath));
 			if (!fileDir.exists()) {
-				fileDir.mkdir();
+				fileDir.mkdirs();
 			}
 
 			File file = new File(filePath);
