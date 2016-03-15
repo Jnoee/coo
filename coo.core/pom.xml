@@ -16,7 +16,7 @@
 		<freemarker.version>2.3.22</freemarker.version>
 		<jackson.version>2.5.3</jackson.version>
 		<xstream.version>1.4.8</xstream.version>
-		<druid.version>1.0.14</druid.version>
+		<druid.version>1.0.18</druid.version>
 		<h2.version>1.4.187</h2.version>
 	</properties>
 	<dependencies>
