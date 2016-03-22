@@ -10,7 +10,6 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.UUID;
 
-import coo.base.constants.Chars;
 import coo.base.constants.Measure;
 import coo.base.exception.UncheckedException;
 
@@ -88,17 +87,11 @@ public class FileUtils {
 	 * @return 返回从文件完整路径中截取完整的文件名。
 	 */
 	public static String getFullFileName(String filePath) {
-		int lastSlashIndex = filePath.lastIndexOf(Chars.SLASH);
-		int lastBackSlashIndex = filePath.lastIndexOf(Chars.BACKSLASH);
-		// 如果没找到斜杠和反斜杠则返回原文件路径
-		// 如果斜杠位置在反斜杠位置之后则从斜杠位置截取文件名
-		// 否则从反斜杠位置截取文件名
-		if (lastSlashIndex == -1 && lastBackSlashIndex == -1) {
-			return filePath;
-		} else if (lastSlashIndex > lastBackSlashIndex) {
-			return StringUtils.substringAfterLast(filePath, Chars.SLASH);
+		String path = transformFilePath(filePath);
+		if (path.indexOf("/") == -1) {
+			return path;
 		} else {
-			return StringUtils.substringAfterLast(filePath, Chars.BACKSLASH);
+			return StringUtils.substringAfterLast(path, "/");
 		}
 	}
 
@@ -110,17 +103,11 @@ public class FileUtils {
 	 * @return 返回从文件完整路径中截取完整的文件目录。
 	 */
 	public static String getFullFileDir(String filePath) {
-		int lastSlashIndex = filePath.lastIndexOf(Chars.SLASH);
-		int lastBackSlashIndex = filePath.lastIndexOf(Chars.BACKSLASH);
-		// 如果没找到斜杠和反斜杠则返回空字符串
-		// 如果斜杠位置在反斜杠位置之后则从斜杠位置截取文件目录
-		// 否则从反斜杠位置截取文件目录
-		if (lastSlashIndex == -1 && lastBackSlashIndex == -1) {
+		String path = transformFilePath(filePath);
+		if (path.indexOf("/") == -1) {
 			return "";
-		} else if (lastSlashIndex > lastBackSlashIndex) {
-			return StringUtils.substringBeforeLast(filePath, Chars.SLASH);
 		} else {
-			return StringUtils.substringBeforeLast(filePath, Chars.BACKSLASH);
+			return StringUtils.substringBeforeLast(path, "/");
 		}
 	}
 
