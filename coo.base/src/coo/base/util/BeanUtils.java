@@ -399,7 +399,7 @@ public abstract class BeanUtils {
 		Field sourceField = findField(source.getClass(), fieldName);
 		Field targetField = findField(target.getClass(), fieldName);
 		return targetField != null
-				&& getFieldType(sourceField) == getFieldType(targetField)
+				&& sourceField.getType() == targetField.getType()
 				&& !Modifier.isFinal(targetField.getModifiers())
 				&& !Modifier.isStatic(targetField.getModifiers());
 	}
