@@ -69,6 +69,9 @@ public abstract class BeanUtils {
 	 * @return 返回对象中指定属性的值。
 	 */
 	public static Object getField(Object target, Field field) {
+		if (field == null) {
+			return null;
+		}
 		try {
 			boolean accessible = field.isAccessible();
 			field.setAccessible(true);
@@ -76,8 +79,8 @@ public abstract class BeanUtils {
 			field.setAccessible(accessible);
 			return processHibernateLazyField(result);
 		} catch (Exception e) {
-			throw new IllegalStateException("获取对象的属性[" + field.getName()
-					+ "]值失败", e);
+			throw new UncheckedException("获取对象的属性[" + field.getName() + "]值失败",
+					e);
 		}
 	}
 
@@ -168,22 +171,18 @@ public abstract class BeanUtils {
 	/**
 	 * 复制两个对象相同Field的值，忽略源对象中为null的Field。
 	 * 
-	 * @param <T>
-	 *            对象类型
 	 * @param source
 	 *            源对象
 	 * @param target
 	 *            目标对象
 	 */
-	public static <T> void copyFields(T source, T target) {
+	public static void copyFields(Object source, Object target) {
 		copyFields(source, target, null, null);
 	}
 
 	/**
 	 * 复制两个对象相同Field的值，忽略源对象中为null的Field。
 	 * 
-	 * @param <T>
-	 *            对象类型
 	 * @param source
 	 *            源对象
 	 * @param target
@@ -191,15 +190,14 @@ public abstract class BeanUtils {
 	 * @param excludeFields
 	 *            不复制的Field的名称，多个名称之间用“,”分割
 	 */
-	public static <T> void copyFields(T source, T target, String excludeFields) {
+	public static void copyFields(Object source, Object target,
+			String excludeFields) {
 		copyFields(source, target, null, excludeFields);
 	}
 
 	/**
 	 * 复制两个对象相同Field的值，忽略源对象中为null的Field，但如果指定了要复制的Field，则为null时该Field也复制。
 	 * 
-	 * @param <T>
-	 *            对象类型
 	 * @param source
 	 *            源对象
 	 * @param target
@@ -209,8 +207,8 @@ public abstract class BeanUtils {
 	 * @param excludeFields
 	 *            不复制的Field的名称，多个名称之间用“,”分割
 	 */
-	public static <T> void copyFields(T source, T target, String includeFields,
-			String excludeFields) {
+	public static void copyFields(Object source, Object target,
+			String includeFields, String excludeFields) {
 		String[] includeFieldNames = new String[] {};
 		if (!StringUtils.isBlank(includeFields)) {
 			includeFieldNames = includeFields.split(Chars.COMMA);
@@ -232,8 +230,6 @@ public abstract class BeanUtils {
 	/**
 	 * 复制两个对象指定Field的值。
 	 * 
-	 * @param <T>
-	 *            对象类型
 	 * @param source
 	 *            源对象
 	 * @param target
@@ -244,14 +240,11 @@ public abstract class BeanUtils {
 	 *            是否复制null值
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> void copyField(T source, T target, String fieldName,
-			Boolean containedNull) {
+	public static void copyField(Object source, Object target,
+			String fieldName, Boolean containedNull) {
 		Object sourceFieldValue = getField(source, fieldName);
-		Field targetField = findField(target.getClass(), fieldName);
-		Boolean needCopy = targetField != null
-				&& !Modifier.isFinal(targetField.getModifiers())
-				&& !Modifier.isStatic(targetField.getModifiers());
-		if (!containedNull && sourceFieldValue == null) {
+		Boolean needCopy = isFieldNeedCopy(source, target, fieldName);
+		if (sourceFieldValue == null && !containedNull) {
 			needCopy = false;
 		}
 		if (needCopy) {
@@ -388,6 +381,27 @@ public abstract class BeanUtils {
 		} catch (Exception e) {
 			throw new UncheckedException("复制Map对象属性到Bean对象时发生异常。", e);
 		}
+	}
+
+	/**
+	 * 判断指定的Field是否需要复制。
+	 * 
+	 * @param source
+	 *            源对象
+	 * @param target
+	 *            目标对象
+	 * @param fieldName
+	 *            Field的名称
+	 * @return 返回指定的Field是否需要复制。
+	 */
+	private static Boolean isFieldNeedCopy(Object source, Object target,
+			String fieldName) {
+		Field sourceField = findField(source.getClass(), fieldName);
+		Field targetField = findField(target.getClass(), fieldName);
+		return targetField != null
+				&& getFieldType(sourceField) == getFieldType(targetField)
+				&& !Modifier.isFinal(targetField.getModifiers())
+				&& !Modifier.isStatic(targetField.getModifiers());
 	}
 
 	/**
