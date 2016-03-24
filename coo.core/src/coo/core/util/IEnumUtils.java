@@ -1,8 +1,12 @@
 package coo.core.util;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import coo.base.exception.UncheckedException;
+import coo.base.util.StringUtils;
 import coo.core.model.IEnum;
 
 /**
@@ -62,5 +66,20 @@ public class IEnumUtils {
 			throw new UncheckedException("获取枚举值时发生异常。", e);
 		}
 		return null;
+	}
+
+	/**
+	 * 获取枚举集合的值字符串。
+	 * 
+	 * @param ienums
+	 *            枚举集合
+	 * @return 返回枚举集合的值字符串。
+	 */
+	public static String getIEnumValues(Collection<? extends IEnum> ienums) {
+		List<String> values = new ArrayList<>();
+		for (IEnum ienum : ienums) {
+			values.add(ienum.getValue());
+		}
+		return StringUtils.join(values, ",");
 	}
 }
