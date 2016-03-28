@@ -368,7 +368,7 @@
  * params：局部刷新需要的参数
  -->
 <#macro reload action params...>
-    <@s.form id="pagerForm" method="get" action=action>
+    <@s.form class="pagerForm" method="get" action=action>
         <#if params??>
             <#list params?keys as paramName>
             <input type="hidden" name="${paramName}" value="${params[paramName]}"/>

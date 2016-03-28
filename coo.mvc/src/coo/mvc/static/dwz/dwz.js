@@ -1256,7 +1256,7 @@ var DWZ = {
 			var endTimePattern = endTime.attr("timeFmt") || "HH:mm";
 			var startTimePattern = startTime.attr("timeFmt") || "HH:mm";
 
-			if(endDate.val() && startDate.val()) {
+			if(endTime.val() && startTime.val()) {
 				return endTime.val().parseDate(endTimePattern) > startTime.val().parseDate(startTimePattern);
 			}
 			return true;
@@ -1268,7 +1268,7 @@ var DWZ = {
 			var endTimePattern = endTime.attr("timeFmt") || "HH:mm";
 			var startTimePattern = startTime.attr("timeFmt") || "HH:mm";
 
-			if(endDate.val() && startDate.val()) {
+			if(endTime.val() && startTime.val()) {
 				return endTime.val().parseDate(endTimePattern) >= startTime.val().parseDate(startTimePattern);
 			}
 			return true;
@@ -1314,16 +1314,14 @@ var DWZ = {
 		$.validator.setDefaults({
 			errorElement: "span",
 			errorPlacement: function(error, element) {
-				error.addClass("fa fa-bell-o red");
-				if(element.hasClass("hideError")) {
-					element.attr("title", error.text());
-				} else {
+				error.addClass("fa fa-bell-o red test");
+				element.attr("title", error.text());
+				if(!element.hasClass("hideError")) {
 					if(element.is("input:checkbox") && element.parent().is("label.unit")) {
 						element.parent().parent().append(error);
 					} else {
 						element.parent().append(error);
 					}
-					error.attr("title", error.text());
 				}
 				error.empty();
 			}
@@ -2457,7 +2455,7 @@ function initUI(_box) {
   $("a[target=selectedTodo]", $p).selectedTodo();
 
   // 处理awesome字体图标
-  $("[class*=fa-]:not(i)").each(function () {
+  $("[class*=fa-]:not(i)", $p).each(function () {
     var i = $("<i></i>");
     i.css("line-height", "inherit");
     i.addClass("fa");
@@ -5728,24 +5726,13 @@ $.fn.extend({
       function initSuffix($tbody) {
         $tbody.find('>tr').each(function (i) {
           $(':input, a.btn, span:not([class*="error"])', this).each(function () {
-            var $this = $(this), name = $this.attr('name'), val = $this.val();
-
-            if (name)
-              $this.attr('name', name.replaceSuffix(i));
-
-            var lookupGroup = $this.attr('lookupGroup');
-            if (lookupGroup) {
-              $this.attr('lookupGroup', lookupGroup.replaceSuffix(i));
-            }
-
-            var suffix = $this.attr("suffix");
-            if (suffix) {
-              $this.attr('suffix', suffix.replaceSuffix(i));
-            }
-
-            if (val && val.indexOf("#index#") >= 0)
+            var $this = $(this);
+            
+            var val = $this.val();
+            if (val && val.indexOf("#index#") >= 0) {
               $this.val(val.replace('#index#', i + 1));
-
+            }
+            
             if ($this.is("span")) {
               if ($this.attr("type") == "index") {
                 $this.text($this.text().replace(/^[0-9]+$/, i + 1).replace('#index#', i + 1));
@@ -5753,6 +5740,12 @@ $.fn.extend({
                 $this.text($this.text().replace('#index#', i + 1));
               }
             }
+            
+            $.each(this.attributes, function(index, attr) {
+              if(attr.name != 'type' && attr.name != 'value') {
+                $this.attr(attr.name, attr.value.replaceSuffix(i));
+              }
+            });
           });
         });
       }
@@ -5806,7 +5799,7 @@ $.fn.extend({
             });
             break;
           case 'date':
-            html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date ' + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '"/>' + '<a class="btn fa-calendar" href="javascript:void(0)">选择</a>';
+            html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date ' + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '" ' + attrFrag + '/>';
             break;
           // 增加checkbox支持
           case 'checkbox':
