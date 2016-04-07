@@ -242,7 +242,7 @@
  * size: 图片大小限制
  * readonly: 是否只读
  -->
-<#macro img path width height limit=0 size=1024 readonly=false fileObjName="attFile" buttonText="上传图片" buttonWidth=70 buttonHeight=18>
+<#macro img path width height limit=0 size=1024 readonly=false fileObjName="attFile" buttonText="上传图片（.jpg .gif .png）" buttonWidth=150 buttonHeight=18>
 	<@s.bind path />
     <#local random = s.name + "_" + .now?datetime?string("yyyyMMddHHmmssSSS")>
     <#local inputId = "imgInput_" + random>
@@ -264,8 +264,8 @@
 			uploadLimit: <#if multi>${limit}<#else>1</#if>,
 			queueSizeLimit: <#if multi>${limit}<#else>1</#if>,
 			fileSizeLimit: '${size}KB',
-			fileTypeDesc: '*.jpg;*.jpeg;*.gif;*.png;',
-			fileTypeExts: '*.jpg;*.jpeg;*.gif;*.png;',
+			fileTypeDesc: '*.jpg;*.gif;*.png;',
+			fileTypeExts: '*.jpg;*.gif;*.png;',
 			inputName: '${s.name}',
 			queueID: '${queueId}',
 			onSelectError: uploadify_onSelectError,
