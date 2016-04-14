@@ -1225,6 +1225,22 @@ var DWZ = {
 			}
 			return true;
 		}, "截止值必须大于等于起始值。");
+		
+		$.validator.addMethod("ltTo", function(value, element, param) {
+			var target = getTarget(element, param);
+			if(value && target.val()) {
+				return parseFloat(value) < parseFloat(target.val());
+			}
+			return true;
+		}, "起始值必须小于截止值。");
+		
+		$.validator.addMethod("leTo", function(value, element, param) {
+			var target = getTarget(element, param);
+			if(value && target.val()) {
+				return parseFloat(value) <= parseFloat(target.val());
+			}
+			return true;
+		}, "起始值必须小于等于截止值。");
 
 		$.validator.addMethod("gtToDate", function(value, element, param) {
 			var endDate = $(element);
