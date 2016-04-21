@@ -220,7 +220,27 @@ public class FullTextCriteria {
 	 *            类型
 	 */
 	public void addSortAsc(String fieldName, SortField.Type type) {
-		sortFields.add(new SortField(fieldName, type));
+		addSortAsc(fieldName, type, null);
+	}
+
+	/**
+	 * 增加顺序排列的排序字段。<br/>
+	 * 类型请参考SortField的公共常量。
+	 * 
+	 * @param fieldName
+	 *            字段名
+	 * @param type
+	 *            类型
+	 * @param missingValue
+	 *            为空设定值
+	 */
+	public void addSortAsc(String fieldName, SortField.Type type,
+			Object missingValue) {
+		SortField sortField = new SortField(fieldName, type);
+		if (missingValue != null) {
+			sortField.setMissingValue(missingValue);
+		}
+		sortFields.add(sortField);
 	}
 
 	/**
@@ -233,7 +253,27 @@ public class FullTextCriteria {
 	 *            类型
 	 */
 	public void addSortDesc(String fieldName, SortField.Type type) {
-		sortFields.add(new SortField(fieldName, type, true));
+		addSortDesc(fieldName, type, null);
+	}
+
+	/**
+	 * 增加倒序排列的排序字段。<br/>
+	 * 类型请参考SortField的公共常量。
+	 * 
+	 * @param fieldName
+	 *            字段名
+	 * @param type
+	 *            类型
+	 * @param missingValue
+	 *            为空设定值
+	 */
+	public void addSortDesc(String fieldName, SortField.Type type,
+			Object missingValue) {
+		SortField sortField = new SortField(fieldName, type, true);
+		if (missingValue != null) {
+			sortField.setMissingValue(missingValue);
+		}
+		sortFields.add(sortField);
 	}
 
 	/**
