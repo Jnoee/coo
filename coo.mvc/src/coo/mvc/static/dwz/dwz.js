@@ -3924,7 +3924,16 @@ var navTab = {
 			$(dialog).hide();
 			$("div.shadow").hide();
 			if($(dialog).data("mask")) {
-				$("#dialogBackground").hide();
+				// 处理同时打开多个模态窗口的问题
+				var hideMask = true;
+				$("div.dialog").each(function() {
+					if($(this).data("mask") && $(this).data("id") != $(dialog).data("id")) {
+						hideMask = false;
+					}
+				});
+				if(hideMask) {
+					$("#dialogBackground").hide();
+				}
 			} else {
 				if($(dialog).data("id"))
 					$.taskBar.closeDialog($(dialog).data("id"));
