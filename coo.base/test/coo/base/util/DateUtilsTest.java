@@ -2,6 +2,7 @@ package coo.base.util;
 
 import java.util.Date;
 
+import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,5 +46,15 @@ public class DateUtilsTest {
 		log.debug("{}", interval.contains(targetDate.getTime()));
 		targetDate = DateUtils.parse("2012-10-02 00:00:00");
 		log.debug("{}", interval.contains(targetDate.getTime()));
+	}
+
+	@Test
+	public void testGetDuration() {
+		Date beginDate = DateUtils.parse("2012-10-01");
+		Date endDate = DateUtils.parse("2012-10-02");
+		Duration duration = DateUtils.getDuration(beginDate, endDate);
+		log.debug("{}", duration.getStandardMinutes());
+		duration = DateUtils.getDuration(endDate, beginDate);
+		log.debug("{}", duration.getStandardMinutes());
 	}
 }
