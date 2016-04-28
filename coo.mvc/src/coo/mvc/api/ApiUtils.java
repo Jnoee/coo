@@ -57,7 +57,7 @@ public class ApiUtils {
 	 * @return 返回失败的响应对象。
 	 */
 	public static ApiReply newErrorReply() {
-		return new ApiReply(ApiCode.FAILURE, "发生未知异常。");
+		return new ApiReply(ApiCode.FAILURE, "服务器繁忙，请稍后再试。");
 	}
 
 	/**
