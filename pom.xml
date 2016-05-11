@@ -32,8 +32,10 @@
 		<plugin.release.version>2.3</plugin.release.version>
 		<plugin.gpg.version>1.6</plugin.gpg.version>
 		<jgit.version>1.9.1</jgit.version>
-		<svnjava.version>2.1.0</svnjava.version>
+		<project.scm.id>nexus</project.scm.id>
+		<!-- 
 		<project.scm.id>github</project.scm.id>
+		 -->
 		<!-- 公共包 -->
 		<logback.version>1.1.2</logback.version>
 		<slf4j.version>1.7.9</slf4j.version>
@@ -149,26 +151,6 @@
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<arguments>-DskipTests</arguments>
-					<useReleaseProfile>false</useReleaseProfile>
-					<providerImplementations>
-						<svn>javasvn</svn>
-					</providerImplementations>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>com.google.code.maven-scm-provider-svnjava</groupId>
-						<artifactId>maven-scm-provider-svnjava</artifactId>
-						<version>${svnjava.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<!-- 
-			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>${plugin.release.version}</version>
-				<configuration>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<arguments>-DskipTests</arguments>
 					<providerImplementations>
 						<git>jgit</git>
 					</providerImplementations>
@@ -194,7 +176,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			 -->
 		</plugins>
 	</build>
 	<modules>
