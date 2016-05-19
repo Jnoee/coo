@@ -7,6 +7,7 @@ import org.hibernate.search.bridge.ParameterizedBridge;
 import org.hibernate.search.bridge.TwoWayStringBridge;
 
 import coo.base.util.DateUtils;
+import coo.base.util.StringUtils;
 
 /**
  * 日期字段全文索引桥接器。内置的日期桥接器使用Lucene的DateTools工具类进行时间转换，其中时区被固定设置为零时区，
@@ -17,11 +18,17 @@ public class DateBridge implements TwoWayStringBridge, ParameterizedBridge {
 
 	@Override
 	public String objectToString(Object object) {
+		if (object == null) {
+			return null;
+		}
 		return DateUtils.format((Date) object, format);
 	}
 
 	@Override
 	public Object stringToObject(String stringValue) {
+		if (StringUtils.isEmpty(stringValue)) {
+			return null;
+		}
 		return DateUtils.parse(stringValue, format);
 	}
 
