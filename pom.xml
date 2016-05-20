@@ -25,13 +25,13 @@
 		<!-- 编译参数 -->
 		<jdk.version>1.7</jdk.version>
 		<encoding>UTF-8</encoding>
-		<plugin.compiler.version>3.1</plugin.compiler.version>
-		<plugin.resources.version>2.6</plugin.resources.version>
-		<plugin.source.version>2.2.1</plugin.source.version>
-		<plugin.javadoc.version>2.9.1</plugin.javadoc.version>
-		<plugin.release.version>2.3</plugin.release.version>
+		<plugin.compiler.version>3.5.1</plugin.compiler.version>
+		<plugin.resources.version>3.0.0</plugin.resources.version>
+		<plugin.source.version>3.0.0</plugin.source.version>
+		<plugin.javadoc.version>2.10.3</plugin.javadoc.version>
+		<plugin.release.version>2.5.3</plugin.release.version>
 		<plugin.gpg.version>1.6</plugin.gpg.version>
-		<jgit.version>1.9.1</jgit.version>
+		<jgit.version>1.9.4</jgit.version>
 		<project.scm.id>github</project.scm.id>
 		<!-- 公共包 -->
 		<logback.version>1.1.2</logback.version>
