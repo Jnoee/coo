@@ -10,7 +10,7 @@ import coo.base.exception.BusinessException;
 import coo.core.util.SpringUtils;
 
 /**
- * 该类定义了信息配置组件。<br/>
+ * 该类定义了信息配置组件。<br>
  * 信息配置文件指定放置在/META-INF/coo目录下，名称以messages结尾，采用标准的Properties XML文件格式。
  */
 @Component

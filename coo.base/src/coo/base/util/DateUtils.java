@@ -30,7 +30,7 @@ public class DateUtils {
 			MILLISECOND_N };
 
 	/**
-	 * 将字符串解析成Date对象。<br/>
+	 * 将字符串解析成Date对象。<br>
 	 * 该方法尝试用[yyyy-MM/yyyy-MM-dd/ yyyy-MM-dd HH:mm/yyyy-MM-dd
 	 * HH:mm:ss/yyyy-MM-dd HH:mm:ss SSSS/ yyyyMM/yyyyMMdd/yyyyMMddHHmm/
 	 * yyyyMMddHHmmss/yyyyMMddHHmmssSSSS]格式进行解析，如果无法解析将抛出异常。

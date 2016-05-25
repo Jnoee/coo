@@ -1,7 +1,7 @@
 package coo.core.model;
 
 /**
- * 用于分页/全文检索的查询条件模型。<br/>
+ * 用于分页/全文检索的查询条件模型。<br>
  * 更多条件的查询条件模型可继承该类进行定义。
  */
 public class SearchModel {

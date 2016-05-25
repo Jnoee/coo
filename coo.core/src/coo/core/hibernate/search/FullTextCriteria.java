@@ -211,7 +211,7 @@ public class FullTextCriteria {
 	}
 
 	/**
-	 * 增加顺序排列的排序字段。<br/>
+	 * 增加顺序排列的排序字段。<br>
 	 * 类型请参考SortField的公共常量。
 	 * 
 	 * @param fieldName
@@ -224,7 +224,7 @@ public class FullTextCriteria {
 	}
 
 	/**
-	 * 增加顺序排列的排序字段。<br/>
+	 * 增加顺序排列的排序字段。<br>
 	 * 类型请参考SortField的公共常量。
 	 * 
 	 * @param fieldName
@@ -244,7 +244,7 @@ public class FullTextCriteria {
 	}
 
 	/**
-	 * 增加倒序排列的排序字段。<br/>
+	 * 增加倒序排列的排序字段。<br>
 	 * 类型请参考SortField的公共常量。
 	 * 
 	 * @param fieldName
@@ -257,7 +257,7 @@ public class FullTextCriteria {
 	}
 
 	/**
-	 * 增加倒序排列的排序字段。<br/>
+	 * 增加倒序排列的排序字段。<br>
 	 * 类型请参考SortField的公共常量。
 	 * 
 	 * @param fieldName
@@ -287,8 +287,8 @@ public class FullTextCriteria {
 	}
 
 	/**
-	 * 设置Hibernate的Criteria查询条件。<br/>
-	 * 该方法应谨慎使用，Criteria查询条件只作用于全文搜索出来的结果集上，不会改变全文搜索的搜索结果。<br/>
+	 * 设置Hibernate的Criteria查询条件。<br>
+	 * 该方法应谨慎使用，Criteria查询条件只作用于全文搜索出来的结果集上，不会改变全文搜索的搜索结果。<br>
 	 * 这将可能引起全文搜索的总记录条数与经Criteria查询条件过滤后的结果集的总记录数不一致。
 	 * 
 	 * @param criteria

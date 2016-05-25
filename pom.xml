@@ -23,7 +23,7 @@
 
 	<properties>
 		<!-- 编译参数 -->
-		<jdk.version>1.7</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		<encoding>UTF-8</encoding>
 		<plugin.compiler.version>3.5.1</plugin.compiler.version>
 		<plugin.resources.version>3.0.0</plugin.resources.version>
@@ -135,9 +135,9 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
-						<phase>none</phase>
+						<phase>verify</phase>
 						<goals>
-							<goal>jar</goal>
+							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>

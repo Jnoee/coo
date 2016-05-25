@@ -15,6 +15,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD })
 public @interface Auth {
-	/** 权限代码 */
+	/**
+	 * 权限代码数组。
+	 * 
+	 * @return 返回权限代码数组。
+	 */
 	String[] value() default {};
 }

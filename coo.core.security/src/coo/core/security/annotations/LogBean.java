@@ -13,6 +13,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface LogBean {
-	/** 日志字段 */
+	/**
+	 * 日志字段数组。
+	 * 
+	 * @return 返回日志字段数组。
+	 */
 	LogField[] value();
 }
