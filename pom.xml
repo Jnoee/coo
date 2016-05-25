@@ -160,7 +160,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<!-- 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -174,7 +173,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			 -->
 		</plugins>
 	</build>
 	<modules>
@@ -191,6 +189,7 @@
 		<developerConnection>scm:git:https://github.com/jnoee/coo.git</developerConnection>
 		<tag>coo-2.2.1</tag>
 	</scm>
+	<!-- 
 	<distributionManagement>
 		<repository>
 			<id>nexus</id>
@@ -201,7 +200,7 @@
 			<url>http://nexus:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	<!-- 
+	 -->
 	<distributionManagement>
 		<snapshotRepository>
 			<id>oss</id>
@@ -212,5 +211,4 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-	 -->
 </project>
