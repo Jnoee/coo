@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
  */
 @Component("coo.core.hibernate.LocalSessionSettings")
 public class LocalSessionSettings extends AbstractLocalSessionSettings {
-	/**
-	 * 构造方法。
-	 */
-	public LocalSessionSettings() {
-		addAnnotatedPackage("coo.core.hibernate.usertype");
-	}
+  /**
+   * 构造方法。
+   */
+  public LocalSessionSettings() {
+    addAnnotatedPackage("coo.core.hibernate.usertype");
+  }
 }

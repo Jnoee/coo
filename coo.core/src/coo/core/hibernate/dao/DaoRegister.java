@@ -18,29 +18,27 @@ import coo.core.hibernate.EntityClassBeanFactoryPostProcessor;
  */
 @Component
 public class DaoRegister extends EntityClassBeanFactoryPostProcessor {
-	private final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Override
-	public void postProcessBeanFactory(
-			ConfigurableListableBeanFactory beanFactory) {
-		super.postProcessBeanFactory(beanFactory);
-		if (CollectionUtils.isNotEmpty(entityClasses)) {
-			for (Class<?> entityClass : entityClasses) {
-				AnnotatedGenericBeanDefinition daoDefinition = new AnnotatedGenericBeanDefinition(
-						Dao.class);
+  @Override
+  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+    super.postProcessBeanFactory(beanFactory);
+    if (CollectionUtils.isNotEmpty(entityClasses)) {
+      for (Class<?> entityClass : entityClasses) {
+        AnnotatedGenericBeanDefinition daoDefinition =
+            new AnnotatedGenericBeanDefinition(Dao.class);
 
-				ConstructorArgumentValues av = new ConstructorArgumentValues();
-				av.addGenericArgumentValue(entityClass);
-				daoDefinition.setConstructorArgumentValues(av);
+        ConstructorArgumentValues av = new ConstructorArgumentValues();
+        av.addGenericArgumentValue(entityClass);
+        daoDefinition.setConstructorArgumentValues(av);
 
-				String beanName = entityClass.getSimpleName();
-				char[] chars = beanName.toCharArray();
-				chars[0] = Character.toLowerCase(chars[0]);
-				beanName = new String(chars) + "Dao";
-				((DefaultListableBeanFactory) beanFactory)
-						.registerBeanDefinition(beanName, daoDefinition);
-				log.debug("自动注入DAO组件[{}]", beanName);
-			}
-		}
-	}
+        String beanName = entityClass.getSimpleName();
+        char[] chars = beanName.toCharArray();
+        chars[0] = Character.toLowerCase(chars[0]);
+        beanName = new String(chars) + "Dao";
+        ((DefaultListableBeanFactory) beanFactory).registerBeanDefinition(beanName, daoDefinition);
+        log.debug("自动注入DAO组件[{}]", beanName);
+      }
+    }
+  }
 }

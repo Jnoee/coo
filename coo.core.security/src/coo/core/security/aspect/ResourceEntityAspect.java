@@ -11,19 +11,18 @@ import coo.core.security.entity.ResourceEntity;
  */
 @Aspect
 public class ResourceEntityAspect {
-	/**
-	 * 切面处理方法。
-	 * 
-	 * @param joinPoint
-	 *            切入点
-	 */
-	@Before("@annotation(coo.core.security.annotations.AutoFillIn)")
-	public void before(JoinPoint joinPoint) {
-		Object[] params = joinPoint.getArgs();
-		for (Object param : params) {
-			if (param instanceof ResourceEntity<?>) {
-				((ResourceEntity<?>) param).autoFillIn();
-			}
-		}
-	}
+  /**
+   * 切面处理方法。
+   * 
+   * @param joinPoint 切入点
+   */
+  @Before("@annotation(coo.core.security.annotations.AutoFillIn)")
+  public void before(JoinPoint joinPoint) {
+    Object[] params = joinPoint.getArgs();
+    for (Object param : params) {
+      if (param instanceof ResourceEntity<?>) {
+        ((ResourceEntity<?>) param).autoFillIn();
+      }
+    }
+  }
 }

@@ -17,20 +17,19 @@ import coo.mvc.converter.UuidEntityToString;
  */
 @Component("coo.mvc.converter.ConversionConfigurer")
 public class ConversionConfigurer extends AbstractConversionConfigurer {
-	@Override
-	public void config(FormattingConversionService conversionService) {
-		conversionService.removeConvertible(String.class, Enum.class);
-		conversionService.addConverterFactory(new StringToIEnum());
-		conversionService.addConverter(new IEnumToString());
-		conversionService.addConverter(new StringToParams());
-		conversionService.addConverter(new ParamsToString());
-		conversionService.addConverterFactory(new StringToUuidEntity());
-		conversionService.addConverter(new UuidEntityToString());
+  @Override
+  public void config(FormattingConversionService conversionService) {
+    conversionService.removeConvertible(String.class, Enum.class);
+    conversionService.addConverterFactory(new StringToIEnum());
+    conversionService.addConverter(new IEnumToString());
+    conversionService.addConverter(new StringToParams());
+    conversionService.addConverter(new ParamsToString());
+    conversionService.addConverterFactory(new StringToUuidEntity());
+    conversionService.addConverter(new UuidEntityToString());
 
-		conversionService
-				.addFormatter(new DateFormatter(DateUtils.MILLISECOND));
-		conversionService.addFormatter(new DateFormatter(DateUtils.SECOND));
-		conversionService.addFormatter(new DateFormatter(DateUtils.MINUTE));
-		conversionService.addFormatter(new DateFormatter(DateUtils.DAY));
-	}
+    conversionService.addFormatter(new DateFormatter(DateUtils.MILLISECOND));
+    conversionService.addFormatter(new DateFormatter(DateUtils.SECOND));
+    conversionService.addFormatter(new DateFormatter(DateUtils.MINUTE));
+    conversionService.addFormatter(new DateFormatter(DateUtils.DAY));
+  }
 }

@@ -13,12 +13,12 @@ import java.lang.annotation.Target;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD})
 public @interface Auth {
-	/**
-	 * 权限代码数组。
-	 * 
-	 * @return 返回权限代码数组。
-	 */
-	String[] value() default {};
+  /**
+   * 权限代码数组。
+   * 
+   * @return 返回权限代码数组。
+   */
+  String[] value() default {};
 }

@@ -11,19 +11,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:messageSourceTestContext.xml" })
+@ContextConfiguration(locations = {"classpath:messageSourceTestContext.xml"})
 public class MessageSourceTest {
-	private Logger log = LoggerFactory.getLogger(getClass());
-	@Resource
-	private MessageSource messageSource;
+  private Logger log = LoggerFactory.getLogger(getClass());
+  @Resource
+  private MessageSource messageSource;
 
-	@Test
-	public void test() {
-		String msg = messageSource.get("msg", "A", "B");
-		Assert.assertEquals(msg, "文字+变量A+变量B");
-		msg = messageSource.get("core", "A", "B");
-		log.debug(msg);
-		msg = messageSource.get("none", "A", "B");
-		log.debug(msg);
-	}
+  @Test
+  public void test() {
+    String msg = messageSource.get("msg", "A", "B");
+    Assert.assertEquals(msg, "文字+变量A+变量B");
+    msg = messageSource.get("core", "A", "B");
+    log.debug(msg);
+    msg = messageSource.get("none", "A", "B");
+    log.debug(msg);
+  }
 }

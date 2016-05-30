@@ -10,17 +10,17 @@ import coo.base.util.StringUtils;
  */
 @Component("coo.mvc.config.FreeMarkerSettings")
 public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
-	/**
-	 * 构造方法。
-	 */
-	public FreeMarkerSettings() {
-		addTemplatePath("classpath:/coo/mvc/macros/");
-		addTemplatePath("classpath:/coo/mvc/templates/");
-		addAutoImport("s", "mvc.ftl");
-		addAutoImport("dwz", "dwz.ftl");
-		addAutoImport("ecs", "ecs.ftl");
-		addStaticClass(StringUtils.class);
-		addStaticClass(DateUtils.class);
-		addEnumPackage("coo.core.enums");
-	}
+  /**
+   * 构造方法。
+   */
+  public FreeMarkerSettings() {
+    addTemplatePath("classpath:/coo/mvc/macros/");
+    addTemplatePath("classpath:/coo/mvc/templates/");
+    addAutoImport("s", "mvc.ftl");
+    addAutoImport("dwz", "dwz.ftl");
+    addAutoImport("ecs", "ecs.ftl");
+    addStaticClass(StringUtils.class);
+    addStaticClass(DateUtils.class);
+    addEnumPackage("coo.core.enums");
+  }
 }

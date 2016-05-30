@@ -9,13 +9,13 @@ import org.junit.Test;
 import coo.core.jxls.Excel;
 
 public class BasicSample extends AbstractSample {
-	@Test
-	public void test() throws Exception {
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("department", genDepartments(1).get(0));
+  @Test
+  public void test() throws Exception {
+    Map<String, Object> model = new HashMap<String, Object>();
+    model.put("department", genDepartments(1).get(0));
 
-		Excel excel = new Excel();
-		excel.init("basic.xlsx", model);
-		excel.writeTo(new FileOutputStream(outputDir + "/basic_output.xlsx"));
-	}
+    Excel excel = new Excel();
+    excel.init("basic.xlsx", model);
+    excel.writeTo(new FileOutputStream(outputDir + "/basic_output.xlsx"));
+  }
 }

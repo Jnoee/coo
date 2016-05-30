@@ -6,7 +6,7 @@ import coo.core.template.AbstractTemplateSettings;
 
 @Component("coo.core.mail.TemplateSettings")
 public class TemplateSettings extends AbstractTemplateSettings {
-	public TemplateSettings() {
-		addTemplatePath("classpath:/coo/core/mail");
-	}
+  public TemplateSettings() {
+    addTemplatePath("classpath:/coo/core/mail");
+  }
 }

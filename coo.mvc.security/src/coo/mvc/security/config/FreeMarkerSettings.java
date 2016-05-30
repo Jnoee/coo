@@ -10,14 +10,14 @@ import coo.mvc.config.AbstractFreeMarkerSettings;
  */
 @Component("coo.mvc.security.config.FreeMarkerSettings")
 public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
-	/**
-	 * 构造方法。
-	 */
-	public FreeMarkerSettings() {
-		addTemplatePath("classpath:/coo/mvc/security/macros/");
-		addTemplatePath("classpath:/coo/mvc/security/actions/");
-		addStaticClass(SecurityUtils.class);
-		addAutoInclude("security.ftl");
-		addAutoImport("sec", "sec.ftl");
-	}
+  /**
+   * 构造方法。
+   */
+  public FreeMarkerSettings() {
+    addTemplatePath("classpath:/coo/mvc/security/macros/");
+    addTemplatePath("classpath:/coo/mvc/security/actions/");
+    addStaticClass(SecurityUtils.class);
+    addAutoInclude("security.ftl");
+    addAutoImport("sec", "sec.ftl");
+  }
 }

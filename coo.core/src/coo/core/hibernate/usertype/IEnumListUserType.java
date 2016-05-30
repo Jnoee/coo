@@ -21,47 +21,46 @@ import coo.core.util.IEnumUtils;
  * IEnum枚举列表自定义类型。
  */
 public class IEnumListUserType extends AbstractListUserType {
-	@SuppressWarnings("unchecked")
-	@Override
-	public Object nullSafeGet(ResultSet rs, String[] names,
-			SessionImplementor session, Object owner) throws SQLException {
-		try {
-			String value = getValue(rs, names[0], session);
-			if (value != null) {
-				Field field = getField(rs, names[0], owner);
-				Class<? extends IEnum> enumClass = (Class<? extends IEnum>) BeanUtils
-						.getGenericFieldType(field);
-				List<IEnum> enums = new ArrayList<IEnum>();
-				for (String enumValue : value.toString().split(Chars.COMMA)) {
-					enums.add(IEnumUtils.getIEnumByValue(enumClass, enumValue));
-				}
-				return enums;
-			} else {
-				return new ArrayList<IEnum>();
-			}
-		} catch (Exception e) {
-			throw new HibernateException("转换IEnum枚举类型列表时发生异常。", e);
-		}
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+      throws SQLException {
+    try {
+      String value = getValue(rs, names[0], session);
+      if (value != null) {
+        Field field = getField(rs, names[0], owner);
+        Class<? extends IEnum> enumClass =
+            (Class<? extends IEnum>) BeanUtils.getGenericFieldType(field);
+        List<IEnum> enums = new ArrayList<IEnum>();
+        for (String enumValue : value.toString().split(Chars.COMMA)) {
+          enums.add(IEnumUtils.getIEnumByValue(enumClass, enumValue));
+        }
+        return enums;
+      } else {
+        return new ArrayList<IEnum>();
+      }
+    } catch (Exception e) {
+      throw new HibernateException("转换IEnum枚举类型列表时发生异常。", e);
+    }
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void nullSafeSet(PreparedStatement st, Object value, int index,
-			SessionImplementor session) throws SQLException {
-		try {
-			List<IEnum> values = (ArrayList<IEnum>) value;
-			if (CollectionUtils.isNotEmpty(values)) {
-				List<String> enumValues = new ArrayList<String>();
-				for (IEnum ienum : values) {
-					enumValues.add(ienum.getValue());
-				}
-				setValue(st, StringUtils.join(enumValues, Chars.COMMA), index,
-						session);
-			} else {
-				setValue(st, null, index, session);
-			}
-		} catch (Exception e) {
-			throw new HibernateException("转换IEnum枚举类型列表时发生异常。", e);
-		}
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
+      throws SQLException {
+    try {
+      List<IEnum> values = (ArrayList<IEnum>) value;
+      if (CollectionUtils.isNotEmpty(values)) {
+        List<String> enumValues = new ArrayList<String>();
+        for (IEnum ienum : values) {
+          enumValues.add(ienum.getValue());
+        }
+        setValue(st, StringUtils.join(enumValues, Chars.COMMA), index, session);
+      } else {
+        setValue(st, null, index, session);
+      }
+    } catch (Exception e) {
+      throw new HibernateException("转换IEnum枚举类型列表时发生异常。", e);
+    }
+  }
 }

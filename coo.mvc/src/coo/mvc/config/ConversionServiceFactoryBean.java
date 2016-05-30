@@ -12,24 +12,24 @@ import org.springframework.format.support.FormattingConversionServiceFactoryBean
 /**
  * 自定义转换器配置管理。
  */
-public class ConversionServiceFactoryBean extends
-		FormattingConversionServiceFactoryBean implements
-		ApplicationContextAware {
-	private List<AbstractConversionConfigurer> configurers = new ArrayList<AbstractConversionConfigurer>();
+public class ConversionServiceFactoryBean extends FormattingConversionServiceFactoryBean
+    implements ApplicationContextAware {
+  private List<AbstractConversionConfigurer> configurers =
+      new ArrayList<AbstractConversionConfigurer>();
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		Map<String, AbstractConversionConfigurer> configurersMap = applicationContext
-				.getBeansOfType(AbstractConversionConfigurer.class);
-		configurers.addAll(configurersMap.values());
-		Collections.sort(configurers);
-	}
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) {
+    Map<String, AbstractConversionConfigurer> configurersMap =
+        applicationContext.getBeansOfType(AbstractConversionConfigurer.class);
+    configurers.addAll(configurersMap.values());
+    Collections.sort(configurers);
+  }
 
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-		for (AbstractConversionConfigurer configurer : configurers) {
-			configurer.config(getObject());
-		}
-	}
+  @Override
+  public void afterPropertiesSet() {
+    super.afterPropertiesSet();
+    for (AbstractConversionConfigurer configurer : configurers) {
+      configurer.config(getObject());
+    }
+  }
 }

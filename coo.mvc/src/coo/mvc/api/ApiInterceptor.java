@@ -12,19 +12,18 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * API接口拦截器。
  */
 public class ApiInterceptor extends HandlerInterceptorAdapter {
-	@Value("${api.log.enabled:false}")
-	private Boolean logEnabled = false;
+  @Value("${api.log.enabled:false}")
+  private Boolean logEnabled = false;
 
-	@Override
-	public void postHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		ModelMap modelMap = modelAndView.getModelMap();
-		ApiReply reply = ApiUtils.getReply(modelMap);
-		modelMap.clear();
-		modelMap.addAttribute(reply);
-		if (logEnabled) {
-			ApiUtils.log(request, reply);
-		}
-	}
+  @Override
+  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+      ModelAndView modelAndView) throws Exception {
+    ModelMap modelMap = modelAndView.getModelMap();
+    ApiReply reply = ApiUtils.getReply(modelMap);
+    modelMap.clear();
+    modelMap.addAttribute(reply);
+    if (logEnabled) {
+      ApiUtils.log(request, reply);
+    }
+  }
 }

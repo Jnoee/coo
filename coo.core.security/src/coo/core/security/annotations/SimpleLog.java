@@ -13,24 +13,24 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface SimpleLog {
-	/**
-	 * 日志信息编码，对应资源文件中定义的日志信息。
-	 * 
-	 * @return 返回日志信息编码。
-	 */
-	String code();
+  /**
+   * 日志信息编码，对应资源文件中定义的日志信息。
+   * 
+   * @return 返回日志信息编码。
+   */
+  String code();
 
-	/**
-	 * 日志信息变量，对应日志信息中的变量，指定为参数对象名或参数对象的属性名。
-	 * 
-	 * @return 返回日志信息变量。
-	 */
-	String[] vars() default "";
+  /**
+   * 日志信息变量，对应日志信息中的变量，指定为参数对象名或参数对象的属性名。
+   * 
+   * @return 返回日志信息变量。
+   */
+  String[] vars() default "";
 
-	/**
-	 * 业务实体ID。
-	 * 
-	 * @return 返回业务实体ID。
-	 */
-	String entityId() default "";
+  /**
+   * 业务实体ID。
+   * 
+   * @return 返回业务实体ID。
+   */
+  String entityId() default "";
 }

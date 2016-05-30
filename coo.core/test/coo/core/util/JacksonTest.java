@@ -12,24 +12,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import coo.base.model.Page;
 
 public class JacksonTest {
-	private Logger log = LoggerFactory.getLogger(getClass());
+  private Logger log = LoggerFactory.getLogger(getClass());
 
-	@Test
-	public void testMixin() throws Exception {
-		Page<String> page = new Page<String>(100, 1, 10);
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.addMixIn(Page.class, Mixin.class);
-		log.debug(mapper.writeValueAsString(page));
-	}
+  @Test
+  public void testMixin() throws Exception {
+    Page<String> page = new Page<String>(100, 1, 10);
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.addMixIn(Page.class, Mixin.class);
+    log.debug(mapper.writeValueAsString(page));
+  }
 
-	abstract class Mixin {
-		@JsonIgnore
-		abstract Boolean getFirst();
+  abstract class Mixin {
+    @JsonIgnore
+    abstract Boolean getFirst();
 
-		@JsonIgnore
-		abstract Boolean getLast();
+    @JsonIgnore
+    abstract Boolean getLast();
 
-		@JsonIgnore
-		abstract List<Integer> getIndexs();
-	}
+    @JsonIgnore
+    abstract List<Integer> getIndexs();
+  }
 }
