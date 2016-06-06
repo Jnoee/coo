@@ -242,7 +242,7 @@
  * size: 图片大小限制
  * readonly: 是否只读
  -->
-<#macro img path width height limit=0 size=1024 readonly=false fileObjName="attFile" buttonText="上传图片（.jpg .gif .png）" buttonWidth=150 buttonHeight=18>
+<#macro img path width height uploadUrl="assist/att-file-upload.json" limit=0 size=1024 readonly=false fileObjName="attFile" buttonText="上传图片（.jpg .gif .png）" buttonWidth=150 buttonHeight=18>
 	<@s.bind path />
     <#local random = s.name + "_" + .now?datetime?string("yyyyMMddHHmmssSSS")>
     <#local inputId = "imgInput_" + random>
@@ -252,7 +252,7 @@
     <#if !readonly>
     	<input id="${inputId}" type="file" uploaderOption="{
 			swf: '${ctx}/dwz/external/uploadify/scripts/uploadify.swf',
-			uploader: 'assist/att-file-upload.json',
+			uploader: '${uploadUrl}',
 			fileObjName: '${fileObjName}',
 			buttonText: '${buttonText}',
 			width: ${buttonWidth},
