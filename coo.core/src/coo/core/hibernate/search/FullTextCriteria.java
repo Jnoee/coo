@@ -13,6 +13,7 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Filter;
+import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
@@ -171,6 +172,19 @@ public class FullTextCriteria {
   public void addRangeField(String fieldName, String lowerTerm, String upperTerm) {
     TermRangeQuery query =
         TermRangeQuery.newStringRange(fieldName, lowerTerm, upperTerm, true, false);
+    addLuceneQuery(query, Occur.MUST);
+  }
+
+  /**
+   * 增加区间字段查询条件。
+   * 
+   * @param fieldName 字段名
+   * @param lowerTerm 最小值
+   * @param upperTerm 最大值
+   */
+  public void addRangeField(String fieldName, Integer lowerTerm, Integer upperTerm) {
+    NumericRangeQuery<Integer> query =
+        NumericRangeQuery.newIntRange(fieldName, lowerTerm, upperTerm, true, false);
     addLuceneQuery(query, Occur.MUST);
   }
 
