@@ -50,7 +50,7 @@ public class JsonListUserType extends AbstractListUserType {
         mapper.configure(SerializationFeature.INDENT_OUTPUT, false);
         setValue(st, mapper.writeValueAsString(values), index, session);
       } else {
-        setValue(st, null, index, session);
+        setValue(st, "[]", index, session);
       }
     } catch (Exception e) {
       throw new SQLException("转换目标对象为Json时发生异常。", e);
