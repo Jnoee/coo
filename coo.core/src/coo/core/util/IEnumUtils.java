@@ -73,4 +73,18 @@ public class IEnumUtils {
     }
     return StringUtils.join(values, ",");
   }
+
+  /**
+   * 获取枚举集合的文本字符串。
+   * 
+   * @param ienums 枚举集合
+   * @return 返回枚举集合的文本字符串。
+   */
+  public static String getIEnumTexts(Collection<? extends IEnum> ienums) {
+    List<String> values = new ArrayList<>();
+    for (IEnum ienum : ienums) {
+      values.add(ienum.getText());
+    }
+    return StringUtils.join(values, ",");
+  }
 }
