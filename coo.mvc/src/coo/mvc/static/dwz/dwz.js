@@ -5802,11 +5802,11 @@ $.fn.extend({
               suggestFrag = 'autocomplete="off" lookupGroup="' + field.lookupGroup + '"' + suffixFrag + ' suggestUrl="' + field.suggestUrl + '" suggestFields="' + field.suggestFields + '"' + ' postField="' + field.postField + '"';
             }
 
-            html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '"' + suggestFrag + ' lookupPk="' + field.lookupPk + '" size="' + field.size + '" class="' + field.fieldClass + '"/>'
+            html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '"' + suggestFrag + ' lookupPk="' + field.lookupPk + '" size="' + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>'
               + '<a class="btn fa-search-plus" href="' + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suggestFrag + ' lookupPk="' + field.lookupPk + '" title="查找带回">查找带回</a>';
             break;
           case 'attach':
-            html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '" size="' + field.size + '" readonly="readonly" class="' + field.fieldClass + '"/>' + '<a class="btn fa-cloud-upload" href="'
+            html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '" size="' + field.size + '" readonly="readonly" class="' + field.fieldClass + '" ' + attrFrag + '/>' + '<a class="btn fa-cloud-upload" href="'
               + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suffixFrag + ' lookupPk="' + field.lookupPk + '" width="SS" height="S" title="上传文件">上传文件</a>';
             break;
           case 'enum':
