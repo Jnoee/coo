@@ -242,7 +242,7 @@
  * size: 图片大小限制
  * readonly: 是否只读
  -->
-<#macro img path width height uploadUrl="assist/att-file-upload.json" limit=0 size=1024 readonly=false fileObjName="attFile" buttonText="上传图片（.jpg .gif .png）" buttonWidth=150 buttonHeight=18>
+<#macro img path width height uploadUrl="assist/att-file-upload.json" limit=0 size=1024 required=true readonly=false fileObjName="attFile" buttonText="上传图片（.jpg .gif .png）" buttonWidth=150 buttonHeight=18>
 	<@s.bind path />
     <#local random = s.name + "_" + .now?datetime?string("yyyyMMddHHmmssSSS")>
     <#local inputId = "imgInput_" + random>
@@ -273,6 +273,9 @@
 			onUploadStart: img_onUploadStart,
 			onUploadSuccess: img_onUploadSuccess
 		}" />
+		<#if required>
+			<input type="hidden" id="${queueId}_hidden" name="${queueId}_hidden" value="" class="required dwzImgHidden" />
+		</#if>
     </#if>
     <div id="${queueId}" class="fileQueue">
 	    <#if s.status.value??>

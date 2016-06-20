@@ -11,6 +11,11 @@ var uploadify_cancel = function(inputId, fileId) {
 	swfuploadify.cancelUpload(fileId, false);
 	var queueDiv = $("#" + swfuploadify.settings.queueID);
 	queueDiv.children("#" + fileId).remove();
+	
+	var hiddenInput = $("#" + swfuploadify.settings.queueID + "_hidden");
+	if(swfuploadify.queueData.files.length == 0) {
+		hiddenInput.val("");
+	}
 }
 
 var uploadify_onSelectError = function(file, errorCode, errorMsg) {
@@ -71,6 +76,9 @@ var img_onUploadSuccess = function(file, data, response) {
 	fileDiv.find(".uploadify-queue-image").append("<input type=hidden name=" + settings.inputName + " value=" + attFile.id + " />");
 	fileDiv.find(".uploadify-progress").remove();
 	fileDiv.find(".uploadify-queue-bar > div:first").remove();
+	
+	var hiddenInput = $("#" + settings.queueID + "_hidden");
+	hiddenInput.val(file.id);
 	
 	if(!settings.multi) {
 		var stats = this.getStats();
