@@ -274,7 +274,7 @@
 			onUploadSuccess: img_onUploadSuccess
 		}" />
 		<#if required>
-			<input type="hidden" id="${queueId}_hidden" name="${queueId}_hidden" value="" class="required dwzImgHidden" />
+			<input type="hidden" id="${queueId}_hidden" name="${queueId}_hidden" class="required dwzImgHidden"<#if s.status.actualValue??> value="${queueId}"</#if> />
 		</#if>
     </#if>
     <div id="${queueId}" class="fileQueue">

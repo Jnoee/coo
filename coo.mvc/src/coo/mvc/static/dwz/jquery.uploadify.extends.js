@@ -12,8 +12,8 @@ var uploadify_cancel = function(inputId, fileId) {
 	var queueDiv = $("#" + swfuploadify.settings.queueID);
 	queueDiv.children("#" + fileId).remove();
 	
-	var hiddenInput = $("#" + swfuploadify.settings.queueID + "_hidden");
-	if(swfuploadify.queueData.files.length == 0) {
+	if(queueDiv.children("div.uploadify-queue-item").size() == 0) {
+		var hiddenInput = $("#" + swfuploadify.settings.queueID + "_hidden");
 		hiddenInput.val("");
 	}
 }
