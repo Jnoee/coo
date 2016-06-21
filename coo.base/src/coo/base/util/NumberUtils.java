@@ -224,6 +224,29 @@ public class NumberUtils {
    * @param value2 值2
    * @return 返回相除后的值。
    */
+  public static Double div(Integer value1, Integer value2) {
+    return div(value1.doubleValue(), value2.doubleValue());
+  }
+
+  /**
+   * 除。
+   * 
+   * @param value1 值1
+   * @param value2 值2
+   * @param scale 保留小数位数
+   * @return 返回相除后的值。
+   */
+  public static Double div(Integer value1, Integer value2, Integer scale) {
+    return div(value1.doubleValue(), value2.doubleValue(), scale);
+  }
+
+  /**
+   * 除（保留两位小数）。
+   * 
+   * @param value1 值1
+   * @param value2 值2
+   * @return 返回相除后的值。
+   */
   public static Double div(Double value1, Double value2) {
     return div(value1, value2, 2);
   }
