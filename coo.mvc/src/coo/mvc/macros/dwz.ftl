@@ -7,6 +7,7 @@
 	<link href="${ctx}/dwz/themes/base/print.css" rel="stylesheet" media="print"/>
 	<link href="${ctx}/dwz/external/awesome/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/external/uploadify/css/uploadify.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/external/uploadifive/uploadifive.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/external/slider/bjqs.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/uploadify.extends.css" rel="stylesheet" />
 	<!--[if IE]>
@@ -20,6 +21,7 @@
 	<script src="${ctx}/dwz/external/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/uploadifive/jquery.uploadifive.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/slider/bjqs-1.3.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/jquery.uploadify.extends.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/dwz.js" type="text/javascript"></script>
@@ -302,6 +304,71 @@
 		            <#if !readonly>
 		            	<div class="uploadify-queue-bar">
 							<div><a href="javascript:uploadify_cancel('${inputId}','${fileId}');" title="删除"><i class="fa fa-trash"></i></a></div>
+						</div>
+		            </#if>
+		        </div>
+	        </#if>
+	    </#if>
+	</div>
+</#macro>
+
+<#--
+ * HTML5图片组件。
+ * 
+ * path: 图片绑定的属性路径
+ * width: 图片宽度
+ * height: 图片高度
+ * size: 图片大小限制
+ * readonly: 是否只读
+ -->
+<#macro imgh5 path width height uploadUrl="assist/att-file-upload.json" limit=0 size=1 required=true readonly=false fileObjName="attFile" btnText="选择图片（.jpg .gif .png）" btnWidth=180 btnHeight=18>
+	<@s.bind path />
+    <#local random = s.name + "_" + .now?datetime?string("yyyyMMddHHmmssSSS")>
+    <#local inputId = "imgInput_" + random>
+    <#local queueId = "imgQueue_" + random>
+    <#local fileId = "imgFile_" + random>
+    <#local multi = s.status.actualValue?? && s.status.actualValue?is_enumerable >
+    <#if !readonly>
+    	<input id="${s.name}" type="file"<#if required> class="required"</#if> uploadifiveImg="{
+			uploadScript: '${uploadUrl}',
+			buttonText: '${btnText}',
+			width: ${btnWidth},
+			height: ${btnHeight},
+			multi: ${multi?c},
+			uploadLimit: <#if multi>${limit}<#else>1</#if>,
+			fileObjName: '${fileObjName}',
+			fileSizeLimit: '${size}MB',
+			queueID: '${queueId}',
+			iwidth: ${width},
+			iheight: ${height},
+			iname: '${s.name}'
+		}" />
+    </#if>
+    <div id="${queueId}" class="uploadifive-queue">
+	    <#if s.status.value??>
+	    	<#if multi>
+		    	<#list s.status.actualValue as image>
+			    	<div id="${fileId}_${image_index}" class="uploadifive-queue-item">
+			            <div class="uploadifive-queue-image" style="width:${width}px;height:${height}px">
+			            	<img src="${image.path}" />
+			            	<#if !readonly><input type="hidden" name="${s.name}" value="${image.id}"></#if>
+			            </div>
+			            <#if !readonly>
+			            	<div class="uploadifive-queue-bar">
+								<i class="fa fa-trash close" title="删除"></i>
+							</div>
+			            </#if>
+			        </div>
+		        </#list>
+		    <#else>
+		        <div id="${fileId}" class="uploadifive-queue-item">
+		            <div class="uploadify-queue-image" style="width:${width}px;height:${height}px">
+		            	<img src="${s.status.actualValue.path}" width="${width}" height="${height}" />
+		            	<#if !readonly><@s.hidden path /></#if>
+		            </div>
+		            <#if !readonly>
+		            	<div class="uploadifive-queue-bar">
+							<i class="fa fa-trash close" title="删除"></i>
 						</div>
 		            </#if>
 		        </div>
