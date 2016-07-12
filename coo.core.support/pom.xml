@@ -10,6 +10,7 @@
 	<properties>
 		<jxls.version>1.0.6</jxls.version>
 		<mail.version>1.4.7</mail.version>
+		<zxing.version>3.2.1</zxing.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -30,7 +31,12 @@
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
+			<version>${mail.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>${zxing.version}</version>
 		</dependency>
 	</dependencies>
 </project>
