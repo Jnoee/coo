@@ -76,7 +76,18 @@ function Map() {
     }
     return arr;
   }
-}(function() {
+}
+
+function uuid() {
+  var d = new Date().getTime();
+  var id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+  return id;
+}
+(function() {
   $.extend(String.prototype, {
     isPositiveInteger: function() {
       return (new RegExp(/^[1-9]\d*$/).test(this));
@@ -1087,6 +1098,11 @@ var DWZ = {
         });
       }
       return json;
+    },
+    uniqueId: function() {
+      var id = 'ui_id_' + uuid().replaceAll('-', '_');
+      $(this).attr('id', id);
+      return id;
     }
   });
 })(jQuery);(function($) {
@@ -1276,9 +1292,6 @@ var DWZ = {
           if (element.is("input:checkbox") && element.parent().is("label.unit")) {
             element.parent().parent().append(error);
           } else {
-            if (element.parent().hasClass("uploadifive-button")) {
-              error.css("float", "right");
-            }
             element.parent().append(error);
           }
         }
@@ -2218,8 +2231,8 @@ function initUI(_box) {
     $this.uploadify(options);
   });
 
-  $(":file[uploadifiveImg]", $p).each(function() {
-    $(this).uploadifiveImg();
+  $("div[webuploaderImg]", $p).each(function() {
+    $(this).webuploaderImg();
   });
 
   $("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");
@@ -6666,159 +6679,186 @@ $.fn.extend({
 })(jQuery);
 (function($) {
   $.fn.extend({
-    uploadifiveImg: function() {
+    webuploaderImg: function() {
       var $this = $(this);
+      var containerId = $this.uniqueId();
+
+      // 先查找是否有文件列表的div
+      var $fileList = $this.children('div');
+      if(!$fileList.length) {
+        $fileList = $('<div></div>');
+        $this.append($fileList);
+      }
+      $fileList.uniqueId();
+      
+      // 创建选择图片的按钮
+      var $button = $('<div></div>');
+      var buttonId = $button.uniqueId();
+      $this.prepend($button);
+
+      // 默认的参数
       var options = {
         auto: true,
-        dnd: false,
-        width: 80,
-        height: 20,
-        buttonText: '选择图片',
-        fileObjName: 'file',
-        fileSizeLimit: '2MB',
-        fileType: ['image/png', 'image/jpeg', 'image/gif'],
-        overrideEvents: ['onError'],
-        // 扩展属性
-        iwidth: 100, // 图片宽度
-        iheight: 100, // 图片高度
-        iname: 'img' // 图片ID隐藏域名称，提交到后台的字段名
+        fileVal: 'attFile',
+        pick: {
+          id: '#' + buttonId,
+          innerHTML: '选择图片',
+          multiple: true
+        },
+        server: 'result/upload-success.json',
+        accept: {
+          title: 'Images',
+          extensions: 'gif,jpg,jpeg,bmp,png',
+          mimeTypes: 'image/*'
+        },
+        fileSingleSizeLimit: 1 * 1024 * 1024,
+        duplicate: true,
+        thumb: {
+          width: 960,
+          height: 960,
+          quality: 100,
+          allowMagnify: false,
+          crop: false,
+          type: 'image/jpeg'
+        },
+        hiddenName: 'pic',
+        required: true,
+        imgWidth: 100,
+        imgHeight: 100
       };
-      var uploadifiveOptions = DWZ.jsonEval($this.attr('uploadifiveImg'));
-      $.extend(options, uploadifiveOptions);
 
-      // 设置上传队列限制等于上传文件数量限制
-      options.queueSizeLimit = options.uploadLimit;
-
-      // 初始化方法
-      options.onInit = function() {
-        var $this = $(this);
-        // 如果是必填，增加一个用于判断必填的隐藏域
-        if ($this.hasClass("required")) {
-          options.inputHidden = $('<input type="hidden" class="required" />');
-          var inputHiddenId = options.queueID + '_hidden';
-          options.inputHidden.attr('id', inputHiddenId);
-          options.inputHidden.attr('name', inputHiddenId);
-          $this.after(options.inputHidden);
-          $this.removeClass('required');
-        }
-
-        var $queue = $('#' + options.queueID);
-        // 如果本身已存在图片列表，对已存在的图片进行初始化处理，用于编辑的情况。
-        if ($queue.length) {
-          var $data = $this.data('uploadifive');
-
-          var $items = $queue.find('.uploadifive-queue-item');
-          $items.each(function() {
-            var $item = $(this);
-            $item.addClass('complete');
-            $data.uploads.count++;
-            $data.queue.count++;
-            if (options.inputHidden) {
-              options.inputHidden.val(options.inputHidden.val() + $item.find('input:hidden').val());
-            }
-
-            $item.find('.close').bind(
-                    'click',
-                    function() {
-                      $item.fadeOut(500, function() {
-                        $(this).remove();
-                      });
-                      if (options.inputHidden) {
-                        options.inputHidden.val(options.inputHidden.val().replace(
-                                $item.find('input:hidden').val(), ''));
-                      }
-                      $data.uploads.count--;
-                      $data.queue.count--;
-                    });
-          });
-        }
+      // 读取页面配置的参数合并到默认参数
+      var uploaderOptions = DWZ.jsonEval($this.attr('webuploaderImg'));
+      $.extend(true, options, uploaderOptions);
+      
+      // 如果指定是必填字段需要增加一个隐藏域来辅助实现必填校验
+      if (options.required) {
+        var requiredHidden = options.requiredHidden = $('<input type="hidden" class="required" />');
+        var requiredHiddenId = requiredHidden.uniqueId();
+        requiredHidden.attr('name', requiredHiddenId);
+        $this.after(requiredHidden);
+        
+        requiredHidden.addFile = function(fileId) {
+          $(this).val($(this).val() + fileId);
+        };
+        
+        requiredHidden.removeFile = function(fileId) {
+          $(this).val($(this).val().replace(fileId, ''));
+        };
       }
+      
+      // 初始化时处理必填隐藏域的默认值和删除按钮动作
+      $fileList.children().each(function() {
+        var $li = $(this);
+        var $imgHidden = $li.find('input:hidden');
+        
+        if($imgHidden.length && options.required) {
+          options.requiredHidden.addFile($imgHidden.val());
+        }
+        
+        $li.find('i.close').click(function() {
+          if($imgHidden.length && options.required) {
+            options.requiredHidden.removeFile($imgHidden.val());
+          }
+          $li.remove();
+        });
+      });
 
-      options.itemTemplate = '<div class="uploadifive-queue-item">\
-        <div class="uploadifive-queue-image" style="width:'
-                      + options.iwidth
-                      + 'px;height:'
-                      + options.iheight
-                      + 'px"></div>\
-          <div class="uploadifive-progress">\
-            <div class="uploadifive-progress-bar"></div>\
-          </div>\
-          <div class="uploadifive-queue-bar">\
-            <i class="fa fa-trash close" title="删除"></i>\
-          </div>\
-        </div>';
+      // 创建上传组件
+      var uploader = WebUploader.create(options);
+      
+      uploader.on('beforeFileQueued', function( file ) {
+        // 如果限制为一张图片，重置上传队列，实现图片替换而不触发数量校验
+        if(options.fileNumLimit == 1) {
+          uploader.reset();
+        }
+      });
+      
+      // 当有文件添加进来的时候
+      uploader.on('fileQueued', function(file) {
+        var $li = $('<div id="' + file.id + '" class="webuploader-file-item thumbnail">\
+                  <img width="' + options.imgWidth + '" height="' + options.imgHeight + '" />\
+                  <div class="webuploader-file-info">' + file.name + '</div>\
+                  <div class="webuploader-file-bar">\
+                    <i class="fa fa-trash close" title="删除"></i>\
+                  </div>\
+                </div>');
+        
+        // 如果限制为一张图片，直接替换，否则新增
+        if(options.fileNumLimit == 1) {
+          $fileList.html($li);
+          if(options.required) {
+            options.requiredHidden.val('');
+          }
+        } else {
+          $fileList.append($li);
+        }
 
-      options.onError = function(errorType, file) {
-        var errorMsg = '上传文件失败，';
-        switch (errorType) {
-        case '404_FILE_NOT_FOUND':
-          errorMsg += '文件未找到。';
+        // 创建缩略图
+        var $img = $li.find('img');
+        uploader.makeThumb(file, function(error, src) {
+          if (error) {
+            $img.replaceWith('<span>不能预览</span>');
+            return;
+          }
+          $img.attr('src', src);
+        });
+
+        // 定义删除按钮动作
+        $li.on('click', '.webuploader-file-bar > i', function() {
+          uploader.removeFile(file, true);
+          
+          var $imgHidden = $li.find('input:hidden');
+          if($imgHidden.length && options.required) {
+            options.requiredHidden.removeFile($imgHidden.val());
+          }
+          $li.remove();
+        });
+      });
+      
+      uploader.on('error', function(type) {
+        var errorMsg = '上传图片失败，';
+        switch(type) {
+        case 'Q_EXCEED_NUM_LIMIT':
+          errorMsg += '图片数量限制为：' + options.fileNumLimit + '。';
           break;
-        case '403_FORBIDDEN':
-          errorMsg += '您没有操作权限，请联系管理员。';
+        case 'F_EXCEED_SIZE':
+          errorMsg += '图片大小限制为：' + WebUploader.Base.formatSize(options.fileSingleSizeLimit) + '。';
           break;
-        case 'FORBIDDEN_FILE_TYPE':
-          errorMsg += '上传的文件类型限制为：' + options.fileType + "。";
+        case 'Q_TYPE_DENIED':
+          errorMsg += '图片类型限制为：' + options.accept.extensions + '。';
           break;
-        case 'FILE_SIZE_LIMIT_EXCEEDED':
-          errorMsg += '上传的文件大小限制为：' + options.fileSizeLimit + "。";
+        case 'F_DUPLICATE':
+          errorMsg += '图片重复。';
           break;
-        case 'QUEUE_LIMIT_EXCEEDED':
-          errorMsg += '上传的文件数量限制为：' + options.uploadLimit + "。";
-          break;
-        case 'UPLOAD_LIMIT_EXCEEDED':
-          return;
         default:
           errorMsg += '发生未知异常，请重试或联系管理员。';
           break;
         }
-        ;
+        alertMsg.error(errorMsg);
+      });
 
-        if (file && file.queueItem) {
-          file.queueItem.remove();
+      uploader.on('uploadSuccess', function(file, response) {
+        var $li = $('#' + file.id);
+        var $hidden = $('<input type="hidden" />');
+        $hidden.attr('name', options.hiddenName);
+        $hidden.val(response.id);
+        $li.append($hidden);
+        
+        if (options.required) {
+          options.requiredHidden.addFile(response.id);
         }
-        alert(errorMsg);
-      };
+        
+        var $info = $li.find('div.webuploader-file-info');
+        $info.addClass('success');
+        $info.text('上传成功');
+      });
 
-      options.onUploadComplete = function(file, data) {
-        var $this = $(this);
-        var $data = $this.data('uploadifive');
-        var $fileDiv = file.queueItem;
-        var result = DWZ.jsonEval(data);
-
-        $fileDiv.find('.progress-bar').css('width', '100%');
-        $fileDiv.find('.progress').slideUp(250);
-        $fileDiv.addClass('complete');
-
-        var $imgDiv = $fileDiv.find('.uploadifive-queue-image');
-        var $img = $('<img src="' + result.path + '" />');
-        var $input = $('<input type="hidden" name="' + options.iname + '" value="' + result.id + '" />');
-        var $progressDiv = $fileDiv.find('.uploadifive-progress');
-
-        $imgDiv.append($img);
-        $imgDiv.append($input);
-
-        $progressDiv.remove();
-
-        if (options.inputHidden) {
-          file.id = result.id;
-          options.inputHidden.val(options.inputHidden.val() + result.id);
-        }
-
-        if (options.uploadLimit == 1) {
-          $data.uploads.count--;
-        }
-      };
-
-      options.onCancel = function(file) {
-        var $data = $this.data('uploadifive');
-        $data.uploads.count--;
-        if (options.inputHidden) {
-          options.inputHidden.val(options.inputHidden.val().replace(file.id, ''));
-        }
-      };
-
-      $this.uploadifive(options);
+      uploader.on('uploadError', function(file) {
+        var $info = $('#' + file.id).find('div.webuploader-file-info');
+        $info.addClass('error');
+        $info.text('上传失败');
+      });
     }
   });
 })(jQuery);/**

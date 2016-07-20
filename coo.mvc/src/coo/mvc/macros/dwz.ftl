@@ -7,7 +7,7 @@
 	<link href="${ctx}/dwz/themes/base/print.css" rel="stylesheet" media="print"/>
 	<link href="${ctx}/dwz/external/awesome/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/external/uploadify/css/uploadify.css" rel="stylesheet" />
-	<link href="${ctx}/dwz/external/uploadifive/uploadifive.css" rel="stylesheet" />
+	<link href="${ctx}/dwz/external/webuploader/webuploader.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/external/slider/bjqs.css" rel="stylesheet" />
 	<link href="${ctx}/dwz/uploadify.extends.css" rel="stylesheet" />
 	<!--[if IE]>
@@ -21,7 +21,7 @@
 	<script src="${ctx}/dwz/external/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
-	<script src="${ctx}/dwz/external/uploadifive/jquery.uploadifive.min.js" type="text/javascript"></script>
+	<script src="${ctx}/dwz/external/webuploader/webuploader.html5only.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/external/slider/bjqs-1.3.min.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/jquery.uploadify.extends.js" type="text/javascript"></script>
 	<script src="${ctx}/dwz/dwz.js" type="text/javascript"></script>
@@ -321,60 +321,53 @@
  * size: 图片大小限制
  * readonly: 是否只读
  -->
-<#macro imgh5 path width height uploadUrl="assist/att-file-upload.json" limit=0 size=1 required=true readonly=false fileObjName="attFile" btnText="选择图片（.jpg .gif .png）" btnWidth=180 btnHeight=18>
+<#macro imgh5 path width=100 height=100 size=1 required=true readonly=false fileObjName="attFile" btnText="选择图片" uploadUrl="assist/att-file-upload.json">
 	<@s.bind path />
-    <#local random = s.name + "_" + .now?datetime?string("yyyyMMddHHmmssSSS")>
-    <#local inputId = "imgInput_" + random>
-    <#local queueId = "imgQueue_" + random>
-    <#local fileId = "imgFile_" + random>
     <#local multi = s.status.actualValue?? && s.status.actualValue?is_enumerable >
     <#if !readonly>
-    	<input id="${s.name}" type="file"<#if required> class="required"</#if> uploadifiveImg="{
-			uploadScript: '${uploadUrl}',
-			buttonText: '${btnText}',
-			width: ${btnWidth},
-			height: ${btnHeight},
-			multi: ${multi?c},
-			uploadLimit: <#if multi>${limit}<#else>1</#if>,
-			fileObjName: '${fileObjName}',
-			fileSizeLimit: '${size}MB',
-			queueID: '${queueId}',
-			iwidth: ${width},
-			iheight: ${height},
-			iname: '${s.name}'
-		}" />
+    	<div webuploaderImg="{
+    	server:'${uploadUrl}',
+    	pick:{innerHTML:'${btnText}', multiple:${multi?c}},
+    	fileVal:'${fileObjName}',
+    	fileSingleSizeLimit:${size}*1024*1024,
+    	hiddenName: '${s.name}',
+    	imgWidth:${width},
+    	imgHeight:${height},
+    	required:${required?c}
+    	<#if !multi>,fileNumLimit:1</#if>}">
     </#if>
-    <div id="${queueId}" class="uploadifive-queue">
-	    <#if s.status.value??>
+    <#if s.status.value??>
+	    <div>
 	    	<#if multi>
 		    	<#list s.status.actualValue as image>
-			    	<div id="${fileId}_${image_index}" class="uploadifive-queue-item">
-			            <div class="uploadifive-queue-image" style="width:${width}px;height:${height}px">
-			            	<img src="${image.path}" />
-			            	<#if !readonly><input type="hidden" name="${s.name}" value="${image.id}"></#if>
-			            </div>
-			            <#if !readonly>
-			            	<div class="uploadifive-queue-bar">
+					<div class="webuploader-file-item thumbnail">
+						<img width="${width}" height="${height}" src="${image.path}">
+						<#if !readonly>
+							<div class="webuploader-file-info">已上传</div>
+							<div class="webuploader-file-bar">
 								<i class="fa fa-trash close" title="删除"></i>
 							</div>
-			            </#if>
-			        </div>
-		        </#list>
-		    <#else>
-		        <div id="${fileId}" class="uploadifive-queue-item">
-		            <div class="uploadify-queue-image" style="width:${width}px;height:${height}px">
-		            	<img src="${s.status.actualValue.path}" width="${width}" height="${height}" />
-		            	<#if !readonly><@s.hidden path /></#if>
-		            </div>
-		            <#if !readonly>
-		            	<div class="uploadifive-queue-bar">
+							<input type="hidden" name="${s.name}" value="${image.id}" />
+						</#if>
+					</div>
+				</#list>
+			<#else>
+				<div class="webuploader-file-item thumbnail">
+					<img width="${width}" height="${height}" src="${s.status.actualValue.path}">
+					<#if !readonly>
+						<div class="webuploader-file-info">已上传</div>
+						<div class="webuploader-file-bar">
 							<i class="fa fa-trash close" title="删除"></i>
 						</div>
-		            </#if>
-		        </div>
-	        </#if>
-	    </#if>
-	</div>
+						<@s.hidden path />
+					</#if>
+				</div>
+			</#if>
+		</div>
+	</#if>
+	<#if !readonly>
+		</div>
+	</#if>
 </#macro>
 
 <#--
