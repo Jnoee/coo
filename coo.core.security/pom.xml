@@ -8,23 +8,13 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<properties>
-		<shiro.version>1.2.3</shiro.version>
+		<shiro.version>1.3.0</shiro.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.github.jnoee</groupId>
 			<artifactId>coo.core</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-			<version>${shiro.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-web</artifactId>
-			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
