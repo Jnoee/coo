@@ -6723,6 +6723,7 @@ $.fn.extend({
         },
         hiddenName: 'pic',
         required: true,
+        initShow: true,
         imgWidth: 100,
         imgHeight: 100
       };
@@ -6733,7 +6734,10 @@ $.fn.extend({
       
       // 如果指定是必填字段需要增加一个隐藏域来辅助实现必填校验
       if (options.required) {
-        var requiredHidden = options.requiredHidden = $('<input type="hidden" class="required" />');
+        var requiredHidden = options.requiredHidden = $('<input type="hidden" />');
+        if(options.initShow) {
+          options.requiredHidden.addClass('required');
+        }
         var requiredHiddenId = requiredHidden.uniqueId();
         requiredHidden.attr('name', requiredHiddenId);
         $this.after(requiredHidden);
