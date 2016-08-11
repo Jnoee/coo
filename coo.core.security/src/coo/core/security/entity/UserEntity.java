@@ -19,6 +19,7 @@ import org.hibernate.search.annotations.FieldBridge;
 import coo.core.enums.EnabledStatus;
 import coo.core.hibernate.search.IEnumValueBridge;
 import coo.core.security.annotations.LogField;
+import coo.core.security.constants.AdminIds;
 
 /**
  * 用户实体基类。
@@ -58,6 +59,15 @@ public abstract class UserEntity<U extends UserEntity<U, A>, A extends ActorEnti
       orphanRemoval = true)
   @OrderBy("createDate")
   private List<A> actors = new ArrayList<A>();
+
+  /**
+   * 判断是否超级管理员。
+   * 
+   * @return 返回是否超级管理员。
+   */
+  public Boolean isAdmin() {
+    return AdminIds.USER_ID.equals(id);
+  }
 
   public String getName() {
     return name;
