@@ -29,7 +29,7 @@ public class TemplateMail extends Mail {
   @Override
   public String getText() {
     try {
-      Configuration configuration = SpringUtils.getBean(Configuration.class);
+      Configuration configuration = SpringUtils.getBean("mailTemplateConfigurer");
       Template template = configuration.getTemplate(templateName);
       if (model == null) {
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, templateModel);

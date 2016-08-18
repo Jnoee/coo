@@ -9,8 +9,10 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+	
 	<!-- 模版配置组件 -->
-	<bean id="templateConfigurer" class="coo.core.template.TemplateConfigurer">
+	<bean id="mailTemplateConfigurer" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="classpath:/META-INF/coo/mail" />
 		<property name="defaultEncoding" value="${freemarker.encoding:UTF-8}" />
 		<property name="freemarkerSettings">
 			<props>
@@ -29,8 +31,9 @@
 			</props>
 		</property>
 	</bean>
+	
 	<!-- 邮件发送组件 -->
-	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<bean id="mailSender" class="coo.core.mail.MailSender">
 		<property name="host" value="${mail.host:smtp.163.com}" />
 		<property name="port" value="${mail.port:25}" />
 		<property name="username" value="${mail.username:coo_mail_test}" />

@@ -10,5 +10,5 @@
 	<context:property-placeholder
 		ignore-resource-not-found="true" />
 	<import resource="classpath:META-INF/coo/coo.core.support.xml" />
-	<context:component-scan base-package="coo.core.util,coo.core.mail" />
+	<context:component-scan base-package="coo.core.util" />
 </beans>

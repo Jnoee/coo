@@ -91,12 +91,14 @@
 	<tx:annotation-driven />
 	<!-- 启动Spring AOP -->
 	<aop:aspectj-autoproxy />
+	
 	<!-- 定义默认异步任务组件 -->
 	<task:executor id="taskExecutor" pool-size="${task.executor.pool.size:20}" />
 	<!-- 定义默认定时任务组件 -->
 	<task:scheduler id="taskScheduler" pool-size="${task.scheduler.pool.size:20}" />
 	<!-- 启用annotation-driven -->
 	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler" />
+	
 	<!-- 加载coo.core下的组件 -->
 	<context:component-scan base-package="coo.core" />
 </beans>
