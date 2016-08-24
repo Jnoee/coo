@@ -128,7 +128,7 @@ public abstract class BeanUtils {
   }
 
   /**
-   * 递归获取类的Field，直到其父类为Object类。子类的Field排列在父类之前。
+   * 获取指定类所有的公共属性列表。
    * 
    * @param targetClass 类
    * @param excludeFieldNames 排除的属性名称
@@ -145,6 +145,23 @@ public abstract class BeanUtils {
     Class<?> parentClass = targetClass.getSuperclass();
     if (parentClass != Object.class) {
       fields.addAll(getAllDeclaredField(parentClass, excludeFieldNames));
+    }
+    return fields;
+  }
+
+  /**
+   * 获取指定类非static、final的公共属性列表。
+   * 
+   * @param targetClass 类
+   * @param excludeFieldNames 排除的属性名称
+   * @return 返回Field列表。
+   */
+  public static List<Field> getDeclaredFields(Class<?> targetClass, String... excludeFieldNames) {
+    List<Field> fields = new ArrayList<Field>();
+    for (Field field : getAllDeclaredField(targetClass, excludeFieldNames)) {
+      if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())) {
+        fields.add(field);
+      }
     }
     return fields;
   }

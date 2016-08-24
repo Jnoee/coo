@@ -11,6 +11,7 @@
 		<jxls.version>1.0.6</jxls.version>
 		<mail.version>1.4.7</mail.version>
 		<zxing.version>3.2.1</zxing.version>
+		<httpclient.version>4.5.2</httpclient.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -37,6 +38,11 @@
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
 			<version>${zxing.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
 		</dependency>
 	</dependencies>
 </project>
