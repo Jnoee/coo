@@ -11,8 +11,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -59,7 +57,6 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE,
       orphanRemoval = true)
   @OrderBy("ordinal,name")
-  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   private List<O> childs = new ArrayList<O>();
   /** 关联职务 */
   @OneToMany(mappedBy = "organ", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE,

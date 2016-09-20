@@ -1,5 +1,6 @@
 package coo.base.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -116,5 +117,20 @@ public abstract class CollectionUtils {
         target.add(o);
       }
     }
+  }
+
+  /**
+   * 将数组转换为列表。
+   * 
+   * @param <T> 元素类型
+   * @param elements 数组
+   * @return 返回对应的列表。
+   */
+  public static <T> List<T> toList(T[] elements) {
+    List<T> list = new ArrayList<>();
+    for (T element : elements) {
+      list.add(element);
+    }
+    return list;
   }
 }
