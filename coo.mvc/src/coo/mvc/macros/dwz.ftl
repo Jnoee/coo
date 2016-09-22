@@ -321,7 +321,7 @@
  * size: 图片大小限制
  * readonly: 是否只读
  -->
-<#macro imgh5 path width=100 height=100 size=1 required=true initShow=true readonly=false fileObjName="attFile" btnText="选择图片" uploadUrl="assist/att-file-upload.json">
+<#macro imgh5 path width=100 height=100 size=1 required=true initShow=true readonly=false fileObjName="attFile" btnText="选择图片" uploadUrl="/assist/att-file-upload.json">
 	<@s.bind path />
     <#local multi = s.status.actualValue?? && s.status.actualValue?is_enumerable >
     <#if !readonly>
