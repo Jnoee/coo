@@ -221,6 +221,15 @@
     </#if>
 </#macro>
 
+<#macro combox path items itemLabel="name" itemValue="id" headerLabel="全部" headerValue="" ref="" refUrl="" required=false>
+	<#local comboxClass = required?string("required ","") + "combox">
+	<@s.select path=path items=items itemLabel=itemLabel itemValue=itemValue headerLabel=headerLabel headerValue=headerValue class=comboxClass ref=ref refUrl=refUrl />
+</#macro>
+
+<#macro ienumCombox path ienum headerLabel="全部" headerValue="" ref="" refUrl="" required=false>
+	<@combox path=path items=ienum?values itemLabel="text" itemValue="value" headerLabel=headerLabel headerValue=headerValue ref=ref refUrl=refUrl required=required />
+</#macro> 
+
 <#--
  * 价格组件。
  *

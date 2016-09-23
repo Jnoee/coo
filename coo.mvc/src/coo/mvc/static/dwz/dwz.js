@@ -6444,7 +6444,7 @@ $.fn.extend({
   };
 
   var _onchange = function(event) {
-    var $ref = $("#" + event.data.ref, $(event.target).unitBox());
+    var $ref = $("select[name=" + event.data.ref + "]", event.data.$this.unitBox());
     if ($ref.size() == 0) return false;
     $.ajax({
       type: 'POST',
@@ -6546,7 +6546,8 @@ $.fn.extend({
         var ref = $this.attr("ref");
         var refUrl = $this.attr("refUrl") || "";
 
-        var cid = $this.attr("id") || Math.round(Math.random() * 10000000);
+        var cid = Math.round(Math.random() * 10000000);
+        $this.attr("id", cid);
         var select = '<div class="combox"><div id="combox_' + cid + '" class="select"'
                 + (ref ? ' ref="' + ref + '"' : '') + '>';
         select += '<a href="javascript:" class="' + $this.attr("class") + '" name="' + name + '" value="' + value
