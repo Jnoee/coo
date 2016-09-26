@@ -225,6 +225,8 @@ public abstract class BeanUtils {
   @SuppressWarnings("unchecked")
   public static void copyField(Object source, Object target, String fieldName,
       Boolean containedNull) {
+    // 如果源对象是懒加载对象，先处理成非懒加载
+    source = processHibernateLazyField(source);
     Object sourceFieldValue = getField(source, fieldName);
     Boolean needCopy = isFieldNeedCopy(source, target, fieldName);
     if (sourceFieldValue == null && !containedNull) {
