@@ -6444,7 +6444,7 @@ $.fn.extend({
   };
 
   var _onchange = function(event) {
-    var $ref = $("select[name=" + event.data.ref + "]", event.data.$this.unitBox());
+    var $ref = $("select[name=" + event.data.ref.escape() + "]", event.data.$this.unitBox());
     if ($ref.size() == 0) return false;
     $.ajax({
       type: 'POST',
