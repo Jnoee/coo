@@ -6,13 +6,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * 统一下单响应。
  */
 public class UnifiedOrderReply extends WxPayReply {
-  /** 设备号 */
   @XStreamAlias("device_info")
   private String deviceInfo;
-  /** 交易类型 */
   @XStreamAlias("trade_type")
   private String tradeType;
-  /** 预支付交易会话标识 */
   @XStreamAlias("prepay_id")
   private String prepayId;
 

@@ -1,12 +1,17 @@
 package coo.core.pay.wx;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 
+import coo.base.constants.Encoding;
 import coo.base.util.BeanUtils;
 import coo.base.util.CryptoUtils;
 
@@ -14,6 +19,25 @@ import coo.base.util.CryptoUtils;
  * 微信支付工具类。
  */
 public class WxPayUtils {
+  private static Map<Class<?>, XStream> XSTREAMS = new HashMap<>();
+
+  /**
+   * 获取指定数据类的XStream工具。
+   * 
+   * @param dataClass 数据类
+   * @return 返回指定数据类的XStream工具。
+   */
+  public static XStream getXstream(Class<?> dataClass) {
+    XStream xstream = XSTREAMS.get(dataClass);
+    if (xstream == null) {
+      xstream = new XStream(new DomDriver(Encoding.UTF_8, new XmlFriendlyNameCoder("-_", "_")));
+      xstream.autodetectAnnotations(true);
+      xstream.alias("xml", dataClass);
+      XSTREAMS.put(dataClass, xstream);
+    }
+    return xstream;
+  }
+
   /**
    * 签名。
    * 
@@ -42,8 +66,8 @@ public class WxPayUtils {
    * @return 返回参数Map。
    */
   private static Map<String, String> genMap(Object data) {
-    List<Field> fields = BeanUtils.getDeclaredFields(data.getClass());
     Map<String, String> params = new TreeMap<>();
+    List<Field> fields = BeanUtils.findField(data.getClass(), XStreamAlias.class);
     for (Field field : fields) {
       XStreamAlias alias = field.getAnnotation(XStreamAlias.class);
       Object value = BeanUtils.getField(data, field);

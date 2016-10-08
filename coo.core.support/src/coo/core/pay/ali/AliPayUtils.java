@@ -118,8 +118,8 @@ public class AliPayUtils {
    * @return 返回数据Map。
    */
   private static Map<String, String> genMap(Object data) {
-    List<Field> fields = BeanUtils.getDeclaredFields(data.getClass());
     Map<String, String> dataMap = new TreeMap<>();
+    List<Field> fields = BeanUtils.findField(data.getClass(), XStreamAlias.class);
     for (Field field : fields) {
       XStreamAlias alias = field.getAnnotation(XStreamAlias.class);
       Object value = BeanUtils.getField(data, field);

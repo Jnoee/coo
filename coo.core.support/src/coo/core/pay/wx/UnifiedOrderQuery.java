@@ -1,76 +1,57 @@
 package coo.core.pay.wx;
 
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import coo.base.util.BeanUtils;
+import coo.base.util.DateUtils;
 
 /**
  * 统一下单请求。
  */
 public class UnifiedOrderQuery extends WxPayQuery {
-  /** 设备号 */
   @XStreamAlias("device_info")
   private String deviceInfo;
-  /** 商品描述 */
   @XStreamAlias("body")
-  @NotBlank
-  @Length(max = 128)
   private String body;
-  /** 商品详情 */
   @XStreamAlias("detail")
-  @Length(max = 8192)
   private String detail;
-  /** 附加数据 */
   @XStreamAlias("attach")
-  @Length(max = 127)
   private String attach;
-  /** 商户订单号 */
   @XStreamAlias("out_trade_no")
-  @NotBlank
-  @Length(max = 32)
   private String outTradeNo;
-  /** 货币类型 */
   @XStreamAlias("fee_type")
-  @Length(max = 16)
   private String feeType;
-  /** 总金额 */
   @XStreamAlias("total_fee")
-  @NotNull
   private Integer totalFee;
-  /** 终端IP */
   @XStreamAlias("spbill_create_ip")
-  @NotBlank
-  @Length(max = 16)
   private String spbillCreateIp;
-  /** 交易起始时间 */
   @XStreamAlias("time_start")
-  @Length(max = 14)
   private String timeStart;
-  /** 交易结束时间 */
   @XStreamAlias("time_expire")
-  @Length(max = 14)
   private String timeExpire;
-  /** 商品标记 */
   @XStreamAlias("goods_tag")
-  @Length(max = 32)
   private String goodsTag;
-  /** 通知地址 */
   @XStreamAlias("notify_url")
-  @NotBlank
-  @Length(max = 256)
   private String notifyUrl;
-  /** 交易类型 */
   @XStreamAlias("trade_type")
-  @NotBlank
-  @Length(max = 16)
-  private String tradeType;
-  /** 限制支付方式 */
+  private String tradeType = "APP";
   @XStreamAlias("limit_pay")
-  @Length(max = 32)
   private String limitPay;
+
+  /**
+   * 构造方法。
+   * 
+   * @param data 业务数据
+   */
+  public UnifiedOrderQuery(UnifiedOrderData data) {
+    BeanUtils.copyFields(data, this);
+    if (data.getTimeStart() != null) {
+      timeStart = DateUtils.format(data.getTimeStart(), DateUtils.SECOND_N);
+    }
+    if (data.getTimeExpire() != null) {
+      timeExpire = DateUtils.format(data.getTimeExpire(), DateUtils.SECOND_N);
+    }
+  }
 
   @Override
   public String getApiName() {

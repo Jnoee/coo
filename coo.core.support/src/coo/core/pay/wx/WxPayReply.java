@@ -7,22 +7,25 @@ import coo.base.exception.BusinessException;
 /**
  * 微信支付响应基类。
  */
-public abstract class WxPayReply extends WxPayData {
-  /** 返回状态码 */
+public abstract class WxPayReply {
   @XStreamAlias("return_code")
-  private String returnCode;
-  /** 返回信息 */
+  protected String returnCode;
   @XStreamAlias("return_msg")
-  private String returnMsg;
-  /** 业务结果 */
+  protected String returnMsg;
+  @XStreamAlias("appid")
+  protected String appId;
+  @XStreamAlias("mch_id")
+  protected String mchId;
+  @XStreamAlias("nonce_str")
+  protected String nonceStr;
+  @XStreamAlias("sign")
+  protected String sign;
   @XStreamAlias("result_code")
-  private String resultCode;
-  /** 错误代码 */
+  protected String resultCode;
   @XStreamAlias("err_code")
-  private String errCode;
-  /** 错误代码描述 */
+  protected String errCode;
   @XStreamAlias("err_code_des")
-  private String errCodeDes;
+  protected String errCodeDes;
 
   /**
    * 解析XML填充响应对象。
@@ -31,7 +34,7 @@ public abstract class WxPayReply extends WxPayData {
    * @param key 密钥
    */
   public void parseXml(String xml, String key) {
-    getXstream().fromXML(xml, this);
+    WxPayUtils.getXstream(getClass()).fromXML(xml, this);
     if (!sign.equals(WxPayUtils.sign(this, key))) {
       throw new BusinessException("微信支付调用失败：验证签名失败。");
     }
@@ -57,6 +60,38 @@ public abstract class WxPayReply extends WxPayData {
 
   public void setReturnMsg(String returnMsg) {
     this.returnMsg = returnMsg;
+  }
+
+  public String getAppId() {
+    return appId;
+  }
+
+  public void setAppId(String appId) {
+    this.appId = appId;
+  }
+
+  public String getMchId() {
+    return mchId;
+  }
+
+  public void setMchId(String mchId) {
+    this.mchId = mchId;
+  }
+
+  public String getNonceStr() {
+    return nonceStr;
+  }
+
+  public void setNonceStr(String nonceStr) {
+    this.nonceStr = nonceStr;
+  }
+
+  public String getSign() {
+    return sign;
+  }
+
+  public void setSign(String sign) {
+    this.sign = sign;
   }
 
   public String getResultCode() {

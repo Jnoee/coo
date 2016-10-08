@@ -28,10 +28,11 @@ public class WxPay {
   /**
    * 统一下单。
    * 
-   * @param query 请求对象
+   * @param data 业务数据
    * @return 返回响应对象。
    */
-  public UnifiedOrderReply unifiedOrder(UnifiedOrderQuery query) {
+  public UnifiedOrderReply unifiedOrder(UnifiedOrderData data) {
+    UnifiedOrderQuery query = new UnifiedOrderQuery(data);
     UnifiedOrderReply reply = new UnifiedOrderReply();
     execute(query, reply);
     return reply;
