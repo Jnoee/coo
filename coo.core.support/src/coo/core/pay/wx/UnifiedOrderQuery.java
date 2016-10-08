@@ -54,8 +54,8 @@ public class UnifiedOrderQuery extends WxPayQuery {
   }
 
   @Override
-  public String getApiName() {
-    return "/unifiedorder";
+  public String getService() {
+    return "/pay/unifiedorder";
   }
 
   public String getDeviceInfo() {

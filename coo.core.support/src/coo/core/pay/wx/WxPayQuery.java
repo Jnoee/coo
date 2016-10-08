@@ -16,11 +16,11 @@ public abstract class WxPayQuery {
   protected String sign;
 
   /**
-   * 获取接口名称。
+   * 获取接口地址。
    * 
-   * @return 返回接口名称。
+   * @return 返回接口地址。
    */
-  public abstract String getApiName();
+  public abstract String getService();
 
   /**
    * 生成请求XML。

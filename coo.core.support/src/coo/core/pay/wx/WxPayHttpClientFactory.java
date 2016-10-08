@@ -29,7 +29,8 @@ public class WxPayHttpClientFactory extends AbstractFactoryBean<HttpClient> {
     try (FileInputStream inputStream = new FileInputStream(new File(certFilePath))) {
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
       keyStore.load(inputStream, certPassword.toCharArray());
-      SSLContext sslContext = SSLContexts.createDefault();
+      SSLContext sslContext =
+          SSLContexts.custom().loadKeyMaterial(keyStore, certPassword.toCharArray()).build();
       SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext,
           new String[] {"TLSv1"}, null, SSLConnectionSocketFactory.getDefaultHostnameVerifier());
       return HttpClients.custom().setSSLSocketFactory(socketFactory).build();

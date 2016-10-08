@@ -4,7 +4,7 @@ package coo.core.pay.wx;
  * 微信支付配置。
  */
 public class WxPayConfig {
-  private String apiUrl = "https://api.mch.weixin.qq.com/pay";
+  private String apiUrl = "https://api.mch.weixin.qq.com";
   private String key;
   private String appId;
   private String mchId;

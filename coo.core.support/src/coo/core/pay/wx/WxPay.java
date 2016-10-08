@@ -39,13 +39,26 @@ public class WxPay {
   }
 
   /**
+   * 申请退款。
+   * 
+   * @param data 业务数据
+   * @return 返回响应对象。
+   */
+  public RefundReply refund(RefundData data) {
+    RefundQuery query = new RefundQuery(data);
+    RefundReply reply = new RefundReply();
+    execute(query, reply);
+    return reply;
+  }
+
+  /**
    * 调用微信支付接口。
    * 
    * @param query 请求对象
    * @param reply 响应对象
    */
   private void execute(WxPayQuery query, WxPayReply reply) {
-    String url = config.getApiUrl() + query.getApiName();
+    String url = config.getApiUrl() + query.getService();
     processQuery(query);
     String queryXml = query.genXml(config.getKey());
     String replyXml = "";
@@ -80,6 +93,13 @@ public class WxPay {
     Field notifyUrlField = BeanUtils.findField(query.getClass(), "notifyUrl");
     if (notifyUrlField != null) {
       BeanUtils.setField(query, notifyUrlField, config.getNotifyUrl());
+    }
+    Field opUserIdField = BeanUtils.findField(query.getClass(), "opUserId");
+    if (opUserIdField != null) {
+      Object opUserId = BeanUtils.getField(query, opUserIdField);
+      if (opUserId == null) {
+        BeanUtils.setField(query, opUserIdField, config.getMchId());
+      }
     }
   }
 
