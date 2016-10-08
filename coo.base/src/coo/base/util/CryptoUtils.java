@@ -16,6 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import coo.base.constants.Algorithm;
 import coo.base.constants.Encoding;
 import coo.base.exception.UncheckedException;
 
@@ -221,10 +222,22 @@ public class CryptoUtils {
    * @return 返回Base64编码格式的签名。
    */
   public static String sign(String srcString, PrivateKey privateKey) {
+    return sign(srcString, Algorithm.MD5RSA, privateKey);
+  }
+
+  /**
+   * 对字符串进行签名。
+   * 
+   * @param srcString 待签名的字符串
+   * @param algorithm 签名算法
+   * @param privateKey 私钥
+   * @return 返回Base64编码格式的签名。
+   */
+  public static String sign(String srcString, String algorithm, PrivateKey privateKey) {
     try {
-      Signature rsa = Signature.getInstance("MD5withRSA");
+      Signature rsa = Signature.getInstance(algorithm);
       rsa.initSign(privateKey);
-      rsa.update(srcString.getBytes());
+      rsa.update(srcString.getBytes(Encoding.UTF_8));
       byte[] sig = rsa.sign();
       return new String(encodeBase64(sig));
     } catch (Exception e) {
@@ -241,10 +254,24 @@ public class CryptoUtils {
    * @return 验证签名成功返回true，否则返回false。
    */
   public static Boolean verify(String srcString, PublicKey publicKey, String signature) {
+    return verify(srcString, Algorithm.MD5RSA, publicKey, signature);
+  }
+
+  /**
+   * 验证签名。
+   * 
+   * @param srcString 原文字符串
+   * @param algorithm 签名算法
+   * @param publicKey 公钥
+   * @param signature 签名
+   * @return 验证签名成功返回true，否则返回false。
+   */
+  public static Boolean verify(String srcString, String algorithm, PublicKey publicKey,
+      String signature) {
     try {
-      Signature rsa = Signature.getInstance("MD5withRSA");
+      Signature rsa = Signature.getInstance(algorithm);
       rsa.initVerify(publicKey);
-      rsa.update(srcString.getBytes());
+      rsa.update(srcString.getBytes(Encoding.UTF_8));
       return rsa.verify(decodeBase64(signature.getBytes()));
     } catch (Exception e) {
       throw new UncheckedException("验证签名时发生异常", e);
