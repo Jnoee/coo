@@ -54,14 +54,14 @@ public class WxPay {
   }
 
   /**
-   * 获取支付结果通知数据。
+   * 获取支付通知数据。
    * 
-   * @param request 微信支付结果回调的HTTP请求
-   * @return 返回支付结果通知数据。
+   * @param request 微信支付通知的HTTP请求
+   * @return 返回支付通知数据。
    */
-  public PayResultData getPayResult(HttpServletRequest request) {
-    PayResultNotice notice = new PayResultNotice(request, config.getKey());
-    return notice.getData();
+  public PayNotifyData getPayNotifyData(HttpServletRequest request) {
+    PayNotify notify = new PayNotify(request, config.getKey());
+    return notify.getData();
   }
 
   /**

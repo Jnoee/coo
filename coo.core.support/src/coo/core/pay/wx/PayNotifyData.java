@@ -1,9 +1,9 @@
 package coo.core.pay.wx;
 
 /**
- * 微信支付结果通知业务数据。
+ * 微信支付通知业务数据。
  */
-public class PayResultData {
+public class PayNotifyData {
   private String openId;
   private Integer totalFee;
   private Integer cashFee;

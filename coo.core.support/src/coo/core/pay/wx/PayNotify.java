@@ -14,9 +14,9 @@ import coo.base.util.BeanUtils;
 import coo.base.util.FileUtils;
 
 /**
- * 微信支付结果通知。
+ * 微信支付通知。
  */
-public class PayResultNotice extends WxPayReply {
+public class PayNotify extends WxPayReply {
   @XStreamAlias("openid")
   private String openId;
   @XStreamAlias("is_subscribe")
@@ -49,10 +49,10 @@ public class PayResultNotice extends WxPayReply {
   /**
    * 构造方法。
    * 
-   * @param request 微信支付结果回调的HTTP请求
+   * @param request 微信支付通知的HTTP请求
    * @param key 密钥
    */
-  public PayResultNotice(HttpServletRequest request, String key) {
+  public PayNotify(HttpServletRequest request, String key) {
     try (InputStream xmlIn = request.getInputStream()) {
       byte[] xmlBytes = FileUtils.toByteArray(xmlIn);
       String xml = new String(xmlBytes, Encoding.UTF_8);
@@ -69,8 +69,8 @@ public class PayResultNotice extends WxPayReply {
    * 
    * @return 返回业务数据。
    */
-  public PayResultData getData() {
-    PayResultData data = new PayResultData();
+  public PayNotifyData getData() {
+    PayNotifyData data = new PayNotifyData();
     BeanUtils.copyFields(this, data);
     return data;
   }

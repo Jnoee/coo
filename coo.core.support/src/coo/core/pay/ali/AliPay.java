@@ -2,6 +2,8 @@ package coo.core.pay.ali;
 
 import java.lang.reflect.Field;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -48,6 +50,17 @@ public class AliPay {
     NoPwdRefundReply reply = new NoPwdRefundReply();
     execute(query, reply);
     return reply;
+  }
+
+  /**
+   * 获取交易通知数据。
+   * 
+   * @param request 支付宝交易通知的HTTP请求
+   * @return 返回交易通知数据。
+   */
+  public TradeNotifyData getTradeNotifyData(HttpServletRequest request) {
+    TradeNotify notify = new TradeNotify(request, config.getPublicKey());
+    return notify.getData();
   }
 
   /**
