@@ -2,6 +2,8 @@ package coo.core.pay.wx;
 
 import java.lang.reflect.Field;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -49,6 +51,17 @@ public class WxPay {
     RefundReply reply = new RefundReply();
     execute(query, reply);
     return reply;
+  }
+
+  /**
+   * 获取支付结果通知数据。
+   * 
+   * @param request 微信支付结果回调的HTTP请求
+   * @return 返回支付结果通知数据。
+   */
+  public PayResultData getPayResult(HttpServletRequest request) {
+    PayResultNotice notice = new PayResultNotice(request, config.getKey());
+    return notice.getData();
   }
 
   /**
