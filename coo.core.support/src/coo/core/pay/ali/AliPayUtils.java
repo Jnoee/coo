@@ -96,6 +96,25 @@ public class AliPayUtils {
   }
 
   /**
+   * 填充数据对象。
+   * 
+   * @param dataMap 数据Map
+   * @param data 数据对象
+   */
+  public static void fillData(Map<String, String> dataMap, Object data) {
+    List<Field> fields = BeanUtils.findField(data.getClass(), XStreamAlias.class);
+    for (Field field : fields) {
+      if (String.class.isAssignableFrom(field.getType())) {
+        XStreamAlias alias = field.getAnnotation(XStreamAlias.class);
+        Object value = dataMap.get(alias.value());
+        if (value != null) {
+          BeanUtils.setField(data, field, value);
+        }
+      }
+    }
+  }
+
+  /**
    * 生成签名内容。
    * 
    * @param dataMap 数据Map

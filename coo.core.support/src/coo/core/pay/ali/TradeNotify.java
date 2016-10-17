@@ -75,8 +75,7 @@ public class TradeNotify {
    */
   public TradeNotify(HttpServletRequest request, String publicKey) {
     Map<String, String> paramsMap = genMap(request);
-    String xml = AliPayUtils.getXstream(getClass()).toXML(paramsMap);
-    AliPayUtils.getXstream(getClass()).fromXML(xml, this);
+    AliPayUtils.fillData(paramsMap, this);
     if (!AliPayUtils.verify(this, publicKey)) {
       throw new BusinessException("支付宝支付结果通知失败：验证签名失败。");
     }
