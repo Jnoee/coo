@@ -28,16 +28,16 @@ public class WxPay {
   private RequestConfig requestConfig;
 
   /**
-   * 统一下单。
+   * 申请支付。
    * 
    * @param data 业务数据
    * @return 返回响应对象。
    */
-  public UnifiedOrderReply unifiedOrder(UnifiedOrderData data) {
+  public PayQuery applyPay(PayData data) {
     UnifiedOrderQuery query = new UnifiedOrderQuery(data);
     UnifiedOrderReply reply = new UnifiedOrderReply();
     execute(query, reply);
-    return reply;
+    return reply.genPayQuery(config.getKey());
   }
 
   /**

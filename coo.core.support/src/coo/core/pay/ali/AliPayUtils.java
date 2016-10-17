@@ -142,7 +142,7 @@ public class AliPayUtils {
     for (Field field : fields) {
       XStreamAlias alias = field.getAnnotation(XStreamAlias.class);
       Object value = BeanUtils.getField(data, field);
-      if (value != null) {
+      if (value != null && StringUtils.isNotBlank(value.toString())) {
         dataMap.put(alias.value(), value.toString());
       }
     }

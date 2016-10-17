@@ -43,7 +43,7 @@ public class UnifiedOrderQuery extends WxPayQuery {
    * 
    * @param data 业务数据
    */
-  public UnifiedOrderQuery(UnifiedOrderData data) {
+  public UnifiedOrderQuery(PayData data) {
     BeanUtils.copyFields(data, this);
     if (data.getTimeStart() != null) {
       timeStart = DateUtils.format(data.getTimeStart(), DateUtils.SECOND_N);

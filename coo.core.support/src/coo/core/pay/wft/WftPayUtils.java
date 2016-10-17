@@ -14,6 +14,7 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import coo.base.constants.Encoding;
 import coo.base.util.BeanUtils;
 import coo.base.util.CryptoUtils;
+import coo.base.util.StringUtils;
 
 /**
  * 威富通支付工具类。
@@ -71,7 +72,7 @@ public class WftPayUtils {
     for (Field field : fields) {
       XStreamAlias alias = field.getAnnotation(XStreamAlias.class);
       Object value = BeanUtils.getField(data, field);
-      if (value != null) {
+      if (value != null && StringUtils.isNotBlank(value.toString())) {
         params.put(alias.value(), value.toString());
       }
     }

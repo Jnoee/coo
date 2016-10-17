@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 统一下单业务数据。
  */
-public class UnifiedOrderData {
+public class PayData {
   private String deviceInfo;
   private String body;
   private String detail;
