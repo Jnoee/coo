@@ -79,7 +79,7 @@ public class TradeNotify {
     Map<String, String> paramsMap = genMap(request);
     AliPayUtils.fillData(paramsMap, this);
     if (!AliPayUtils.verify(this, publicKey)) {
-      throw new BusinessException("支付宝支付结果通知失败：验证签名失败。");
+      throw new BusinessException("支付宝支付结果通知失败：验证签名失败，返回数据为[" + paramsMap + "]");
     }
   }
 

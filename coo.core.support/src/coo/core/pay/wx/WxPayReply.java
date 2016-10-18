@@ -36,7 +36,7 @@ public abstract class WxPayReply {
   public void parseXml(String xml, String key) {
     WxPayUtils.getXstream(getClass()).fromXML(xml, this);
     if (!sign.equals(WxPayUtils.sign(this, key))) {
-      throw new BusinessException("微信支付调用失败：验证签名失败。");
+      throw new BusinessException("微信支付调用失败：验证签名失败，返回数据为[" + xml + "]");
     }
     if ("FAIL".equals(returnCode)) {
       throw new BusinessException("微信支付调用失败：" + returnMsg);
