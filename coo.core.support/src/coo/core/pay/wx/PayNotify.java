@@ -51,6 +51,16 @@ public class PayNotify extends WxPayReply {
   }
 
   /**
+   * 构造方法。
+   * 
+   * @param xml 微信支付通知XML内容
+   * @param key 密钥
+   */
+  public PayNotify(String xml, String key) {
+    parseXml(xml, key);
+  }
+
+  /**
    * 获取业务数据。
    * 
    * @return 返回业务数据。

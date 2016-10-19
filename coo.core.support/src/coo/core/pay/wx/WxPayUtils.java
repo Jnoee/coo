@@ -68,13 +68,12 @@ public class WxPayUtils {
   }
 
   /**
-   * 从HTTP请求中获取订单号。
+   * 从XML内容中获取订单号。
    * 
-   * @param request HTTP请求
+   * @param xml XML内容
    * @return 返回订单号。
    */
-  public static String getOrderBn(HttpServletRequest request) {
-    String xml = genXml(request);
+  public static String getOrderBn(String xml) {
     return StringUtils.substringBetween(xml, "<out_trade_no><![CDATA[", "]]></out_trade_no>");
   }
 

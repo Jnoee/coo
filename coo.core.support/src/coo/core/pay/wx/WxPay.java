@@ -65,6 +65,17 @@ public class WxPay {
   }
 
   /**
+   * 获取支付通知数据。
+   * 
+   * @param xml 微信支付通知XML内容
+   * @return 返回支付通知数据。
+   */
+  public PayNotifyData getPayNotifyData(String xml) {
+    PayNotify notify = new PayNotify(xml, config.getKey());
+    return notify.getData();
+  }
+
+  /**
    * 调用微信支付接口。
    * 
    * @param query 请求对象
