@@ -1,10 +1,15 @@
 package coo.core.pay.wx;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -12,8 +17,10 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 
 import coo.base.constants.Encoding;
+import coo.base.exception.UncheckedException;
 import coo.base.util.BeanUtils;
 import coo.base.util.CryptoUtils;
+import coo.base.util.FileUtils;
 import coo.base.util.StringUtils;
 
 /**
@@ -58,6 +65,34 @@ public class WxPayUtils {
     }
     builder.append("key=" + key);
     return CryptoUtils.md5(builder.toString()).toUpperCase();
+  }
+
+  /**
+   * 从HTTP请求中获取订单号。
+   * 
+   * @param request HTTP请求
+   * @return 返回订单号。
+   */
+  public static String getOrderBn(HttpServletRequest request) {
+    String xml = genXml(request);
+    return StringUtils.substringBetween(xml, "<out_trade_no><![CDATA[", "]]></out_trade_no>");
+  }
+
+  /**
+   * 从HTTP请求中获取XML字符串。
+   * 
+   * @param request HTTP请求
+   * @return 返回XML字符串。
+   */
+  public static String genXml(HttpServletRequest request) {
+    try (InputStream xmlIn = request.getInputStream()) {
+      byte[] xmlBytes = FileUtils.toByteArray(xmlIn);
+      return new String(xmlBytes, Encoding.UTF_8);
+    } catch (UnsupportedEncodingException e) {
+      throw new UncheckedException(e);
+    } catch (IOException e) {
+      throw new UncheckedException(e);
+    }
   }
 
   /**

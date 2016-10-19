@@ -1,8 +1,6 @@
 package coo.core.pay.ali;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +8,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import coo.base.exception.BusinessException;
 import coo.base.util.BeanUtils;
-import coo.base.util.StringUtils;
 
 /**
  * 支付宝交易通知。
@@ -76,7 +73,7 @@ public class TradeNotify {
    * @param publicKey 支付宝公钥
    */
   public TradeNotify(HttpServletRequest request, String publicKey) {
-    Map<String, String> paramsMap = genMap(request);
+    Map<String, String> paramsMap = AliPayUtils.genMap(request);
     AliPayUtils.fillData(paramsMap, this);
     if (!AliPayUtils.verify(this, publicKey)) {
       throw new BusinessException("支付宝支付结果通知失败：验证签名失败，返回数据为[" + paramsMap + "]");
@@ -104,21 +101,6 @@ public class TradeNotify {
     data.setQuantity(Integer.valueOf(quantity));
     data.setPrice(Double.valueOf(price));
     return data;
-  }
-
-  /**
-   * 将HTTP请求参数转换成Map。
-   * 
-   * @param request HTTP请求
-   * @return 返回参数Map。
-   */
-  private static Map<String, String> genMap(HttpServletRequest request) {
-    Map<String, String[]> paramsMap = request.getParameterMap();
-    Map<String, String> resultMap = new HashMap<String, String>();
-    for (Entry<String, String[]> param : paramsMap.entrySet()) {
-      resultMap.put(param.getKey(), StringUtils.join(param.getValue(), ","));
-    }
-    return resultMap;
   }
 
   public String getNotifyTime() {

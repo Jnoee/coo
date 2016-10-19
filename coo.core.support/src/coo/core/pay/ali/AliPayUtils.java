@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -93,6 +96,31 @@ public class AliPayUtils {
       datas.add(key + "=" + dataMap.get(key));
     }
     return StringUtils.join(datas, "&");
+  }
+
+  /**
+   * 从HTTP请求中获取订单号。
+   * 
+   * @param request HTTP请求
+   * @return 返回订单号。
+   */
+  public static String getOrderBn(HttpServletRequest request) {
+    return request.getParameter("out_trade_no");
+  }
+
+  /**
+   * 将HTTP请求参数转换成Map。
+   * 
+   * @param request HTTP请求
+   * @return 返回参数Map。
+   */
+  public static Map<String, String> genMap(HttpServletRequest request) {
+    Map<String, String[]> paramsMap = request.getParameterMap();
+    Map<String, String> resultMap = new HashMap<String, String>();
+    for (Entry<String, String[]> param : paramsMap.entrySet()) {
+      resultMap.put(param.getKey(), StringUtils.join(param.getValue(), ","));
+    }
+    return resultMap;
   }
 
   /**

@@ -8,9 +8,12 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
+
+import coo.base.exception.UncheckedException;
 
 /**
  * 微信支付HttpClient工厂。
@@ -25,7 +28,7 @@ public class WxPayHttpClientFactory extends AbstractFactoryBean<HttpClient> {
   }
 
   @Override
-  protected HttpClient createInstance() throws Exception {
+  protected CloseableHttpClient createInstance() {
     try (FileInputStream inputStream = new FileInputStream(new File(certFilePath))) {
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
       keyStore.load(inputStream, certPassword.toCharArray());
@@ -34,6 +37,8 @@ public class WxPayHttpClientFactory extends AbstractFactoryBean<HttpClient> {
       SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext,
           new String[] {"TLSv1"}, null, SSLConnectionSocketFactory.getDefaultHostnameVerifier());
       return HttpClients.custom().setSSLSocketFactory(socketFactory).build();
+    } catch (Exception e) {
+      throw new UncheckedException("创建HTTP客户端组件时发生异常。", e);
     }
   }
 

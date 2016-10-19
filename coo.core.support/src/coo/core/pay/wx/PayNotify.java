@@ -1,17 +1,10 @@
 package coo.core.pay.wx;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-import coo.base.constants.Encoding;
-import coo.base.exception.UncheckedException;
 import coo.base.util.BeanUtils;
-import coo.base.util.FileUtils;
 
 /**
  * 微信支付通知。
@@ -53,15 +46,8 @@ public class PayNotify extends WxPayReply {
    * @param key 密钥
    */
   public PayNotify(HttpServletRequest request, String key) {
-    try (InputStream xmlIn = request.getInputStream()) {
-      byte[] xmlBytes = FileUtils.toByteArray(xmlIn);
-      String xml = new String(xmlBytes, Encoding.UTF_8);
-      parseXml(xml, key);
-    } catch (UnsupportedEncodingException e) {
-      throw new UncheckedException(e);
-    } catch (IOException e) {
-      throw new UncheckedException(e);
-    }
+    String xml = WxPayUtils.genXml(request);
+    parseXml(xml, key);
   }
 
   /**
