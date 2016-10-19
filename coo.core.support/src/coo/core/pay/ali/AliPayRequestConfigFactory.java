@@ -17,7 +17,7 @@ public class AliPayRequestConfigFactory extends AbstractFactoryBean<RequestConfi
   }
 
   @Override
-  protected RequestConfig createInstance() throws Exception {
+  protected RequestConfig createInstance() {
     return RequestConfig.custom().setConnectTimeout(connectTimeout).setSocketTimeout(socketTimeout)
         .setConnectionRequestTimeout(connectionRequestTimeout).build();
   }
