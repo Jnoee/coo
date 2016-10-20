@@ -1,12 +1,12 @@
 package coo.base.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 集合工具类。
@@ -79,7 +79,7 @@ public abstract class CollectionUtils {
    * 
    * @param list 列表
    */
-  public static <T> void removeDuplicate(List<T> list) {
+  public static <T> void distinct(List<T> list) {
     Set<T> set = new HashSet<T>(list);
     list.clear();
     list.addAll(set);
@@ -94,11 +94,8 @@ public abstract class CollectionUtils {
    * @return 如果数组中包含指定元素返回true，否则返回false。
    */
   public static <T> Boolean contains(T[] elements, T elementToFind) {
-    if (isEmpty(elements)) {
-      return false;
-    }
-    List<T> elementsList = Arrays.asList(elements);
-    return elementsList.contains(elementToFind);
+    return isNotEmpty(elements)
+        && Stream.of(elements).filter(e -> e.equals(elementToFind)).count() > 0;
   }
 
   /**
@@ -112,11 +109,7 @@ public abstract class CollectionUtils {
     Assert.isTrue(source != null, "源集合不能为空。");
     Assert.isTrue(source != null, "目标集合不能为空。");
     target.clear();
-    if (!source.isEmpty()) {
-      for (T o : source) {
-        target.add(o);
-      }
-    }
+    source.stream().forEach(e -> target.add(e));
   }
 
   /**
@@ -127,10 +120,6 @@ public abstract class CollectionUtils {
    * @return 返回对应的列表。
    */
   public static <T> List<T> toList(T[] elements) {
-    List<T> list = new ArrayList<>();
-    for (T element : elements) {
-      list.add(element);
-    }
-    return list;
+    return Stream.of(elements).collect(Collectors.toList());
   }
 }
