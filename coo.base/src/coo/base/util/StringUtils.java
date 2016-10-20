@@ -2,6 +2,8 @@ package coo.base.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import coo.base.exception.UncheckedException;
 
@@ -36,15 +38,8 @@ public abstract class StringUtils {
    * @return 返回指定字符串是否为空字符串。
    */
   public static Boolean isBlank(String str) {
-    if (isEmpty(str)) {
-      return true;
-    }
-    for (char c : str.toCharArray()) {
-      if (!Character.isWhitespace(c)) {
-        return false;
-      }
-    }
-    return true;
+    return isEmpty(str) || str.codePoints().filter(c -> !Character.isWhitespace(c)).count() == 0;
+
   }
 
   /**
@@ -180,17 +175,7 @@ public abstract class StringUtils {
   public static String join(String[] strs, String separator) {
     Assert.notNull(strs);
     Assert.notNull(separator);
-
-    StringBuilder builder = new StringBuilder();
-    for (String str : strs) {
-      builder.append(str + separator);
-    }
-
-    String result = builder.toString();
-    if (!separator.isEmpty()) {
-      result = substringBeforeLast(result, separator);
-    }
-    return result;
+    return Stream.of(strs).collect(Collectors.joining(separator));
   }
 
   /**
