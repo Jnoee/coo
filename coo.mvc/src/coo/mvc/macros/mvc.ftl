@@ -150,7 +150,7 @@
     <@bind path />
     <@replaceAttributes attributes />
     <select id="${id}" name="${name}" ${getAttributes(attributes)}>
-    	<#if headerLabel??>
+    	<#if headerLabel?? && headerLabel != "">
     	<option value="${headerValue}">${headerLabel}</option>
     	</#if>
         <@options items itemValue itemLabel status.value />
