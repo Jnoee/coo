@@ -6710,7 +6710,7 @@ $.fn.extend({
         accept: {
           title: 'Images',
           extensions: 'gif,jpg,jpeg,bmp,png',
-          mimeTypes: 'image/*'
+          mimeTypes: 'image/gif,image/jpg,image/jpeg,image/bmp,image/png'
         },
         fileSingleSizeLimit: 1 * 1024 * 1024,
         duplicate: true,
