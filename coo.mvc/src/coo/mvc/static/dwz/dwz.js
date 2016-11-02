@@ -6709,8 +6709,8 @@ $.fn.extend({
         server: 'result/upload-success.json',
         accept: {
           title: 'Images',
-          extensions: 'gif,jpg,jpeg,bmp,png',
-          mimeTypes: 'image/gif,image/jpg,image/jpeg,image/bmp,image/png'
+          extensions: 'gif,jpg,jpeg,png',
+          mimeTypes: 'image/gif,image/jpg,image/jpeg,image/png'
         },
         fileSingleSizeLimit: 1 * 1024 * 1024,
         duplicate: true,
