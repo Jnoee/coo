@@ -501,7 +501,10 @@ public class Dao<T> {
   @SuppressWarnings("unchecked")
   public Page<T> findPage(String hql, Integer pageNo, Integer pageSize, Integer totalCount,
       Object... values) {
-    if (totalCount < 1) {
+    // 计算总页数，如果总页数小于待获取的页数，返回空列表。
+    Integer pageCount =
+        totalCount % pageSize > 0 ? totalCount / pageSize + 1 : totalCount / pageSize;
+    if (totalCount < 1 || pageCount < pageNo) {
       return new Page<T>(pageSize);
     }
 
@@ -538,7 +541,10 @@ public class Dao<T> {
    */
   @SuppressWarnings("unchecked")
   public Page<T> findPage(Criteria criteria, Integer pageNo, Integer pageSize, Integer totalCount) {
-    if (totalCount < 1) {
+    // 计算总页数，如果总页数小于待获取的页数，返回空列表。
+    Integer pageCount =
+        totalCount % pageSize > 0 ? totalCount / pageSize + 1 : totalCount / pageSize;
+    if (totalCount < 1 || pageCount < pageNo) {
       return new Page<T>(pageSize);
     }
 
@@ -698,7 +704,9 @@ public class Dao<T> {
     } catch (Exception e) {
       log.warn("实体[" + clazz + "]全文索引文件尚未生成。", e);
     }
-    if (total < 1) {
+    // 计算总页数，如果总页数小于待获取的页数，返回空列表。
+    Integer pageCount = total % pageSize > 0 ? total / pageSize + 1 : total / pageSize;
+    if (total < 1 || pageCount < pageNo) {
       return new Page<T>(pageSize);
     }
 
