@@ -13,6 +13,7 @@
 		<servlet.version>3.0.1</servlet.version>
 		<zxing.version>3.2.1</zxing.version>
 		<httpclient.version>4.5.2</httpclient.version>
+		<jpush.version>3.2.8</jpush.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -50,6 +51,11 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>${httpclient.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>${jpush.version}</version>
 		</dependency>
 	</dependencies>
 </project>
