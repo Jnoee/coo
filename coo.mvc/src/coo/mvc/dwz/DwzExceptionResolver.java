@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import coo.base.exception.BusinessException;
 import coo.mvc.handler.GenericExceptionResolver;
+import coo.mvc.util.HttpUtils;
 
 /**
  * DWZ异常处理。
@@ -17,22 +18,11 @@ public class DwzExceptionResolver extends GenericExceptionResolver {
   protected ModelAndView doResolveException(HttpServletRequest request,
       HttpServletResponse response, Object handler, Exception exception) {
     ModelAndView mav = super.doResolveException(request, response, handler, exception);
-    if (isAjaxRequest(request)) {
+    if (HttpUtils.isAjaxRequest(request)) {
       response.setStatus(HttpStatus.OK.value());
       mav = processCustomExceptions(exception);
     }
     return mav;
-  }
-
-  /**
-   * 判断客户端请求是否是Ajax请求。
-   * 
-   * @param request 请求对象
-   * 
-   * @return 如果客户端请求是Ajax请求返回true，否则返回false。
-   */
-  protected Boolean isAjaxRequest(HttpServletRequest request) {
-    return "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"));
   }
 
   /**
