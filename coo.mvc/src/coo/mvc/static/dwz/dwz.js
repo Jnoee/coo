@@ -1146,7 +1146,6 @@ var DWZ = {
     }, "请输入正确格式的邮政编码。");
 
     $.validator.addMethod("date", function(value, element) {
-      value = value.replace(/\s+/g, "");
       var $input = $(element);
       var pattern = $input.attr('dateFmt') || 'yyyy-MM-dd';
       return !value || value.parseDate(pattern);
