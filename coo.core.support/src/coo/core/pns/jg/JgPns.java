@@ -1,11 +1,7 @@
 package coo.core.pns.jg;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 
 import cn.jpush.api.JPushClient;
 import cn.jpush.api.common.ClientConfig;
@@ -30,41 +26,23 @@ import coo.core.pns.PnsScheduleNotify;
  */
 public class JgPns {
   private Logger log = LoggerFactory.getLogger(getClass());
-  /** 应用ID */
-  @Value("${pns.appKey}")
-  private String appKey;
-  /** 密码 */
-  @Value("${pns.masterSecret}")
-  private String masterSecret;
-  /** 是否生产环境 */
-  @Value("${pns.production:false}")
-  private Boolean production;
-  /** 消息存活时间（秒） */
-  @Value("${pns.live:300}")
-  private Long liveTime;
-  /** 连接超时时间（秒） */
-  @Value("${pns.connTimeout:5}")
-  private Integer connTimeout;
-  /** 失败重发次数 */
-  @Value("${pns.retryTimes:3}")
-  private Integer retryTimes;
-  /** 读取返回结果超时时间（秒） */
-  @Value("${pns.readTimeout:30}")
-  private Integer readTimeout;
-
-  private JPushClient client;
-  private ClientConfig config;
+  private JgPnsConfig config;
+  private JPushClient jpushClient;
+  private ClientConfig jpushClientConfig;
 
   /**
-   * 初始化。
+   * 构造方法。
+   * 
+   * @param config 极光推送配置
    */
-  @PostConstruct
-  protected void init() {
-    config = ClientConfig.getInstance();
-    config.setConnectionTimeout(connTimeout * 1000);
-    config.setMaxRetryTimes(retryTimes);
-    config.setReadTimeout(readTimeout * 1000);
-    client = new JPushClient(masterSecret, appKey, null, config);
+  public JgPns(JgPnsConfig config) {
+    this.config = config;
+    jpushClientConfig = ClientConfig.getInstance();
+    jpushClientConfig.setConnectionTimeout(config.getConnTimeout() * 1000);
+    jpushClientConfig.setMaxRetryTimes(config.getRetryTimes());
+    jpushClientConfig.setReadTimeout(config.getReadTimeout() * 1000);
+    jpushClient =
+        new JPushClient(config.getMasterSecret(), config.getAppKey(), null, jpushClientConfig);
   }
 
   /**
@@ -72,7 +50,6 @@ public class JgPns {
    * 
    * @param notify 推送通知
    */
-  @Async
   public void sendPush(PnsNotify notify) {
     if (CollectionUtils.isEmpty(notify.getAliases())) {
       log.warn("极光推送别名列表为空，未推送消息：{}", notify.getContent());
@@ -80,7 +57,7 @@ public class JgPns {
     }
     try {
       PushPayload pushPayload = genPushPayLoad(notify);
-      PushResult pushResult = client.sendPush(pushPayload);
+      PushResult pushResult = jpushClient.sendPush(pushPayload);
       log.info("极光推送返回消息：{}", pushResult);
     } catch (APIConnectionException | APIRequestException e) {
       log.error("极光推送消息失败：{}。", e.getMessage());
@@ -95,7 +72,6 @@ public class JgPns {
    * @param notify 定时推送通知
    * @return 返回定时推送任务ID。
    */
-  @Async
   public String createSingleSchedule(PnsScheduleNotify notify) {
     if (CollectionUtils.isEmpty(notify.getAliases())) {
       log.warn("极光推送别名列表为空，未推送消息：{}", notify.getContent());
@@ -103,7 +79,7 @@ public class JgPns {
     }
     try {
       PushPayload pushPayload = genPushPayLoad(notify);
-      ScheduleResult pushResult = client.createSingleSchedule(notify.getTaskName(),
+      ScheduleResult pushResult = jpushClient.createSingleSchedule(notify.getTaskName(),
           DateUtils.format(notify.getSendTime(), DateUtils.SECOND), pushPayload);
       log.info("极光创建定时推送返回消息：{}", pushResult);
       return pushResult.getSchedule_id();
@@ -121,10 +97,9 @@ public class JgPns {
    * 
    * @param scheduleId 定时通知ID
    */
-  @Async
   public void deleteSchedule(String scheduleId) {
     try {
-      client.deleteSchedule(scheduleId);
+      jpushClient.deleteSchedule(scheduleId);
       log.info("极光删除定时推送消息：{}", scheduleId);
     } catch (APIConnectionException | APIRequestException e) {
       log.error("极光删除定时推送消息失败：{}。", e.getMessage());
@@ -145,8 +120,8 @@ public class JgPns {
     Notification notification =
         Notification.newBuilder().addPlatformNotification(androidNotification)
             .addPlatformNotification(iosNotification).build();
-    Options options =
-        Options.newBuilder().setApnsProduction(production).setTimeToLive(liveTime).build();
+    Options options = Options.newBuilder().setApnsProduction(config.getProduction())
+        .setTimeToLive(config.getLiveTime()).build();
     return PushPayload.newBuilder().setPlatform(Platform.android_ios()).setOptions(options)
         .setAudience(Audience.alias(notify.getAliases())).setNotification(notification).build();
   }
