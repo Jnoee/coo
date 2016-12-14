@@ -1,6 +1,9 @@
 package coo.mvc.config;
 
 import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.DateTimeFormatAnnotationFormatterFactory;
+import org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory;
+import org.springframework.format.datetime.standard.Jsr310DateTimeFormatAnnotationFormatterFactory;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +30,15 @@ public class ConversionConfigurer extends AbstractConversionConfigurer {
     conversionService.addConverterFactory(new StringToUuidEntity());
     conversionService.addConverter(new UuidEntityToString());
 
-    conversionService.addFormatter(new DateFormatter(DateUtils.MILLISECOND));
-    conversionService.addFormatter(new DateFormatter(DateUtils.SECOND));
-    conversionService.addFormatter(new DateFormatter(DateUtils.MINUTE));
+    // 添加默认java.util.Date转换器
     conversionService.addFormatter(new DateFormatter(DateUtils.DAY));
+
+    // 添加DateTimeFormat注解的日期时间转换器
+    conversionService
+        .addFormatterForFieldAnnotation(new DateTimeFormatAnnotationFormatterFactory());
+    conversionService
+        .addFormatterForFieldAnnotation(new JodaDateTimeFormatAnnotationFormatterFactory());
+    conversionService
+        .addFormatterForFieldAnnotation(new Jsr310DateTimeFormatAnnotationFormatterFactory());
   }
 }
