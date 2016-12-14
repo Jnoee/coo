@@ -3,7 +3,6 @@ package coo.mvc.config;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateTimeFormatAnnotationFormatterFactory;
 import org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory;
-import org.springframework.format.datetime.standard.Jsr310DateTimeFormatAnnotationFormatterFactory;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +37,5 @@ public class ConversionConfigurer extends AbstractConversionConfigurer {
         .addFormatterForFieldAnnotation(new DateTimeFormatAnnotationFormatterFactory());
     conversionService
         .addFormatterForFieldAnnotation(new JodaDateTimeFormatAnnotationFormatterFactory());
-    conversionService
-        .addFormatterForFieldAnnotation(new Jsr310DateTimeFormatAnnotationFormatterFactory());
   }
 }
