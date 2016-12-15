@@ -221,6 +221,10 @@
     </#if>
 </#macro>
 
+<#macro ienumCheckboxs path ienum box itemWidth="auto" required=true showCheckAllBtn=false>
+	<@checkboxs path=path items=ienum?values itemLabel="text" itemValue="value" box=box itemWidth=itemWidth required=required showCheckAllBtn=showCheckAllBtn />
+</#macro>
+
 <#macro combox path items itemLabel="name" itemValue="id" headerLabel="全部" headerValue="" ref="" refUrl="" required=false>
 	<#local comboxClass = required?string("required ","") + "combox">
 	<@s.select path=path items=items itemLabel=itemLabel itemValue=itemValue headerLabel=headerLabel headerValue=headerValue class=comboxClass ref=ref refUrl=refUrl />
