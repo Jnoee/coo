@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>coo.mvc.security</artifactId>
 	<properties>
-		<servlet.version>2.5</servlet.version>
+		<servlet.version>3.0.1</servlet.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
+			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>

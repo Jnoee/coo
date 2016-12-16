@@ -12,7 +12,6 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
@@ -50,7 +49,6 @@ public class FullTextCriteria {
   private List<SortField> sortFields = new ArrayList<SortField>();
   /** 附加的Lucene查询条件列表 */
   private List<AttachLuceneQuery> luceneQueries = new ArrayList<AttachLuceneQuery>();
-  private Filter filter;
   private Criteria criteriaQuery;
   /** 是否优先从二级缓存中获取数据 */
   private Boolean lookupCache = true;
@@ -255,15 +253,6 @@ public class FullTextCriteria {
   }
 
   /**
-   * 设置Lucene的Filter过滤器。
-   * 
-   * @param filter Lucene的Filter过滤器
-   */
-  public void setFilter(Filter filter) {
-    this.filter = filter;
-  }
-
-  /**
    * 设置Hibernate的Criteria查询条件。<br>
    * 该方法应谨慎使用，Criteria查询条件只作用于全文搜索出来的结果集上，不会改变全文搜索的搜索结果。<br>
    * 这将可能引起全文搜索的总记录条数与经Criteria查询条件过滤后的结果集的总记录数不一致。
@@ -283,9 +272,6 @@ public class FullTextCriteria {
     FullTextQuery fullTextQuery = session.createFullTextQuery(generateLuceneQuery(), clazz);
     if (!sortFields.isEmpty()) {
       fullTextQuery.setSort(new Sort(sortFields.toArray(new SortField[] {})));
-    }
-    if (filter != null) {
-      fullTextQuery.setFilter(filter);
     }
     if (criteriaQuery != null) {
       fullTextQuery.setCriteriaQuery(criteriaQuery);

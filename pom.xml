@@ -34,8 +34,8 @@
 		<jgit.version>1.9.4</jgit.version>
 		<project.scm.id>github</project.scm.id>
 		<!-- 公共包 -->
-		<logback.version>1.1.2</logback.version>
-		<slf4j.version>1.7.9</slf4j.version>
+		<logback.version>1.1.8</logback.version>
+		<slf4j.version>1.7.22</slf4j.version>
 		<junit.version>4.12</junit.version>
 	</properties>
 	<dependencies>
