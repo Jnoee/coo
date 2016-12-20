@@ -24,6 +24,48 @@ public class NumberUtils {
   }
 
   /**
+   * 格式化数字字符串，保留两位小数。
+   * 
+   * @param value 值
+   * @return 返回格式化后的字符串。
+   */
+  public static String format(Double value) {
+    return format(value, "##0.00");
+  }
+
+  /**
+   * 格式化数字字符串，保留两位小数。
+   * 
+   * @param value 值
+   * @param format 格式
+   * @return 返回格式化后的字符串。
+   */
+  public static String format(Double value, String format) {
+    return new DecimalFormat(format).format(value);
+  }
+
+  /**
+   * 格式化数字字符串，保留两位小数。
+   * 
+   * @param value 值
+   * @return 返回格式化后的字符串。
+   */
+  public static String format(Float value) {
+    return format(value, "##0.00");
+  }
+
+  /**
+   * 格式化数字字符串，保留两位小数。
+   * 
+   * @param value 值
+   * @param format 格式
+   * @return 返回格式化后的字符串。
+   */
+  public static String format(Float value, String format) {
+    return new DecimalFormat(format).format(value);
+  }
+
+  /**
    * 四舍五入保留两位小数。
    * 
    * @param value 值
