@@ -1,6 +1,8 @@
 package coo.core.pay.wx;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +42,22 @@ public class WxPayFactory {
       payMap.put(config.getMchId(), wxPay);
     }
     return wxPay;
+  }
+
+  /**
+   * 清除支付组件缓存。
+   */
+  public void clear() {
+    payMap.clear();
+  }
+
+  /**
+   * 获取商户号列表。
+   * 
+   * @return 返回商户号列表。
+   */
+  public List<String> getMchIds() {
+    return new ArrayList<String>(payMap.keySet());
   }
 
   public String getCertDir() {

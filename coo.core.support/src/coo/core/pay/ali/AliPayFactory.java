@@ -1,6 +1,8 @@
 package coo.core.pay.ali;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,8 +37,26 @@ public class AliPayFactory {
 
       AliPayRequestConfigFactory requestConfigFactory = new AliPayRequestConfigFactory();
       aliPay.setRequestConfig(requestConfigFactory.createInstance());
+
+      payMap.put(config.getPartner(), aliPay);
     }
     return aliPay;
+  }
+
+  /**
+   * 清除支付组件缓存。
+   */
+  public void clear() {
+    payMap.clear();
+  }
+
+  /**
+   * 获取商户号列表。
+   * 
+   * @return 返回商户号列表。
+   */
+  public List<String> getPartners() {
+    return new ArrayList<String>(payMap.keySet());
   }
 
   public String getCertDir() {
