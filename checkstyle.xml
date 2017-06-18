@@ -17,7 +17,7 @@
     <module name="JavadocMethod">
       <property name="allowUndeclaredRTE" value="true"/>
       <property name="allowMissingPropertyJavadoc" value="true"/>
-      <property name="ignoreMethodNamesRegex" value="^search$|^get$|^create$|^update$|^delete$|^remove$|^enable$|^disable$"/>
+      <property name="ignoreMethodNamesRegex" value="^menu$|^list$|^search$|^view$|^get$|^add$|^save$|^create$|^edit$|^update$|^delete$|^remove$|^enable$|^disable$"/>
     </module>
     <module name="TypeName"/>
     <module name="MemberName"/>
