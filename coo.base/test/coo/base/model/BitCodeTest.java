@@ -11,7 +11,8 @@ public class BitCodeTest {
     BitCode code3 = new BitCode("01010101010101010101010101010100101010101010101010101010101010");
     Assert.assertEquals(code2, code3);
     code3 = code1.or(code2);
-    Assert.assertEquals(code3, "11111111111111111111111111111111111111111111111111111111111111");
+    Assert.assertEquals(code3,
+        new BitCode("11111111111111111111111111111111111111111111111111111111111111"));
     Assert.assertTrue(code1.isTrue(1));
     Assert.assertFalse(code1.isTrue(2));
   }
