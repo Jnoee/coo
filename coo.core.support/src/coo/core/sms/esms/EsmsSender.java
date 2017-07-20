@@ -80,7 +80,7 @@ public class EsmsSender implements SmsSender {
 
       HttpEntity replyEntity = httpclient.execute(httpPost).getEntity();
       String replyString = EntityUtils.toString(replyEntity);
-      if (replyString.equals("100")) {
+      if ("100".equals(replyString)) {
         log.debug("调用短信接口成功，返回结果：{}", replyString);
       } else {
         log.warn("调用短信接口失败，返回结果：{}", replyString);

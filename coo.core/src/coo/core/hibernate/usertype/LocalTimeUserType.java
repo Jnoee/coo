@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.joda.time.LocalTime;
 
@@ -14,7 +13,7 @@ import org.joda.time.LocalTime;
 public class LocalTimeUserType extends AbstractUserType {
   @Override
   public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
-      throws HibernateException, SQLException {
+      throws SQLException {
     String value = getValue(rs, names[0], session);
     if (value != null) {
       return new LocalTime(value);
@@ -25,7 +24,7 @@ public class LocalTimeUserType extends AbstractUserType {
 
   @Override
   public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
-      throws HibernateException, SQLException {
+      throws SQLException {
     if (value != null) {
       LocalTime localTime = (LocalTime) value;
       setValue(st, localTime.toString("HH:mm:ss"), index, session);

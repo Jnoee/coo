@@ -151,7 +151,7 @@ public class AliPayUtils {
   private static String genSignContent(Map<String, String> dataMap) {
     List<String> datas = new ArrayList<>();
     for (String key : dataMap.keySet()) {
-      if (!key.equals("sign") && !key.equals("sign_type")) {
+      if (!"sign".equals(key) && !"sign_type".equals(key)) {
         datas.add(key + "=" + dataMap.get(key));
       }
     }

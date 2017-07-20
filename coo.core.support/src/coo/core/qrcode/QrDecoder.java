@@ -3,7 +3,7 @@ package coo.core.qrcode;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -68,7 +68,6 @@ public class QrDecoder {
       BufferedImage bufferedImage = ImageIO.read(stream);
       return decode(bufferedImage);
     } catch (Exception e) {
-      e.printStackTrace();
       throw new UncheckedException("解析二维码时发生异常。", e);
     }
   }
@@ -78,8 +77,8 @@ public class QrDecoder {
    * 
    * @return 返回二维码配置参数。
    */
-  private static Hashtable<DecodeHintType, Object> getHints() {
-    Hashtable<DecodeHintType, Object> hints = new Hashtable<>();
+  private static HashMap<DecodeHintType, Object> getHints() {
+    HashMap<DecodeHintType, Object> hints = new HashMap<>();
     hints.put(DecodeHintType.CHARACTER_SET, Encoding.UTF_8);
     hints.put(DecodeHintType.PURE_BARCODE, true);
     return hints;

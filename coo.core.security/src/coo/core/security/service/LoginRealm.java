@@ -84,9 +84,8 @@ public class LoginRealm extends AuthorizingRealm {
       throw new DisabledAccountException();
     }
 
-    SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getId(), user.getPassword(),
-        getSaltByteSource(), getName());
-    return info;
+    return new SimpleAuthenticationInfo(user.getId(), user.getPassword(), getSaltByteSource(),
+        getName());
   }
 
   @Override

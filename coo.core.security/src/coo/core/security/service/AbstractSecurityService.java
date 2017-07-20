@@ -97,7 +97,6 @@ public abstract class AbstractSecurityService<O extends OrganEntity<O, U, A>, U 
     } catch (IncorrectCredentialsException ie) {
       messageSource.thrown(ie, "password.wrong");
     } catch (AuthenticationException ae) {
-      ae.printStackTrace();
       messageSource.thrown(ae, "login.failed");
     }
   }

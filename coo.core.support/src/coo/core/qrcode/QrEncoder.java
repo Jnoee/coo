@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -96,8 +96,8 @@ public class QrEncoder {
    * 
    * @return 返回二维码配置参数。
    */
-  private static Hashtable<EncodeHintType, Object> getHints() {
-    Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
+  private static HashMap<EncodeHintType, Object> getHints() {
+    HashMap<EncodeHintType, Object> hints = new HashMap<>();
     hints.put(EncodeHintType.CHARACTER_SET, Encoding.UTF_8);
     return hints;
   }
