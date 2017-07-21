@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 /**
  * 集合工具类。
  */
-public abstract class CollectionUtils {
+public interface CollectionUtils {
   /**
    * 判断指定的集合是否为空。
    * 
@@ -80,7 +80,7 @@ public abstract class CollectionUtils {
    * @param list 列表
    */
   public static <T> void distinct(List<T> list) {
-    Set<T> set = new HashSet<T>(list);
+    Set<T> set = new HashSet<>(list);
     list.clear();
     list.addAll(set);
   }

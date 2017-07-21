@@ -21,7 +21,7 @@ import coo.base.exception.UncheckedException;
 /**
  * Class工具类。
  */
-public class ClassUtils {
+public abstract class ClassUtils {
   private static Logger log = LoggerFactory.getLogger(ClassUtils.class);
 
   /**
@@ -33,7 +33,7 @@ public class ClassUtils {
    */
   public static List<Class<?>> findClassesByParentClass(Class<?> parentClass,
       String... packageNames) {
-    List<Class<?>> classes = new ArrayList<Class<?>>();
+    List<Class<?>> classes = new ArrayList<>();
     for (Class<?> targetClass : findClasses(packageNames)) {
       if (!targetClass.equals(parentClass) && parentClass.isAssignableFrom(targetClass)
           && !Modifier.isAbstract(targetClass.getModifiers())) {
@@ -52,7 +52,7 @@ public class ClassUtils {
    */
   public static List<Class<?>> findClassesByAnnotationClass(
       Class<? extends Annotation> annotationClass, String... packageNames) {
-    List<Class<?>> classes = new ArrayList<Class<?>>();
+    List<Class<?>> classes = new ArrayList<>();
     for (Class<?> targetClass : findClasses(packageNames)) {
       if (targetClass.isAnnotationPresent(annotationClass)) {
         classes.add(targetClass);
@@ -68,7 +68,7 @@ public class ClassUtils {
    * @return 返回指定包下的类集合。
    */
   public static List<Class<?>> findClasses(String... packageNames) {
-    List<Class<?>> classes = new ArrayList<Class<?>>();
+    List<Class<?>> classes = new ArrayList<>();
     for (String className : findClassNames(packageNames)) {
       try {
         classes.add(Class.forName(className));
@@ -86,7 +86,7 @@ public class ClassUtils {
    * @return 返回指定包下的类名集合。
    */
   private static List<String> findClassNames(String... packageNames) {
-    List<String> classNames = new ArrayList<String>();
+    List<String> classNames = new ArrayList<>();
     try {
       for (String packageName : packageNames) {
         String packagePath = packageName.replace(".", Chars.BACKSLASH);
@@ -115,7 +115,7 @@ public class ClassUtils {
    * @return 返回jar包中指定包下的类名集合。
    */
   private static List<String> getClassNamesFromJar(URL url, String packageName) {
-    List<String> classNames = new ArrayList<String>();
+    List<String> classNames = new ArrayList<>();
     try {
       String jarPath = URLDecoder.decode(url.toExternalForm(), Encoding.UTF_8);
       log.debug("开始获取[{}]中的类名...", jarPath);
@@ -142,7 +142,7 @@ public class ClassUtils {
    * @return 返回jar包文件单元中获取指定包下的类名集合。
    */
   private static List<String> getClassNamesFromJar(JarEntry jarEntry, String packageName) {
-    List<String> classNames = new ArrayList<String>();
+    List<String> classNames = new ArrayList<>();
     if (!jarEntry.isDirectory() && jarEntry.getName().endsWith(".class")) {
       String className = jarEntry.getName();
       className = className.replaceFirst(".class$", "");
@@ -179,7 +179,7 @@ public class ClassUtils {
    * @return 返回目录中指定包下的类名集合。
    */
   private static List<String> getClassNamesFromDir(File dir, String packageName) {
-    List<String> classNames = new ArrayList<String>();
+    List<String> classNames = new ArrayList<>();
     try {
       File[] files = dir.listFiles();
       String separator = System.getProperty("file.separator");

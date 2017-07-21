@@ -10,7 +10,7 @@ import coo.base.exception.UncheckedException;
 /**
  * 字符串工具类。
  */
-public abstract class StringUtils {
+public interface StringUtils {
   /**
    * 判断指定字符串是否为空。
    * 

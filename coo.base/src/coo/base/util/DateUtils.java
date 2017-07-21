@@ -12,7 +12,7 @@ import org.joda.time.format.DateTimeFormatter;
 /**
  * 日期时间工具类。
  */
-public class DateUtils {
+public abstract class DateUtils {
   public static final String MONTH = "yyyy-MM";
   public static final String DAY = "yyyy-MM-dd";
   public static final String MINUTE = "yyyy-MM-dd HH:mm";
@@ -25,7 +25,7 @@ public class DateUtils {
   public static final String SECOND_N = "yyyyMMddHHmmss";
   public static final String MILLISECOND_N = "yyyyMMddHHmmssSSSS";
 
-  public static final String[] FORMATS = new String[] {DAY, MONTH, MINUTE, SECOND, MILLISECOND,
+  protected static final String[] FORMATS = new String[] {DAY, MONTH, MINUTE, SECOND, MILLISECOND,
       DAY_N, MONTH_N, MINUTE_N, SECOND_N, MILLISECOND_N};
 
   /**

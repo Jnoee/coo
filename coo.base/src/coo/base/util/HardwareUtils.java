@@ -10,14 +10,14 @@ import coo.base.exception.UncheckedException;
 /**
  * 硬件相关工具类。
  */
-public class HardwareUtils {
+public abstract class HardwareUtils {
   /**
    * 获取当前机器所有MAC地址列表。
    * 
    * @return 返回当前机器所有MAC地址列表。
    */
   public static List<String> getAllMac() {
-    List<String> macs = new ArrayList<String>();
+    List<String> macs = new ArrayList<>();
     try {
       Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
       while (networkInterfaces.hasMoreElements()) {

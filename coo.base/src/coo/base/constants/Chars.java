@@ -3,7 +3,7 @@ package coo.base.constants;
 /**
  * 特殊字符常量。
  */
-public class Chars {
+public abstract class Chars {
   public static final String BACKSLASH = "/";
   public static final String SLASH = "\\";
   public static final String LF = "\n";

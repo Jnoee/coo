@@ -28,9 +28,9 @@ public class Page<T> implements Serializable {
   /** 当前页码 */
   private Integer number = 1;
   /** 分页记录集合 */
-  private List<T> contents = new ArrayList<T>();
+  private List<T> contents = new ArrayList<>();
   /** 页数序号 */
-  private List<Integer> indexs = new ArrayList<Integer>();
+  private List<Integer> indexs = new ArrayList<>();
 
   /**
    * 初始化一个新的分页对象，该构造方法通常用于生成一个空的分页对象。
@@ -58,8 +58,8 @@ public class Page<T> implements Serializable {
     previous = number <= 1 ? number : number - 1;
     last = number >= pageCount ? true : false;
     next = number >= pageCount ? number : number + 1;
-    contents = new ArrayList<T>();
-    indexs = new ArrayList<Integer>();
+    contents = new ArrayList<>();
+    indexs = new ArrayList<>();
     for (int i = 1; i <= pageCount; i++) {
       indexs.add(i);
     }

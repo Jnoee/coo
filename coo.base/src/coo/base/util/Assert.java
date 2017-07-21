@@ -8,7 +8,7 @@ import coo.base.exception.UncheckedException;
 /**
  * 断言工具类。该工具类常用于对参数进行校验。
  */
-public abstract class Assert {
+public interface Assert {
   /**
    * 断言表达式为true。
    * 

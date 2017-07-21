@@ -3,7 +3,7 @@ package coo.base.constants;
 /**
  * 常用算法名常量。
  */
-public class Algorithm {
+public abstract class Algorithm {
   public static final String MD5 = "MD5";
   public static final String SHA1 = "SHA-1";
   public static final String SHA1RSA = "SHA1WithRSA";

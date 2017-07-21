@@ -46,7 +46,7 @@ public abstract class BeanUtils {
       Class<? extends Annotation> annotationClassOnField) {
     Assert.notNull(targetClass);
     Assert.notNull(annotationClassOnField);
-    List<Field> fields = new ArrayList<Field>();
+    List<Field> fields = new ArrayList<>();
     for (Field field : getAllDeclaredField(targetClass)) {
       if (field.isAnnotationPresent(annotationClassOnField)) {
         fields.add(field);
@@ -135,7 +135,7 @@ public abstract class BeanUtils {
    * @return 返回Field列表。
    */
   public static List<Field> getAllDeclaredField(Class<?> targetClass, String... excludeFieldNames) {
-    List<Field> fields = new ArrayList<Field>();
+    List<Field> fields = new ArrayList<>();
     for (Field field : targetClass.getDeclaredFields()) {
       if (CollectionUtils.contains(excludeFieldNames, field.getName())) {
         continue;
@@ -157,7 +157,7 @@ public abstract class BeanUtils {
    * @return 返回Field列表。
    */
   public static List<Field> getDeclaredFields(Class<?> targetClass, String... excludeFieldNames) {
-    List<Field> fields = new ArrayList<Field>();
+    List<Field> fields = new ArrayList<>();
     for (Field field : getAllDeclaredField(targetClass, excludeFieldNames)) {
       if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())) {
         fields.add(field);
@@ -358,7 +358,8 @@ public abstract class BeanUtils {
   private static Boolean isFieldNeedCopy(Object source, Object target, String fieldName) {
     Field sourceField = findField(source.getClass(), fieldName);
     Field targetField = findField(target.getClass(), fieldName);
-    return targetField != null && sourceField.getType() == targetField.getType()
+    return targetField != null && sourceField != null
+        && sourceField.getType() == targetField.getType()
         && !Modifier.isFinal(targetField.getModifiers())
         && !Modifier.isStatic(targetField.getModifiers());
   }

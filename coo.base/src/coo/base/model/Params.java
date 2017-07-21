@@ -50,7 +50,7 @@ public class Params extends LinkedHashMap<String, String> {
    * @return 返回指定键名的列表型值。
    */
   public List<String> getList(String name) {
-    List<String> list = new ArrayList<String>();
+    List<String> list = new ArrayList<>();
     if (StringUtils.isNotBlank(get(name))) {
       list = Arrays.asList(get(name).split(Chars.COMMA));
     }
@@ -78,7 +78,7 @@ public class Params extends LinkedHashMap<String, String> {
    * @return 返回指定键名的Map型值。
    */
   public Map<String, String> getMap(String name) {
-    Map<String, String> map = new LinkedHashMap<String, String>();
+    Map<String, String> map = new LinkedHashMap<>();
     if (StringUtils.isNotBlank(get(name))) {
       for (String entry : get(name).split(Chars.COMMA)) {
         String key = StringUtils.substringBefore(entry, Chars.COLON);
@@ -96,7 +96,7 @@ public class Params extends LinkedHashMap<String, String> {
    * @param map Map
    */
   public void putMap(String name, Map<String, ?> map) {
-    List<String> list = new ArrayList<String>();
+    List<String> list = new ArrayList<>();
     for (Map.Entry<String, ?> entry : map.entrySet()) {
       list.add(entry.getKey() + Chars.COLON + entry.getValue());
     }
@@ -123,7 +123,7 @@ public class Params extends LinkedHashMap<String, String> {
 
   @Override
   public String toString() {
-    List<String> paramStrings = new ArrayList<String>();
+    List<String> paramStrings = new ArrayList<>();
     for (String key : keySet()) {
       String paramString = key + Chars.EQUAL + get(key);
       paramStrings.add(paramString);
