@@ -5,8 +5,8 @@ package coo.mvc.api;
  */
 public class ApiException extends RuntimeException {
   private static final long serialVersionUID = 3703190701308868615L;
-  private String code;
-  private String msg;
+  private final String code;
+  private final String msg;
 
   /**
    * 构造方法。
@@ -24,15 +24,7 @@ public class ApiException extends RuntimeException {
     return code;
   }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
-
   public String getMsg() {
     return msg;
-  }
-
-  public void setMsg(String msg) {
-    this.msg = msg;
   }
 }
