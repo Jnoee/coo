@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jnoee</groupId>
 	<artifactId>coo</artifactId>
-	<version>2.2.10-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>coo</name>
@@ -22,8 +22,7 @@
 	</developers>
 
 	<properties>
-		<!-- 编译参数 -->
-		<jdk.version>1.8</jdk.version>
+		<java.version>1.8</java.version>
 		<encoding>UTF-8</encoding>
 		<plugin.compiler.version>3.5.1</plugin.compiler.version>
 		<plugin.resources.version>3.0.0</plugin.resources.version>
@@ -33,13 +32,26 @@
 		<plugin.gpg.version>1.6</plugin.gpg.version>
 		<jgit.version>1.9.4</jgit.version>
 		<project.scm.id>github</project.scm.id>
-		<sonar.language>java</sonar.language>
-		<!-- 公共包 -->
-		<logback.version>1.1.8</logback.version>
-		<slf4j.version>1.7.22</slf4j.version>
+
+		<logback.version>1.1.11</logback.version>
+		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.12</junit.version>
+
+		<spring.boot.version>1.5.6.RELEASE</spring.boot.version>
+		<spring.version>4.3.10.RELEASE</spring.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring.boot.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
@@ -58,11 +70,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
@@ -71,39 +78,15 @@
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
-		<resources>
-			<resource>
-				<directory>src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>test</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</testResource>
-		</testResources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${plugin.compiler.version}</version>
 				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
@@ -179,7 +162,6 @@
 	<modules>
 		<module>coo.base</module>
 		<module>coo.core</module>
-		<module>coo.core.security</module>
 		<module>coo.core.support</module>
 		<module>coo.mvc</module>
 		<module>coo.mvc.security</module>

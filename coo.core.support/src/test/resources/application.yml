@@ -1,0 +1,12 @@
+debug: false
+
+coo:
+  druid:
+    url: jdbc:mysql://localhost:3306/coo?autoReconnect=true&characterEncoding=UTF-8
+    username: root
+    password: root
+  hibernate:
+    dialect: org.hibernate.dialect.MySQL5Dialect
+    showSql: true
+    search:
+      defaultIndexBase: ${user.home}/.coo.boot/indexed

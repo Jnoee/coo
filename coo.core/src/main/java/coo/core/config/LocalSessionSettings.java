@@ -1,0 +1,18 @@
+package coo.core.config;
+
+import org.springframework.stereotype.Component;
+
+import coo.core.hibernate.AbstractLocalSessionSettings;
+
+/**
+ * SessionFactory设置。
+ */
+@Component("coo.core.hibernate.LocalSessionSettings")
+public class LocalSessionSettings extends AbstractLocalSessionSettings {
+  /**
+   * 构造方法。
+   */
+  public LocalSessionSettings() {
+    addAnnotatedPackage("coo.core.hibernate.usertype");
+  }
+}

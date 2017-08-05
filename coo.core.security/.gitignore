@@ -1,7 +1,0 @@
-.settings
-.project
-.classpath
-.checkstyle
-/target
-*.md.html
-/pom.xml.releaseBackup
