@@ -110,5 +110,8 @@ public class WxPayUtils {
     return params;
   }
 
+  /**
+   * 私有构造方法。
+   */
   private WxPayUtils() {}
 }

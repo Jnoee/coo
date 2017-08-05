@@ -63,5 +63,8 @@ public class AspectUtils {
     return methodSignature.getMethod().getAnnotation(annotationClass);
   }
 
+  /**
+   * 私有构造方法。
+   */
   private AspectUtils() {}
 }

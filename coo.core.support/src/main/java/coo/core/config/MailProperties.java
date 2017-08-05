@@ -2,6 +2,9 @@ package coo.core.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * 邮件配置属性。
+ */
 @ConfigurationProperties("coo.mail")
 public class MailProperties {
   private String host = "smtp.163.com";
@@ -12,6 +15,9 @@ public class MailProperties {
   private Boolean debug = false;
   private Smtp smtp = new Smtp();
 
+  /**
+   * SMTP配置。
+   */
   public static class Smtp {
     private Boolean auth = true;
     private Boolean starttlsEnable = false;

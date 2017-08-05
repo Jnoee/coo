@@ -34,5 +34,8 @@ public class ResultUtils {
     return model;
   }
 
+  /**
+   * 私有构造方法。
+   */
   private ResultUtils() {}
 }

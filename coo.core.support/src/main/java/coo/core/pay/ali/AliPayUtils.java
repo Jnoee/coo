@@ -172,5 +172,8 @@ public class AliPayUtils {
     return dataMap;
   }
 
+  /**
+   * 私有构造方法。
+   */
   private AliPayUtils() {}
 }

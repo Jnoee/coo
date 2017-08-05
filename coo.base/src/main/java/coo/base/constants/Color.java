@@ -15,5 +15,8 @@ public class Color {
   /** 红色（通常用来标识异常状态） */
   public static final String RED = "red";
 
+  /**
+   * 私有构造方法。
+   */
   private Color() {}
 }

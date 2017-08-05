@@ -14,9 +14,18 @@ import coo.base.exception.BusinessException;
 import coo.mvc.dwz.DwzResultBuild;
 import coo.mvc.util.HttpUtils;
 
+/**
+ * DWZ异常处理组件。
+ */
 public class DwzErrorController extends BasicErrorController {
   protected final ErrorAttributes errorAttributes;
 
+  /**
+   * 构造方法。
+   * 
+   * @param errorAttributes ErrorAttributes组件
+   * @param errorProperties ErrorProperties组件
+   */
   public DwzErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
     super(errorAttributes, errorProperties);
     this.errorAttributes = errorAttributes;
@@ -31,12 +40,26 @@ public class DwzErrorController extends BasicErrorController {
     }
   }
 
+  /**
+   * 处理HTTP请求异常。
+   * 
+   * @param request 请求对象
+   * @param response 响应对象
+   * @return 返回异常页面。
+   */
   protected ModelAndView processErrorHtml(HttpServletRequest request,
       HttpServletResponse response) {
     response.setStatus(getStatus(request).value());
     return new ModelAndView("/500");
   }
 
+  /**
+   * 处理AJAX请求异常。
+   * 
+   * @param request 请求对象
+   * @param response 响应对象
+   * @return 返回异常页面。
+   */
   protected ModelAndView processErrorAjax(HttpServletRequest request,
       HttpServletResponse response) {
     response.setStatus(HttpStatus.OK.value());
@@ -48,6 +71,12 @@ public class DwzErrorController extends BasicErrorController {
     return mav;
   }
 
+  /**
+   * 获取异常。
+   * 
+   * @param request 请求对象
+   * @return 返回异常对象。
+   */
   protected Throwable getException(HttpServletRequest request) {
     return errorAttributes.getError(new ServletRequestAttributes(request));
   }

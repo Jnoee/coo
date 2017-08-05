@@ -21,24 +21,43 @@ import coo.mvc.security.interceptor.AuthInterceptor;
 import coo.mvc.security.permission.PermissionConfig;
 import coo.mvc.security.service.LoginRealm;
 
+/**
+ * 组件配置。
+ */
 @Configuration
 @EnableConfigurationProperties(CaptchaProperties.class)
 public class SecurityConfiguration extends WebMvcConfigurerAdapter {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
+    // 权限注解拦截器
     registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**");
   }
 
+  /**
+   * 配置LifecycleBeanPostProcessor组件。
+   * 
+   * @return 返回LifecycleBeanPostProcessor组件。
+   */
   @Bean
   public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
     return new LifecycleBeanPostProcessor();
   }
 
+  /**
+   * 配置RealmCacheManager组件。
+   * 
+   * @return 返回RealmCacheManager组件。
+   */
   @Bean
   public CacheManager realmCacheManager() {
     return new MemoryConstrainedCacheManager();
   }
 
+  /**
+   * 配置LoginRealm组件。
+   * 
+   * @return 返回LoginRealm组件。
+   */
   @Bean
   @DependsOn("daoRegister")
   public LoginRealm loginRealm() {
@@ -47,6 +66,11 @@ public class SecurityConfiguration extends WebMvcConfigurerAdapter {
     return realm;
   }
 
+  /**
+   * 配置SecurityManager组件。
+   * 
+   * @return 返回SecurityManager组件。
+   */
   @Bean
   public SecurityManager securityManager() {
     DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -54,6 +78,11 @@ public class SecurityConfiguration extends WebMvcConfigurerAdapter {
     return securityManager;
   }
 
+  /**
+   * 配置ShiroFilter组件。
+   * 
+   * @return 返回ShiroFilter组件。
+   */
   @Bean
   public ShiroFilterFactoryBean shiroFilter() {
     ShiroFilterFactoryBean factory = new ShiroFilterFactoryBean();
@@ -64,6 +93,11 @@ public class SecurityConfiguration extends WebMvcConfigurerAdapter {
     return factory;
   }
 
+  /**
+   * 配置权限管理组件。
+   * 
+   * @return 返回权限管理组件。
+   */
   @Bean
   public PermissionConfig permissionConfig() {
     PermissionConfig config = new PermissionConfig();
@@ -71,6 +105,12 @@ public class SecurityConfiguration extends WebMvcConfigurerAdapter {
     return config;
   }
 
+  /**
+   * 配置异常处理组件。
+   * 
+   * @param errorAttributes ErrorAttributes组件
+   * @return 返回异常处理组件。
+   */
   @Bean
   public ErrorController errorController(ErrorAttributes errorAttributes) {
     return new DwzSecurityErrorController(errorAttributes, new ErrorProperties());

@@ -19,6 +19,9 @@ public class EntityCacheManager {
   @Resource
   private SessionFactory sessionFactory;
 
+  /**
+   * 初始化方法。
+   */
   @PostConstruct
   public void init() {
     Map<String, ClassMetadata> metadatas = sessionFactory.getAllClassMetadata();

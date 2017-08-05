@@ -29,5 +29,8 @@ public class FileSuffix {
   public static final String RAM = "*.ram";
   public static final String AVI = "*.avi";
 
+  /**
+   * 私有构造方法。
+   */
   private FileSuffix() {}
 }

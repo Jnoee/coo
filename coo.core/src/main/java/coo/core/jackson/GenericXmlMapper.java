@@ -11,9 +11,15 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 import coo.base.util.DateUtils;
 
+/**
+ * 对Jackson的XmlMapper封装。设置xml的输出格式、时间格式及Hibernate懒加载支持。
+ */
 public class GenericXmlMapper extends XmlMapper {
   private static final long serialVersionUID = -1172780298906652649L;
 
+  /**
+   * 构造方法。
+   */
   public GenericXmlMapper() {
     setSerializationInclusion(Include.NON_NULL);
     configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

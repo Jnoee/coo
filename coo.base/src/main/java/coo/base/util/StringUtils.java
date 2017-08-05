@@ -205,5 +205,8 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 私有构造方法。
+   */
   private StringUtils() {}
 }

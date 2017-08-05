@@ -5,6 +5,9 @@ import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
 import coo.core.jackson.GenericXmlMapper;
 import coo.core.jackson.IEnumModule;
 
+/**
+ * 自定义基于Jackson2的xml视图。
+ */
 public class GenericJackson2XmlView extends MappingJackson2XmlView {
   /**
    * 构造方法。

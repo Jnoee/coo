@@ -80,7 +80,7 @@ public abstract class AbstractLoginAction {
    * @param out 页面输出流
    * @throws IOException
    * 
-   * @throws Exception 图片输出失败时抛出异常。
+   * @throws IOException 图片输出失败时抛出异常。
    */
   @RequestMapping("captcha-code-image")
   public void captchaCode(HttpServletRequest request, OutputStream out) throws IOException {

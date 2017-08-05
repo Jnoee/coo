@@ -178,5 +178,8 @@ public class FileUtils {
     }
   }
 
+  /**
+   * 私有构造方法。
+   */
   private FileUtils() {}
 }

@@ -8,5 +8,8 @@ public class AdminPermission {
   public static final String CODE = "ADMIN";
   public static final String DEFAULT_PASSWORD = "666666";
 
+  /**
+   * 私有构造方法。
+   */
   private AdminPermission() {}
 }

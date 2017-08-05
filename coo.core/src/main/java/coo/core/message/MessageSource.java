@@ -65,7 +65,7 @@ public class MessageSource extends ReloadableResourceBundleMessageSource {
         SpringUtils.getResourceBasenamesByWildcard(MESSAGE_DIR, basenames);
     for (String resourceBasename : resourceBasenames) {
       super.addBasenames(resourceBasename);
-      logger.info("加载配置信息文件[" + resourceBasename + "]成功。");
+      logger.debug("加载配置信息文件[" + resourceBasename + "]成功。");
     }
   }
 }

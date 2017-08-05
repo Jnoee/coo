@@ -2,6 +2,9 @@ package coo.core.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * 任务线程池配置属性。
+ */
 @ConfigurationProperties("coo.task")
 public class ExecutorProperties {
   private Integer executorPoolSize = 20;

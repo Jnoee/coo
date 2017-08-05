@@ -88,5 +88,8 @@ public class IEnumUtils {
     return StringUtils.join(values, ",");
   }
 
+  /**
+   * 私有构造方法。
+   */
   private IEnumUtils() {}
 }

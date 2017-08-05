@@ -53,5 +53,8 @@ public class HardwareUtils {
     return mac;
   }
 
+  /**
+   * 私有构造方法。
+   */
   private HardwareUtils() {}
 }

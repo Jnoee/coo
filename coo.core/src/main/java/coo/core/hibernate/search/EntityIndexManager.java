@@ -28,6 +28,9 @@ public class EntityIndexManager {
   private SessionFactory sessionFactory;
   private List<Class<?>> indexedEntityClasses = new ArrayList<>();
 
+  /**
+   * 初始化方法。
+   */
   @PostConstruct
   public void init() {
     Map<String, ClassMetadata> metadatas = sessionFactory.getAllClassMetadata();

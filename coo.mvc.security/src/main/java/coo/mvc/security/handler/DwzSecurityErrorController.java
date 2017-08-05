@@ -12,8 +12,18 @@ import org.springframework.web.servlet.ModelAndView;
 import coo.mvc.dwz.DwzResultBuild;
 import coo.mvc.handler.DwzErrorController;
 
+/**
+ * DWZ安全异常处理组件。
+ */
 public class DwzSecurityErrorController extends DwzErrorController {
-  public DwzSecurityErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
+  /**
+   * 构造方法。
+   * 
+   * @param errorAttributes ErrorAttributes组件
+   * @param errorProperties ErrorProperties组件
+   */
+  public DwzSecurityErrorController(ErrorAttributes errorAttributes,
+      ErrorProperties errorProperties) {
     super(errorAttributes, errorProperties);
   }
 

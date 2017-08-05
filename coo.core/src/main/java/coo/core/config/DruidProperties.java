@@ -2,6 +2,9 @@ package coo.core.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Druid数据库连接池配置属性。
+ */
 @ConfigurationProperties("coo.druid")
 public class DruidProperties {
   private String url = "jdbc:h2:mem:coo";

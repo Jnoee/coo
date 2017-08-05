@@ -84,5 +84,8 @@ public class QrDecoder {
     return hints;
   }
 
+  /**
+   * 私有构造方法。
+   */
   private QrDecoder() {}
 }

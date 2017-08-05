@@ -7,5 +7,8 @@ public class Encoding {
   public static final String UTF_8 = "UTF-8";
   public static final String GBK = "GBK";
 
+  /**
+   * 私有构造方法。
+   */
   private Encoding() {}
 }

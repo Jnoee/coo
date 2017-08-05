@@ -123,5 +123,8 @@ public class CollectionUtils {
     return Stream.of(elements).collect(Collectors.toList());
   }
 
+  /**
+   * 私有构造方法。
+   */
   private CollectionUtils() {}
 }

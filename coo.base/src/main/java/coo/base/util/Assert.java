@@ -219,5 +219,8 @@ public class Assert {
     notEmpty(map, "断言失败: Map不能是空");
   }
 
+  /**
+   * 私有构造方法。
+   */
   private Assert() {}
 }

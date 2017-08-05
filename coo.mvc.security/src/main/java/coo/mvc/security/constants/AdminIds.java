@@ -13,5 +13,8 @@ public class AdminIds {
   /** 管理员职务ID */
   public static final String ACTOR_ID = "ADMINAID-0000-0000-0000-000000000000";
 
+  /**
+   * 私有构造方法。
+   */
   private AdminIds() {}
 }

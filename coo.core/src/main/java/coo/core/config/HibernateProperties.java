@@ -4,6 +4,9 @@ import java.util.Properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Hibernate配置属性。
+ */
 @ConfigurationProperties("coo.hibernate")
 public class HibernateProperties {
   /** 数据库适配器 */
@@ -17,6 +20,11 @@ public class HibernateProperties {
   /** 全文索引设置 */
   private Search search = new Search();
 
+  /**
+   * 转换为Properties。
+   * 
+   * @return 返回Properties。
+   */
   public Properties toProperties() {
     Properties properties = new Properties();
     properties.setProperty("hibernate.dialect", dialect);
@@ -82,6 +90,9 @@ public class HibernateProperties {
     this.search = search;
   }
 
+  /**
+   * 缓存配置。
+   */
   public static class Cache {
     private String useQueryCache = "false";
     private String useSecondLevelCache = "true";
@@ -112,6 +123,9 @@ public class HibernateProperties {
     }
   }
 
+  /**
+   * Jdbc配置。
+   */
   public static class Jdbc {
     private String fetchSize = "50";
     private String batchSize = "25";
@@ -133,6 +147,9 @@ public class HibernateProperties {
     }
   }
 
+  /**
+   * 全文索引配置。
+   */
   public static class Search {
     private String defaultExclusiveIndexUse = "false";
     private String defaultDirectoryProvider = "filesystem";

@@ -5,6 +5,9 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.http.HttpStatus;
 
+/**
+ * 自定义嵌入式Servlet容器配置。
+ */
 public class GenericContainerCustomizer implements EmbeddedServletContainerCustomizer {
   @Override
   public void customize(ConfigurableEmbeddedServletContainer container) {

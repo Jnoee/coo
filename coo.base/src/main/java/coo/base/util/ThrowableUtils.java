@@ -33,5 +33,8 @@ public class ThrowableUtils {
     return stingWriter.toString();
   }
 
+  /**
+   * 私有构造方法。
+   */
   private ThrowableUtils() {}
 }

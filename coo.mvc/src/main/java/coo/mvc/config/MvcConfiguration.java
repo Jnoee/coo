@@ -28,9 +28,18 @@ import coo.mvc.handler.GenericContainerCustomizer;
 import coo.mvc.handler.GenericWebBindingInitializer;
 import coo.mvc.handler.GenericWebMvcConfigurerAdapter;
 
+/**
+ * 组件配置。
+ */
 @Configuration
 @ComponentScan("coo.mvc")
 public class MvcConfiguration {
+  /**
+   * 配置FreeMarker模版组件。
+   * 
+   * @param freemarkerProperties FreeMarker配置属性
+   * @return 返回FreeMarker模版组件。
+   */
   @Bean
   public FreeMarkerConfigurer freemarkerConfigurer(FreeMarkerProperties freemarkerProperties) {
     GenericFreeMarkerConfigurer configurer = new GenericFreeMarkerConfigurer();
@@ -38,6 +47,11 @@ public class MvcConfiguration {
     return configurer;
   }
 
+  /**
+   * 配置文件上传组件。
+   * 
+   * @return 返回文件上传组件。
+   */
   @Bean
   public MultipartResolver multipartResolver() {
     CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -45,12 +59,24 @@ public class MvcConfiguration {
     return resolver;
   }
 
+  /**
+   * 配置异常处理组件。
+   * 
+   * @param errorAttributes ErrorAttributes组件
+   * @return 返回异常处理组件。
+   */
   @Bean
   @ConditionalOnMissingBean(ErrorController.class)
   public ErrorController errorController(ErrorAttributes errorAttributes) {
     return new DwzErrorController(errorAttributes, new ErrorProperties());
   }
 
+  /**
+   * 配置验证组件。
+   * 
+   * @param messageSource MessageSource组件
+   * @return 返回验证组件。
+   */
   @Bean
   public Validator validator(MessageSource messageSource) {
     LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -59,11 +85,22 @@ public class MvcConfiguration {
     return validator;
   }
 
+  /**
+   * 配置转换组件。
+   * 
+   * @return 返回转换组件。
+   */
   @Bean
   public GenericConverterFactoryBean conversionService() {
     return new GenericConverterFactoryBean();
   }
 
+  /**
+   * 配置ConfigurableWebBindingInitializer组件。
+   * 
+   * @param validator 验证组件
+   * @return 返回ConfigurableWebBindingInitializer组件。
+   */
   @Bean
   public ConfigurableWebBindingInitializer webBindingInitializer(Validator validator) {
     GenericWebBindingInitializer initializer = new GenericWebBindingInitializer();
@@ -72,11 +109,21 @@ public class MvcConfiguration {
     return initializer;
   }
 
+  /**
+   * 配置WebMvcConfigurerAdapter组件。
+   * 
+   * @return 返回WebMvcConfigurerAdapter组件。
+   */
   @Bean
   public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
     return new GenericWebMvcConfigurerAdapter();
   }
 
+  /**
+   * 配置EmbeddedServletContainerCustomizer组件。
+   * 
+   * @return 返回EmbeddedServletContainerCustomizer组件。
+   */
   @Bean
   public EmbeddedServletContainerCustomizer contianerCustomizer() {
     return new GenericContainerCustomizer();

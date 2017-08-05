@@ -7,6 +7,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import coo.base.constants.Encoding;
 import coo.base.util.DateUtils;
 
+/**
+ * FreeMarker配置属性。
+ */
 @ConfigurationProperties(prefix = FreeMarkerProperties.PREFIX)
 public class FreeMarkerProperties {
   public static final String PREFIX = "coo.freemarker";
@@ -23,6 +26,11 @@ public class FreeMarkerProperties {
   private Boolean classicCompatible = true;
   private Boolean whitespaceStripping = true;
 
+  /**
+   * 转换为Properties。
+   * 
+   * @return 返回Properties。
+   */
   public Properties toProperties() {
     Properties properties = new Properties();
     properties.put("template_update_delay", templateUpdateDelay.toString());

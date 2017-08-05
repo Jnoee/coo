@@ -31,6 +31,11 @@ public class Captcha implements Serializable {
   /** 正确的验证码 */
   private String correctCode;
 
+  /**
+   * 构造方法。
+   * 
+   * @param properties 配置属性
+   */
   public Captcha(CaptchaProperties properties) {
     this.properties = properties;
   }

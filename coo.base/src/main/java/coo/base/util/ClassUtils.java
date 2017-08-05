@@ -197,5 +197,8 @@ public class ClassUtils {
     return classNames;
   }
 
+  /**
+   * 私有构造方法。
+   */
   private ClassUtils() {}
 }

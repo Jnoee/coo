@@ -10,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * 自定义WebMvcConfigurerAdapter。
+ */
 public class GenericWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
   @Override
   public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {

@@ -19,8 +19,18 @@ import coo.core.config.MailProperties;
 public class MailSender extends JavaMailSenderImpl {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
+  /**
+   * 构造方法。
+   * 
+   * @param properties 邮件配置属性
+   */
   public MailSender(MailProperties properties) {
-    applyProperties(properties);
+    BeanUtils.copyFields(properties, this);
+    getJavaMailProperties().put("mail.smtp.auth", properties.getSmtp().getAuth());
+    getJavaMailProperties().put("mail.smtp.starttls.enable",
+        properties.getSmtp().getStarttlsEnable().toString());
+    getJavaMailProperties().put("mail.smtp.timeout", properties.getSmtp().getTimeout().toString());
+    getJavaMailProperties().put("mail.debug", properties.getDebug().toString());
   }
 
   /**
@@ -50,14 +60,5 @@ public class MailSender extends JavaMailSenderImpl {
       log.error("发送邮件时发生异常。", e);
       throw new UncheckedException("发送邮件时发生异常。", e);
     }
-  }
-
-  private void applyProperties(MailProperties properties) {
-    BeanUtils.copyFields(properties, this);
-    getJavaMailProperties().put("mail.smtp.auth", properties.getSmtp().getAuth());
-    getJavaMailProperties().put("mail.smtp.starttls.enable",
-        properties.getSmtp().getStarttlsEnable().toString());
-    getJavaMailProperties().put("mail.smtp.timeout", properties.getSmtp().getTimeout().toString());
-    getJavaMailProperties().put("mail.debug", properties.getDebug().toString());
   }
 }

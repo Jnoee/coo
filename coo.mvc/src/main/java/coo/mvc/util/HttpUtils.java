@@ -27,5 +27,8 @@ public class HttpUtils {
     return ua.contains("mac") || ua.contains("iphone") || ua.contains("ipad");
   }
 
+  /**
+   * 私有构造方法。
+   */
   private HttpUtils() {}
 }

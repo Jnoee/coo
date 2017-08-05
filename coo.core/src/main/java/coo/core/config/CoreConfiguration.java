@@ -28,6 +28,9 @@ import coo.core.hibernate.cache.EntityCacheManager;
 import coo.core.hibernate.dao.DaoRegister;
 import coo.core.hibernate.search.EntityIndexManager;
 
+/**
+ * 组件配置。
+ */
 @Configuration
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -44,6 +47,11 @@ public class CoreConfiguration {
   @Resource
   private HibernateProperties hibernateProperties;
 
+  /**
+   * 配置数据源。
+   * 
+   * @return 返回数据源。
+   */
   @Bean(destroyMethod = "close")
   public DruidDataSource dataSource() {
     DruidDataSource dataSource = new DruidDataSource();
@@ -74,6 +82,11 @@ public class CoreConfiguration {
     return dataSource;
   }
 
+  /**
+   * 配置SessionFactory。
+   * 
+   * @return 返回SessionFactory。
+   */
   @Bean
   public LocalSessionFactoryBean sessionFactory() {
     GenericLocalSessionFactoryBean sessionFactory = new GenericLocalSessionFactoryBean();
@@ -82,6 +95,11 @@ public class CoreConfiguration {
     return sessionFactory;
   }
 
+  /**
+   * 配置事务管理器。
+   * 
+   * @return 返回事务管理器。
+   */
   @Bean
   @ConditionalOnBean(SessionFactory.class)
   public PlatformTransactionManager transactionManager() {
@@ -90,26 +108,51 @@ public class CoreConfiguration {
     return transactionManager;
   }
 
-  @Bean
-  public EntityCacheManager entityCacheManager() {
-    return new EntityCacheManager();
-  }
-
-  @Bean
-  public static EntityIndexManager entityIndexManager() {
-    return new EntityIndexManager();
-  }
-
+  /**
+   * 配置Dao自动注册组件。
+   * 
+   * @return 返回Dao自动注册组件。
+   */
   @Bean
   public static DaoRegister daoRegister() {
     return new DaoRegister();
   }
 
+  /**
+   * 配置实体缓存管理组件。
+   * 
+   * @return 返回实体缓存管理组件。
+   */
+  @Bean
+  public EntityCacheManager entityCacheManager() {
+    return new EntityCacheManager();
+  }
+
+  /**
+   * 配置全文索引管理组件。
+   * 
+   * @return 返回全文索引管理组件。
+   */
+  @Bean
+  public static EntityIndexManager entityIndexManager() {
+    return new EntityIndexManager();
+  }
+
+  /**
+   * 配置及时任务执行组件。
+   * 
+   * @return 返回及时任务执行组件。
+   */
   @Bean
   public ExecutorService taskExecutor() {
     return Executors.newFixedThreadPool(executorProperties.getExecutorPoolSize());
   }
 
+  /**
+   * 配置定时任务执行组件。
+   * 
+   * @return 返回定时任务执行组件。
+   */
   @Bean
   public ExecutorService taskScheduler() {
     return Executors.newScheduledThreadPool(executorProperties.getSchedulerPoolSize());

@@ -34,7 +34,7 @@ public class PermissionConfig {
     try {
       initPermissions();
       initAllPermissions();
-      log.info("加载权限配置文件成功。");
+      log.debug("加载权限配置文件成功。");
     } catch (Exception e) {
       throw new UncheckedException("加载权限配置文件时发生异常。", e);
     }

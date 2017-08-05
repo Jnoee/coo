@@ -13,5 +13,8 @@ public class Measure {
   /** T字节数 */
   public static final Integer T = 1024 * G;
 
+  /**
+   * 私有构造方法。
+   */
   private Measure() {}
 }

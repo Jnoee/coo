@@ -243,5 +243,8 @@ public class DateUtils {
     return new Interval(new DateTime(beginDate), new DateTime(endDate));
   }
 
+  /**
+   * 私有构造方法。
+   */
   private DateUtils() {}
 }

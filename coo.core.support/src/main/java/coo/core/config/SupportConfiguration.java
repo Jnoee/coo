@@ -7,9 +7,18 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 import coo.core.mail.MailSender;
 
+/**
+ * 组件配置。
+ */
 @Configuration
 @EnableConfigurationProperties({FreeMarkerProperties.class, MailProperties.class})
 public class SupportConfiguration {
+  /**
+   * 邮件模版配置。
+   * 
+   * @param freemarkerProperties 模版配置属性
+   * @return 返回邮件模版配置。
+   */
   @Bean
   public FreeMarkerConfigurationFactoryBean mailTemplateConfigurer(
       FreeMarkerProperties freemarkerProperties) {
@@ -19,6 +28,11 @@ public class SupportConfiguration {
     return factoryBean;
   }
 
+  /**
+   * 配置邮件发送组件。
+   * 
+   * @return 返回邮件发送组件。
+   */
   @Bean
   public MailSender mailSender() {
     return new MailSender(new MailProperties());

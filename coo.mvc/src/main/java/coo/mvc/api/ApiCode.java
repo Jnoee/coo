@@ -11,5 +11,8 @@ public class ApiCode {
   /** 系统错误 */
   public static final String FAILURE = "999";
 
+  /**
+   * 私有构造方法。
+   */
   private ApiCode() {}
 }

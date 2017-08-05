@@ -332,5 +332,8 @@ public class NumberUtils {
     return bValue1.divide(bValue2, scale, BigDecimal.ROUND_HALF_UP).floatValue();
   }
 
+  /**
+   * 私有构造方法。
+   */
   private NumberUtils() {}
 }

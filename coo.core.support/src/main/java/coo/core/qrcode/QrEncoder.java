@@ -102,5 +102,8 @@ public class QrEncoder {
     return hints;
   }
 
+  /**
+   * 私有构造方法。
+   */
   private QrEncoder() {}
 }

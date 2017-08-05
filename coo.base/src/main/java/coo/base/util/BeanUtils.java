@@ -489,5 +489,8 @@ public class BeanUtils {
     }
   }
 
+  /**
+   * 私有构造方法。
+   */
   private BeanUtils() {}
 }
