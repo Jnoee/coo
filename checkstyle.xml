@@ -55,7 +55,9 @@
     <property name="max" value="1000"/>
     <property name="fileExtensions" value="java"/>
   </module>
+  <!-- 
   <module name="SuppressionFilter">
     <property name="file" value="${basedir}/checkstyle.suppressions.xml"/>
   </module>
+   -->
 </module>

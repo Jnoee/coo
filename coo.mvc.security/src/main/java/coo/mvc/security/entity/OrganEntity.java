@@ -82,9 +82,9 @@ public abstract class OrganEntity<O extends OrganEntity<O, U, A>, U extends User
    * @return 返回机构名称。
    */
   public String getSelectText() {
-    StringBuilder builder = new StringBuilder(" > " + name);
+    StringBuilder builder = new StringBuilder(name);
     for (int i = 0; i < getOrganLevel(); i++) {
-      builder.insert(0, "  ");
+      builder.insert(0, "> ");
     }
     return builder.toString();
   }
