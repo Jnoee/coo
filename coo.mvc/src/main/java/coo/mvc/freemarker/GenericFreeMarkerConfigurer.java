@@ -20,8 +20,6 @@ import org.springframework.ui.freemarker.SpringTemplateLoader;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import coo.base.exception.UncheckedException;
-import coo.base.util.ClassUtils;
-import coo.core.model.IEnum;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
@@ -97,7 +95,7 @@ public class GenericFreeMarkerConfigurer extends FreeMarkerConfigurer
     TemplateHashModel enums =
         ((BeansWrapper) getConfiguration().getObjectWrapper()).getEnumModels();
     getConfiguration().setSharedVariable("enums", enums);
-    for (Class<?> enumClass : ClassUtils.findClassesByParentClass(IEnum.class, getEnumPackages())) {
+    for (Class<?> enumClass : getEnumClasses()) {
       getConfiguration().setSharedVariable(enumClass.getSimpleName(),
           enums.get(enumClass.getName()));
       log.debug("初始化枚举变量[{}:{}]。", enumClass.getSimpleName(), enumClass.getName());
@@ -152,21 +150,21 @@ public class GenericFreeMarkerConfigurer extends FreeMarkerConfigurer
   }
 
   /**
-   * 获取枚举包列表。
+   * 获取枚举类列表。
    * 
-   * @return 返回枚举包列表。
+   * @return 返回枚举类列表。
    */
-  private String[] getEnumPackages() {
-    List<String> enumPackages = new ArrayList<>();
+  private List<Class<?>> getEnumClasses() {
+    List<Class<?>> enumClasses = new ArrayList<>();
     for (AbstractFreeMarkerSettings freeMarkerSettings : settings) {
-      for (String enumPackage : freeMarkerSettings.getEnumPackages()) {
-        if (enumPackages.contains(enumPackage)) {
-          throw new UncheckedException("加载枚举类包[" + enumPackage + "]时发生冲突。");
+      for (Class<?> enumClass : freeMarkerSettings.getEnumClasses()) {
+        if (enumClasses.contains(enumClass)) {
+          throw new UncheckedException("加载枚举类[" + enumClass + "]时发生冲突。");
         }
-        enumPackages.add(enumPackage);
+        enumClasses.add(enumClass);
       }
     }
-    return enumPackages.toArray(new String[] {});
+    return enumClasses;
   }
 
   /**

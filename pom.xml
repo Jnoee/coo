@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jnoee</groupId>
 	<artifactId>coo</artifactId>
@@ -80,6 +81,17 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -172,18 +184,9 @@
 		<developerConnection>scm:git:https://github.com/jnoee/coo.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-	<!-- 
-	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<url>http://nexus:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus</id>
-			<url>http://nexus:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-	 -->
+	<!-- <distributionManagement> <repository> <id>nexus</id> <url>http://nexus:8081/nexus/content/repositories/releases</url> 
+		</repository> <snapshotRepository> <id>nexus</id> <url>http://nexus:8081/nexus/content/repositories/snapshots</url> 
+		</snapshotRepository> </distributionManagement> -->
 	<distributionManagement>
 		<snapshotRepository>
 			<id>oss</id>

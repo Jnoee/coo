@@ -1,6 +1,7 @@
 package coo.mvc.freemarker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,8 @@ import java.util.Map;
 public abstract class AbstractFreeMarkerSettings implements Comparable<AbstractFreeMarkerSettings> {
   /** 加载序号 */
   private Integer order = 0;
-  /** 枚举包列表 */
-  private List<String> enumPackages = new ArrayList<>();
+  /** 枚举类列表 */
+  private List<Class<?>> enumClasses = new ArrayList<>();
   /** 静态类列表 */
   private List<Class<?>> staticClasses = new ArrayList<>();
   /** 模版路径列表 */
@@ -25,12 +26,12 @@ public abstract class AbstractFreeMarkerSettings implements Comparable<AbstractF
   private Map<String, String> globalBeans = new HashMap<>();
 
   /**
-   * 添加枚举包名。
+   * 添加枚举类。
    * 
-   * @param enumPackage 枚举包名
+   * @param enumClass 枚举类名
    */
-  public void addEnumPackage(String enumPackage) {
-    enumPackages.add(enumPackage);
+  public void addEnumClass(Class<?>... enumClass) {
+    enumClasses.addAll(Arrays.asList(enumClass));
   }
 
   /**
@@ -38,8 +39,8 @@ public abstract class AbstractFreeMarkerSettings implements Comparable<AbstractF
    * 
    * @param staticClass 静态类名
    */
-  public void addStaticClass(Class<?> staticClass) {
-    staticClasses.add(staticClass);
+  public void addStaticClass(Class<?>... staticClass) {
+    staticClasses.addAll(Arrays.asList(staticClass));
   }
 
   /**
@@ -93,8 +94,8 @@ public abstract class AbstractFreeMarkerSettings implements Comparable<AbstractF
     this.order = order;
   }
 
-  public List<String> getEnumPackages() {
-    return enumPackages;
+  public List<Class<?>> getEnumClasses() {
+    return enumClasses;
   }
 
   public List<Class<?>> getStaticClasses() {

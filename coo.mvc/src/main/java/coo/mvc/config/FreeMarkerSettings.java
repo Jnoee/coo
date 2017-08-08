@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import coo.base.util.DateUtils;
 import coo.base.util.StringUtils;
+import coo.core.enums.EnabledStatus;
 import coo.mvc.freemarker.AbstractFreeMarkerSettings;
 
 /**
@@ -20,8 +21,7 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
     addAutoImport("s", "mvc.ftl");
     addAutoImport("dwz", "dwz.ftl");
     addAutoImport("ecs", "ecs.ftl");
-    addStaticClass(StringUtils.class);
-    addStaticClass(DateUtils.class);
-    addEnumPackage("coo.core.enums");
+    addStaticClass(StringUtils.class, DateUtils.class);
+    addEnumClass(EnabledStatus.class);
   }
 }
